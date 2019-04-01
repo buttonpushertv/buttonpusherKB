@@ -49,6 +49,14 @@ SplashTextOff
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
 
+#b::
+Send, buttonpusher
+return
+
+#+b::
+Send, ben@buttonpusher.tv
+return
+
 #!^+q:: ; <-- Exit MASTER-SCRIPT & child AHK Scripts
     DetectHiddenWindows, On
     MsgBox, ,Quitting, Quitting MASTER-SCRIPT & child AHK scripts, 3
