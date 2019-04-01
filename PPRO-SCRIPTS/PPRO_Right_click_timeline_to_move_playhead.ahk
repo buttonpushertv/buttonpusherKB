@@ -13,21 +13,22 @@ Menu, Tray, Icon, imageres.dll, 90 ; sets the Tray Icon to a timeline looking th
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
-sleepShort = 333
-sleepMedium = 666
-sleepLong = 1500
-sleepDeep = 3500
+sleepMicro := 15
+sleepShort := 333
+sleepMedium := 666
+sleepLong := 1500
+sleepDeep := 3500
 
 ;First, we define all the timeline's DEFAULT possible colors.
 ;(Note that your colors will be different if you changed the UI brightness inside preferences > appearance > brightness.)
 ;I used Window Spy (it comes with AHK) to detect the exact colors onscreen.
-timeline1 = 0x414141 ;timeline color inside the in/out points ON a targeted track
-timeline2 = 0x313131 ;timeline color of the separating LINES between targeted AND non targeted tracks inside the in/out points
-timeline3 = 0x1B1B1B ;the timeline color inside in/out points on a NON targeted track
-timeline4 = 0x212121 ;the color of the bare timeline NOT inside the in out points
-timeline5 = 0x202020 ;the color of a SELECTED blank space on the timeline, NOT in the in/out points
-timeline6 = 0x414141 ;the color of a SELECTED blank space on the timeline, IN the in/out points, on a TARGETED track
-timeline7 = 0x1B1B1B ;the color of a SELECTED blank space on the timeline, IN the in/out points, on an UNTARGETED track
+timeline1 := 0x414141 ;timeline color inside the in/out points ON a targeted track
+timeline2 := 0x313131 ;timeline color of the separating LINES between targeted AND non targeted tracks inside the in/out points
+timeline3 := 0x1B1B1B ;the timeline color inside in/out points on a NON targeted track
+timeline4 := 0x212121 ;the color of the bare timeline NOT inside the in out points
+timeline5 := 0x202020 ;the color of a SELECTED blank space on the timeline, NOT in the in/out points
+timeline6 := 0x414141 ;the color of a SELECTED blank space on the timeline, IN the in/out points, on a TARGETED track
+timeline7 := 0x1B1B1B ;the color of a SELECTED blank space on the timeline, IN the in/out points, on an UNTARGETED track
 
 ; +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ; NOTE THAT YOU MUST ASSIGN \(backslash) to "Move playhead to cursor" in Premiere's keyboard shortcuts panel!
@@ -36,7 +37,7 @@ timeline7 = 0x1B1B1B ;the color of a SELECTED blank space on the timeline, IN th
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loaded Premiere Pro Right-Click Timeline MOD.`n`nRight Click in timeline to move playhead.`n`nRight Clicking on clips should still work normally.
 WinMove, Launching %A_ScriptFullPath%, , 100, 500
-Sleep, sleepDeep
+Sleep, sleepLong
 SplashTextOff
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe ;exact name was gotten from windowspy

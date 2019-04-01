@@ -1,5 +1,6 @@
-﻿; AutoHotKey - Blank Template by Ben Howard - ben@buttonpusher.tv
-; You can customize this template by editing "C:\Windows\ShellNew\Template.ahk"
+﻿; AutoHotKey - MASTER-FUNCTIONS for inclusion into MASTER-SCRIPT.AHK
+;by Ben Howard - ben@buttonpusher.tv
+
 ;===============================================================================================
 ;===== START OF AUTO-EXECUTION SECTION =========================================================
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
@@ -12,10 +13,11 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times
-sleepShort = 333
-sleepMedium = 666
-sleepLong = 1500
-sleepDeep = 3500
+sleepMicro := 15
+sleepShort := 333
+sleepMedium := 666
+sleepLong := 1500
+sleepDeep := 3500
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================

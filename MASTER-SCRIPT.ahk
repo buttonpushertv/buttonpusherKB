@@ -19,7 +19,7 @@ if not A_IsAdmin
 FileGetTime ScriptStartModTime, %A_ScriptFullPath%
 SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
 
-#Include C:\AHK\MASTER-FUNCTIONS.ahk
+#Include MASTER-FUNCTIONS.ahk
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
@@ -34,7 +34,7 @@ SplashTextOn, 600, 80, Launching %A_ScriptFullPath%, Loading MASTER AHK Script.`
 WinMove, Launching %A_ScriptFullPath%, , 100, 100  
 ; ===== LAUNCH STANDALONE SCRIPTS HERE
 Run, "PPRO-SCRIPTS\PREMIERE-PRO-HOTKEYS.ahk"
-Run, "PPRO-SCRIPTS\PREMIERE_MOD_Right_click_timeline_to_move_playhead.ahk"
+Run, "PPRO-SCRIPTS\PPRO_Right_click_timeline_to_move_playhead.ahk"
 Run, "UTIL-SCRIPTS\Accelerated Scrolling 1.3.ahk"
 Sleep, sleepLong
 SplashTextOff
@@ -54,7 +54,8 @@ SplashTextOff
     MsgBox, ,Quitting, Quitting MASTER-SCRIPT & child AHK scripts, 3
     SetTitleMatchMode, 2
     WinClose, PREMIERE-PRO-HOTKEYS.ahk
-    WinClose, PREMIERE_MOD_Right_click_timeline_to_move_playhead.ahk
+    WinClose, PPRO_Right_click_timeline_to_move_playhead.ahk
+    WinClose, Accelerated Scrolling 1.3.ahk
     ExitApp
     return
 

@@ -1,7 +1,7 @@
 ; Accelerated Scrolling
 ; V1.3
 ; By BoffinbraiN
-
+; with additons by ben@buttonpusher.tv
 
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
@@ -13,11 +13,11 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #MaxHotkeysPerInterval 120
 
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
-sleepMicro = 15
-sleepShort = 333
-sleepMedium = 666
-sleepLong = 1500
-sleepDeep = 3500
+sleepMicro := 15
+sleepShort := 333
+sleepMedium := 666
+sleepLong := 1500
+sleepDeep := 3500
 
 SplashTextOn, 600, 80, Launching %A_ScriptFullPath%, Loading Accelerated Scrolling.`nCurrently enabled only in Premiere Pro.
 WinMove, Launching %A_ScriptFullPath%, , 100, 700
