@@ -1,0 +1,24 @@
+============================== MASTER-SCRIPT ===============================
+WIN+ALT+CTRL+SHIFT+Q    <-- Exit ALL running AHK Scripts
+CTRL+ALT+SHIFT+F        <-- Nuke Firefox
+CTRL+ALT+SHIFT+P        <-- Nuke Premiere
+LALT UP                 <-- PPRO: blocking ALT key from triggering the menu bar items - from TaranVH
+RALT UP                 <-- PPRO: blocking ALT key from triggering the menu bar items - from TaranVH
+RALT                    <-- PPRO: blocking ALT key from triggering the menu bar items - from TaranVH
+LALT                    <-- PPRO: blocking ALT key from triggering the menu bar items - from TaranVH
+WIN+]                   <--Display a Text File CheatSheet of My AHK Keyboard Shortcuts
+WIN+[                   <--Display an image CheatSheet of App Specific Keyboard Shortcuts
+WIN+W                   <--Display a Text File CheatSheet of Windows Default Keys
+
+=========================== PREMIERE-PRO-HOTKEYS ===========================
+ALT+M                   <-- PPRO: closing the Menu that gets opened when this key combo is sent
+ALT+W                   <-- PPRO: closing the Menu that gets opened when this key combo is sent
+ALT+F                   <-- PPRO: closing the Menu that gets opened when this key combo is sent
+ALT+Z                   <-- PPRO: Select clip @ playhead & delete it
+CTRL+4                  <-- PPRO: Step Left 1 second
+CTRL+SHIFT+3            <-- PPRO: Step Left 10 seconds THEN Play
+CTRL+3                  <-- PPRO: Step Left 5 seconds THEN Play
+CTRL+5                  <-- PPRO: Step Right 1 second
+
+============ PREMIERE_MOD_RIGHT_CLICK_TIMELINE_TO_MOVE_PLAYHEAD ============
+RBUTTON                 <-- PPRO: Right Click on Blank Timeline area to move playhead
