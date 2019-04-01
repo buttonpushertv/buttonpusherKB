@@ -1,4 +1,4 @@
-﻿; AutoHotKey - EDIT2 - Master Script
+﻿; AutoHotKey - Buttonpusher Post-Production Keyboard Environment - Master Script
 ; by Ben Howard - ben@buttonpusher.tv
 
 ;===== START OF AUTO-EXECUTION SECTION =========================================================
@@ -30,7 +30,7 @@ sleepLong := 1500
 sleepDeep := 3500
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading MASTER AHK Script.`nWin-] for CheatSheet of AHK Hotkeys.`n`nWin-Ctrl-Alt-Shift-Q to quit MASTER-SCRIPT & child scripts.
+SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading MASTER AHK Script.`nWin-F1 for CheatSheet of AHK Hotkeys.`n`nWin-Ctrl-Alt-Shift-Q to quit MASTER-SCRIPT & child scripts.
 WinMove, Launching %A_ScriptFullPath%, , 100, 100  
 ; ===== LAUNCH STANDALONE SCRIPTS HERE
 Run, "SCRIPTS-PPRO\PREMIERE-PRO-HOTKEYS.ahk"
@@ -49,11 +49,11 @@ SplashTextOff
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
 
-#b::
+#b:: ; <-- Send 'buttonpusher' as text
 Send, buttonpusher
 return
 
-#+b::
+#!b:: ; <-- Send 'ben@buttonpusher.tv' as text
 Send, ben@buttonpusher.tv
 return
 
@@ -67,19 +67,18 @@ return
     ExitApp
     return
 
+#f1:: ; <--Display a Text File CheatSheet of My AHK Keyboard Shortcuts 
+    showText("SUPPORTING-FILES\MY-AHK-KEYS.txt")
+    keywait, f1
+    killGui()
+    return
 
-#[:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts 
+#f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts 
     If WinActive("ahk_exe Adobe Premiere Pro.exe")
     showPic("SUPPORTING-FILES\BEN-CC19-KEYBOARD.png")
     else
     showPic("SUPPORTING-FILES\NO-CHEAT-SHEET.png")
-    keywait, [
-    killGui()
-    return
-
-#]:: ; <--Display a Text File CheatSheet of My AHK Keyboard Shortcuts 
-    showText("SUPPORTING-FILES\MY-AHK-KEYS.txt")
-    keywait, ]
+    keywait, f2
     killGui()
     return
 
@@ -89,9 +88,9 @@ return
     killGui()
     return
 
-!#p:: ; <--Display an image CheatSheet for Preonic Keyboard 
+#f4:: ; <--Display an image CheatSheet for Preonic Keyboard 
     showPic("SUPPORTING-FILES\PREONIC-KEY-LAYOUT.png")
-    keywait, p
+    keywait,f4
     killGui()
     return
 

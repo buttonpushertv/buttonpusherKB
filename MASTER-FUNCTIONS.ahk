@@ -31,11 +31,15 @@ sleepDeep := 3500
 
 showText(fileToShow){
 FileRead, textToShow, %fileToShow%
+FormatTime, now,, hh:mm tt
+today = %A_YYYY%-%A_MMM%-%A_DD%
 Gui, +alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
 Gui, Color, 000000
 Gui, Margin, 30, 30
 Gui, font, s14 cFFFFFF, Consolas
+Gui, Add, Text, , %now% - %today%
 Gui, add, text, , %textToShow%
+Gui, add, text, , This file located @: %A_ScriptDir%\%A_Scriptname%
 Gui, Show
 return
 }
