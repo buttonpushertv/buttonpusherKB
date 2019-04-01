@@ -20,7 +20,7 @@ sleepLong := 1500
 sleepDeep := 3500
 
 SplashTextOn, 600, 80, Launching %A_ScriptFullPath%, Loading Accelerated Scrolling.`nCurrently enabled only in Premiere Pro.
-WinMove, Launching %A_ScriptFullPath%, , 100, 700
+WinMove, Launching %A_ScriptFullPath%, , 100, 550
 Sleep, sleepLong
 SplashTextOff
 
@@ -51,10 +51,10 @@ vmax := 1
 ; Key bindings
 
 #IfWinActive, ahk_exe Adobe Premiere Pro.exe
-WheelUp::    Goto Scroll
-WheelDown::  Goto Scroll
-#WheelUp::   Suspend
-#WheelDown:: Goto Quit
+WheelUp::    Goto Scroll ; <-- Accelerated Scroll Up (limited to PPRO only currently)
+WheelDown::  Goto Scroll ; <-- Accelerated Scroll Down (limited to PPRO only currently)
+#WheelUp::   Suspend ; <-- Suspend Accelerated Scrolling (limited to PPRO only currently)
+#WheelDown:: Goto Quit ; <-- Quit Accelerated Scrolling (limited to PPRO only currently)
 
 #IfWinActive
 

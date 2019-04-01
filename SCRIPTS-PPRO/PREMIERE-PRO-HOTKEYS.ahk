@@ -22,8 +22,8 @@ sleepLong := 1500
 sleepDeep := 3500
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 80, Launching %A_ScriptFullPath%, Loading PREMIERE PRO HOTKEYS Script.`n`nWin-[ to show CheatSheet of Keyboard Layout (BEN-CC19.kys).
-WinMove, Launching %A_ScriptFullPath%, , 100, 300
+SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading PREMIERE PRO HOTKEYS Script.`n`nWin-[ to show CheatSheet of Keyboard Layout (BEN-CC19.kys).
+WinMove, Launching %A_ScriptFullPath%, , 100, 250
 Sleep, sleepLong
 SplashTextOff
 ;===== END OF AUTO-EXECUTE =====================================================================
@@ -39,6 +39,24 @@ SplashTextOff
 ;===== PREMIERE PRO HOTKEY DEFINITIONS HERE ============================================
 
 #IfWinActive, ahk_exe Adobe Premiere Pro.exe
+
+^+3:: ; <-- PPRO: Step Left 10 seconds THEN Play
+Send, {2}{Control Down}{f9}{Control Up}
+sleep, sleepMicro
+Send, ^+a
+sleep, sleepShort
+Send, {NumpadSub}
+sleep, sleepMicro
+Send, {Numpad1}
+sleep, sleepMicro
+Send, {Numpad0}
+sleep, sleepMicro
+Send, {NumpadDot}
+sleep, sleepMicro
+Send, {NumpadEnter}{NumpadEnter}
+sleep, sleepMicro
+Send, 3
+return
 
 ^3:: ; <-- PPRO: Step Left 5 seconds THEN Play
 Send, {2}{Control Down}{f9}{Control Up}
@@ -84,23 +102,6 @@ sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
 
-^+3:: ; <-- PPRO: Step Left 10 seconds THEN Play
-Send, {2}{Control Down}{f9}{Control Up}
-sleep, sleepMicro
-Send, ^+a
-sleep, sleepShort
-Send, {NumpadSub}
-sleep, sleepMicro
-Send, {Numpad1}
-sleep, sleepMicro
-Send, {Numpad0}
-sleep, sleepMicro
-Send, {NumpadDot}
-sleep, sleepMicro
-Send, {NumpadEnter}{NumpadEnter}
-sleep, sleepMicro
-Send, 3
-return
 
 !f:: ; <-- PPRO: closing the Menu that gets opened when this key combo is sent
 Send, !f{ESC}

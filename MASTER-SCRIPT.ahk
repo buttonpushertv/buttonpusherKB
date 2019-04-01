@@ -30,12 +30,12 @@ sleepLong := 1500
 sleepDeep := 3500
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 80, Launching %A_ScriptFullPath%, Loading MASTER AHK Script.`nWin-] for CheatSheet of AHK Hotkeys.`n`nWin-Ctrl-Alt-Shift-Q to quit MASTER-SCRIPT & child scripts.
+SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading MASTER AHK Script.`nWin-] for CheatSheet of AHK Hotkeys.`n`nWin-Ctrl-Alt-Shift-Q to quit MASTER-SCRIPT & child scripts.
 WinMove, Launching %A_ScriptFullPath%, , 100, 100  
 ; ===== LAUNCH STANDALONE SCRIPTS HERE
-Run, "PPRO-SCRIPTS\PREMIERE-PRO-HOTKEYS.ahk"
-Run, "PPRO-SCRIPTS\PPRO_Right_click_timeline_to_move_playhead.ahk"
-Run, "UTIL-SCRIPTS\Accelerated Scrolling 1.3.ahk"
+Run, "SCRIPTS-PPRO\PREMIERE-PRO-HOTKEYS.ahk"
+Run, "SCRIPTS-PPRO\PPRO_Right_click_timeline_to_move_playhead.ahk"
+Run, "SCRIPTS-UTIL\Accelerated Scrolling 1.3.ahk"
 Sleep, sleepLong
 SplashTextOff
 
@@ -81,7 +81,7 @@ SplashTextOff
     killGui()
     return
 
-!#p:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts 
+!#p:: ; <--Display an image CheatSheet for Preonic Keyboard 
     showPic("SUPPORTING-FILES\PREONIC-KEY-LAYOUT.png")
     keywait, p
     killGui()
@@ -122,13 +122,13 @@ return
 
 #IfWinActive, ahk_exe Explorer.EXE
  
-^!+f:: ; <-- Nuke Firefox
+#^+f:: ; <-- Nuke Firefox
 Run, %comspec% /c "taskkill.exe /F /IM firefox.exe",, hide
 ToolTip, killed firefox
 SetTimer, RemoveToolTip, -2000
 return
 
-^!+p:: ; <-- Nuke Premiere
+#^+p:: ; <-- Nuke Premiere
 Run, %comspec% /c "taskkill.exe /IM /Adobe Premiere Pro.exe /T /F" ;,, hide
 ToolTip, killed premiere
 SetTimer, RemoveToolTip, -2000

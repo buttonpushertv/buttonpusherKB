@@ -36,7 +36,7 @@ timeline7 := 0x1B1B1B ;the color of a SELECTED blank space on the timeline, IN t
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loaded Premiere Pro Right-Click Timeline MOD.`n`nRight Click in timeline to move playhead.`n`nRight Clicking on clips should still work normally.
-WinMove, Launching %A_ScriptFullPath%, , 100, 500
+WinMove, Launching %A_ScriptFullPath%, , 100, 400
 Sleep, sleepLong
 SplashTextOff
 
