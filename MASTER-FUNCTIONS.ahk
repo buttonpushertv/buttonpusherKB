@@ -39,7 +39,7 @@ Gui, Margin, 30, 30
 Gui, font, s14 cFFFFFF, Consolas
 Gui, Add, Text, , %now% - %today%
 Gui, add, text, , %textToShow%
-Gui, add, text, , This file located @: %A_ScriptDir%\%fileToShow%
+Gui, add, text, , File: %A_ScriptDir%\%fileToShow%
 Gui, Show
 return
 }
@@ -50,7 +50,7 @@ Gui, Color, 000000
 Gui, Margin, 30, 30
 Gui, font, s14 cFFFFFF, Consolas
 Gui, add, picture, , %picToShow%
-Gui, add, text, , This file located @: %A_ScriptDir%\%picToShow%
+Gui, add, text, , File: %A_ScriptDir%\%picToShow%
 Gui, Show
 return
 }
