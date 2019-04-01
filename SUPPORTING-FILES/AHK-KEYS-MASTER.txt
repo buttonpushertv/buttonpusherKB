@@ -1,0 +1,19 @@
+============================== MASTER-SCRIPT ===============================
+ALT                     <-- Blocking ALT key from triggering the menu bar items
+                            Ignored in FreeCommander XE
+
+WIN+F1                  <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys (this file)
+WIN+F2                  <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
+WIN+F3                  <--Display a Text File CheatSheet of App Specific AutoHotKeys
+WIN+F4                  <--Display an image CheatSheet for Preonic Keyboard
+WIN+W                   <--Display a Text File CheatSheet of Windows Default Keys
+
+WIN+B                   <-- Send 'buttonpusher' as text
+ALT+WIN+B               <-- Send 'ben@buttonpusher.tv' as text
+
+WIN+CTRL+SHIFT+F        <-- Nuke Firefox (click Desktop first)
+WIN+CTRL+SHIFT+P        <-- Nuke Premiere (click Desktop first)
+
+WIN+ALT+CTRL+SHIFT+Q    <-- Exit MASTER-SCRIPT and child AHK Scripts
+
+============================================================================

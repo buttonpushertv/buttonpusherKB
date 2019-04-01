@@ -9,7 +9,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #Persistent ; Keeps script permanently running.
 #SingleInstance force ; Ensures that there is only a single instance of this script running.
 ; SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of "exact"
-;Menu, Tray, Icon, shell32.dll, 283 ;tray icon is now a little keyboard, or piece of paper or something
+Menu, Tray, Icon, imageres.dll, 187 ;tray icon is now a little keyboard, or piece of paper or something
 
 if not A_IsAdmin
 	Run *RunAs "%A_ScriptFullPath%" ; (A_AhkPath is usually optional if the script has the .ahk extension.) You would typically check  first.
@@ -67,13 +67,13 @@ return
     ExitApp
     return
 
-#f1:: ; <--Display a Text File CheatSheet of My AHK Keyboard Shortcuts 
-    showText("SUPPORTING-FILES\MY-AHK-KEYS.txt")
+#f1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys
+    showText("SUPPORTING-FILES\AHK-KEYS-MASTER.txt")
     keywait, f1
     killGui()
     return
 
-#f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts 
+#f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK) 
     If WinActive("ahk_exe Adobe Premiere Pro.exe")
     showPic("SUPPORTING-FILES\BEN-CC19-KEYBOARD.png")
     else
@@ -82,15 +82,24 @@ return
     killGui()
     return
 
-#w:: ; <--Display a Text File CheatSheet of Windows Default Keys
-    showText("SUPPORTING-FILES\WINDOWS-DEFAULT-KEYS.txt")
-    keywait, w
+#f3:: ; <--Display a Text File CheatSheet of App Specific AutoHotKeys
+    If WinActive("ahk_exe Adobe Premiere Pro.exe")
+    showText("SUPPORTING-FILES\AHK-KEYS-PPRO.txt")
+    else
+    showText("SUPPORTING-FILES\AHK-KEYS-NO-CHEATSHEET.txt")
+    keywait, f3
     killGui()
     return
 
 #f4:: ; <--Display an image CheatSheet for Preonic Keyboard 
     showPic("SUPPORTING-FILES\PREONIC-KEY-LAYOUT.png")
     keywait,f4
+    killGui()
+    return
+
+#w:: ; <--Display a Text File CheatSheet of Windows Default Keys
+    showText("SUPPORTING-FILES\WINDOWS-DEFAULT-KEYS.txt")
+    keywait, w
     killGui()
     return
 

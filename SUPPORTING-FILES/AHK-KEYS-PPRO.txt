@@ -1,0 +1,19 @@
+=========================== PREMIERE-PRO-HOTKEYS ===========================
+ALT+Z                   <-- PPRO: Select clip @ playhead and delete it
+CTRL+SHIFT+3            <-- PPRO: Step Left 10 seconds THEN Play
+CTRL+3                  <-- PPRO: Step Left 5 seconds THEN Play
+CTRL+4                  <-- PPRO: Step Left 1 second
+CTRL+5                  <-- PPRO: Step Right 1 second
+
+ALT+F                   <-- PPRO: closing the Menu that gets opened when this key combo is sent
+ALT+M                   <-- PPRO: closing the Menu that gets opened when this key combo is sent
+ALT+W                   <-- PPRO: closing the Menu that gets opened when this key combo is sent
+
+================ PPRO_RIGHT_CLICK_TIMELINE_TO_MOVE_PLAYHEAD ================
+RBUTTON                 <-- PPRO: Right Click on Blank Timeline area to move playhead
+
+======================== ACCELERATED SCROLLING 1.3 =========================
+WHEELDOWN               <-- Accelerated Scroll Down (limited to PPRO only currently)
+WHEELUP                 <-- Accelerated Scroll Up (limited to PPRO only currently)
+WIN+WHEELDOWN           <-- Quit Accelerated Scrolling (limited to PPRO only currently)
+WIN+WHEELUP             <-- Suspend Accelerated Scrolling (limited to PPRO only currently)
