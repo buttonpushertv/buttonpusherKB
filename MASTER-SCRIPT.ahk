@@ -57,6 +57,10 @@ return
 Send, ben@buttonpusher.tv
 return
 
+#^!+Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
+Reload
+Return
+
 #!^+q:: ; <-- Exit MASTER-SCRIPT & child AHK Scripts
     DetectHiddenWindows, On
     MsgBox, ,Quitting, Quitting MASTER-SCRIPT & child AHK scripts, 3
