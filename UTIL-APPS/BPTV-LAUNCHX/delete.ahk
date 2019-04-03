@@ -1,5 +1,6 @@
 #SingleInstance,force
 
+Gui, +OwnDialogs +AlwaysOnTop
 gui, font, s10, Verdana 
 Gui,Add,Text,, DOUBLE CLICK to Remove
 Gui, Add, ListView, r11 w230 gMyListView -HScroll,FileName
@@ -58,7 +59,7 @@ if(countline=0)
 }
 
 gui, font, s11, Verdana
-;Gui,Add,Button, W100 gClose  X613 Y%countline%+20,&EXIT
+Gui,Add,Button, W100 gClose  X613 Y%countline%+20,&EXIT
 Gui, Show, w250 ,Delete
 return
 

@@ -74,11 +74,13 @@ Gui, Color, %transColor%
 ***********
 */
 global x_axis:=10
-global y_axis:=30
+global y_axis:=10
 global Array := Object()
 global Path := Object()
 global count:=0
-
+global width:=150
+global height:=45
+global spacer:=10
 
 ;Menu,logo.png,,1
 Menu, Tray, Icon,,,1
@@ -111,34 +113,33 @@ for index, element in Array ;ADDING THE BUTTONS ON WINDOW
 {
 	;Gui,Color,EEAA99
 	;Gui, Font, s10 CWhite, Verdana 
-  Gui,Add,Button,gArray%A_Index%  X%x_axis%  Y%y_axis% w125 h30, %   "" . element
+  Gui,Add,Button,gArray%A_Index%  X%x_axis%  Y%y_axis% w%width% h%height%, %   "" . element
 
 if (x_axis>330) ;SETTING THE POSITONS OF BUTTONS
 	{
 	x_axis:=10
-	y_axis:=y_axis+45
+	y_axis:=y_axis+(height+spacer)
 	}
 else
 	{
-	x_axis:=x_axis+135
+	x_axis:=x_axis+(width+spacer)
 	}
 
  count:=count+1
 }
 
-y_axis:=y_axis+45
-x_axis:=80
-; change the above value to 10 if you enable the Delte All button below.Otherwise it should be 80.
-spacer:=10
-width:=125
-;Gui,Add,Button,x%x_axis% y%y_axis% w%width% h30 CBlue,&Delete_All ;adding the DELETE ALL button
+y_axis:=y_axis+(height+spacer*3)
+x_axis:=90
+height:=30
+; change the above value to 10 if you enable the Delete All button below. Otherwise it should be 90.
+;Gui,Add,Button,x%x_axis% y%y_axis% w%width% h%height% CBlue,&Delete_All ;adding the DELETE ALL button
 ;x_axis:=(x_axis+width+spacer)
-Gui,Add,Button,x%x_axis% y%y_axis% w%width% h30 cWhite gDelete ,&Remove A Button ;ADDING THE Remove BUTTON
+Gui,Add,Button,x%x_axis% y%y_axis% w%width% h%height% cWhite gDelete ,&Remove A Button ;ADDING THE Remove BUTTON
 x_axis:=(x_axis+width+spacer)
-Gui,Add,Button,x%x_axis% y%y_axis% w%width% h30 cWhite ,&Add_New ;ADDING THE +ADD BUTTON
+Gui,Add,Button,x%x_axis% y%y_axis% w%width% h%height% cWhite ,&Add_New ;ADDING THE +ADD BUTTON
 x_axis:=(x_axis+width+spacer)
-Gui,Add,Button,x%x_axis% y%y_axis% w%width% h30 CBlue, &Exit_App ;ADDING THE CLOSE BUTTON
-Gui,Show,w550,buttonpusherTV Launch-X ;PUTS ALL GUI ON WINDOW
+Gui,Add,Button,x%x_axis% y%y_axis% w%width% h%height% CBlue, &Exit_App ;ADDING THE CLOSE BUTTON
+Gui,Show,w650,buttonpusherTV Launch-X ;PUTS ALL GUI ON WINDOW
 return
 
 Esc::
@@ -157,29 +158,9 @@ GuiClose:
 ExitApp
 return 
 
-/*
-****************************
-MENU EVENT 
-****************************
-*/
-
-about:
-MenuAbout:       
-MsgBox,**************************************************************************************`nLaunch-X`n-by Kamal Awasthi(kamalahktips.blogspot.in)`n**************************************************************************************`nInstructions`n1)The default Hotkey is:[Ctrl]+[G]`n2)Use Add_New Button to add the shortcut buttons.`n3)You can add add a Folder or a File by choosing the appropriate option henced poped up.`n4)Enter the name of the button you wanna see as hint for the destination folder/file.`n5)Choose the file/folder.`n6)all set your button is added on the app.`n8)You can change the Hotkey by Settings->Shortcuts
-return
-
-MenuExit:
-ExitApp
-return
-
 Delete_All:
 FileDelete,path%currentfile%.ka
 FileDelete,run%currentfile%.ka
-Reload
-return
-
-Save:
-Run,launch.ahk
 Reload
 return
 
@@ -195,33 +176,37 @@ IfMsgBox No
 	Reload
 	return
 
+afterClick:
+	;gosub quit
+	return
+
 /*
 ****************************
  BUTTON EVENTS
 ****************************
 */
- Array1:
+Array1:
 t:=Path[1]
 Run,%t%
-ExitApp
+gosub afterClick
 return
 
 Array2:
 t:=Path[2]
 Run,%t%
-ExitApp
+gosub afterClick
 return
 
 Array3:
 t:=Path[3]
 Run,%t%
-ExitApp
+gosub afterClick
 return
 
 Array4:
 t:=Path[4]
 Run,%t%
-ExitApp
+gosub afterClick
 return
 
 Array5:
@@ -260,20 +245,17 @@ Run,%g%
 ExitApp
 return
 
-
 Array11:
 g:=Path[11]
 Run,%g%
 ExitApp
 return
 
-
 Array12:
 g:=Path[12]
 Run,%g%
 ExitApp
 return
-
 
 Array13:
 g:=Path[13]
@@ -287,13 +269,11 @@ Run,%g%
 ExitApp
 return
 
-
 Array15:
 g:=Path[15]
 Run,%g%
 ExitApp
 return
-
 
 Array16:
 g:=Path[16]
@@ -301,20 +281,17 @@ Run,%g%
 ExitApp
 return
 
-
 Array17:
 g:=Path[17]
 Run,%g%
 ExitApp
 return
 
-
 Array18:
 g:=Path[18]
 Run,%g%
 ExitApp
 return
-
 
 Array19:
 g:=Path[`9]
@@ -336,6 +313,7 @@ newhotkey
 */
 newkey:
 Gui, 2:Submit, Nohide
+Gui, 2:+AlwaysOnTop +Border +Caption -e0x90 +Toolwindow
 IfNotEqual, hotkey
 {
 Fileatline("settings.ini", hotkey, 3)
@@ -360,10 +338,9 @@ return
 ****************
 */
 ButtonAdd_New:
-Gui, 3:Color,0xefe6a3
-Gui,3:+Border +Caption -e0x90 +Toolwindow
+Gui,3:Color,0xefe6a3
+Gui,3:+AlwaysOnTop +Border +Caption -e0x90 +Toolwindow
 TransColor = D4D1CF
-
 Gui,3:Font,S10 CBlue, Verdana
 Gui,3:Add,Text, x20 y10 w150 h30,_Add New?
 Gui,3:Add,Button,x15 y70 w100 h30 gfolder ,&Folder
@@ -377,8 +354,9 @@ Gui,3:Hide
 return
 
 folder:
+Gui, 3:+LastFound +OwnDialogs +AlwaysOnTop
 Gui,3:Hide
-InputBox, OutputVar, File Name, Button name?   ;ASKING THE BUTTON NAME
+InputBox, OutputVar, File Name, Button name?`n(Text will be centered.)`n(Names over 20 chars will be split on multiple lines.)  ;ASKING THE BUTTON NAME
 if  OutputVar=                                 ;IF NONE IS SELECTED , RETURN
 return
  FileSelectFolder,Path, ,3,Select the Folder
@@ -398,8 +376,9 @@ Reload
 return
 
 file:
+Gui, 3:+LastFound +OwnDialogs +AlwaysOnTop
 Gui,3:Hide
-InputBox, OutputVar, File Name, Button name?   ;ASKING THE BUTTON NAME
+InputBox, OutputVar, File Name, Button name?`n(Text will be centered.)`n(Names over 20 chars will be split on multiple lines.)   ;ASKING THE BUTTON NAME
 if  OutputVar=                                 ;IF NONE IS SELECTED , RETURN
 return
 FileSelectFile,Path, , 3, Select the file
@@ -450,22 +429,4 @@ FileAppend, %filedata%, %file%
 Browse(site){
 RegRead, OutputVar, HKEY_CLASSES_ROOT, http\shell\open\command 
   run,% "iexplore.exe" . " """ . site . """"	;internet explorer
-}
-
-; This function will auto-reload the script on save.
-CheckScriptUpdate() {
-    global ScriptStartModTime
-    FileGetTime curModTime, %A_ScriptFullPath%
-    If (curModTime <> ScriptStartModTime) {
-        Loop
-        {
-            reload
-            Sleep 300 ; ms
-            MsgBox 0x2, %A_ScriptName%, Reload failed. ; 0x2 = Abort/Retry/Ignore
-            IfMsgBox Abort
-                ExitApp
-            IfMsgBox Ignore
-                break
-        } ; loops reload on "Retry"
-    }
 }
