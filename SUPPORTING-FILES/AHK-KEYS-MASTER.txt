@@ -1,6 +1,6 @@
 ============================== MASTER-SCRIPT ===============================
-ALT                       <-- Blocking ALT key from triggering the menu bar items
-                            Ignored in FreeCommander XE
+ALT                     <-- Blocking ALT key from triggering the menu bar items
+			    (Only Active in Premiere Pro - causing weird problems elsewhere)
 
 WIN+F1                    <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys (this file)
 WIN+F2                    <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)

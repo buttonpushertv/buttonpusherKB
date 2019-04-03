@@ -12,6 +12,11 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #MaxHotkeysPerInterval 2000
 #WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm
 
+; The 2 lines below pertain to the 'reload on save' function below (CheckScriptUpdate). 
+; They are required for it to work.
+FileGetTime ScriptStartModTime, %A_ScriptFullPath%
+SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
+
 Menu, Tray, Icon, shell32.dll, 116 ; this changes the tray icon to a filmstrip!
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
@@ -41,7 +46,7 @@ SplashTextOff
 #IfWinActive, ahk_exe Adobe Premiere Pro.exe
 
 ^+3:: ; <-- PPRO: Step Left 10 seconds THEN Play
-Send, {2}{Control Down}{f9}{Control Up}
+Send, {2}
 sleep, sleepMicro
 Send, ^+a
 sleep, sleepShort
@@ -59,7 +64,7 @@ Send, 3
 return
 
 ^3:: ; <-- PPRO: Step Left 5 seconds THEN Play
-Send, {2}{Control Down}{f9}{Control Up}
+Send, {2}
 sleep, sleepMicro
 Send, ^+a
 sleep, sleepShort
@@ -75,8 +80,6 @@ Send, 3
 return
 
 ^4:: ; <-- PPRO: Step Left 1 second
-Send, {Control Down}{f9}{Control Up}
-sleep, sleepMicro
 Send, ^+a
 sleep, sleepShort
 Send, {NumpadSub}
@@ -89,8 +92,6 @@ Send, {NumpadEnter}{NumpadEnter}
 return
 
 ^5:: ; <-- PPRO: Step Right 1 second
-Send, {Control Down}{f9}{Control Up}
-sleep, sleepMicro
 Send, ^+a
 sleep, sleepShort
 Send, {NumpadAdd}
@@ -120,8 +121,92 @@ Send, d ; PPro Key for 'select clip at playhead'
 Send, {DEL} ; PPro Key for 'remove'
 return
 
+;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
+
+;+^!f1::
+;+^!f2::
++^!f3:: ; <-- Step Left 2 seconds
+sleep, sleepMicro
+Send, ^+a
+sleep, sleepShort
+Send, {NumpadSub}
+sleep, sleepMicro
+Send, {Numpad2}
+sleep, sleepMicro
+Send, {NumpadDot}
+sleep, sleepMicro
+Send, {NumpadEnter}{NumpadEnter}
+return
+
++^!f4:: ; <-- Step Left 5 seconds
+sleep, sleepMicro
+Send, ^+a
+sleep, sleepShort
+Send, {NumpadSub}
+sleep, sleepMicro
+Send, {Numpad5}
+sleep, sleepMicro
+Send, {NumpadDot}
+sleep, sleepMicro
+Send, {NumpadEnter}{NumpadEnter}
+return
+
+;+^!f5::
+;+^!f6::
+;+^!f7::
+;+^!f8::
++^!f9:: ; <-- Step Right 2 Seconds
+sleep, sleepMicro
+Send, ^+a
+sleep, sleepShort
+Send, {NumpadAdd}
+sleep, sleepMicro
+Send, {Numpad2}
+sleep, sleepMicro
+Send, {NumpadDot}
+sleep, sleepMicro
+Send, {NumpadEnter}{NumpadEnter}
+return
+
++^!f10:: ; <-- Step Right 5 Seconds
+sleep, sleepMicro
+Send, ^+a
+sleep, sleepShort
+Send, {NumpadAdd}
+sleep, sleepMicro
+Send, {Numpad5}
+sleep, sleepMicro
+Send, {NumpadDot}
+sleep, sleepMicro
+Send, {NumpadEnter}{NumpadEnter}
+return
+;+^!f11::
+;+^!f12::
+;+^!f13::
+;+^!f14::
+;+^!f15::
+;+^!f16::
+
 #IfWinActive
 
 ;===== END Program 1 DEFINITIONS ===============================================================
 
 ;===== FUNCTIONS ===============================================================================
+
+; This function will auto-reload the script on save.
+CheckScriptUpdate() {
+    global ScriptStartModTime
+    FileGetTime curModTime, %A_ScriptFullPath%
+    If (curModTime <> ScriptStartModTime) {
+        Loop
+        {
+            reload
+            Sleep 300 ; ms
+            MsgBox 0x2, %A_ScriptName%, Reload failed. ; 0x2 = Abort/Retry/Ignore
+            IfMsgBox Abort
+                ExitApp
+            IfMsgBox Ignore
+                break
+        } ; loops reload on "Retry"
+    }
+}

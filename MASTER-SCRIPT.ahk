@@ -101,13 +101,23 @@ Return
     killGui()
     return
 
+#f11:: ; <-- TEST:to see if RunOrActivate() works
+RunOrActivate("FreeCommander.exe")
+return
+
+#f12:: ; <-- Launch buttonpusherTV LAUNCH-X
+    Run, C:\BPTV-KB\UTIL-APPS\BPTV-LAUNCHX\launcher.ahk ,C:\BPTV-KB\UTIL-APPS\BPTV-LAUNCHX 
+    return
+    
 #w:: ; <--Display a Text File CheatSheet of Windows Default Keys
     showText("SUPPORTING-FILES\WINDOWS-DEFAULT-KEYS.txt")
     keywait, w
     killGui()
     return
-
-#IfWinNotActive ahk_exe FreeCommander.exe
+/*
+WHAT HAPPENS IF THE ALY KEY DISABLER CODE HERE IS SET TO ONLY WORK IN PREMIERE?
+*/
+#IfWinActive, ahk_exe Adobe Premiere Pro.exe
 
 LAlt:: ; <-- PPRO: blocking ALT key from triggering the menu bar items - from TaranVH
 sendinput, {LAlt down}

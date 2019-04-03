@@ -1,9 +1,16 @@
 =========================== PREMIERE-PRO-HOTKEYS ===========================
+
 ALT+Z                   <-- PPRO: Select clip @ playhead and delete it
 CTRL+SHIFT+3            <-- PPRO: Step Left 10 seconds THEN Play
 CTRL+3                  <-- PPRO: Step Left 5 seconds THEN Play
 CTRL+4                  <-- PPRO: Step Left 1 second
 CTRL+5                  <-- PPRO: Step Right 1 second
+
+SCAF-----
+SHIFT+CTRL+ALT+F3       <-- Step Left 2 seconds
+SHIFT+CTRL+ALT+F4       <-- Step Left 5 seconds
+SHIFT+CTRL+ALT+F9       <-- Step Right 2 Seconds
+SHIFT+CTRL+ALT+F10      <-- Step Right 5 Seconds
 
 ALT+F                   <-- PPRO: closing the Menu that gets opened when this key combo is sent
 ALT+M                   <-- PPRO: closing the Menu that gets opened when this key combo is sent
