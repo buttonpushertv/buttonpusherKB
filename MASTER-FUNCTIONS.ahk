@@ -96,3 +96,11 @@ RunOrActivate(Target, WinTitle = "", Parameters = "")
       WinActivate, ahk_pid %PID%
    }
 }
+
+VNCRunOrActivate(VNCLaunchCode, VNCWintitle)
+{
+   if WinExist(VNCWinTitle)
+      WinActivate, %VNCWinTitle%
+   else
+      Run, %VNCLaunchCode%
+}

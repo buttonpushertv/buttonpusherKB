@@ -9,7 +9,8 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #Persistent ; Keeps script permanently running.
 #SingleInstance force ; Ensures that there is only a single instance of this script running.
-#NoTrayIcon
+;#NoTrayIcon
+Menu, Tray, Icon, imageres.dll, 306 ;tray icon is now an icon
 #MaxHotkeysPerInterval 120
 
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.

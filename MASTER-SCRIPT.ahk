@@ -21,6 +21,7 @@ SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
 
 #Include MASTER-FUNCTIONS.ahk
 
+
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
 sleepMicro := 15
@@ -101,9 +102,6 @@ Return
     killGui()
     return
 
-#f11:: ; <-- TEST:to see if RunOrActivate() works
-RunOrActivate("FreeCommander.exe")
-return
 
 #f12:: ; <-- Launch buttonpusherTV LAUNCH-X
     Run, C:\BPTV-KB\UTIL-APPS\BPTV-LAUNCHX\launcher.ahk ,C:\BPTV-KB\UTIL-APPS\BPTV-LAUNCHX 
@@ -114,41 +112,7 @@ return
     keywait, w
     killGui()
     return
-/*
-WHAT HAPPENS IF THE ALY KEY DISABLER CODE HERE IS SET TO ONLY WORK IN PREMIERE?
-*/
-#IfWinActive, ahk_exe Adobe Premiere Pro.exe
 
-LAlt:: ; <-- PPRO: blocking ALT key from triggering the menu bar items - from TaranVH
-sendinput, {LAlt down}
-sendinput, {SC0E8 down} ;this is the scan code of an unassigned key. As long as you nor the system never use it for anything else, it can be used in THIS way to cancel the menu acceleration.
-;tooltip, Lalt is pressed
-KeyWait, LAlt
-; That line is important, so that ALT does not continuously fire as you are holding it down.
-;tooltip, Lalt was released
-return
-
-LAlt up:: ; <-- PPRO: blocking ALT key from triggering the menu bar items - from TaranVH
-sendinput, {LAlt up}
-sendinput, {SC0E8 up}
-;;;Unlike my 2nd keyboard, this method does not use the scan code as a strict "wrapper."
-;;tooltip, 
-return
-
-
-RAlt:: ; <-- PPRO: blocking ALT key from triggering the menu bar items - from TaranVH
-sendinput, {RAlt down}
-sendinput, {SC0E8 down}
-;;tooltip, Ralt is pressed
-KeyWait, RAlt
-;;tooltip, Ralt was released
-return
-
-RAlt up:: ; <-- PPRO: blocking ALT key from triggering the menu bar items - from TaranVH
-sendinput, {RAlt up}
-sendinput, {SC0E8 up}
-;;tooltip, 
-return
 
 #IfWinActive, ahk_exe Explorer.EXE
  

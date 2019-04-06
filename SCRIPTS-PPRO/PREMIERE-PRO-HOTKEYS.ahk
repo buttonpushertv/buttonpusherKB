@@ -1,4 +1,4 @@
-﻿; AutoHotKey - EDIT 2 - Premiere Pro Actions & Functions
+﻿; AutoHotKey - Buttonpusher Post-Production Keyboard Environment - Premiere Pro HotKeys
 ; by Ben Howard - ben@buttonpusher.tv
 
 ;===== START OF AUTO-EXECUTION SECTION =========================================================
@@ -25,6 +25,8 @@ sleepShort := 333
 sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
+
+#Include SCRIPTS-PPRO\PREMIERE-PRO-FUNCTIONS.ahk
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading PREMIERE PRO HOTKEYS Script.`n`nWin-[ to show CheatSheet of Keyboard Layout (BEN-CC19.kys).
@@ -120,6 +122,9 @@ return
 Send, d ; PPro Key for 'select clip at playhead'
 Send, {DEL} ; PPro Key for 'remove'
 return
+
+#'::prFocus("timeline")
+#;::prFocus("program")
 
 ;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
 
