@@ -1,0 +1,1 @@
+RunOrActivate-1Shot.ahk "C:\Program Files\FreeCommander XE\FreeCommander.exe"
