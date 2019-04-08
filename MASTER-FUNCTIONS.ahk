@@ -33,32 +33,55 @@ showText(fileToShow){
 FileRead, textToShow, %fileToShow%
 FormatTime, now,, hh:mm tt
 today = %A_YYYY%-%A_MMM%-%A_DD%
-Gui, +alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
-Gui, Color, 000000
-Gui, Margin, 30, 30
-Gui, font, s14 cFFFFFF, Consolas
-Gui, Add, Text, , %now% - %today%
-Gui, add, text, , %textToShow%
-Gui, add, text, , File: %A_ScriptDir%\%fileToShow%
-Gui, Show
+Gui, Text:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
+Gui, Text:Color, 000000
+Gui, Text:Margin, 30, 30
+Gui, Text:font, s14 cFFFFFF, Consolas
+Gui, Text:Add, Text, , %now% - %today%
+Gui, Text:add, text, , %textToShow%
+Gui, Text:add, text, , File: %A_ScriptDir%\%fileToShow%
+Gui, Text:Show
 return
 }
 
 showPic(picToShow){
-Gui, +alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
-Gui, Color, 000000
-Gui, Margin, 30, 30
-Gui, font, s14 cFFFFFF, Consolas
-Gui, add, picture, , %picToShow%
-Gui, add, text, , File: %A_ScriptDir%\%picToShow%
-Gui, Show
+Gui, Picture:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
+Gui, Picture:Color, 000000
+Gui, Picture:Margin, 30, 30
+Gui, Picture:font, s14 cFFFFFF, Consolas
+Gui, Picture:add, picture, , %picToShow%
+Gui, Picture:add, text, , File: %A_ScriptDir%\%picToShow%
+Gui, Picture:Show
 return
 }
 
-killGui(){
+killGui(whicGUI){
 Gui, Destroy
 return
 }
+
+INILoad(INIfile) {
+    INIRead, loadPremierePro, %INIfile%, Apps, loadPremierePro
+    INIRead, loadPPRORightClickMod, %INIfile%, Apps, loadPPRORightClickMod
+    INIRead, loadAfterEffects, %INIfile%, Apps, loadAfterEffects
+    INIRead, loadPhotoshop, %INIfile%, Apps, loadPhotoshop
+    INIRead, splashScreenSpacing, %INIFile%, ScriptSettings, splashScreenSpacing
+    INIRead, loadAcceleratedScrolling, %INIfile%, Helpers, loadAcceleratedScrolling
+    INIRead, loadKeyPressOSD, %INIfile%, Helpers, loadKeyPressOSD
+}
+
+INISave(INIfile) {
+    IniWrite, %loadPremierePro%, %INIfile%, Apps, loadPremierePro
+    IniWrite, %loadPPRORightClickMod%, %INIfile%, Apps, loadPPRORightClickMod
+    INIWrite, %loadAfterEffects%, %INIfile%, Apps, loadAfterEffects
+    INIWrite, %loadPhotoshop%, %INIfile%, Apps, loadPhotoshop
+    INIWrite, %splashScreenSpacing%, %INIFile%, ScriptSettings, splashScreenSpacing
+    INIWrite, %loadAcceleratedScrolling%, %INIfile%, Helpers, loadAcceleratedScrolling
+    INIWrite, %loadKeyPressOSD%, %INIfile%, Helpers, loadKeyPressOSD
+}
+
+
+
 
 ; ===========================================================================
 ; Run a program or switch to it if already running.

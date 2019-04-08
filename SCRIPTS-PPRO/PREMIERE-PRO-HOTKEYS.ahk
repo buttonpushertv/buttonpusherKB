@@ -26,11 +26,14 @@ sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
 
+splashScreenX = %1%
+splashScreenY = %2%
+
 #Include SCRIPTS-PPRO\PREMIERE-PRO-FUNCTIONS.ahk
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading PREMIERE PRO HOTKEYS Script.`n`nWin-[ to show CheatSheet of Keyboard Layout (BEN-CC19.kys).
-WinMove, Launching %A_ScriptFullPath%, , 100, 250
+WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
 Sleep, sleepLong
 SplashTextOff
 ;===== END OF AUTO-EXECUTE =====================================================================
