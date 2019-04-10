@@ -1,4 +1,4 @@
-﻿; AutoHotKey - RunOrActivate - 1-Shot
+﻿; AutoHotKey - RunOrActivate - VNCHelper
 ; by Ben Howard - ben@buttonpusher.tv
 
 ;To be used as a 1-Shot event when trying to call up an application from a hotkey or something like the StreamDeck (so we don't always launch new instances of apps)....There are no hotkey in this script.

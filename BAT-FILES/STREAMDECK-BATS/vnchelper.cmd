@@ -1,1 +1,1 @@
-start "VNC Helper Launcher" /D "C:\Program Files (simple)\vnchelper\" "vnchelper.exe"
+start "VNC Helper Launcher" /D "C:\BPTV-KB\UTIL-APPS\vnchelper\" "vnchelper.exe"
