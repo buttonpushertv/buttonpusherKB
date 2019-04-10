@@ -65,7 +65,6 @@ INILoad(INIfile) {
     INIRead, loadPPRORightClickMod, %INIfile%, Apps, loadPPRORightClickMod
     INIRead, loadAfterEffects, %INIfile%, Apps, loadAfterEffects
     INIRead, loadPhotoshop, %INIfile%, Apps, loadPhotoshop
-    INIRead, splashScreenSpacing, %INIFile%, ScriptSettings, splashScreenSpacing
     INIRead, loadAcceleratedScrolling, %INIfile%, Helpers, loadAcceleratedScrolling
     INIRead, loadKeyPressOSD, %INIfile%, Helpers, loadKeyPressOSD
 }
@@ -75,7 +74,6 @@ INISave(INIfile) {
     IniWrite, %loadPPRORightClickMod%, %INIfile%, Apps, loadPPRORightClickMod
     INIWrite, %loadAfterEffects%, %INIfile%, Apps, loadAfterEffects
     INIWrite, %loadPhotoshop%, %INIfile%, Apps, loadPhotoshop
-    INIWrite, %splashScreenSpacing%, %INIFile%, ScriptSettings, splashScreenSpacing
     INIWrite, %loadAcceleratedScrolling%, %INIfile%, Helpers, loadAcceleratedScrolling
     INIWrite, %loadKeyPressOSD%, %INIfile%, Helpers, loadKeyPressOSD
 }
