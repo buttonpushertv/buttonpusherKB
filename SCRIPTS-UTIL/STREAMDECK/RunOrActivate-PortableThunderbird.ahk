@@ -1,9 +1,5 @@
-﻿; AutoHotKey - RunOrActivate - VNCHelper
+﻿; AutoHotKey - RunOrActivate Portable Thunderbird
 ; by Ben Howard - ben@buttonpusher.tv
-
-;To be used as a 1-Shot event when trying to call up an application from a hotkey or something like the StreamDeck (so we don't always launch new instances of apps)....There are no hotkey in this script.
-
-;Be careful with this though. It will not set the wokring directory (like you can in a BAT file). Use a BAT file to launch something that needs a working directory set.
 
 ;===== START OF AUTO-EXECUTION SECTION =========================================================
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
@@ -24,10 +20,10 @@ sleepDeep := 3500
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 DetectHiddenWindows, On
-LaunchCode := "..\..\BAT-FILES\STREAMDECK-BATS\vnchelper.cmd"
-WindowTitle := "VNC helper"
+LaunchCode := "X:\PortableApps\ThunderbirdPortable2ndProfile\ThunderbirdPortable2ndProfile.exe"
+WindowTitle := "ahk_class MozillaWindowClass"
 
-;MsgBox,,Attempt,Trying to run or activate:`n%AppToRun%,2
+;MsgBox,,Attempt,Trying to run or activate:`n%WindowTitle%,2
 RunOrActivate(LaunchCode, WindowTitle)
 ExitApp
 
@@ -44,8 +40,5 @@ RunOrActivate(LaunchCode, Windowtitle)
    else {
       ;MsgBox Running
       Run, %LaunchCode%
-      ;Sleep, sleepDeep
-      ;WinActivate, C:\Windows\system32\cmd.exe
-      ;WinClose, C:\Windows\system32\cmd.exe
    }
 }

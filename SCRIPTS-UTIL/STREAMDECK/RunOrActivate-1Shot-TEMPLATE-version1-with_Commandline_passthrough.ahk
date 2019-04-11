@@ -3,6 +3,8 @@
 
 ;To be used as a 1-Shot event when trying to call up an application from a hotkey or something like the StreamDeck (so we don't always launch new instances of apps)....There are no hotkey in this script.
 
+; IMPORTANT NOTE - since the StreamDeck can't accept commandline arguments, this version doesn't work as well. Use the version 2 Template to create hard-coded, 1-shot app runOrActivate scripts.
+
 ;Be careful with this though. It will not set the wokring directory (like you can in a BAT file). Use a BAT file to launch something that needs a working directory set.
 
 ;===== START OF AUTO-EXECUTION SECTION =========================================================
