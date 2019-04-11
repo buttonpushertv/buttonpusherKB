@@ -40,7 +40,7 @@ DetectHiddenWindows, On
 LaunchCode := "..\..\BAT-FILES\STREAMDECK-BATS\vnchelper.cmd"
 WindowTitle := "VNC helper"
 
-;MsgBox,,Attempt,Trying to run or activate:`n%AppToRun%,2
+;MsgBox,,Attempt,Trying to run or activate:`n%WindowLaunch%,2
 RunOrActivate(LaunchCode, WindowTitle)
 ExitApp
 
