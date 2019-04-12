@@ -24,7 +24,7 @@ sleepDeep := 3500
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 AppToRun = "C:\Program Files\FreeCommander XE\FreeCommander.exe"
-MsgBox,,Attempt,Trying to run or activate:`n%AppToRun%,1
+;MsgBox,,Attempt,Trying to run or activate:`n%AppToRun%,1
 RunOrActivate(AppToRun)
 ExitApp
 
