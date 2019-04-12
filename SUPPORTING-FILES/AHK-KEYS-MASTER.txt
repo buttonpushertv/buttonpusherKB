@@ -6,6 +6,7 @@ WIN+F1                <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHot
 WIN+F2                <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
 WIN+F3                <--Display a Text File CheatSheet of App Specific AutoHotKeys
 WIN+F4                <--Display an image CheatSheet for Preonic Keyboard
+WIN+T                 <-- Send time & date as text
 WIN+W                 <--Display a Text File CheatSheet of Windows Default Keys
 
 WIN+B                 <-- Send 'buttonpusher' as text

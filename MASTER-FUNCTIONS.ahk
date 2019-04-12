@@ -29,6 +29,13 @@ sleepDeep := 3500
 
 ;===== FUNCTIONS ===============================================================================
 
+timestamp(theTimeStamp) {
+global
+FormatTime, now,, hh:mm tt
+today = %A_YYYY%-%A_MMM%-%A_DD%
+theTimeStamp = %now% - %today%
+}
+
 showText(fileToShow){
 FileRead, textToShow, %fileToShow%
 FormatTime, now,, hh:mm tt

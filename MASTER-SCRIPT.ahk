@@ -29,6 +29,7 @@ sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
 
+;global theTimeStamp := "now"
 global INIfile := "settings.ini"
 global loadPremierePro := False
 global loadPPRORightClickMod := False
@@ -140,7 +141,16 @@ goto Quitting
 #f12:: ; <-- Launch buttonpusherTV LAUNCH-X
     Run, C:\BPTV-KB\UTIL-APPS\BPTV-LAUNCHX\launcher.ahk ,C:\BPTV-KB\UTIL-APPS\BPTV-LAUNCHX 
     return
-    
+
+#t:: ; <-- Send time & date as text
+    ;timestamp(theTimeStamp)
+    FormatTime, now,, hh:mm tt
+    today = %A_YYYY%-%A_MMM%-%A_DD%
+    theTimeStamp = %now% - %today%
+    Send, %theTimeStamp%
+    return
+
+
 #w:: ; <--Display a Text File CheatSheet of Windows Default Keys
     showText("SUPPORTING-FILES\WINDOWS-DEFAULT-KEYS.txt")
     keywait, w
@@ -172,22 +182,10 @@ Quitting:
     DetectHiddenWindows, On
     MsgBox, ,Quitting, Quitting MASTER-SCRIPT & child AHK scripts, 3
     SetTitleMatchMode, 2
-    If (loadPremierePro <> 0){
-        WinClose, PREMIERE-PRO-HOTKEYS.ahk
-}
-    If (loadPPRORightClickMod <> 0){
-        WinClose, PPRO_Right_click_timeline_to_move_playhead.ahk
-}
-    If (loadAfterEffects <> 0){
-}    
-    If (loadPhotoshop <> 0){
-}
-    If (loadAcceleratedScrolling <> 0){
-        WinClose, Accelerated-Scrolling-1-3.ahk
-}
-    If (loadKeyPressOSD <> 0){
-        WinClose, UTIL-APPS\KeypressOSD.ahk
-}
+    WinClose, PREMIERE-PRO-HOTKEYS.ahk
+    WinClose, PPRO_Right_click_timeline_to_move_playhead.ahk
+    WinClose, Accelerated-Scrolling-1-3.ahk
+    WinClose, UTIL-APPS\KeypressOSD.ahk
     ExitApp
     return
 
