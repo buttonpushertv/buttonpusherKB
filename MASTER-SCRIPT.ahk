@@ -11,6 +11,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ; SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of "exact"
 Menu, Tray, Icon, imageres.dll, 187 ;tray icon is now a little keyboard, or piece of paper or something
 
+#MenuMaskKey vk07 ; This is needed to block the Window key from triggering the Start Menu when pressed by itself.
+
 if not A_IsAdmin
 	Run *RunAs "%A_ScriptFullPath%" ; (A_AhkPath is usually optional if the script has the .ahk extension.) You would typically check  first.
 
@@ -88,12 +90,26 @@ SplashTextOff
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
 
+~LWin::Send {Blind}{vk07} ; <-- Blocks Left Window key from triggering the Start Menu when pressed by itself. The Right Window key will still work in the default fashion.
+
+; don't know if this works for alt too...
+~LAlt::Send {Blind}{vk07}
+
+
 #b:: ; <-- Send 'buttonpusher' as text
 Send, buttonpusher
 return
 
 #!b:: ; <-- Send 'ben@buttonpusher.tv' as text
 Send, ben@buttonpusher.tv
+return
+
+#c:: ; <-- Delete Key
+Send, {Del}
+return
+
+#v:: ; <-- Backspace Key
+Send, {BackSpace}
 return
 
 #^!f1::
