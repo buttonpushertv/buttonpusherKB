@@ -28,8 +28,6 @@ sleepLong := 1500
 sleepDeep := 3500
 
 global INIfile := "settings.ini"
-global systemLocation := "EDIT-2"
-global sysytemLocationChoices := "EDIT-2|LAPTOP|HOME-DESKTOP"
 global loadPremierePro := False
 global loadPPRORightClickMod := False
 global loadAfterEffects := False
@@ -39,41 +37,32 @@ global loadKeyPressOSD := False
 
 INILoad(INIfile)
 
-firstRow := 45
-secondRow := 80
-thirdRow := 270
-firstColumn := 20
-secondColumn := 330
-
 Gui, Font, S12 CDefault, Franklin Gothic Medium
 Gui, Add, Text, x10 y10 w240 h20 , Settings for MASTER-SCRIPT.AHK
-;System Location
-Gui, Add, Text, xp+20 y%firstRow% w300 h30 , System Location:
-Gui, Add, DropDownList, xp+130 yp-5 vsystemLocation, %systemLocationChoices%`
 ;Hotkey Scripts To Load Group Box
-Gui, Add, GroupBox, x%firstColumn% y%secondRow% w300 h170 , Hotkey Scripts to Load:
-Gui, Add, CheckBox, xp+10 yp+30 w120 h20 vloadPremierePro Checked%loadPremierePro%, Premiere Pro
-Gui, Add, CheckBox, xp+20 yp+30 w250 h20 vloadPPRORightClickMod Checked%loadPPRORightClickMod%, PPRO:Right Click Timeline MOD
-Gui, Add, CheckBox, xp-20 yp+30 w120 h20 vloadAfterEffects Checked%loadAfterEffects%, After Effects
-Gui, Add, CheckBox, xp yp+30 w120 h20 vloadPhotoshop Checked%loadPhotoshop%, Photoshop
+Gui, Add, GroupBox, x10 y40 w300 h170 , Hotkey Scripts to Load:
+Gui, Add, CheckBox, x30 y80 w120 h20 vloadPremierePro Checked%loadPremierePro%, Premiere Pro
+Gui, Add, CheckBox, x50 y110 w250 h20 vloadPPRORightClickMod Checked%loadPPRORightClickMod%, PPRO:Right Click Timeline MOD
+Gui, Add, CheckBox, x30 y140 w120 h20 vloadAfterEffects Checked%loadAfterEffects%, After Effects
+Gui, Add, CheckBox, x30 y170 w120 h20 vloadPhotoshop Checked%loadPhotoshop%, Photoshop
 ;Utility Scripts to Load Groupbox
-Gui, Add, GroupBox, x%secondColumn% y%secondRow% w300 h170 , Utility Scripts to Load:
-Gui, Add, CheckBox, xp+10 yp+30 w170 h20 vloadAcceleratedScrolling Checked%loadAcceleratedScrolling%, Accelerated Scrolling
-Gui, Add, CheckBox, xp yp+30 w170 h20 vloadKeyPressOSD Checked%loadKeyPressOSD%, KeyPress OSD
+Gui, Add, GroupBox, x330 y40 w300 h170 , Utility Scripts to Load:
+Gui, Add, CheckBox, x350 y80 w170 h20 vloadAcceleratedScrolling Checked%loadAcceleratedScrolling%, Accelerated Scrolling
+Gui, Add, CheckBox, x350 y110 w170 h20 vloadKeyPressOSD Checked%loadKeyPressOSD%, KeyPress OSD
 ;QuickLauncher Groupbox
-Gui, Add, GroupBox, x%firstColumn% y%thirdRow% w620 h80 , Quick Launcher
-Gui, Add, Button, xp+10 yp+30 w170 h30 , ShowRunningAHKs
-Gui, Add, Button, xp+205 yp w170 h30 , HotKey Help
-Gui, Add, Button, xp+205 yp w170 h30 , KeyPress OSD
+Gui, Add, GroupBox, x10 y220 w620 h80 , Quick Launcher
+Gui, Add, Button, x30 y250 w170 h30 , ShowRunningAHKs
+Gui, Add, Button, x230 y250 w170 h30 , HotKey Help
+Gui, Add, Button, x430 y250 w170 h30 , KeyPress OSD
 ;Text that appears above button row of buttons
 Gui, Font, S10 CDefault, Franklin Gothic Medium
-Gui, Add, Text, x30 yp+60 w450 h80, The buttons below do the following:`nReload - will reload this script and MASTER-SCRIPT.AHK (without saving)`nCancel - will cancel changes and exit settings`nOK - will save config above, exit settings and reload MASTER-SCRIPT.AHK
-Gui, Add, Text, x30 yp+80 w500 h30, Press WIN-CTRL-ALT-Q while MASTER-SCRIPT.AHK is running to quit it and all Child Scripts.
+Gui, Add, Text, x30 y310 w450 h80, The buttons below do the following:`nReload - will reload this script and MASTER-SCRIPT.AHK (without saving)`nCancel - will cancel changes and exit settings`nOK - will save config above, exit settings and reload MASTER-SCRIPT.AHK
+Gui, Add, Text, x30 y390 w500 h30, Press WIN-CTRL-ALT-Q while MASTER-SCRIPT.AHK is running to quit it and all Child Scripts.
 ;Bottom row of buttons- Quit, Reload, Cancel, OK
 Gui, Font, S12 CDefault, Franklin Gothic Medium
-Gui, Add, Button, x30 yp+35 w170 h30 , Reload
-Gui, Add, Button, x230 yp w170 h30 , Cancel
-Gui, Add, Button, x430 yp w170 h30 , OK
+Gui, Add, Button, x30 y425 w170 h30 , Reload
+Gui, Add, Button, x230 y425 w170 h30 , Cancel
+Gui, Add, Button, x430 y425 w170 h30 , OK
 
 
 ;===== END OF AUTO-EXECUTE =====================================================================
@@ -86,7 +75,7 @@ Gui, Add, Button, x430 yp w170 h30 , OK
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
 
 ; AUTO Open the Settings GUI for MASTER-SCRIPT.AHK
-Gui, Show, w650 h600, Settings GUI
+Gui, Show, w660 h475, Settings GUI
 return
 
 ;===============================================================================================
