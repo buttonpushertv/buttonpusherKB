@@ -131,7 +131,9 @@ goto Quitting
 
 #f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK) 
     If WinActive("ahk_exe Adobe Premiere Pro.exe")
-    showPic("SUPPORTING-FILES\BEN-CC19-KEYBOARD.png")
+        showPic("SUPPORTING-FILES\BEN-CC19-KEYBOARD.png")
+    If WinActive("ahk_exe SubtitleEdit.exe")
+        showPic("SUPPORTING-FILES\CONTOUR-PRO-SUBTITLE-EDIT.jpg")
     else
     showPic("SUPPORTING-FILES\NO-CHEAT-SHEET.png")
     keywait, f2
