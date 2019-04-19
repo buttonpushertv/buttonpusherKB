@@ -43,7 +43,7 @@ today = %A_YYYY%-%A_MMM%-%A_DD%
 Gui, Text:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
 Gui, Text:Color, 000000
 Gui, Text:Margin, 30, 30
-Gui, Text:font, s14 cFFFFFF, Consolas
+Gui, Text:font, s12 cFFFFFF, Consolas
 Gui, Text:Add, Text, , %now% - %today%
 Gui, Text:add, text, , %textToShow%
 Gui, Text:add, text, , File: %A_ScriptDir%\%fileToShow%
