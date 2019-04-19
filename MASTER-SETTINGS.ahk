@@ -1,6 +1,7 @@
-﻿; AutoHotKey - Settings for MASTER-SCRIPT.AHK
+﻿; AutoHotKey - MASTER-SETTINGS for MASTER-SCRIPT
 ; by Ben Howard - ben@buttonpusher.tv
-
+; based on an example given in this post:
+; https://autohotkey.com/board/topic/19650-auto-readload-and-save-an-ini-file-updated/
 
 ;===== START OF AUTO-EXECUTION SECTION =========================================================
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
@@ -11,12 +12,6 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance force ; Ensures that there is only a single instance of this script running.
 ; SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of "exact"
 
-; The 2 lines below pertain to the 'reload on save' function below (CheckScriptUpdate). 
-; They are required for it to work.
-FileGetTime ScriptStartModTime, %A_ScriptFullPath%
-SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
-
-#Include MASTER-FUNCTIONS.ahk
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times
@@ -27,137 +22,123 @@ sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
 
-global INIfile := "settings.ini"
-global loadPremierePro := False
-global loadPPRORightClickMod := False
-global loadAfterEffects := False
-global loadPhotoshop := False
-global loadAcceleratedScrolling := False
-global loadKeyPressOSD := False
-
-INILoad(INIfile)
-
-Gui, Font, S12 CDefault, Franklin Gothic Medium
-Gui, Add, Text, x10 y10 w240 h20 , Settings for MASTER-SCRIPT.AHK
-;Hotkey Scripts To Load Group Box
-Gui, Add, GroupBox, x10 y40 w300 h170 , Hotkey Scripts to Load:
-Gui, Add, CheckBox, x30 y80 w120 h20 vloadPremierePro Checked%loadPremierePro%, Premiere Pro
-Gui, Add, CheckBox, x50 y110 w250 h20 vloadPPRORightClickMod Checked%loadPPRORightClickMod%, PPRO:Right Click Timeline MOD
-Gui, Add, CheckBox, x30 y140 w120 h20 vloadAfterEffects Checked%loadAfterEffects%, After Effects
-Gui, Add, CheckBox, x30 y170 w120 h20 vloadPhotoshop Checked%loadPhotoshop%, Photoshop
-;Utility Scripts to Load Groupbox
-Gui, Add, GroupBox, x330 y40 w300 h170 , Utility Scripts to Load:
-Gui, Add, CheckBox, x350 y80 w170 h20 vloadAcceleratedScrolling Checked%loadAcceleratedScrolling%, Accelerated Scrolling
-Gui, Add, CheckBox, x350 y110 w170 h20 vloadKeyPressOSD Checked%loadKeyPressOSD%, KeyPress OSD
-;QuickLauncher Groupbox
-Gui, Add, GroupBox, x10 y220 w620 h80 , Quick Launcher
-Gui, Add, Button, x30 y250 w170 h30 , ShowRunningAHKs
-Gui, Add, Button, x230 y250 w170 h30 , HotKey Help
-Gui, Add, Button, x430 y250 w170 h30 , KeyPress OSD
-;Text that appears above button row of buttons
-Gui, Font, S10 CDefault, Franklin Gothic Medium
-Gui, Add, Text, x30 y310 w450 h80, The buttons below do the following:`nReload - will reload this script and MASTER-SCRIPT.AHK (without saving)`nCancel - will cancel changes and exit settings`nOK - will save config above, exit settings and reload MASTER-SCRIPT.AHK
-Gui, Add, Text, x30 y390 w500 h30, Press WIN-CTRL-ALT-Q while MASTER-SCRIPT.AHK is running to quit it and all Child Scripts.
-;Bottom row of buttons- Quit, Reload, Cancel, OK
-Gui, Font, S12 CDefault, Franklin Gothic Medium
-Gui, Add, Button, x30 y425 w170 h30 , Reload
-Gui, Add, Button, x230 y425 w170 h30 , Cancel
-Gui, Add, Button, x430 y425 w170 h30 , OK
-
+#Include MASTER-FUNCTIONS.ahk
 
 ;===== END OF AUTO-EXECUTE =====================================================================
-;===== MODIFIER MEMORY HELPER ==================================================================
-; combine below with key and '::' to define hotkey 
-; e.g.- ^f1::Msgbox You pressed Control and F1
-; #=Win | !=Alt | ^=Ctrl | +=Shift | &=combine keys | *=ignore other mods
-; <=use left mod key| >=use right mod key  | UP=fires on release
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
+inifile = settings.ini
 
-; AUTO Open the Settings GUI for MASTER-SCRIPT.AHK
-Gui, Show, w660 h475, Settings GUI
+INI_Init(inifile)
+INI_Load(inifile)
+
+;GUI Building
+
+;figuring out how tall the whole GUI will be
+loop, %inisections%
+{
+  keyRows += % section%A_Index%_keys
+}
+guiHeight := (keyRows * 35)
+
+;Section 1 - System Location
+sectionGroupH := (section1_keys - 1)
+currentAltCounter := 1
+Gui, Font, S12 CDefault, Franklin Gothic Medium
+Gui, Add, GroupBox, R%sectionGroupH% x10 y10 w300 , System Location
+Gui, Font, S10 CDefault, Franklin Gothic Medium
+Gui, Add, Text, x330 y10 w300 wrap, Select a Location at the left. If you provide an image at 'SUPPORTING-FILES\KB-CHEATSHEET-LOCATION(number).png' then it will display via Window-F4.`n`nBelow, check the boxes for the scripts you'd like to launch when running MASTER-SCRIPT.ahk.`n`nEdit '%inifile%' to add more locations and scripts. 
+Gui, Font, S12 CDefault, Franklin Gothic Medium
+Gui, Add, Text, section x10 y10,
+loop, %section1_keys%
+  {
+    if (A_Index = 1) {
+      Continue
+    }
+    ;MsgBox %currentAltCounter%
+    currentAltCounter := (A_Index - 1)
+    currentKey := % section1_key%A_Index%
+    currentKeyValue := % %section1%_%currentKey%
+    currentKeyValueForRadio := "Location" . currentAltCounter . " > " . currentKeyValue
+    ;Gui, Add, Text, xs+20 yp+25
+    ;Gui, Add, Text, xs+20 yp+25, %currentKeyValueForRadio%
+     
+    if (currentAltCounter = Location_currentSystemLocation)
+      Gui, Add, Radio, xs+20 vLocRadioGroup%currentAltCounter% Checked, %currentKeyValueForRadio%
+    else
+      Gui, Add, Radio, xs+20 vLocRadioGroup%currentAltCounter%, %currentKeyValueForRadio%
+    ;MsgBox %currentAltCounter%
+  }
+;Section 2 - Scripts To Run
+sectionGroupH := (section2_keys / 2)
+currentAltCounter := 1
+Gui, Add, GroupBox, R%sectionGroupH% x10 yp+50 w630 , Scripts to Load
+Gui, Add, Text, section xp yp+10,
+loop, %section2_keys%
+  {
+    currentKey := % section2_key%A_Index%
+    pathLookAhead := A_Index + 1
+    pathKey := 
+    currentKeyValue := 
+    currentPathValue :=
+    If mod(A_Index,2){
+      pathKey := % section2_key%pathLookAhead%
+      currentKeyValue := %section2%_%currentKey%
+      currentPathValue := %section2%_%pathKey%
+      scriptCheckboxEnable%A_Index% = %currentKeyValue%
+      Gui, Add, Checkbox, xs+20 yp+20 vscriptCheckboxEnable%currentAltCounter% Checked%currentKeyValue%, %currentPathValue%
+      currentAltCounter += 1
+    }
+    else
+      Continue
+  }
+Gui, Font, S10 CDefault, Franklin Gothic Medium
+Gui, Add, Text, x30 yp+65 w340, Clicking 'SAVE' will save the settings above and reload MASTER-SCRIPT.ahk and the checked scripts above.
+Gui, Font, S12 CDefault, Franklin Gothic Medium
+;Gui, Add, Button, x10 yp+75 w100 h30, Variables
+Gui, Add, Button, x400 yp w100 h30, Cancel
+Gui, Add, Button, x520 yp w100 h30, SAVE
+Gui, Show, w700 h%guiHeight%
 return
 
-;===============================================================================================
+;ButtonVariables:
+;Listvars
+;return
 
-;===== FUNCTIONS ===============================================================================
-
-ButtonShowRunningAHKs:
-Run, C:\BPTV-KB\UTIL-APPS\ShowRunningAHKs.ahk
-return
-
-ButtonKeyPressOSD:
-Run, C:\BPTV-KB\UTIL-APPS\KeypressOSD.ahk
-return
-
-ButtonHotKeyHelp:
-Run, C:\BPTV-KB\UTIL-APPS\Hotkey Help.ahk
-return
-
-ButtonReload:
-Send, {Control Down}
-sleep, sleepShort
-Send, {Alt Down}
-sleep, sleepShort
-Send, {LWin Down}
-sleep, sleepShort
-Send, {BackSpace}
-sleep, sleepShort
-Send, {Control Up}
-sleep, sleepShort
-Send, {Alt Up}
-sleep, sleepShort
-Send, {LWin Up}
-Reload
-return
-
-ButtonOK:
+ButtonSAVE:
 Gui, Submit
-INISAVE(INIfile)
-Gui, hide
-Send, {Control Down}
-sleep, sleepShort
-Send, {Alt Down}
-sleep, sleepShort
-Send, {LWin Down}
-sleep, sleepShort
-Send, {BackSpace}
-sleep, sleepShort
-Send, {Control Up}
-sleep, sleepShort
-Send, {Alt Up}
-sleep, sleepShort
-Send, {LWin Up}
-sleep, sleepLong
-goto Quitting
-return
-
-ButtonCancel:
-GuiEscape:
-GuiClose:
-Gui, hide
-goto Quitting
-return
-
-Quitting:
+;Setting the location if it got changed
+loop, %section1_keys%
+  {
+    if (A_Index = 1)
+      Continue
+    currentAltCounter := (A_Index - 1)
+    currentRadioGroup := % LocRadioGroup%currentAltCounter%
+    if LocRadioGroup%currentAltCounter%
+      Location_currentSystemLocation = %currentAltCounter%
+  }
+;Setting Scripts_loadAppX to new values
+currentAltCounter := 1
+loop, %section2_keys%
+  {    
+  if mod(A_Index,2) { 
+    Scripts_loadApp%currentAltCounter% = % scriptCheckboxEnable%currentAltCounter%
+    currentAltCounter += 1
+  }
+  else
+    Continue
+  }
+INI_Save(inifile)
+;Reload ;uncomment to reload immed. after save - to check what it saved
+Run, "MASTER-SCRIPT.ahk" ; forcing the MASTER-SCRIPT.ahk to reload
+Gui, Destroy
 ExitApp
 return
 
+ButtonCancel:
+GuiClose:
+GuiEscape:
+ExitApp
 
-; This function will auto-reload the script on save.
-CheckScriptUpdate() {
-    global ScriptStartModTime
-    FileGetTime curModTime, %A_ScriptFullPath%
-    If (curModTime <> ScriptStartModTime) {
-        Loop
-        {
-            reload
-            Sleep 300 ; ms
-            MsgBox 0x2, %A_ScriptName%, Reload failed. ; 0x2 = Abort/Retry/Ignore
-            IfMsgBox Abort
-                ExitApp
-            IfMsgBox Ignore
-                break
-        } ; loops reload on "Retry"
-    }
-}
+;===== FUNCTIONS ===============================================================================
+

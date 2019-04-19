@@ -32,7 +32,7 @@ sleepLong := 1500
 sleepDeep := 3500
 
 ;global theTimeStamp := "now"
-global INIfile := "settings.ini"
+global iniFile := "settings.ini"
 global loadPremierePro := False
 global loadPPRORightClickMod := False
 global loadAfterEffects := False
@@ -43,7 +43,8 @@ global splashScreenSpacing := 150
 global splashScreenStartY := 100
 global splashScreenStartX := 100
 
-INILoad(INIfile)
+INI_Init(iniFile)
+INI_Load(iniFile)
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading MASTER AHK Script.`nWin-F1 for CheatSheet of AHK Hotkeys.`n`nWin-Ctrl-Alt-Shift-Q to quit MASTER-SCRIPT & child scripts.
@@ -53,29 +54,28 @@ splashScreenStartY += splashScreenSpacing
 
 ; ===== LAUNCH STANDALONE SCRIPTS HERE
 
-If loadPremierePro {
-    Run, SCRIPTS-PPRO\PREMIERE-PRO-HOTKEYS.ahk %splashScreenStartX% %splashScreenStartY%
-    splashScreenStartY += splashScreenSpacing
-}
-If loadPPRORightClickMod {
-    Run, SCRIPTS-PPRO\PPRO_Right_click_timeline_to_move_playhead.ahk %splashScreenStartX% %splashScreenStartY%
-    splashScreenStartY += splashScreenSpacing
-}
-If loadAfterEffects {
-    MsgBox After Effects Not Implemented Yet
-    splashScreenStartY += splashScreenSpacing
-}   
-If loadPhotoshop {
-    MsgBox Photoshop Not Implemented Yet
-    splashScreenStartY += splashScreenSpacing
-}
-If loadAcceleratedScrolling {
-    Run, SCRIPTS-UTIL\Accelerated-Scrolling-1-3.ahk %splashScreenStartX% %splashScreenStartY%
-    splashScreenStartY += splashScreenSpacing
-}
-If loadKeyPressOSD {
-    Run, UTIL-APPS\KeypressOSD.ahk %splashScreenStartX% %splashScreenStart%
-    splashScreenStartY += splashScreenSpacing
+loop, %section2_keys%
+{
+    currentKey := % section2_key%A_Index%
+    pathLookAhead := A_Index + 1
+    pathKey := 
+    currentKeyValue := 
+    currentPathValue :=
+    If mod(A_Index,2){
+        pathKey := % section2_key%pathLookAhead%
+        currentKeyValue := %section2%_%currentKey%
+        currentPathValue := %section2%_%pathKey%
+        ;MsgBox currentKey: %currentKey%`ncurrentKeyValue: %currentKeyValue%`npathKey: %pathKey%`ncurrentPathValue: %currentPathValue%
+        If (currentKeyValue) {
+            ;MsgBox Runnning: %currentPathValue%
+            Run, %currentPathValue% %splashScreenStartX% %splashScreenStartY%
+            splashScreenStartY += splashScreenSpacing
+        }
+        else
+            Continue
+    }
+    else
+    Continue  
 }
 Sleep, sleepLong
 SplashTextOff
@@ -112,7 +112,7 @@ return
 Send, {BackSpace}
 return
 
-#^!f1::
+#f11::
 Run, MASTER-SETTINGS.AHK
 return
 
@@ -147,8 +147,9 @@ goto Quitting
     Gui, Text:Destroy
     return
 
-#f4:: ; <--Display an image CheatSheet for Preonic Keyboard 
-    showPic("SUPPORTING-FILES\PREONIC-KEY-LAYOUT.png")
+#f4:: ; <--Display an image CheatSheet based on System Location Setting
+    locationPic := "SUPPORTING-FILES\KB-CHEATSHEET-LOCATION" . Location_currentSystemLocation . ".png"
+    showPic(locationPic)
     keywait,f4
     Gui, Picture:Destroy
     return
