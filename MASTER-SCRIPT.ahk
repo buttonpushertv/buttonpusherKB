@@ -33,12 +33,6 @@ sleepDeep := 3500
 
 ;global theTimeStamp := "now"
 global iniFile := "settings.ini"
-global loadPremierePro := False
-global loadPPRORightClickMod := False
-global loadAfterEffects := False
-global loadPhotoshop := False
-global loadAcceleratedScrolling := False
-global loadKeyPressOSD := False
 global splashScreenSpacing := 150
 global splashScreenStartY := 100
 global splashScreenStartX := 100
@@ -105,14 +99,14 @@ Send, ben@buttonpusher.tv
 return
 
 #c:: ; <-- Delete Key
-Send, {Del}
+Send, {Delete}
 return
 
 #v:: ; <-- Backspace Key
 Send, {BackSpace}
 return
 
-#f11::
+#f11:: ; <--Open the Settings GUI for MASTER-SCRIPT.AHK
 Run, MASTER-SETTINGS.AHK
 return
 
@@ -124,14 +118,22 @@ Return
 goto Quitting
 
 #f1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys
-    showText("SUPPORTING-FILES\AHK-KEYS-MASTER.txt")
+    locationPic := "SUPPORTING-FILES\AHK-KEYS-MASTER-LOC" . Location_currentSystemLocation . ".txt"
+    showText(locationPic)
     keywait, f1
     Gui, Text:Destroy
     return
 
 #f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK) 
-    If WinActive("ahk_exe Adobe Premiere Pro.exe")
-    showPic("SUPPORTING-FILES\BEN-CC19-KEYBOARD.png")
+    If WinActive("ahk_exe Adobe Premiere Pro.exe") {
+        pic2Show := "SUPPORTING-FILES\KEYBOARD-PPRO-LOC" . Location_currentSystemLocation . ".png"
+        showPic(pic2Show)
+    }
+    else
+    If WinActive("ahk_exe AfterFX.exe") {
+        pic2Show := "SUPPORTING-FILES\KEYBOARD-AE-LOC" . Location_currentSystemLocation . ".png"
+        showPic(pic2Show)
+    }       
     else
     showPic("SUPPORTING-FILES\NO-CHEAT-SHEET.png")
     keywait, f2
@@ -148,7 +150,7 @@ goto Quitting
     return
 
 #f4:: ; <--Display an image CheatSheet based on System Location Setting
-    locationPic := "SUPPORTING-FILES\KB-CHEATSHEET-LOCATION" . Location_currentSystemLocation . ".png"
+    locationPic := "SUPPORTING-FILES\KEYBOARD-LOC" . Location_currentSystemLocation . ".png"
     showPic(locationPic)
     keywait,f4
     Gui, Picture:Destroy

@@ -95,15 +95,15 @@ loop, %section2_keys%
 Gui, Font, S10 CDefault, Franklin Gothic Medium
 Gui, Add, Text, x30 yp+65 w340, Clicking 'SAVE' will save the settings above and reload MASTER-SCRIPT.ahk and the checked scripts above.
 Gui, Font, S12 CDefault, Franklin Gothic Medium
-;Gui, Add, Button, x10 yp+75 w100 h30, Variables
 Gui, Add, Button, x400 yp w100 h30, Cancel
 Gui, Add, Button, x520 yp w100 h30, SAVE
+Gui, Add, Button, x630 yp w70 h30, Variables
 Gui, Show, w700 h%guiHeight%
 return
 
-;ButtonVariables:
-;Listvars
-;return
+ButtonVariables:
+Listvars
+return
 
 ButtonSAVE:
 Gui, Submit

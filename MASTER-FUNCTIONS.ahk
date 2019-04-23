@@ -37,28 +37,32 @@ theTimeStamp = %now% - %today%
 }
 
 showText(fileToShow){
-FileRead, textToShow, %fileToShow%
-FormatTime, now,, hh:mm tt
-today = %A_YYYY%-%A_MMM%-%A_DD%
-Gui, Text:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
-Gui, Text:Color, 000000
-Gui, Text:Margin, 30, 30
-Gui, Text:font, s12 cFFFFFF, Consolas
-Gui, Text:Add, Text, , %now% - %today%
-Gui, Text:add, text, , %textToShow%
-Gui, Text:add, text, , File: %A_ScriptDir%\%fileToShow%
-Gui, Text:Show
+  IfNotExist, %fileToShow%
+    fileToShow := "SUPPORTING-FILES\AHK-KEYS-NO-CHEATSHEET.txt"
+  FileRead, textToShow, %fileToShow%
+  FormatTime, now,, hh:mm tt
+  today = %A_YYYY%-%A_MMM%-%A_DD%
+  Gui, Text:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
+  Gui, Text:Color, 000000
+  Gui, Text:Margin, 30, 30
+  Gui, Text:font, s12 cFFFFFF, Consolas
+  Gui, Text:Add, Text, , %now% - %today%
+  Gui, Text:add, text, , %textToShow%
+  Gui, Text:add, text, , File: %A_ScriptDir%\%fileToShow%
+  Gui, Text:Show
 return
 }
 
 showPic(picToShow){
-Gui, Picture:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
-Gui, Picture:Color, 000000
-Gui, Picture:Margin, 30, 30
-Gui, Picture:font, s14 cFFFFFF, Consolas
-Gui, Picture:add, picture, , %picToShow%
-Gui, Picture:add, text, , File: %A_ScriptDir%\%picToShow%
-Gui, Picture:Show
+  IfNotExist, %picToShow%
+    picToShow := "SUPPORTING-FILES\KEYBOARD-NO-CHEATSHEET.png"
+  Gui, Picture:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
+  Gui, Picture:Color, 000000
+  Gui, Picture:Margin, 15, 15
+  Gui, Picture:font, s14 cFFFFFF, Consolas
+  Gui, Picture:add, picture, , %picToShow%
+  Gui, Picture:add, text, , File: %A_ScriptDir%\%picToShow%
+  Gui, Picture:Show
 return
 }
 
