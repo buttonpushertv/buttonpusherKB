@@ -97,7 +97,7 @@ Gui, Add, Text, x30 yp+65 w340, Clicking 'SAVE' will save the settings above and
 Gui, Font, S12 CDefault, Franklin Gothic Medium
 Gui, Add, Button, x400 yp w100 h30, Cancel
 Gui, Add, Button, x520 yp w100 h30, SAVE
-Gui, Add, Button, x630 yp w70 h30, Variables
+;Gui, Add, Button, x400 yp+32 w220 h20, Variables
 Gui, Show, w700 h%guiHeight%
 return
 
