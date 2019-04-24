@@ -118,7 +118,7 @@ Return
 goto Quitting
 
 #f1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys
-    locationPic := "SUPPORTING-FILES\AHK-KEYS-MASTER-LOC" . Location_currentSystemLocation . ".txt"
+    locationPic := "SUPPORTING-FILES\AHK-KEYS-F1-LOC" . Location_currentSystemLocation . ".txt"
     showText(locationPic)
     keywait, f1
     Gui, Text:Destroy
@@ -126,23 +126,23 @@ goto Quitting
 
 #f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK) 
     If WinActive("ahk_exe Adobe Premiere Pro.exe") {
-        pic2Show := "SUPPORTING-FILES\KEYBOARD-PPRO-LOC" . Location_currentSystemLocation . ".png"
+        pic2Show := "SUPPORTING-FILES\KBF2-PPRO-LOC" . Location_currentSystemLocation . ".png"
         showPic(pic2Show)
     }
     else
     If WinActive("ahk_exe AfterFX.exe") {
-        pic2Show := "SUPPORTING-FILES\KEYBOARD-AE-LOC" . Location_currentSystemLocation . ".png"
+        pic2Show := "SUPPORTING-FILES\KBF2-AE-LOC" . Location_currentSystemLocation . ".png"
         showPic(pic2Show)
     }       
     else
-    showPic("SUPPORTING-FILES\NO-CHEAT-SHEET.png")
+    showPic("SUPPORTING-FILES\KB-NO-CHEAT-SHEET.png")
     keywait, f2
     Gui, Picture:Destroy
     return
 
 #f3:: ; <--Display a Text File CheatSheet of App Specific AutoHotKeys
     If WinActive("ahk_exe Adobe Premiere Pro.exe")
-    showText("SUPPORTING-FILES\AHK-KEYS-PPRO.txt")
+    showText("SUPPORTING-FILES\AHK-KEYS-F3-PPRO.txt")
     else
     showText("SUPPORTING-FILES\AHK-KEYS-NO-CHEATSHEET.txt")
     keywait, f3
@@ -150,12 +150,11 @@ goto Quitting
     return
 
 #f4:: ; <--Display an image CheatSheet based on System Location Setting
-    locationPic := "SUPPORTING-FILES\KEYBOARD-LOC" . Location_currentSystemLocation . ".png"
+    locationPic := "SUPPORTING-FILES\KBF4-LOC" . Location_currentSystemLocation . ".png"
     showPic(locationPic)
     keywait,f4
     Gui, Picture:Destroy
     return
-
 
 #f12:: ; <-- Launch buttonpusherTV LAUNCH-X
     Run, C:\BPTV-KB\UTIL-APPS\BPTV-LAUNCHX\launcher.ahk ,C:\BPTV-KB\UTIL-APPS\BPTV-LAUNCHX 
@@ -168,7 +167,6 @@ goto Quitting
     theTimeStamp = %now% - %today%
     Send, %theTimeStamp%
     return
-
 
 #w:: ; <--Display a Text File CheatSheet of Windows Default Keys
     showText("SUPPORTING-FILES\WINDOWS-DEFAULT-KEYS.txt")
@@ -184,12 +182,14 @@ ToolTip, killed firefox
 SetTimer, RemoveToolTip, -2000
 return
 
-#^+p:: ; <-- Nuke Premiere
-Run, %comspec% /c "taskkill.exe /IM /Adobe Premiere Pro.exe /T /F" ;,, hide
-ToolTip, killed premiere
-SetTimer, RemoveToolTip, -2000
+#^p:: ; <-- Nuke Premiere
+    Process, Exist, Adobe Premiere Pro.exe
+    If (ErrorLevel > 0)
+        PID = %ErrorLevel%
+    Run, %comspec% /c "taskkill.exe /PID %PID% /T /F"
+    ToolTip, killed premiere
+    SetTimer, RemoveToolTip, -2000
 return
-
 
 ;===== FUNCTIONS ===============================================================================
 
@@ -207,7 +207,6 @@ Quitting:
     WinClose, UTIL-APPS\KeypressOSD.ahk
     ExitApp
     return
-
 
 ; This function will auto-reload the script on save.
 CheckScriptUpdate() {
