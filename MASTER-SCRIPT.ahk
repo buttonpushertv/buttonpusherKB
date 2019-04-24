@@ -183,10 +183,13 @@ ToolTip, killed firefox
 SetTimer, RemoveToolTip, -2000
 return
 
-#^+p:: ; <-- Nuke Premiere
-Run, %comspec% /c "taskkill.exe /IM /Adobe Premiere Pro.exe /T /F" ;,, hide
-ToolTip, killed premiere
-SetTimer, RemoveToolTip, -2000
+#^p:: ; <-- Nuke Premiere
+    Process, Exist, Adobe Premiere Pro.exe
+    If (ErrorLevel > 0)
+        PID = %ErrorLevel%
+    Run, %comspec% /c "taskkill.exe /PID %PID% /T /F"
+    ToolTip, killed premiere
+    SetTimer, RemoveToolTip, -2000
 return
 
 
