@@ -21,7 +21,7 @@ sleepDeep := 3500
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
-; combine below with key and '::' to define hotkey 
+; combine below with key and '::' to define hotkey
 ; e.g.- ^f1::Msgbox You pressed Control and F1
 ; #=Win | !=Alt | ^=Ctrl | +=Shift | &=combine keys | *=ignore other mods
 ; <=use left mod key| >=use right mod key  | UP=fires on release
@@ -37,28 +37,32 @@ theTimeStamp = %now% - %today%
 }
 
 showText(fileToShow){
-FileRead, textToShow, %fileToShow%
-FormatTime, now,, hh:mm tt
-today = %A_YYYY%-%A_MMM%-%A_DD%
-Gui, Text:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
-Gui, Text:Color, 000000
-Gui, Text:Margin, 30, 30
-Gui, Text:font, s14 cFFFFFF, Consolas
-Gui, Text:Add, Text, , %now% - %today%
-Gui, Text:add, text, , %textToShow%
-Gui, Text:add, text, , File: %A_ScriptDir%\%fileToShow%
-Gui, Text:Show
+  IfNotExist, %fileToShow%
+    fileToShow := "SUPPORTING-FILES\AHK-KEYS-NO-CHEATSHEET.txt"
+  FileRead, textToShow, %fileToShow%
+  FormatTime, now,, hh:mm tt
+  today = %A_YYYY%-%A_MMM%-%A_DD%
+  Gui, Text:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
+  Gui, Text:Color, 000000
+  Gui, Text:Margin, 30, 30
+  Gui, Text:font, s12 cFFFFFF, Consolas
+  Gui, Text:Add, Text, , %now% - %today%
+  Gui, Text:add, text, , %textToShow%
+  Gui, Text:add, text, , File: %A_ScriptDir%\%fileToShow%
+  Gui, Text:Show
 return
 }
 
 showPic(picToShow){
-Gui, Picture:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
-Gui, Picture:Color, 000000
-Gui, Picture:Margin, 15, 15
-Gui, Picture:font, s14 cFFFFFF, Consolas
-Gui, Picture:add, picture, , %picToShow%
-Gui, Picture:add, text, , File: %A_ScriptDir%\%picToShow%
-Gui, Picture:Show
+  IfNotExist, %picToShow%
+    picToShow := "SUPPORTING-FILES\KEYBOARD-NO-CHEATSHEET.png"
+  Gui, Picture:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
+  Gui, Picture:Color, 000000
+  Gui, Picture:Margin, 15, 15
+  Gui, Picture:font, s14 cFFFFFF, Consolas
+  Gui, Picture:add, picture, , %picToShow%
+  Gui, Picture:add, text, , File: %A_ScriptDir%\%picToShow%
+  Gui, Picture:Show
 return
 }
 
@@ -67,25 +71,74 @@ Gui, Destroy
 return
 }
 
-INILoad(INIfile) {
-    INIRead, loadPremierePro, %INIfile%, Apps, loadPremierePro
-    INIRead, loadPPRORightClickMod, %INIfile%, Apps, loadPPRORightClickMod
-    INIRead, loadAfterEffects, %INIfile%, Apps, loadAfterEffects
-    INIRead, loadPhotoshop, %INIfile%, Apps, loadPhotoshop
-    INIRead, loadAcceleratedScrolling, %INIfile%, Helpers, loadAcceleratedScrolling
-    INIRead, loadKeyPressOSD, %INIfile%, Helpers, loadKeyPressOSD
+
+
+/*
+INI_Init(inifile)     ;prepares the global variables to be populated
+INI_Load(inifile)     ;Reads all the settings into the global variables from the file
+INI_Save(inifile)     ;Saves all the settings from the global variables into the file
+
+INI_ReadAll(inifile)  ;Synonym for INI_Load
+INI_WriteAll(inifile) ;Synonym for INI_Save
+
+*/
+INI_Init(inifile = "inifile.ini"){
+  global
+  local key
+  inisections:=0
+
+  loop,read,%inifile%
+  {
+    if regexmatch(A_Loopreadline,"\[(\w+)]")
+      {
+        inisections+= 1
+        section%inisections%:=regexreplace(A_loopreadline,"(\[)(\w+)(])","$2")
+        section%inisections%_keys:=0
+      }
+    else if regexmatch(A_LoopReadLine,"(\w+)=(.*)")
+      {
+        section%inisections%_keys+= 1
+        key:=section%inisections%_keys
+        section%inisections%_key%key%:=regexreplace(A_LoopReadLine,"(\w+)=(.*)","$1")
+      }
+  }
 }
 
-INISave(INIfile) {
-    IniWrite, %loadPremierePro%, %INIfile%, Apps, loadPremierePro
-    IniWrite, %loadPPRORightClickMod%, %INIfile%, Apps, loadPPRORightClickMod
-    INIWrite, %loadAfterEffects%, %INIfile%, Apps, loadAfterEffects
-    INIWrite, %loadPhotoshop%, %INIfile%, Apps, loadPhotoshop
-    INIWrite, %loadAcceleratedScrolling%, %INIfile%, Helpers, loadAcceleratedScrolling
-    INIWrite, %loadKeyPressOSD%, %INIfile%, Helpers, loadKeyPressOSD
+INI_readAll(inifile="inifile.ini"){
+  INI_load(inifile)
 }
 
+INI_load(inifile="inifile.ini"){
+  global
+  local sec,var
+  loop,%inisections%
+    {
+      sec:=A_index
+      loop,% section%a_index%_keys
+        {
+          var:=section%sec% "_" section%sec%_key%A_index%
+          iniread,%var%,%inifile%,% section%sec%,% section%sec%_key%A_index%
+        }
+    }
+}
 
+INI_writeAll(inifile="inifile.ini"){
+  INI_Save(inifile)
+}
+
+INI_Save(inifile="inifile.ini"){
+  global
+  local sec,var
+  loop,%inisections%
+    {
+      sec:=A_index
+      loop,% section%a_index%_keys
+        {
+          var:=section%sec% "_" section%sec%_key%A_index%,var:=%var%
+          iniwrite,%var%,%inifile%,% section%sec%,% section%sec%_key%A_index%
+        }
+    }
+}
 
 
 ; ===========================================================================
@@ -110,7 +163,7 @@ RunOrActivate(Target, WinTitle = "", Parameters = "")
    ; At least one app (Seapine TestTrack wouldn't always become the active
    ; window after using Run), so we always force a window activate.
    ; Activate by title if given, otherwise use PID.
-   If WinTitle <> 
+   If WinTitle <>
    {
       SetTitleMatchMode, 2
       WinWait, %WinTitle%, , 3
