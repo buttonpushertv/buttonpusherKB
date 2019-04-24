@@ -54,7 +54,7 @@ return
 showPic(picToShow){
 Gui, Picture:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
 Gui, Picture:Color, 000000
-Gui, Picture:Margin, 30, 30
+Gui, Picture:Margin, 15, 15
 Gui, Picture:font, s14 cFFFFFF, Consolas
 Gui, Picture:add, picture, , %picToShow%
 Gui, Picture:add, text, , File: %A_ScriptDir%\%picToShow%
