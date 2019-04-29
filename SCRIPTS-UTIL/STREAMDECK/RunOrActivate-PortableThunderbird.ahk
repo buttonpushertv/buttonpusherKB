@@ -21,7 +21,7 @@ sleepDeep := 3500
 ;===== END OF AUTO-EXECUTE =====================================================================
 DetectHiddenWindows, On
 LaunchCode := "X:\PortableApps\ThunderbirdPortable2ndProfile\ThunderbirdPortable2ndProfile.exe"
-WindowTitle := "ahk_class MozillaWindowClass"
+WindowTitle := "ahk_exe thunderbird.exe"
 
 ;MsgBox,,Attempt,Trying to run or activate:`n%WindowTitle%,2
 RunOrActivate(LaunchCode, WindowTitle)
