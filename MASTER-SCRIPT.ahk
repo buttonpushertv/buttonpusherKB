@@ -135,6 +135,9 @@ goto Quitting
         showPic(pic2Show)
     }
     else
+    If WinActive("ahk_exe SubtitleEdit.exe")
+        showPic("SUPPORTING-FILES\CONTOUR-PRO-SUBTITLE-EDIT.jpg")
+    else
     showPic("SUPPORTING-FILES\KB-NO-CHEAT-SHEET.png")
     keywait, f2
     Gui, Picture:Destroy
