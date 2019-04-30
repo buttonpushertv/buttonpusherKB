@@ -125,20 +125,24 @@ goto Quitting
     return
 
 #f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
+    If WinActive("ahk_exe Explorer.EXE") {
+        pic2show := "SUPPORTING-FILES\KBF2-WIN-LOC" . Location_currentSystemLocation . ".png"
+    }
+    else
     If WinActive("ahk_exe Adobe Premiere Pro.exe") {
         pic2Show := "SUPPORTING-FILES\KBF2-PPRO-LOC" . Location_currentSystemLocation . ".png"
-        showPic(pic2Show)
     }
     else
     If WinActive("ahk_exe AfterFX.exe") {
         pic2Show := "SUPPORTING-FILES\KBF2-AE-LOC" . Location_currentSystemLocation . ".png"
-        showPic(pic2Show)
     }
     else
     If WinActive("ahk_exe SubtitleEdit.exe")
         showPic("SUPPORTING-FILES\CONTOUR-PRO-SUBTITLE-EDIT.jpg")
     else
-    showPic("SUPPORTING-FILES\KB-NO-CHEAT-SHEET.png")
+        pic2Show := "SUPPORTING-FILES\KB-NO-CHEAT-SHEET.png"
+    
+        showPic(pic2Show)
     keywait, f2
     Gui, Picture:Destroy
     return
