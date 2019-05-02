@@ -35,11 +35,16 @@ INI_Load(inifile)
 ;GUI Building
 
 ;figuring out how tall the whole GUI will be
+
 loop, %inisections%
 {
   keyRows += % section%A_Index%_keys
 }
-guiHeight := (keyRows * 35)
+
+If (keyRows) < 6
+  guiHeight := 245
+else
+  guiHeight := (keyRows * 35)
 
 ;Section 1 - System Location
 sectionGroupH := (section1_keys - 1)

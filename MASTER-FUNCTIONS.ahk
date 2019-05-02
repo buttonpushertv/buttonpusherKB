@@ -36,6 +36,8 @@ today = %A_YYYY%-%A_MMM%-%A_DD%
 theTimeStamp = %now% - %today%
 }
 
+;for showText & showPic - I want to add code in that will downgrade to the next lowest code that does exist if it can't find whatever file it is sent.
+
 showText(fileToShow){
   IfNotExist, %fileToShow%
     fileToShow := "SUPPORTING-FILES\AHK-KEYS-NO-CHEATSHEET.txt"
@@ -84,6 +86,30 @@ INI_WriteAll(inifile) ;Synonym for INI_Save
 */
 INI_Init(inifile = "inifile.ini"){
   global
+
+;the section below will check for the existance of the 'settings.ini' file. If it does not exist, then a default one will be created.
+  If !FileExist("settings.ini"){ ;remember an ! before the variable to test in an 'if' statement means 'logical not' - it's a way to invert the value for something where you only want to do a thing if the result is false. (i.e.-you don't need an if (true) stop...else (false) do soemthing
+		FileAppend,
+      (
+[Location]
+currentSystemLocation=1
+systemLocation1=This-PC
+[Scripts]
+loadApp1=1
+pathApp1=settings-made.ahk
+      ), settings.ini
+	  FileAppend,
+	  (
+#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+; #Warn  ; Enable warnings to assist with detecting common errors.
+SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
+SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+MsgBox, 64, 'settings.ini' file created, The 'settings.ini' file has been created in D:\Dropbox\PostOp-Ben Share\Apps\AutoHotKey\AHK-SCRIPTS-working\using an ini file.``n``nYou can edit it in a text editor to add to it. Follow the format of the created file to add Locations and/or Scripts to Run at the Launch of MASTER-SCRIPT.AHK.``n``nFeel free to delete this script and it's corresponding settings once you have begun adding your own items.``n``nPress WIN+F11 to open the settings interface.
+	), settings-made.ahk
+	}
+
+;done checking for and/or creating 'settings.ini' if it doesn't exist
+
   local key
   inisections:=0
 

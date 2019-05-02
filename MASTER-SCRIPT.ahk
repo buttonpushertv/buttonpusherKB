@@ -148,10 +148,13 @@ goto Quitting
     return
 
 #f3:: ; <--Display a Text File CheatSheet of App Specific AutoHotKeys
-    If WinActive("ahk_exe Adobe Premiere Pro.exe")
-    showText("SUPPORTING-FILES\AHK-KEYS-F3-PPRO.txt")
+    If WinActive("ahk_exe Explorer.EXE")
+        showText("SUPPORTING-FILES\WINDOWS-DEFAULT-KEYS.txt")
     else
-    showText("SUPPORTING-FILES\AHK-KEYS-NO-CHEATSHEET.txt")
+    If WinActive("ahk_exe Adobe Premiere Pro.exe")
+        showText("SUPPORTING-FILES\AHK-KEYS-F3-PPRO.txt")
+    else
+        showText("SUPPORTING-FILES\AHK-KEYS-NO-CHEATSHEET.txt")
     keywait, f3
     Gui, Text:Destroy
     return
@@ -167,18 +170,12 @@ goto Quitting
     Run, C:\BPTV-KB\UTIL-APPS\BPTV-LAUNCHX\launcher.ahk ,C:\BPTV-KB\UTIL-APPS\BPTV-LAUNCHX
     return
 
-#t:: ; <-- Send time & date as text
+#!t:: ; <-- Send time & date as text
     ;timestamp(theTimeStamp)
     FormatTime, now,, hh:mm tt
     today = %A_YYYY%-%A_MMM%-%A_DD%
     theTimeStamp = %now% - %today%
     Send, %theTimeStamp%
-    return
-
-#w:: ; <--Display a Text File CheatSheet of Windows Default Keys
-    showText("SUPPORTING-FILES\WINDOWS-DEFAULT-KEYS.txt")
-    keywait, w
-    Gui, Text:Destroy
     return
 
 #IfWinActive, ahk_exe Explorer.EXE
