@@ -1,0 +1,1 @@
+type %temp%\StartupLog.txt

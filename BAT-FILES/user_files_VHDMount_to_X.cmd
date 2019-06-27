@@ -5,9 +5,9 @@
 CLS
 
 ECHO.
-ECHO =============================
-ECHO Running Admin shell
-ECHO =============================
+ECHO +==============================+
+ECHO Running Admin Shell
+ECHO +==============================+
 
 :init
 setlocal DisableDelayedExpansion
@@ -25,6 +25,7 @@ if '%1'=='ELEV' (echo ELEV & shift /1 & goto gotPrivileges)
 ECHO.
 ECHO **************************************
 ECHO Invoking UAC for Privilege Escalation
+ECHO (Asking to Run as Admin)
 ECHO **************************************
 
 ECHO Set UAC = CreateObject^("Shell.Application"^) > "%vbsGetPrivileges%"
@@ -45,16 +46,32 @@ if '%1'=='ELEV' (del "%vbsGetPrivileges%" 1>nul 2>nul  &  shift /1)
 ::START
 ::::::::::::::::::::::::::::
 REM Run shell as admin (example) - put here code as you like
-ECHO %batchName% Arguments: %1 %2 %3 %4 %5 %6 %7 %8 %9
+REM ECHO %batchName% Arguments: %1 %2 %3 %4 %5 %6 %7 %8 %9
 REM cmd /k
+ECHO.
+ECHO Running as Admin now...
+ECHO.
+ECHO.
+	ECHO +==============================+
+	ECHO.
+	ECHO Mounted Volumes - (Local Drives)
+	wmic logicaldisk get volumename,name
+	ECHO Mounted Volumes - (Network Shares)
+	type %temp%\StartupLog.txt
+	ECHO.
+	ECHO +==============================+
 
 	ECHO Checking for existence of X:
 	IF EXIST X:\ ( 
-		echo X: Drive already mounted
+		echo X: Drive already mounted.
+		echo.
+		echo Press CTRL-C to abort script.
 		pause
 		goto unLocked
 	) else ( 
+		echo.
 		echo X: not mounted
+		echo.
 	)
 
 	SET DiskPartScript="%TEMP%\DiskpartScript.txt"
@@ -78,6 +95,7 @@ REM cmd /k
 	if not %ERRORLEVEL% == 0 goto accessDisk
 	
 	:unLocked
+	ECHO +==============================+
 	ECHO Starting Portable Apps on X:
 	
 	x:\start.exe
