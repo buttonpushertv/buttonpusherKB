@@ -131,8 +131,50 @@ return
 
 ;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
 
-;+^!f1::
-;+^!f2::
++^!f1:: ; <-- move ahead 3 secs, mark in, go to next xsit, back 1 frame, mark out, & extract
+sleep, sleepShort
+Send, {Control Down}{F9}{Control Up}
+sleep, sleepShort
+Send, {NumpadAdd}
+sleep, sleepShort
+Send, {Numpad3}
+sleep, sleepShort
+Send, {NumpadDot}
+sleep, sleepShort
+Send, {NumpadEnter}
+sleep, sleepShort
+Send, {f1}
+sleep, sleepShort
+Send, {w}
+sleep, sleepShort
+Send, {LEFT}
+sleep, sleepShort
+Send, {f2}
+sleep, sleepShort
+Send, {Shift Down}{X}{Shift Up}
+return
+
++^!f2:: ; <-- open a clip marker, select all, copy text to clipboard, close clip marker, create seq marker, edit seq marker, paste text
+sleep, sleepShort
+Send, m
+sleep, sleepShort
+Send, ^a
+sleep, sleepShort
+Send, ^c
+sleep, sleepShort
+Send, {ESC}
+sleep, sleepShort
+Send, ^+a
+sleep, sleepShort
+Send, m
+sleep, sleepLong
+Send, m
+sleep, sleepShort
+Send, ^v
+sleep, sleepShort
+Send, {Enter}
+return
+
 +^!f3:: ; <-- Step Left 2 seconds
 sleep, sleepMicro
 Send, ^+a
