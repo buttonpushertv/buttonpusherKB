@@ -118,8 +118,8 @@ Return
 goto Quitting
 
 #f1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys
-    locationPic := "SUPPORTING-FILES\AHK-KEYS-F1-LOC" . Location_currentSystemLocation . ".txt"
-    showText(locationPic)
+    txt2show := "SUPPORTING-FILES\AHK-KEYS-F1-LOC" . Location_currentSystemLocation . ".txt"
+    showText(txt2show)
     keywait, f1
     Gui, Text:Destroy
     return
@@ -153,6 +153,9 @@ goto Quitting
     else
     If WinActive("ahk_exe Adobe Premiere Pro.exe")
         showText("SUPPORTING-FILES\AHK-KEYS-F3-PPRO.txt")
+    else
+    If WinActive("ahk_exe stickies.exe")
+        showText("SUPPORTING-FILES\AHK-KEYS-F3-STICKIES.txt")
     else
         showText("SUPPORTING-FILES\AHK-KEYS-NO-CHEATSHEET.txt")
     keywait, f3
