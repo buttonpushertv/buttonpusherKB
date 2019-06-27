@@ -22,7 +22,7 @@ ALT+WIN+B             <--Send 'ben@buttonpusher.tv' as text
 WIN+CTRL+SHIFT+F      <--Nuke Firefox (click Desktop first)
 WIN+CTRL+SHIFT+P      <--Nuke Premiere (click Desktop first)
 
-WIN+ALT+CTRL+F1       <--Open the Settings GUI for MASTER-SCRIPT.AHK
+WIN+F11               <--Open the Settings GUI for MASTER-SCRIPT.AHK
 WIN+ALT+CTRL+BACKSP   <--Reload MASTER-SCRIPT.ahk
 WIN+ALT+CTRL+Q        <--Exit MASTER-SCRIPT and child AHK Scripts
 
