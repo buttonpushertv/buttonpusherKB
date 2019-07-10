@@ -52,7 +52,7 @@ currentAltCounter := 1
 Gui, Font, S12 CDefault, Franklin Gothic Medium
 Gui, Add, GroupBox, R%sectionGroupH% x10 y10 w300 , System Location
 Gui, Font, S10 CDefault, Franklin Gothic Medium
-Gui, Add, Text, x330 y10 w300 wrap, Select a Location at the left. If you provide an image at 'SUPPORTING-FILES\KB-CHEATSHEET-LOCATION(number).png' then it will display via Window-F4.`n`nBelow, check the boxes for the scripts you'd like to launch when running MASTER-SCRIPT.ahk.`n`nEdit '%inifile%' to add more locations and scripts. 
+Gui, Add, Text, x330 y10 w300 wrap, Select a Location at the left. If you provide an image at 'SUPPORTING-FILES\KB-CHEATSHEET-LOCATION(number).png' then it will display via Window-F4.`n`nBelow, check the boxes for the scripts you'd like to launch when running MASTER-SCRIPT.ahk.`n`nEdit '%inifile%' to add more locations and scripts.
 Gui, Font, S12 CDefault, Franklin Gothic Medium
 Gui, Add, Text, section x10 y10,
 loop, %section1_keys%
@@ -67,7 +67,7 @@ loop, %section1_keys%
     currentKeyValueForRadio := "Location" . currentAltCounter . " > " . currentKeyValue
     ;Gui, Add, Text, xs+20 yp+25
     ;Gui, Add, Text, xs+20 yp+25, %currentKeyValueForRadio%
-     
+
     if (currentAltCounter = Location_currentSystemLocation)
       Gui, Add, Radio, xs+20 vLocRadioGroup%currentAltCounter% Checked, %currentKeyValueForRadio%
     else
@@ -83,8 +83,8 @@ loop, %section2_keys%
   {
     currentKey := % section2_key%A_Index%
     pathLookAhead := A_Index + 1
-    pathKey := 
-    currentKeyValue := 
+    pathKey :=
+    currentKeyValue :=
     currentPathValue :=
     If mod(A_Index,2){
       pathKey := % section2_key%pathLookAhead%
@@ -102,7 +102,7 @@ Gui, Add, Text, x30 yp+65 w340, Clicking 'SAVE' will save the settings above and
 Gui, Font, S12 CDefault, Franklin Gothic Medium
 Gui, Add, Button, x400 yp w100 h30, Cancel
 Gui, Add, Button, x520 yp w100 h30, SAVE
-;Gui, Add, Button, x400 yp+32 w220 h20, Variables
+Gui, Add, Button, x400 yp+32 w220 h20, Variables
 Gui, Show, w700 h%guiHeight%
 return
 
@@ -122,12 +122,12 @@ loop, %section1_keys%
     if LocRadioGroup%currentAltCounter%
       Location_currentSystemLocation = %currentAltCounter%
   }
-;Setting Scripts_loadAppX to new values
+;Setting Scripts_loadScriptX to new values
 currentAltCounter := 1
 loop, %section2_keys%
-  {    
-  if mod(A_Index,2) { 
-    Scripts_loadApp%currentAltCounter% = % scriptCheckboxEnable%currentAltCounter%
+  {
+  if mod(A_Index,2) {
+    Scripts_loadScript%currentAltCounter% = % scriptCheckboxEnable%currentAltCounter%
     currentAltCounter += 1
   }
   else
@@ -146,4 +146,3 @@ GuiEscape:
 ExitApp
 
 ;===== FUNCTIONS ===============================================================================
-
