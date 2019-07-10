@@ -10,6 +10,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance force ; Ensures that there is only a single instance of this script running.
 ; SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of "exact"
 Menu, Tray, Icon, imageres.dll, 187 ;tray icon is now a little keyboard, or piece of paper or something
+;#MaxThreadsPerHotkey 1
 
 #MenuMaskKey vk07 ; This is needed to block the Window key from triggering the Start Menu when pressed by itself.
 
@@ -39,6 +40,7 @@ global splashScreenStartX := 100
 
 INI_Init(iniFile)
 INI_Load(iniFile)
+
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading MASTER AHK Script.`nWin-F1 for CheatSheet of AHK Hotkeys.`n`nWin-Ctrl-Alt-Shift-Q to quit MASTER-SCRIPT & child scripts.
@@ -73,7 +75,7 @@ loop, %section2_keys%
 }
 Sleep, sleepLong
 SplashTextOff
-
+    
 ;
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -89,65 +91,83 @@ SplashTextOff
 ; don't know if this works for alt too...
 ~LAlt::Send {Blind}{vk07}
 
+ScrollLock & f11:: ; <--Open the Settings GUI for MASTER-SCRIPT.AHK
+    Run, MASTER-SETTINGS.AHK
+    return
 
-#b:: ; <-- Send 'buttonpusher' as text
+ScrollLock & f12:: ; <-- Launch buttonpusherTV LAUNCH-X
+    Run, C:\BPTV-KB\UTIL-APPS\BPTV-LAUNCHX\launcher.ahk ,C:\BPTV-KB\UTIL-APPS\BPTV-LAUNCHX
+    return
+
+ScrollLock & Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
+    Reload
+    Return
+
+CapsLock & WheelDown::Send ^{PGDN}
+CapsLock & WheelUp::Send ^{PGUP}
+
+CapsLock & q:: ; <-- Exit MASTER-SCRIPT and child AHK Scripts
+goto Quitting
+
+CapsLock & b:: ; <-- Send 'buttonpusher' as text
 Send, buttonpusher
 return
 
-#!b:: ; <-- Send 'ben@buttonpusher.tv' as text
+CapsLock & e:: ; <-- Send 'ben@buttonpusher.tv' as text
 Send, ben@buttonpusher.tv
 return
 
-#c:: ; <-- Delete Key
+CapsLock & c:: ; <-- Delete Key
 Send, {Delete}
 return
 
-#v:: ; <-- Backspace Key
+CapsLock & v:: ; <-- Backspace Key
 Send, {BackSpace}
 return
 
-#f11:: ; <--Open the Settings GUI for MASTER-SCRIPT.AHK
-Run, MASTER-SETTINGS.AHK
-return
-
-#^!Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
-Reload
-Return
-
-#^!q:: ; <-- Exit MASTER-SCRIPT and child AHK Scripts
-goto Quitting
-
-#f1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys
+CapsLock & f1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys
     txt2show := "SUPPORTING-FILES\AHK-KEYS-F1-LOC" . Location_currentSystemLocation . ".txt"
     showText(txt2show)
     keywait, f1
     Gui, Text:Destroy
     return
 
-#f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
+CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
     If WinActive("ahk_exe Explorer.EXE") {
-        pic2show := "SUPPORTING-FILES\KBF2-WIN-LOC" . Location_currentSystemLocation . ".png"
+        pic2show := "SUPPORTING-FILES\KBF2-WIN-PAGE"
+        PictureWidth := 2000
+        numPages := 2
     }
     else
     If WinActive("ahk_exe Adobe Premiere Pro.exe") {
-        pic2Show := "SUPPORTING-FILES\KBF2-PPRO-LOC" . Location_currentSystemLocation . ".png"
+        pic2Show := "SUPPORTING-FILES\KBF2-PPRO.png"
+        PictureWidth := 2000
+        numPages := 1
     }
     else
     If WinActive("ahk_exe AfterFX.exe") {
-        pic2Show := "SUPPORTING-FILES\KBF2-AE-LOC" . Location_currentSystemLocation . ".png"
+        pic2Show := "SUPPORTING-FILES\KBF2-AE-LOC.png"
+        PictureWidth := 2000
+        numPages := 1
     }
     else
-    If WinActive("ahk_exe SubtitleEdit.exe")
-        showPic("SUPPORTING-FILES\CONTOUR-PRO-SUBTITLE-EDIT.jpg")
-    else
-        pic2Show := "SUPPORTING-FILES\KB-NO-CHEAT-SHEET.png"
-    
-        showPic(pic2Show)
+    If WinActive("ahk_exe SubtitleEdit.exe") {
+        pic2Show := "SUPPORTING-FILES\CONTOUR-PRO-SUBTITLE-EDIT.jpg"
+        PictureWidth := 906
+        numPages := 1
+    }
+    else {
+        pic2Show := "SUPPORTING-FILES\NO-CHEAT-SHEET.png"
+        PictureWidth := 579
+        numPages := 1
+    }
+    showImageTabs(pic2Show, PictureWidth, numPages)
     keywait, f2
+    numPages := 0
     Gui, Picture:Destroy
     return
 
-#f3:: ; <--Display a Text File CheatSheet of App Specific AutoHotKeys
+CapsLock & f3:: ; <--Display a Text File CheatSheet of App Specific AutoHotKeys
     If WinActive("ahk_exe Explorer.EXE")
         showText("SUPPORTING-FILES\WINDOWS-DEFAULT-KEYS.txt")
     else
@@ -162,18 +182,14 @@ goto Quitting
     Gui, Text:Destroy
     return
 
-#f4:: ; <--Display an image CheatSheet based on System Location Setting
+CapsLock & f4:: ; <--Display an image CheatSheet based on System Location Setting
     locationPic := "SUPPORTING-FILES\KBF4-LOC" . Location_currentSystemLocation . ".png"
-    showPic(locationPic)
+    showPic(locationPic, 0)
     keywait,f4
     Gui, Picture:Destroy
     return
-
-#f12:: ; <-- Launch buttonpusherTV LAUNCH-X
-    Run, C:\BPTV-KB\UTIL-APPS\BPTV-LAUNCHX\launcher.ahk ,C:\BPTV-KB\UTIL-APPS\BPTV-LAUNCHX
-    return
-
-#!t:: ; <-- Send time & date as text
+    
+CapsLock & t:: ; <-- Send time & date as text
     ;timestamp(theTimeStamp)
     FormatTime, now,, hh:mm tt
     today = %A_YYYY%-%A_MMM%-%A_DD%
@@ -201,17 +217,56 @@ return
 ;===== FUNCTIONS ===============================================================================
 
 RemoveToolTip:
-ToolTip
-return
+    ToolTip
+    return
+
+CapsLockCheck:
+    If GetKeyState("CapsLock","T")
+    {
+    SetTimer, CapsBeep, 5000
+    ;SoundPlay,C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_06.wav ; Assign your own sound
+    }
+    Else
+    {
+    SetTimer, CapsBeep, Off
+    ;SoundPlay, C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_11.wav ; Assign your own sound
+    }
+    Return
+
+CapsBeep:
+    If GetKeyState("CapsLock","T")
+        SoundPlay, C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_01.wav ; Assign your own sound
+    Return
 
 Quitting:
     DetectHiddenWindows, On
     MsgBox, ,Quitting, Quitting MASTER-SCRIPT & child AHK scripts, 3
     SetTitleMatchMode, 2
-    WinClose, PREMIERE-PRO-HOTKEYS.ahk
-    WinClose, PPRO_Right_click_timeline_to_move_playhead.ahk
-    WinClose, Accelerated-Scrolling-1-3.ahk
-    WinClose, UTIL-APPS\KeypressOSD.ahk
+
+    loop, %section2_keys%
+    {
+    currentKey := % section2_key%A_Index%
+    pathLookAhead := A_Index + 1
+    pathKey :=
+    currentKeyValue :=
+    currentPathValue :=
+    If mod(A_Index,2){
+        pathKey := % section2_key%pathLookAhead%
+        currentKeyValue := %section2%_%currentKey%
+        currentPathValue := %section2%_%pathKey%
+        ;MsgBox currentKey: %currentKey%`ncurrentKeyValue: %currentKeyValue%`npathKey: %pathKey%`ncurrentPathValue: %currentPathValue%
+        If (currentKeyValue) {
+            ;MsgBox Runnning: %currentPathValue%
+            WinClose, %currentPathValue%
+            splashScreenStartY += splashScreenSpacing
+        }
+        else
+            Continue
+    }
+    else
+    Continue
+    }
+
     ExitApp
     return
 

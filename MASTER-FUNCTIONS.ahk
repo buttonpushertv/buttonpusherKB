@@ -19,6 +19,10 @@ sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
 
+
+;SysGet, Mon1, Monitor, 1
+;MsgBox, Left: %Mon1Left% -- Top: %Mon1Top% -- Right: %Mon1Right% -- Bottom %Mon1Bottom%.
+
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
 ; combine below with key and '::' to define hotkey
@@ -55,18 +59,58 @@ showText(fileToShow){
 return
 }
 
-showPic(picToShow){
-  IfNotExist, %picToShow%
-    picToShow := "SUPPORTING-FILES\KEYBOARD-NO-CHEATSHEET.png"
+showPic(picToShow, PictureWidth){
+  SysGet, Mon1, Monitor, 1
+  If (Mon1Right < PictureWidth)
+    PictureWidth -= 425
+  if !FileExist(picToShow) { 
+    picToShow := "SUPPORTING-FILES\KB-NO-CHEAT-SHEET.png"
+    PictureWidth := 579
+  }
   Gui, Picture:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
   Gui, Picture:Color, 000000
   Gui, Picture:Margin, 15, 15
   Gui, Picture:font, s14 cFFFFFF, Consolas
-  Gui, Picture:add, picture, , %picToShow%
+  Gui, Picture:add, picture, w%PictureWidth% h-1 , %picToShow%
   Gui, Picture:add, text, , File: %A_ScriptDir%\%picToShow%
   Gui, Picture:Show
 return
 }
+
+showImageTabs(picToshow, PictureWidth, numPages){
+    SysGet, Mon1, Monitor, 1
+    If (Mon1Right < PictureWidth)
+      PictureWidth -= 450
+    If (numPages = 1) {
+      showPic(picToshow, PictureWidth)
+      return
+    }
+    Gui, Picture:+alwaysontop -sysmenu +owner -caption +toolwindow +0x02000000
+    Gui, Picture:Color, 111111
+    Gui, Picture:Margin, 5, 5
+    Gui, Picture:font, s10 cFFFFFF, Consolas
+    loop, %numPages% {
+        nextTab := tabList . "Page" . A_Index . "|"
+        tabList := nextTab
+        }
+    Gui, Picture:add, Tab3,, %tabList%   
+    loop, %numPages% {
+        fileToShow := picToShow . A_Index . ".png"
+        If (A_Index = 1) {
+            Gui, Picture:add, picture, w%PictureWidth% h-1 , %fileToShow%
+            Gui, Picture:add, text, , %PictureWidth% - File: %A_ScriptDir%\%fileToShow%
+        }
+        else {
+            Gui, Picture:Tab, %A_Index%
+            Gui, Picture:add, picture, w%PictureWidth% h-1 , %fileToShow%
+            Gui, Picture:add, text, , File: %A_ScriptDir%\%fileToShow%
+            }
+    }
+    Gui, Picture:Tab
+    Gui, Picture:Show
+    return
+}
+
 
 killGui(whicGUI){
 Gui, Destroy
@@ -95,8 +139,8 @@ INI_Init(inifile = "inifile.ini"){
 currentSystemLocation=1
 systemLocation1=This-PC
 [Scripts]
-loadApp1=1
-pathApp1=settings-made.ahk
+loadScript1=1
+pathScript1=settings-made.ahk
       ), settings.ini
 	  FileAppend,
 	  (
