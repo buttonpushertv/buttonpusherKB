@@ -50,9 +50,9 @@ SplashTextOff
 
 #IfWinActive, ahk_exe Adobe Premiere Pro.exe
 
-^+3:: ; <-- PPRO: Step Left 10 seconds THEN Play
+^+2:: ; <-- PPRO: Step Left 10 seconds THEN Play
 Send, {2}
-sleep, sleepMicro
+sleep, sleepShort
 Send, ^+a
 sleep, sleepShort
 Send, {NumpadSub}
@@ -68,9 +68,9 @@ sleep, sleepMicro
 Send, 3
 return
 
-^3:: ; <-- PPRO: Step Left 5 seconds THEN Play
+^2:: ; <-- PPRO: Step Left 5 seconds THEN Play
 Send, {2}
-sleep, sleepMicro
+sleep, sleepShort
 Send, ^+a
 sleep, sleepShort
 Send, {NumpadSub}
@@ -84,7 +84,7 @@ sleep, sleepMicro
 Send, 3
 return
 
-^4:: ; <-- PPRO: Step Left 1 second
+^1:: ; <-- PPRO: Step Left 1 second
 Send, ^+a
 sleep, sleepShort
 Send, {NumpadSub}
@@ -96,7 +96,7 @@ sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
 
-^5:: ; <-- PPRO: Step Right 1 second
+^3:: ; <-- PPRO: Step Right 1 second
 Send, ^+a
 sleep, sleepShort
 Send, {NumpadAdd}

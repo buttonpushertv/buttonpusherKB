@@ -39,22 +39,22 @@ prFocus(panel) ;this function allows you to have ONE spot where you define your 
 
 if (panel = "effects")
     {
-    Send {Alt Down}{``}{Alt Up} ;bring focus to the effects panel, in order to "clear" the current focus on the MAIN monitor
+    Send {F8} ;bring focus to the effects panel, in order to "clear" the current focus on the MAIN monitor
     sleep sleepMini
-    Send !`` ;do it AGAIN, just in case a panel was full-screened... it would only have exited full screen, and not switched to the effects panel as it should have.
+    Send {F8} ;do it AGAIN, just in case a panel was full-screened... it would only have exited full screen, and not switched to the effects panel as it should have.
     sleep sleepMini
     goto FocusEnd ;should be in the correct panel, so end function
     }
 else if (panel = "timeline")
     Send {Control Down}{f9}{Control Up} ;if focus had already been on the timeline, this would have switched to the next sequence in some arbitrary order.
 else if (panel = "program") ;program monitor
-        Send !5
+        Send {F8}
 else if (panel = "source") ;source monitor
-        Send !2
+        Send {Shift Down}{F8}{Shift Up}
 else if (panel = "project") ;AKA a "bin" or "folder"
-        Send f9
+        Send {F9}
 else if (panel = "effect controls")
-        Send !1
+        Send {F7}
 
 FocusEnd:
 }
