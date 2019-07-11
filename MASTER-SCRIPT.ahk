@@ -32,15 +32,16 @@ sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
 
-;global theTimeStamp := "now"
-global iniFile := "settings.ini"
+halfScreenWidth := (A_ScreenWidth / 2) ; determine what half the screen's width is for splash screens
+quarterScreenHeight := (A_ScreenHeight / 4) ; determine what 1/4 the screen's height is for splash screens
+
+global iniFile := "settings.ini" ; the main settings file used by most of the BPTV-KB scripts
 global splashScreenSpacing := 150
-global splashScreenStartY := 100
-global splashScreenStartX := 100
+global splashScreenStartY := quarterScreenHeight
+global splashScreenStartX := (halfScreenWidth - 300)
 
 INI_Init(iniFile)
 INI_Load(iniFile)
-
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading MASTER AHK Script.`nWin-F1 for CheatSheet of AHK Hotkeys.`n`nWin-Ctrl-Alt-Shift-Q to quit MASTER-SCRIPT & child scripts.
@@ -61,9 +62,9 @@ loop, %section2_keys%
         pathKey := % section2_key%pathLookAhead%
         currentKeyValue := %section2%_%currentKey%
         currentPathValue := %section2%_%pathKey%
-        ;MsgBox currentKey: %currentKey%`ncurrentKeyValue: %currentKeyValue%`npathKey: %pathKey%`ncurrentPathValue: %currentPathValue%
+
         If (currentKeyValue) {
-            ;MsgBox Runnning: %currentPathValue%
+            ;MsgBox Runnning: %currentPathValue%`nsplashScreenStartX: %splashScreenStartX%`nsplashScreenStartY: %splashScreenStartY%
             Run, %currentPathValue% %splashScreenStartX% %splashScreenStartY%
             splashScreenStartY += splashScreenSpacing
         }
@@ -239,6 +240,9 @@ CapsBeep:
     Return
 
 Quitting:
+    splashScreenSpacing := 75
+    splashScreenStartY := 100
+    splashScreenStartX := 100
     DetectHiddenWindows, On
     MsgBox, ,Quitting, Quitting MASTER-SCRIPT & child AHK scripts, 3
     SetTitleMatchMode, 2
@@ -254,9 +258,9 @@ Quitting:
         pathKey := % section2_key%pathLookAhead%
         currentKeyValue := %section2%_%currentKey%
         currentPathValue := %section2%_%pathKey%
-        ;MsgBox currentKey: %currentKey%`ncurrentKeyValue: %currentKeyValue%`npathKey: %pathKey%`ncurrentPathValue: %currentPathValue%
         If (currentKeyValue) {
-            ;MsgBox Runnning: %currentPathValue%
+            SplashTextOn, 600, 50, Quitting AHK scripts, Quitting %currentPathValue%
+            WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
             WinClose, %currentPathValue%
             splashScreenStartY += splashScreenSpacing
         }
@@ -266,9 +270,15 @@ Quitting:
     else
     Continue
     }
-
+    SplashTextOn, 600, 50, Quitting AHK scripts, All MASTER-SCRIPT.AHK shut down.`nGoodbye & thanks for all the fishes...
+    WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%    
+    Sleep, sleepMedium
+    SplashTextOff
     ExitApp
     return
+
+
+
 
 ; This function will auto-reload the script on save.
 CheckScriptUpdate() {
