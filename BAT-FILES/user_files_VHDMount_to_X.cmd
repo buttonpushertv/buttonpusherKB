@@ -8,7 +8,7 @@ ECHO.
 ECHO +==============================+
 ECHO Running Admin Shell
 ECHO +==============================+
-
+pause
 :init
 setlocal DisableDelayedExpansion
 set "batchPath=%~0"
@@ -95,11 +95,13 @@ ECHO.
 	if not %ERRORLEVEL% == 0 goto accessDisk
 	
 	:unLocked
-	ECHO +==============================+
-	ECHO Starting Portable Apps on X:
-	
-	x:\start.exe
-	
-	ECHO Launching LAUNCH-X
-	
-	C:\BPTV-KB\UTIL-APPS\BPTV-LAUNCHX\launcher.ahk	
+REM	ECHO +==============================+
+REM	ECHO Starting Portable Apps on X:
+REM	
+REM	x:\start.exe
+REM (moved the above to BPTV-LAUNCHER)
+
+	ECHO Launching BPTV-LAUNCHER
+	c:
+	cd \BPTV-KB
+	C:\BPTV-KB\BPTV-LAUNCHER.ahk
