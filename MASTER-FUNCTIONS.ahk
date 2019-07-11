@@ -19,17 +19,12 @@ sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
 
-
-;SysGet, Mon1, Monitor, 1
-;MsgBox, Left: %Mon1Left% -- Top: %Mon1Top% -- Right: %Mon1Right% -- Bottom %Mon1Bottom%.
-
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
 ; combine below with key and '::' to define hotkey
 ; e.g.- ^f1::Msgbox You pressed Control and F1
 ; #=Win | !=Alt | ^=Ctrl | +=Shift | &=combine keys | *=ignore other mods
 ; <=use left mod key| >=use right mod key  | UP=fires on release
-
 
 ;===== FUNCTIONS ===============================================================================
 
