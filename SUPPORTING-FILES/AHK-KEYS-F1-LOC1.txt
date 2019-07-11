@@ -1,30 +1,33 @@
-== MASTER-SCRIPT ===========================================================
-
-LEFT WIN              <-- Will not activate the Start Menu when pressed by itself
-RIGHT WIN             <-- Works normally. Will open Start menu when pressed by itself
-
-LEFT ALT              <-- Should not activate App Menu Bar when pressed by itself
-RIGHT ALT             <-- Works normally. Will open App Menu Bar when pressed by itself
-
-WIN+F1                <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys (this file)
-WIN+F2                <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
-WIN+F3                <--Display a Text File CheatSheet of App Specific AutoHotKeys
-WIN+F4                <--Display an image CheatSheet for Preonic Keyboard
-WIN+T                 <--Send time & date as text (hh:mm AM/PM - YYYY-MMM-DD)
-WIN+W                 <--Display a Text File CheatSheet of Windows Default Keys
-
-WIN+C                 <--Delete Key
-WIN+V                 <--BackSpace
-
-WIN+B                 <--Send 'buttonpusher' as text
-ALT+WIN+B             <--Send 'ben@buttonpusher.tv' as text
-
-WIN+CTRL+SHIFT+F      <--Nuke Firefox (click Desktop first)
-WIN+CTRL+SHIFT+P      <--Nuke Premiere (click Desktop first)
-
-WIN+F11               <--Open the Settings GUI for MASTER-SCRIPT.AHK
-WIN+ALT+CTRL+BACKSP   <--Reload MASTER-SCRIPT.ahk
-WIN+ALT+CTRL+Q        <--Exit MASTER-SCRIPT and child AHK Scripts
++==KINESIS KEYBOARD=======+==== MASTER-SCRIPT ===========================================================
+| M1         | M2         |
+| BACKSPACE  |            |  LEFT WIN           <-- Will not activate the Start Menu when pressed by itself
+|            |            |  RIGHT WIN          <-- Works normally. Will open Start menu when pressed by itself
+|-------------------------|
+| M3         | M4         |  LEFT ALT           <-- Should not activate App Menu Bar when pressed by itself
+| SHIFT+V    | SHIFT+B    |  RIGHT ALT          <-- Works normally. Will open App Menu Bar when pressed by itself
+|            |            |
+|-------------------------|  CAPS+F1             <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys (this file)
+| M5         | M6         |  CAPS+F2             <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
+|            |            |  CAPS+F3             <--Display a Text File CheatSheet of App Specific AutoHotKeys
+|            |            |  CAPS+F4             <--Display an image CheatSheet for Preonic Keyboard
+|-------------------------|
+| M7         | M8         |  CAPS+B              <--Send 'buttonpusher' as text
+|            | s33KriT    |  CAPS+ALT+B          <--Send 'ben@buttonpusher.tv' as text
+|            |            |
+|-------------------------|  CAPS+T              <--Send time & date as text (hh:mm AM/PM - YYYY-MMM-DD)
+| REMAPS                  |  CAPS+W              <--Display a Text File CheatSheet of Windows Default Keys
+| PAUSE -> INSERT         |
+| Fn INSERT -> PAUSE      |  CAPS+C              <--Delete Key
+|                         |  CAPS+V              <--BackSpace
+|-------------------------|
+| Fn LAYER KEYS           |  CAPS+Q              <--Exit MASTER-SCRIPT and child AHK Scripts
+| MEDIA KEYS AS LABELLED  |
+| Fn C -> CALCULATOR      |  WIN+CTRL+SHIFT+F    <--Nuke Firefox (click Desktop first)
+|                         |  WIN+CTRL+SHIFT+P    <--Nuke Premiere (click Desktop first)
++=========================+
+                             SCRLK+F11           <--Open the Settings GUI for MASTER-SCRIPT.AHK
+                             SCRLK+F12           <--Open BPTV-KB LAUNCH-X
+                             SCRLK+BACKSP        <--Reload MASTER-SCRIPT.ahk
 
 == STICKIES HOTKEYS -=======================================================
 
