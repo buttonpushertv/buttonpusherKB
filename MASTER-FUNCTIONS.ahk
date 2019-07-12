@@ -59,7 +59,7 @@ showPic(picToShow, PictureWidth){
   If (Mon1Right < PictureWidth)
     PictureWidth -= 425
   if !FileExist(picToShow) { 
-    picToShow := "SUPPORTING-FILES\KB-NO-CHEAT-SHEET.png"
+    picToShow := "SUPPORTING-FILES\NO-CHEAT-SHEET.png"
     PictureWidth := 579
   }
   Gui, Picture:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
@@ -91,6 +91,12 @@ showImageTabs(picToshow, PictureWidth, numPages){
     Gui, Picture:add, Tab3,, %tabList%   
     loop, %numPages% {
         fileToShow := picToShow . A_Index . ".png"
+          if !FileExist(fileToShow) { 
+            picToShow := "SUPPORTING-FILES\NO-CHEAT-SHEET.png"
+            PictureWidth := 579
+            showPic(picToshow, PictureWidth)
+            Return
+          }
         If (A_Index = 1) {
             Gui, Picture:add, picture, w%PictureWidth% h-1 , %fileToShow%
             Gui, Picture:add, text, , %PictureWidth% - File: %A_ScriptDir%\%fileToShow%

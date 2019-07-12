@@ -32,19 +32,16 @@ inifile = settings.ini
 INI_Init(inifile)
 INI_Load(inifile)
 
-;GUI Building
-
+;Creating the Main GUI for the app - the bit that loads inititally when run
+;setting width variables
+guiWidth := 700
+guiElementWidth := (guiWidth - 20) 
 ;figuring out how tall the whole GUI will be
-
-loop, %inisections%
-{
-  keyRows += % section%A_Index%_keys
-}
-
-If (keyRows) < 6
-  guiHeight := 245
-else
-  guiHeight := (keyRows * 35)
+keyRows := (section1_keys - 1)
+keyRows += (section2_keys / 3)
+guiHeight := (keyRows * 30)
+guiHeight += 150 ; this is to add the bit at the bottom for the buttons, text
+buttonStartingY := (guiHeight - 50)
 
 ;Section 1 - System Location
 sectionGroupH := (section1_keys - 1)
@@ -52,7 +49,7 @@ currentAltCounter := 1
 Gui, Font, S12 CDefault, Franklin Gothic Medium
 Gui, Add, GroupBox, R%sectionGroupH% x10 y10 w300 , System Location
 Gui, Font, S10 CDefault, Franklin Gothic Medium
-Gui, Add, Text, x330 y10 w300 wrap, Select a Location at the left. If you provide an image at 'SUPPORTING-FILES\KB-CHEATSHEET-LOCATION(number).png' then it will display via Window-F4.`n`nBelow, check the boxes for the scripts you'd like to launch when running MASTER-SCRIPT.ahk.`n`nEdit '%inifile%' to add more locations and scripts.
+Gui, Add, Text, x330 y20 w280, Select a Location at the left. This can be used to provide location specific settings.`n`nBelow, check the boxes for the scripts you'd like to launch when running MASTER-SCRIPT.ahk.`n`nEdit '%inifile%' to add more locations and scripts.
 Gui, Font, S12 CDefault, Franklin Gothic Medium
 Gui, Add, Text, section x10 y10,
 loop, %section1_keys%
@@ -60,22 +57,18 @@ loop, %section1_keys%
     if (A_Index = 1) {
       Continue
     }
-    ;MsgBox %currentAltCounter%
     currentAltCounter := (A_Index - 1)
     currentKey := % section1_key%A_Index%
     currentKeyValue := % %section1%_%currentKey%
     currentKeyValueForRadio := "Location" . currentAltCounter . " > " . currentKeyValue
-    ;Gui, Add, Text, xs+20 yp+25
-    ;Gui, Add, Text, xs+20 yp+25, %currentKeyValueForRadio%
-
     if (currentAltCounter = Location_currentSystemLocation)
       Gui, Add, Radio, xs+20 vLocRadioGroup%currentAltCounter% Checked, %currentKeyValueForRadio%
     else
       Gui, Add, Radio, xs+20 vLocRadioGroup%currentAltCounter%, %currentKeyValueForRadio%
-    ;MsgBox %currentAltCounter%
   }
+  
 ;Section 2 - Scripts To Run
-sectionGroupH := (section2_keys / 2)
+sectionGroupH := (section2_keys / 3)
 currentAltCounter := 1
 Gui, Add, GroupBox, R%sectionGroupH% x10 yp+50 w630 , Scripts to Load
 Gui, Add, Text, section xp yp+10,
@@ -83,27 +76,33 @@ loop, %section2_keys%
   {
     currentKey := % section2_key%A_Index%
     pathLookAhead := A_Index + 1
-    pathKey :=
-    currentKeyValue :=
-    currentPathValue :=
-    If mod(A_Index,2){
-      pathKey := % section2_key%pathLookAhead%
-      currentKeyValue := %section2%_%currentKey%
-      currentPathValue := %section2%_%pathKey%
+    nameLookAhead := A_Index + 2
+    pathKey := % section2_key%pathLookAhead%
+    nameKey := % section2_key%nameLookAhead%
+    currentKeyValue := %section2%_%currentKey%
+    currentPathValue := %section2%_%pathKey%
+    currentNameValue := %section2%_%nameKey%
+    currentKeyLeft7 := SubStr(currentKey, 1, 7)
+    If (currentKeyLeft7 = "loadScr"){
       scriptCheckboxEnable%A_Index% = %currentKeyValue%
       Gui, Add, Checkbox, xs+20 yp+20 vscriptCheckboxEnable%currentAltCounter% Checked%currentKeyValue%, %currentPathValue%
       currentAltCounter += 1
+      pathKey :=
+	  nameKey :=
+      currentKeyValue :=
+      currentPathValue :=
+
     }
     else
       Continue
   }
 Gui, Font, S10 CDefault, Franklin Gothic Medium
-Gui, Add, Text, x30 yp+65 w340, Clicking 'SAVE' will save the settings above and reload MASTER-SCRIPT.ahk and the checked scripts above.
+Gui, Add, Text, x30 y%buttonStartingY% w340, Clicking 'SAVE' will save the settings above and reload MASTER-SCRIPT.ahk and the checked scripts above.
 Gui, Font, S12 CDefault, Franklin Gothic Medium
-Gui, Add, Button, x400 yp w100 h30, Cancel
+Gui, Add, Button, x400 y%buttonStartingY% w100 h30, Cancel
 Gui, Add, Button, x520 yp w100 h30, SAVE
-Gui, Add, Button, x400 yp+32 w220 h20, Variables
-Gui, Show, w700 h%guiHeight%
+;Gui, Add, Button, x400 yp+32 w220 h20, Variables
+Gui, Show, w%guiWidth% h%guiHeight%
 return
 
 ButtonVariables:

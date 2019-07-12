@@ -37,14 +37,14 @@ quarterScreenHeight := (A_ScreenHeight / 4) ; determine what 1/4 the screen's he
 
 global iniFile := "settings.ini" ; the main settings file used by most of the BPTV-KB scripts
 global splashScreenSpacing := 150
-global splashScreenStartY := quarterScreenHeight
+global splashScreenStartY := 50
 global splashScreenStartX := (halfScreenWidth - 300)
 
 INI_Init(iniFile)
 INI_Load(iniFile)
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading MASTER AHK Script.`nWin-F1 for CheatSheet of AHK Hotkeys.`n`nWin-Ctrl-Alt-Shift-Q to quit MASTER-SCRIPT & child scripts.
+SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading MASTER AHK Script.`nCAPS-F1 for CheatSheet of AHK Hotkeys.`nCAPS-Q to quit MASTER-SCRIPT & child scripts.`nCAPS-F11 to edit settings(MASTER-SETTINGS.ahk)
 WinMove, Launching %A_ScriptFullPath%, , %splashScreenStartX%, %splashScreenStartY%
 
 splashScreenStartY += splashScreenSpacing
@@ -55,27 +55,32 @@ loop, %section2_keys%
 {
     currentKey := % section2_key%A_Index%
     pathLookAhead := A_Index + 1
-    pathKey :=
-    currentKeyValue :=
-    currentPathValue :=
-    If mod(A_Index,2){
-        pathKey := % section2_key%pathLookAhead%
-        currentKeyValue := %section2%_%currentKey%
-        currentPathValue := %section2%_%pathKey%
-
+    pathKey := % section2_key%pathLookAhead%
+    currentKeyValue := %section2%_%currentKey%
+    currentPathValue := %section2%_%pathKey%
+    currentKeyLeft7 := SubStr(currentKey, 1, 7)
+    If (currentKeyLeft7 = "loadScr") {
         If (currentKeyValue) {
-            ;MsgBox Runnning: %currentPathValue%`nsplashScreenStartX: %splashScreenStartX%`nsplashScreenStartY: %splashScreenStartY%
-            Run, %currentPathValue% %splashScreenStartX% %splashScreenStartY%
+            If !FileExist(currentPathValue) {
+              MsgBox The App could not be found at %currentPathValue%
+              continue
+              }
+            else {
+            Run, %currentPathValue% %splashScreenStartX% %splashScreenStartY% %Settings_splashScreenTimeout%
             splashScreenStartY += splashScreenSpacing
+            }
         }
-        else
+        else {
             Continue
+            }
+        pathKey :=
+        currentKeyValue :=
+        currentPathValue :=
     }
     else
     Continue
 }
-Sleep, sleepLong
-SplashTextOff
+SetTimer, RemoveSplashScreen, %Settings_splashScreenTimeout%
     
 ;
 ;===== END OF AUTO-EXECUTE =====================================================================
@@ -96,8 +101,8 @@ ScrollLock & f11:: ; <--Open the Settings GUI for MASTER-SCRIPT.AHK
     Run, MASTER-SETTINGS.AHK
     return
 
-ScrollLock & f12:: ; <-- Launch buttonpusherTV LAUNCH-X
-    Run, C:\BPTV-KB\UTIL-APPS\BPTV-LAUNCHX\launcher.ahk ,C:\BPTV-KB\UTIL-APPS\BPTV-LAUNCHX
+ScrollLock & f12:: ; <-- Open BPTV-LAUNCHER
+    Run, C:\BPTV-KB\BPTV-LAUNCHER.ahk
     return
 
 ScrollLock & Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
@@ -147,7 +152,7 @@ CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortc
     }
     else
     If WinActive("ahk_exe AfterFX.exe") {
-        pic2Show := "SUPPORTING-FILES\KBF2-AE-LOC.png"
+        pic2Show := "SUPPORTING-FILES\KBF2-AE.png"
         PictureWidth := 2000
         numPages := 1
     }
@@ -155,6 +160,12 @@ CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortc
     If WinActive("ahk_exe SubtitleEdit.exe") {
         pic2Show := "SUPPORTING-FILES\CONTOUR-PRO-SUBTITLE-EDIT.jpg"
         PictureWidth := 906
+        numPages := 1
+    }
+    else
+    If WinActive("ahk_exe stickies.exe") {
+        pic2Show := "C:\BPTV-KB\SUPPORTING-FILES\KBF2-STICKIES.png"
+        PictureWidth := 1920
         numPages := 1
     }
     else {
@@ -217,6 +228,11 @@ return
 
 ;===== FUNCTIONS ===============================================================================
 
+RemoveSplashScreen:
+    SplashTextOff
+    SetTimer RemoveSplashScreen, Off
+    return
+
 RemoveToolTip:
     ToolTip
     return
@@ -247,37 +263,35 @@ Quitting:
     MsgBox, ,Quitting, Quitting MASTER-SCRIPT & child AHK scripts, 3
     SetTitleMatchMode, 2
 
-    loop, %section2_keys%
-    {
+loop, %section2_keys%
+{
     currentKey := % section2_key%A_Index%
     pathLookAhead := A_Index + 1
-    pathKey :=
-    currentKeyValue :=
-    currentPathValue :=
-    If mod(A_Index,2){
-        pathKey := % section2_key%pathLookAhead%
-        currentKeyValue := %section2%_%currentKey%
-        currentPathValue := %section2%_%pathKey%
+    pathKey := % section2_key%pathLookAhead%
+    currentKeyValue := %section2%_%currentKey%
+    currentPathValue := %section2%_%pathKey%
+    currentKeyLeft7 := SubStr(currentKey, 1, 7)
+    If (currentKeyLeft7 = "loadScr") {
         If (currentKeyValue) {
             SplashTextOn, 600, 50, Quitting AHK scripts, Quitting %currentPathValue%
             WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
             WinClose, %currentPathValue%
             splashScreenStartY += splashScreenSpacing
+        pathKey :=
+        currentKeyValue :=
+        currentPathValue :=
+            }
         }
-        else
-            Continue
-    }
-    else
+    else {
     Continue
     }
+}
     SplashTextOn, 600, 50, Quitting AHK scripts, All MASTER-SCRIPT.AHK shut down.`nGoodbye & thanks for all the fishes...
     WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%    
     Sleep, sleepMedium
     SplashTextOff
     ExitApp
     return
-
-
 
 
 ; This function will auto-reload the script on save.
