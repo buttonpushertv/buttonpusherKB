@@ -28,12 +28,12 @@ sleepDeep := 3500
 
 splashScreenX = %1%
 splashScreenY = %2%
+splashScreenTimeout = %3%
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading ILLUSTRATOR HOTKEYS Script.`n`nWin-[ to show CheatSheet of Keyboard Layout.
 WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
-Sleep, sleepLong
-SplashTextOff
+SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -675,6 +675,11 @@ SplashTextOff
 ;===== END SCAF DEFINITIONS ===============================================================
 
 ;===== FUNCTIONS ===============================================================================
+
+RemoveSplashScreen:
+    SplashTextOff
+    SetTimer RemoveSplashScreen, Off
+    return
 
 ; This function will auto-reload the script on save.
 CheckScriptUpdate() {

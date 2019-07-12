@@ -22,12 +22,12 @@ sleepDeep := 3500
 
 splashScreenX = %1%
 splashScreenY = %2%
+splashScreenTimeout = %3%
 
 
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading Accelerated Scrolling.`nCurrently enabled only in Premiere Pro.
 WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
-Sleep, sleepLong
-SplashTextOff
+SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 
 Process, Priority, , H
 SendMode Input
@@ -119,3 +119,8 @@ QuickToolTip(text, delay)
 	ToolTip
 	return
 }
+
+RemoveSplashScreen:
+    SplashTextOff
+    SetTimer RemoveSplashScreen, Off
+    return

@@ -21,6 +21,7 @@ sleepDeep := 3500
 
 splashScreenX = %1%
 splashScreenY = %2%
+splashScreenTimeout = %3%
 
 ;First, we define all the timeline's DEFAULT possible colors.
 ;(Note that your colors will be different if you changed the UI brightness inside preferences > appearance > brightness.)
@@ -40,8 +41,7 @@ timeline7 := 0x1B1B1B ;the color of a SELECTED blank space on the timeline, IN t
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loaded Premiere Pro Right-Click Timeline MOD.`n`nRight Click in timeline to move playhead.`n`nRight Clicking on clips should still work normally.
 WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
-Sleep, sleepLong
-SplashTextOff
+SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe ;exact name was gotten from windowspy
 
@@ -76,3 +76,7 @@ theEnd:
 Return
 
 
+RemoveSplashScreen:
+    SplashTextOff
+    SetTimer RemoveSplashScreen, Off
+    return

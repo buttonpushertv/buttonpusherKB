@@ -28,14 +28,14 @@ sleepDeep := 3500
 
 splashScreenX = %1%
 splashScreenY = %2%
+splashScreenTimeout = %3%
 
 #Include SCRIPTS-PPRO\PREMIERE-PRO-FUNCTIONS.ahk
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading PREMIERE PRO HOTKEYS Script.`n`nWin-[ to show CheatSheet of Keyboard Layout (BEN-CC19.kys).
 WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
-Sleep, sleepLong
-SplashTextOff
+SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -242,6 +242,11 @@ return
 ;===== END Program 1 DEFINITIONS ===============================================================
 
 ;===== FUNCTIONS ===============================================================================
+
+RemoveSplashScreen:
+    SplashTextOff
+    SetTimer RemoveSplashScreen, Off
+    return
 
 ; This function will auto-reload the script on save.
 CheckScriptUpdate() {
