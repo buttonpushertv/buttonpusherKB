@@ -81,7 +81,7 @@ loop, %section2_keys%
     Continue
 }
 SetTimer, RemoveSplashScreen, %Settings_splashScreenTimeout%
-    
+
 ;
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -200,7 +200,7 @@ CapsLock & f4:: ; <--Display an image CheatSheet based on System Location Settin
     keywait,f4
     Gui, Picture:Destroy
     return
-    
+
 CapsLock & t:: ; <-- Send time & date as text
     ;timestamp(theTimeStamp)
     FormatTime, now,, hh:mm tt
@@ -237,24 +237,6 @@ RemoveToolTip:
     ToolTip
     return
 
-CapsLockCheck:
-    If GetKeyState("CapsLock","T")
-    {
-    SetTimer, CapsBeep, 5000
-    ;SoundPlay,C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_06.wav ; Assign your own sound
-    }
-    Else
-    {
-    SetTimer, CapsBeep, Off
-    ;SoundPlay, C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_11.wav ; Assign your own sound
-    }
-    Return
-
-CapsBeep:
-    If GetKeyState("CapsLock","T")
-        SoundPlay, C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_01.wav ; Assign your own sound
-    Return
-
 Quitting:
     splashScreenSpacing := 75
     splashScreenStartY := 100
@@ -287,7 +269,7 @@ loop, %section2_keys%
     }
 }
     SplashTextOn, 600, 50, Quitting AHK scripts, All MASTER-SCRIPT.AHK shut down.`nGoodbye & thanks for all the fishes...
-    WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%    
+    WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
     Sleep, sleepMedium
     SplashTextOff
     ExitApp
