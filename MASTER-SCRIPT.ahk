@@ -83,7 +83,7 @@ loop, %section2_keys%
 }
 SetTimer, RemoveSplashScreen, %Settings_splashScreenTimeout%
 
-SetTimer, CapsLockCheck, 10000
+SetTimer, CapsLockCheck, %Settings_CapsLockCheckPeriod%
 ;
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -100,34 +100,52 @@ SetTimer, CapsLockCheck, 10000
 ~LAlt::Send {Blind}{vk07}
 
 ScrollLock & f11:: ; <--Open the Settings GUI for MASTER-SCRIPT.AHK
-    Run, MASTER-SETTINGS.AHK
+		SetScrollLockState, Off
+		Run, MASTER-SETTINGS.AHK
     return
 
 ScrollLock & f12:: ; <-- Open BPTV-LAUNCHER
-    Run, C:\BPTV-KB\BPTV-LAUNCHER.ahk
+		SetScrollLockState, Off
+		Run, C:\BPTV-KB\BPTV-LAUNCHER.ahk
     return
 
 ScrollLock & Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
-    Reload
+		SetScrollLockState, Off
+		Reload
     Return
 
 CapsLock & WheelDown::Send ^{PGDN}
 CapsLock & WheelUp::Send ^{PGUP}
 
-CapsLock & q:: ; <-- Exit MASTER-SCRIPT and child AHK Scripts
-goto Quitting
-
 CapsLock & b:: ; <-- Send 'buttonpusher' as text
-Send, buttonpusher
-return
-
-CapsLock & e:: ; <-- Send 'ben@buttonpusher.tv' as text
-Send, ben@buttonpusher.tv
+	Send, buttonpusher
 return
 
 CapsLock & c:: ; <-- Delete Key
-Send, {Delete}
+	Send, {Delete}
 return
+
+CapsLock & e:: ; <-- Send 'ben@buttonpusher.tv' as text
+	Send, ben@buttonpusher.tv
+return
+
+CapsLock & p:: ; <-- Toggle CapsLockCheck on or Off
+	If (IgnoreCapsCheck) {
+		SetTimer, CapsLockCheck, %Settings_CapsLockCheckPeriod%
+		IgnoreCapsCheck := 0
+		ToolTip, CapsLock checking activated.
+		SetTimer, RemoveToolTip, -2000
+		return
+	} else {
+	SetTimer, CapsLockCheck, Off
+	IgnoreCapsCheck := 1
+	ToolTip, CapsLock checking deactivated.
+	SetTimer, RemoveToolTip, -2000
+	return
+	}
+
+CapsLock & q:: ; <-- Exit MASTER-SCRIPT and child AHK Scripts
+goto Quitting
 
 CapsLock & v:: ; <-- Backspace Key
 Send, {BackSpace}
@@ -240,25 +258,29 @@ RemoveToolTip:
     return
 
 CapsLockCheck:
+		If IgnoreCapsCheck {
+		SetTimer, CapsLockCheck, off
+		return
+		}
     If GetKeyState("CapsLock","T")
     {
     	CapsLockCounter += 1
-			If (CapsLockCounter <=3 ) {
+			If (CapsLockCounter <= Settings_CapsLockToggleTimeoutThreshold ) {
 					return
-			} else If (CapsLockCounter >= 6) {
+			} else If (CapsLockCounter >= Settings_CapsLockToggleOffTimeout ) {
 				SetCapsLockState, Off
+				ToolTip, CapsLock Being Deactivated - Press CAPS+P to toggle this check on/off.
+				SetTimer, RemoveToolTip, -4000
 				CapsLockCounter := 0
 				SoundPlay,C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_06.wav ; Assign your own sound
 				Return
 				}
 			SoundPlay, C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_01.wav ; Assign your own sound
-			ToolTip, %CapsLockCounter%
-			SetTimer, RemoveToolTip, -2000
     	}	else {
 			CapsLockCounter := 0
 		}
     Return
-    
+
 Quitting:
     splashScreenSpacing := 75
     splashScreenStartY := 100

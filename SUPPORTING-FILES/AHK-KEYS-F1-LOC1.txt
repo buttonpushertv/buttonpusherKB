@@ -20,14 +20,16 @@
 | Fn INSERT -> PAUSE      |  CAPS+C              <--Delete Key
 |                         |  CAPS+V              <--BackSpace
 |-------------------------|
-| Fn LAYER KEYS           |  CAPS+Q              <--Exit MASTER-SCRIPT and child AHK Scripts
+| Fn LAYER KEYS           |  CAPS+P             <-- Toggle CapsLockCheck On or Off
 | MEDIA KEYS AS LABELLED  |
-| Fn C -> CALCULATOR      |  WIN+CTRL+SHIFT+F    <--Nuke Firefox (click Desktop first)
-|                         |  WIN+CTRL+SHIFT+P    <--Nuke Premiere (click Desktop first)
-+=========================+
+| Fn C -> CALCULATOR      |
+|                         |  WIN+CTRL+SHIFT+F    <--Nuke Firefox (click Desktop first)
++=========================+  WIN+CTRL+SHIFT+P    <--Nuke Premiere (click Desktop first)
+
                              SCRLK+F11           <--Open the Settings GUI for MASTER-SCRIPT.AHK
                              SCRLK+F12           <--Open BPTV-KB LAUNCH-X
                              SCRLK+BACKSP        <--Reload MASTER-SCRIPT.ahk
+                             CAPS+Q              <--Exit MASTER-SCRIPT and child AHK Scripts
 
 == STICKIES HOTKEYS -=======================================================
 
