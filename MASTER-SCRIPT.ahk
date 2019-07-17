@@ -41,6 +41,8 @@ global splashScreenStartY := 50
 global splashScreenStartX := (halfScreenWidth - 300)
 global CapsLockCounter := 0
 
+SetScrollLockState, off
+
 INI_Init(iniFile)
 INI_Load(iniFile)
 
@@ -100,17 +102,16 @@ SetTimer, CapsLockCheck, %Settings_CapsLockCheckPeriod%
 ~LAlt::Send {Blind}{vk07}
 
 ScrollLock & f11:: ; <--Open the Settings GUI for MASTER-SCRIPT.AHK
-		SetScrollLockState, Off
+		ScrollLockOff()
 		Run, MASTER-SETTINGS.AHK
     return
 
 ScrollLock & f12:: ; <-- Open BPTV-LAUNCHER
-		SetScrollLockState, Off
+		ScrollLockOff()
 		Run, C:\BPTV-KB\BPTV-LAUNCHER.ahk
     return
 
 ScrollLock & Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
-		SetScrollLockState, Off
 		Reload
     Return
 
