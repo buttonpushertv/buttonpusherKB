@@ -39,6 +39,7 @@ global iniFile := "settings.ini" ; the main settings file used by most of the BP
 global splashScreenSpacing := 150
 global splashScreenStartY := 50
 global splashScreenStartX := (halfScreenWidth - 300)
+global CapsLockCounter := 0
 
 INI_Init(iniFile)
 INI_Load(iniFile)
@@ -81,7 +82,9 @@ loop, %section2_keys%
     Continue
 }
 SetTimer, RemoveSplashScreen, %Settings_splashScreenTimeout%
-    
+
+SetTimer, CapsLockCheck, 5000
+
 ;
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -200,7 +203,7 @@ CapsLock & f4:: ; <--Display an image CheatSheet based on System Location Settin
     keywait,f4
     Gui, Picture:Destroy
     return
-    
+
 CapsLock & t:: ; <-- Send time & date as text
     ;timestamp(theTimeStamp)
     FormatTime, now,, hh:mm tt
@@ -240,14 +243,20 @@ RemoveToolTip:
 CapsLockCheck:
     If GetKeyState("CapsLock","T")
     {
-    SetTimer, CapsBeep, 5000
-    ;SoundPlay,C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_06.wav ; Assign your own sound
-    }
-    Else
-    {
-    SetTimer, CapsBeep, Off
-    ;SoundPlay, C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_11.wav ; Assign your own sound
-    }
+    CapsLockCounter += 1
+			If (CapsLockCounter >= 6) {
+				SetCapsLockState, Off
+				CapsLockCounter := 0
+				SoundPlay,C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_06.wav ; Assign your own sound
+				Return
+				}
+		SoundPlay, C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_01.wav ; Assign your own sound
+		ToolTip, %CapsLockCounter%
+		SetTimer, RemoveToolTip, -2000
+        }
+		else {
+		CapsLockCounter := 0
+		}
     Return
 
 CapsBeep:
@@ -287,7 +296,7 @@ loop, %section2_keys%
     }
 }
     SplashTextOn, 600, 50, Quitting AHK scripts, All MASTER-SCRIPT.AHK shut down.`nGoodbye & thanks for all the fishes...
-    WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%    
+    WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
     Sleep, sleepMedium
     SplashTextOff
     ExitApp
