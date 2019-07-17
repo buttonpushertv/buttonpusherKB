@@ -83,7 +83,7 @@ loop, %section2_keys%
 }
 SetTimer, RemoveSplashScreen, %Settings_splashScreenTimeout%
 
-SetTimer, CapsLockCheck, 5000
+SetTimer, CapsLockCheck, 10000
 
 ;
 ;===== END OF AUTO-EXECUTE =====================================================================
@@ -243,19 +243,20 @@ RemoveToolTip:
 CapsLockCheck:
     If GetKeyState("CapsLock","T")
     {
-    CapsLockCounter += 1
-			If (CapsLockCounter >= 6) {
+    	CapsLockCounter += 1
+			If (CapsLockCounter <=3 ) {
+					return
+			} else If (CapsLockCounter >= 6) {
 				SetCapsLockState, Off
 				CapsLockCounter := 0
 				SoundPlay,C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_06.wav ; Assign your own sound
 				Return
 				}
-		SoundPlay, C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_01.wav ; Assign your own sound
-		ToolTip, %CapsLockCounter%
-		SetTimer, RemoveToolTip, -2000
-        }
-		else {
-		CapsLockCounter := 0
+			SoundPlay, C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_01.wav ; Assign your own sound
+			ToolTip, %CapsLockCounter%
+			SetTimer, RemoveToolTip, -2000
+    	}	else {
+			CapsLockCounter := 0
 		}
     Return
 
