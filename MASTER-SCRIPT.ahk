@@ -39,6 +39,7 @@ global iniFile := "settings.ini" ; the main settings file used by most of the BP
 global splashScreenSpacing := 150
 global splashScreenStartY := 50
 global splashScreenStartX := (halfScreenWidth - 300)
+global CapsLockCounter := 0
 
 INI_Init(iniFile)
 INI_Load(iniFile)
@@ -82,6 +83,7 @@ loop, %section2_keys%
 }
 SetTimer, RemoveSplashScreen, %Settings_splashScreenTimeout%
 
+SetTimer, CapsLockCheck, 10000
 ;
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -237,6 +239,26 @@ RemoveToolTip:
     ToolTip
     return
 
+CapsLockCheck:
+    If GetKeyState("CapsLock","T")
+    {
+    	CapsLockCounter += 1
+			If (CapsLockCounter <=3 ) {
+					return
+			} else If (CapsLockCounter >= 6) {
+				SetCapsLockState, Off
+				CapsLockCounter := 0
+				SoundPlay,C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_06.wav ; Assign your own sound
+				Return
+				}
+			SoundPlay, C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_01.wav ; Assign your own sound
+			ToolTip, %CapsLockCounter%
+			SetTimer, RemoveToolTip, -2000
+    	}	else {
+			CapsLockCounter := 0
+		}
+    Return
+    
 Quitting:
     splashScreenSpacing := 75
     splashScreenStartY := 100
