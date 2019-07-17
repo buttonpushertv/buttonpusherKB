@@ -46,13 +46,14 @@ theTimeStamp = %now% - %today%
 }
 
 ScrollLockOff() {
-  SetTimer, ScrollLockToggle, 3000
+  SetTimer, ScrollLockToggle, 1000
   return
 
 ScrollLockToggle:
   SetScrollLockState, off
   ToolTip, Scroll Lock Toggled Off.
   RemoveToolTip(-2000)
+  SetTimer, ScrollLockToggle, Off
   Return
 
 }
