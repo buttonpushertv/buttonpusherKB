@@ -135,13 +135,13 @@ CapsLock & p:: ; <-- Toggle CapsLockCheck on or Off
 		SetTimer, CapsLockCheck, %Settings_CapsLockCheckPeriod%
 		IgnoreCapsCheck := 0
 		ToolTip, CapsLock checking activated.
-		SetTimer, RemoveToolTip, -2000
+		RemoveToolTip(-2000)
 		return
 	} else {
 	SetTimer, CapsLockCheck, Off
 	IgnoreCapsCheck := 1
 	ToolTip, CapsLock checking deactivated.
-	SetTimer, RemoveToolTip, -2000
+	RemoveToolTip(-2000)
 	return
 	}
 
@@ -235,7 +235,7 @@ CapsLock & t:: ; <-- Send time & date as text
 #^+f:: ; <-- Nuke Firefox
 Run, %comspec% /c "taskkill.exe /F /IM firefox.exe",, hide
 ToolTip, killed firefox
-SetTimer, RemoveToolTip, -2000
+RemoveToolTip(-2000)
 return
 
 #^p:: ; <-- Nuke Premiere
@@ -244,7 +244,7 @@ return
         PID = %ErrorLevel%
     Run, %comspec% /c "taskkill.exe /PID %PID% /T /F"
     ToolTip, killed premiere
-    SetTimer, RemoveToolTip, -2000
+    RemoveToolTip(-2000)
 return
 
 ;===== FUNCTIONS ===============================================================================
@@ -252,10 +252,6 @@ return
 RemoveSplashScreen:
     SplashTextOff
     SetTimer RemoveSplashScreen, Off
-    return
-
-RemoveToolTip:
-    ToolTip
     return
 
 CapsLockCheck:
@@ -271,7 +267,7 @@ CapsLockCheck:
 			} else If (CapsLockCounter >= Settings_CapsLockToggleOffTimeout ) {
 				SetCapsLockState, Off
 				ToolTip, CapsLock Being Deactivated - Press CAPS+P to toggle this check on/off.
-				SetTimer, RemoveToolTip, -4000
+				RemoveToolTip(-4000)
 				CapsLockCounter := 0
 				SoundPlay,C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_06.wav ; Assign your own sound
 				Return
@@ -289,36 +285,35 @@ Quitting:
     DetectHiddenWindows, On
     MsgBox, ,Quitting, Quitting MASTER-SCRIPT & child AHK scripts, 3
     SetTitleMatchMode, 2
-
-loop, %section2_keys%
-{
-    currentKey := % section2_key%A_Index%
-    pathLookAhead := A_Index + 1
-    pathKey := % section2_key%pathLookAhead%
-    currentKeyValue := %section2%_%currentKey%
-    currentPathValue := %section2%_%pathKey%
-    currentKeyLeft7 := SubStr(currentKey, 1, 7)
-    If (currentKeyLeft7 = "loadScr") {
-        If (currentKeyValue) {
-            SplashTextOn, 600, 50, Quitting AHK scripts, Quitting %currentPathValue%
-            WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
-            WinClose, %currentPathValue%
-            splashScreenStartY += splashScreenSpacing
-        pathKey :=
-        currentKeyValue :=
-        currentPathValue :=
-            }
-        }
-    else {
-    Continue
-    }
-}
-    SplashTextOn, 600, 50, Quitting AHK scripts, All MASTER-SCRIPT.AHK shut down.`nGoodbye & thanks for all the fishes...
-    WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
-    Sleep, sleepMedium
-    SplashTextOff
-    ExitApp
-    return
+		loop, %section2_keys%
+		{
+		    currentKey := % section2_key%A_Index%
+		    pathLookAhead := A_Index + 1
+		    pathKey := % section2_key%pathLookAhead%
+		    currentKeyValue := %section2%_%currentKey%
+		    currentPathValue := %section2%_%pathKey%
+		    currentKeyLeft7 := SubStr(currentKey, 1, 7)
+		    If (currentKeyLeft7 = "loadScr") {
+		        If (currentKeyValue) {
+		            SplashTextOn, 600, 50, Quitting AHK scripts, Quitting %currentPathValue%
+		            WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
+		            WinClose, %currentPathValue%
+		            splashScreenStartY += splashScreenSpacing
+		        pathKey :=
+		        currentKeyValue :=
+		        currentPathValue :=
+		            }
+		        }
+		    else {
+		    Continue
+		    }
+		}
+		    SplashTextOn, 600, 50, Quitting AHK scripts, All MASTER-SCRIPT.AHK shut down.`nGoodbye & thanks for all the fishes...
+		    WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
+		    Sleep, sleepMedium
+		    SplashTextOff
+		    ExitApp
+		    return
 
 
 ; This function will auto-reload the script on save.

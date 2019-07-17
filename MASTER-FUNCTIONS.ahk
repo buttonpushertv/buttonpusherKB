@@ -28,6 +28,16 @@ sleepDeep := 3500
 
 ;===== FUNCTIONS ===============================================================================
 
+RemoveToolTip(duration) {
+  SetTimer, ToolTipOff, %duration%
+  Return
+
+ToolTipOff:
+    ToolTip
+    return
+}
+
+
 timestamp(theTimeStamp) {
 global
 FormatTime, now,, hh:mm tt
@@ -42,7 +52,7 @@ ScrollLockOff() {
 ScrollLockToggle:
   SetScrollLockState, off
   ToolTip, Scroll Lock Toggled Off.
-  SetTimer, RemoveToolTip, -2000
+  RemoveToolTip(-2000)
   Return
 
 }
