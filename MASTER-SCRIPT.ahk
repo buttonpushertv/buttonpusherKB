@@ -84,7 +84,6 @@ loop, %section2_keys%
 SetTimer, RemoveSplashScreen, %Settings_splashScreenTimeout%
 
 SetTimer, CapsLockCheck, 10000
-
 ;
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -259,7 +258,7 @@ CapsLockCheck:
 			CapsLockCounter := 0
 		}
     Return
-
+    
 Quitting:
     splashScreenSpacing := 75
     splashScreenStartY := 100
