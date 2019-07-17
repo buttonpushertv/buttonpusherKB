@@ -259,11 +259,6 @@ CapsLockCheck:
 		}
     Return
 
-CapsBeep:
-    If GetKeyState("CapsLock","T")
-        SoundPlay, C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_01.wav ; Assign your own sound
-    Return
-
 Quitting:
     splashScreenSpacing := 75
     splashScreenStartY := 100
