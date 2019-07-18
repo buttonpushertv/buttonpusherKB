@@ -39,6 +39,9 @@ global iniFile := "settings.ini" ; the main settings file used by most of the BP
 global splashScreenSpacing := 150
 global splashScreenStartY := 50
 global splashScreenStartX := (halfScreenWidth - 300)
+global CapsLockCounter := 0
+
+SetScrollLockState, off
 
 INI_Init(iniFile)
 INI_Load(iniFile)
@@ -82,6 +85,7 @@ loop, %section2_keys%
 }
 SetTimer, RemoveSplashScreen, %Settings_splashScreenTimeout%
 
+SetTimer, CapsLockCheck, %Settings_CapsLockCheckPeriod%
 ;
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -98,34 +102,51 @@ SetTimer, RemoveSplashScreen, %Settings_splashScreenTimeout%
 ~LAlt::Send {Blind}{vk07}
 
 ScrollLock & f11:: ; <--Open the Settings GUI for MASTER-SCRIPT.AHK
-    Run, MASTER-SETTINGS.AHK
+		ScrollLockOff()
+		Run, MASTER-SETTINGS.AHK
     return
 
 ScrollLock & f12:: ; <-- Open BPTV-LAUNCHER
-    Run, C:\BPTV-KB\BPTV-LAUNCHER.ahk
+		ScrollLockOff()
+		Run, C:\BPTV-KB\BPTV-LAUNCHER.ahk
     return
 
 ScrollLock & Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
-    Reload
+		Reload
     Return
 
 CapsLock & WheelDown::Send ^{PGDN}
 CapsLock & WheelUp::Send ^{PGUP}
 
-CapsLock & q:: ; <-- Exit MASTER-SCRIPT and child AHK Scripts
-goto Quitting
-
 CapsLock & b:: ; <-- Send 'buttonpusher' as text
-Send, buttonpusher
-return
-
-CapsLock & e:: ; <-- Send 'ben@buttonpusher.tv' as text
-Send, ben@buttonpusher.tv
+	Send, buttonpusher
 return
 
 CapsLock & c:: ; <-- Delete Key
-Send, {Delete}
+	Send, {Delete}
 return
+
+CapsLock & e:: ; <-- Send 'ben@buttonpusher.tv' as text
+	Send, ben@buttonpusher.tv
+return
+
+CapsLock & p:: ; <-- Toggle CapsLockCheck on or Off
+	If (IgnoreCapsCheck) {
+		SetTimer, CapsLockCheck, %Settings_CapsLockCheckPeriod%
+		IgnoreCapsCheck := 0
+		ToolTip, CapsLock checking activated.
+		RemoveToolTip(-2000)
+		return
+	} else {
+	SetTimer, CapsLockCheck, Off
+	IgnoreCapsCheck := 1
+	ToolTip, CapsLock checking deactivated.
+	RemoveToolTip(-2000)
+	return
+	}
+
+CapsLock & q:: ; <-- Exit MASTER-SCRIPT and child AHK Scripts
+goto Quitting
 
 CapsLock & v:: ; <-- Backspace Key
 Send, {BackSpace}
@@ -214,7 +235,7 @@ CapsLock & t:: ; <-- Send time & date as text
 #^+f:: ; <-- Nuke Firefox
 Run, %comspec% /c "taskkill.exe /F /IM firefox.exe",, hide
 ToolTip, killed firefox
-SetTimer, RemoveToolTip, -2000
+RemoveToolTip(-2000)
 return
 
 #^p:: ; <-- Nuke Premiere
@@ -223,7 +244,7 @@ return
         PID = %ErrorLevel%
     Run, %comspec% /c "taskkill.exe /PID %PID% /T /F"
     ToolTip, killed premiere
-    SetTimer, RemoveToolTip, -2000
+    RemoveToolTip(-2000)
 return
 
 ;===== FUNCTIONS ===============================================================================
@@ -233,9 +254,29 @@ RemoveSplashScreen:
     SetTimer RemoveSplashScreen, Off
     return
 
-RemoveToolTip:
-    ToolTip
-    return
+CapsLockCheck:
+		If IgnoreCapsCheck {
+		SetTimer, CapsLockCheck, off
+		return
+		}
+    If GetKeyState("CapsLock","T")
+    {
+    	CapsLockCounter += 1
+			If (CapsLockCounter <= Settings_CapsLockToggleTimeoutThreshold ) {
+					return
+			} else If (CapsLockCounter >= Settings_CapsLockToggleOffTimeout ) {
+				SetCapsLockState, Off
+				ToolTip, CapsLock Being Deactivated - Press CAPS+P to toggle this check on/off.
+				RemoveToolTip(-4000)
+				CapsLockCounter := 0
+				SoundPlay,C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_06.wav ; Assign your own sound
+				Return
+				}
+			SoundPlay, C:\BPTV-KB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_01.wav ; Assign your own sound
+    	}	else {
+			CapsLockCounter := 0
+		}
+    Return
 
 Quitting:
     splashScreenSpacing := 75
@@ -244,36 +285,35 @@ Quitting:
     DetectHiddenWindows, On
     MsgBox, ,Quitting, Quitting MASTER-SCRIPT & child AHK scripts, 3
     SetTitleMatchMode, 2
-
-loop, %section2_keys%
-{
-    currentKey := % section2_key%A_Index%
-    pathLookAhead := A_Index + 1
-    pathKey := % section2_key%pathLookAhead%
-    currentKeyValue := %section2%_%currentKey%
-    currentPathValue := %section2%_%pathKey%
-    currentKeyLeft7 := SubStr(currentKey, 1, 7)
-    If (currentKeyLeft7 = "loadScr") {
-        If (currentKeyValue) {
-            SplashTextOn, 600, 50, Quitting AHK scripts, Quitting %currentPathValue%
-            WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
-            WinClose, %currentPathValue%
-            splashScreenStartY += splashScreenSpacing
-        pathKey :=
-        currentKeyValue :=
-        currentPathValue :=
-            }
-        }
-    else {
-    Continue
-    }
-}
-    SplashTextOn, 600, 50, Quitting AHK scripts, All MASTER-SCRIPT.AHK shut down.`nGoodbye & thanks for all the fishes...
-    WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
-    Sleep, sleepMedium
-    SplashTextOff
-    ExitApp
-    return
+		loop, %section2_keys%
+		{
+		    currentKey := % section2_key%A_Index%
+		    pathLookAhead := A_Index + 1
+		    pathKey := % section2_key%pathLookAhead%
+		    currentKeyValue := %section2%_%currentKey%
+		    currentPathValue := %section2%_%pathKey%
+		    currentKeyLeft7 := SubStr(currentKey, 1, 7)
+		    If (currentKeyLeft7 = "loadScr") {
+		        If (currentKeyValue) {
+		            SplashTextOn, 600, 50, Quitting AHK scripts, Quitting %currentPathValue%
+		            WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
+		            WinClose, %currentPathValue%
+		            splashScreenStartY += splashScreenSpacing
+		        pathKey :=
+		        currentKeyValue :=
+		        currentPathValue :=
+		            }
+		        }
+		    else {
+		    Continue
+		    }
+		}
+		    SplashTextOn, 600, 50, Quitting AHK scripts, All MASTER-SCRIPT.AHK shut down.`nGoodbye & thanks for all the fishes...
+		    WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
+		    Sleep, sleepMedium
+		    SplashTextOff
+		    ExitApp
+		    return
 
 
 ; This function will auto-reload the script on save.

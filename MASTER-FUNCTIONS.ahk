@@ -28,12 +28,36 @@ sleepDeep := 3500
 
 ;===== FUNCTIONS ===============================================================================
 
+RemoveToolTip(duration) {
+  SetTimer, ToolTipOff, %duration%
+  Return
+
+ToolTipOff:
+    ToolTip
+    return
+}
+
+
 timestamp(theTimeStamp) {
 global
 FormatTime, now,, hh:mm tt
 today = %A_YYYY%-%A_MMM%-%A_DD%
 theTimeStamp = %now% - %today%
 }
+
+ScrollLockOff() {
+  SetTimer, ScrollLockToggle, 1000
+  return
+
+ScrollLockToggle:
+  SetScrollLockState, off
+  ToolTip, Scroll Lock Toggled Off.
+  RemoveToolTip(-2000)
+  SetTimer, ScrollLockToggle, Off
+  Return
+
+}
+
 
 ;for showText & showPic - I want to add code in that will downgrade to the next lowest code that does exist if it can't find whatever file it is sent.
 
@@ -58,7 +82,7 @@ showPic(picToShow, PictureWidth){
   SysGet, Mon1, Monitor, 1
   If (Mon1Right < PictureWidth)
     PictureWidth -= 425
-  if !FileExist(picToShow) { 
+  if !FileExist(picToShow) {
     picToShow := "SUPPORTING-FILES\NO-CHEAT-SHEET.png"
     PictureWidth := 579
   }
@@ -88,10 +112,10 @@ showImageTabs(picToshow, PictureWidth, numPages){
         nextTab := tabList . "Page" . A_Index . "|"
         tabList := nextTab
         }
-    Gui, Picture:add, Tab3,, %tabList%   
+    Gui, Picture:add, Tab3,, %tabList%
     loop, %numPages% {
         fileToShow := picToShow . A_Index . ".png"
-          if !FileExist(fileToShow) { 
+          if !FileExist(fileToShow) {
             picToShow := "SUPPORTING-FILES\NO-CHEAT-SHEET.png"
             PictureWidth := 579
             showPic(picToshow, PictureWidth)
