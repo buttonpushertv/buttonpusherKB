@@ -2,7 +2,7 @@
 # buttonpushertv-Post-Production-Keyboard-Interface
 A set of files used to create an efficient Post-Production Keyboard Interface that works for me.
 
- Based on the [2nd keyboard] project by TaranVH, this suite of [AutoHotKey] scripts (and a few other files) provide a framework for making efficient use of a keyboard and some other input devices for the work I do in post-production.
+ Based on the [2nd keyboard:https://github.com/TaranVH/2nd-keyboard] project by TaranVH, this suite of [AutoHotKey] scripts (and a few other files) provide a framework for making efficient use of a keyboard and some other input devices for the work I do in post-production.
  
  A little about me: I’m an editor with over 30 years experience in post-production. I got my start in linear, tape-based suites and quickly transitioned to non-linear systems as the field evolved. I’m a nut for tweaking the interface of my systems. In recent years, I’ve begun integrating custom and programmable keypads and other devices into my workflow.
  
