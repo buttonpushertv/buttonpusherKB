@@ -23,6 +23,7 @@ To make use of this suite, there are just a few things you’ll need to do.
 1.  Install [AutoHotKey](https://www.autohotkey.com/) - download & install the latest stable version.
 2.  Download this whole repository and unzip it into a folder in the root of your system drive. Mine is located in C:\BPTV-KB. I have it installed on 3 systems and the only thing that I have to tweak on each system is the settings.ini file (more on that later)
 3.  That’s pretty much all you need to get going...well, there’s the whole *getting-inside-Ben’s-brain-thing* but other than that, you’re all set. 😜
+4.  Visit the [Wiki of this Repository](https://github.com/buttonpushertv/buttonpushertv-Post-Production-Keyboard-Interface/wiki) - this is where I will go through what the scripts do & my thinking behind them.
 
 
 ## Authors
