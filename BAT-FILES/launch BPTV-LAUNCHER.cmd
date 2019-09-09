@@ -1,0 +1,2 @@
+cd C:\BPTV-KB
+BPTV-LAUNCHER.ahk
