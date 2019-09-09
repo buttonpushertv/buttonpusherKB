@@ -104,10 +104,12 @@ Gui, Add, Text, x85 yp+55 vtimeoutText, %timeoutText%
 Gui, Add, Text, x330 yp w25 vtimeoutTextProgress
 Gui, Font, S12 CDefault, Franklin Gothic Medium
 Gui, Add, Progress, x10 yp+20 w%guiElementWidth% h20 cGreen BackgroundNavy Range0-%timeoutSegments% vtimeoutProgress
-Gui, Add, Button, x10 yp+30 w%guiElementWidth% h30, Launch Apps &Now
+Gui, Add, Button, Default x10 yp+30 w%guiElementWidth% h30, Launch Apps &Now
 ;guiHeight += 75
 ;Gui, Add, Button, x10 yp+40 w430 h30, Variables
 Gui, Show, w%guiWidth% h%guiHeight%
+
+
 
 ;timer code section here
 ;the timeout period is stored in settings.ini - under the [Settings] section as milliseconds - other values designated in above GUI code

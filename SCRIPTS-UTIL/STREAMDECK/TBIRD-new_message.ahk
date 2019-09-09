@@ -1,10 +1,19 @@
 ﻿; AutoHotKey - 1-Shot - TBIRD
 ; by Ben Howard - ben@buttonpusher.tv
 
-#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
-; #Warn  ; Enable warnings to assist with detecting common errors.
-SendMode Event ; Thunderbird does not see 'Input' flavor Sends...
-SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+#NoEnv
+SetWorkingDir %A_ScriptDir%
+CoordMode, Mouse, Window
+SendMode Input
+#SingleInstance Force
+SetTitleMatchMode 2
+#WinActivateForce
+SetControlDelay 1
+SetWinDelay 0
+SetKeyDelay -1
+SetMouseDelay -1
+SetBatchLines -1
+
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
 
@@ -22,11 +31,11 @@ sleepDeep = 3500
 ; <=use left mod key| >=use right mod key  | UP=fires on release
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
-WinActivate, ahk_exe thunderbird.exe
+WinActivate, ahk_class MozillaWindowClass
+Sleep, sleepLong
+Send, {RControl Down}
 Sleep, sleepShort
-Send, {Control Down}
+Send, {n}
 Sleep, sleepShort
-Send, n
-Sleep, sleepShort
-Send, {Control Up}
+Send, {RControl Up}
 ExitApp
