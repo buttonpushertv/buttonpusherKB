@@ -122,6 +122,10 @@ CapsLock & b:: ; <-- Send 'buttonpusher' as text
 	Send, buttonpusher
 return
 
+CapsLock & n:: ; <-- Send 'ben@buttonpusher' as text
+	Send, ben@buttonpusher.tv
+return
+
 CapsLock & c:: ; <-- Delete Key
 	Send, {Delete}
 return
