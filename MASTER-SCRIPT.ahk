@@ -232,7 +232,6 @@ CapsLock & f4:: ; <--Display an image CheatSheet based on System Location Settin
     return
 
 CapsLock & t:: ; <-- Send time & date as text
-    ;timestamp(theTimeStamp)
     FormatTime, now,, hh:mm tt
     today = %A_YYYY%-%A_MMM%-%A_DD%
     theTimeStamp = %now% - %today%

@@ -4,15 +4,12 @@
 ; https://autohotkey.com/board/topic/19650-auto-readload-and-save-an-ini-file-updated/
 
 ;===== START OF AUTO-EXECUTION SECTION =========================================================
+;
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
-; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-; #Persistent ; Keeps script permanently running.
 #SingleInstance force ; Ensures that there is only a single instance of this script running.
-; SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of "exact"
-
-
+;
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times
 sleepMicro := 5
@@ -25,8 +22,10 @@ sleepDeep := 3500
 #Include MASTER-FUNCTIONS.ahk
 
 ;===== END OF AUTO-EXECUTE =====================================================================
-
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
+
+; This section will Initialize & Load the settiings from %inifile%
+; code is commented below
 inifile = settings.ini
 
 INI_Init(inifile)
@@ -35,7 +34,7 @@ INI_Load(inifile)
 ;Creating the Main GUI for the app - the bit that loads inititally when run
 ;setting width variables
 guiWidth := 700
-guiElementWidth := (guiWidth - 20) 
+guiElementWidth := (guiWidth - 20)
 ;figuring out how tall the whole GUI will be
 keyRows := (section1_keys - 1)
 keyRows += (section2_keys / 3)
@@ -66,7 +65,7 @@ loop, %section1_keys%
     else
       Gui, Add, Radio, xs+20 vLocRadioGroup%currentAltCounter%, %currentKeyValueForRadio%
   }
-  
+
 ;Section 2 - Scripts To Run
 sectionGroupH := (section2_keys / 3)
 currentAltCounter := 1
@@ -101,7 +100,7 @@ Gui, Add, Text, x30 y%buttonStartingY% w340, Clicking 'SAVE' will save the setti
 Gui, Font, S12 CDefault, Franklin Gothic Medium
 Gui, Add, Button, x400 y%buttonStartingY% w100 h30, Cancel
 Gui, Add, Button, x520 yp w100 h30, SAVE
-;Gui, Add, Button, x400 yp+32 w220 h20, Variables
+;Gui, Add, Button, x400 yp+32 w220 h20, Variables ; Uncomment if you wish to have a button to show Variables assigned by the script
 Gui, Show, w%guiWidth% h%guiHeight%
 return
 
@@ -134,7 +133,7 @@ loop, %section2_keys%
   }
 INI_Save(inifile)
 ;Reload ;uncomment to reload immed. after save - to check what it saved
-Run, "MASTER-SCRIPT.ahk" ; forcing the MASTER-SCRIPT.ahk to reload
+Run, "MASTER-SCRIPT.ahk" ; forcing the MASTER-SCRIPT.ahk to reload. Since '#SingleInstance force' is defined in MASTER-SCRIPT.ahk, by just running the script again will reload it.
 Gui, Destroy
 ExitApp
 return

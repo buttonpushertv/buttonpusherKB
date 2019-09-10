@@ -1,15 +1,14 @@
 ﻿; AutoHotKey - MASTER-FUNCTIONS for inclusion into MASTER-SCRIPT.AHK
 ;by Ben Howard - ben@buttonpusher.tv
+;
+; portions copied from TaranVH's 2nd-keyboard project (https://github.com/TaranVH/2nd-keyboard)
 
 ;===============================================================================================
 ;===== START OF AUTO-EXECUTION SECTION =========================================================
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
-; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-; #Persistent ; Keeps script permanently running.
 #SingleInstance force ; Ensures that there is only a single instance of this script running.
-; SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of "exact"
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times
@@ -28,6 +27,7 @@ sleepDeep := 3500
 
 ;===== FUNCTIONS ===============================================================================
 
+; use this function to Remove ToolTips - pretty self-explanatory
 RemoveToolTip(duration) {
   SetTimer, ToolTipOff, %duration%
   Return
@@ -37,14 +37,7 @@ ToolTipOff:
     return
 }
 
-
-timestamp(theTimeStamp) {
-global
-FormatTime, now,, hh:mm tt
-today = %A_YYYY%-%A_MMM%-%A_DD%
-theTimeStamp = %now% - %today%
-}
-
+; use this function to turn ScrollLock off
 ScrollLockOff() {
   SetTimer, ScrollLockToggle, 1000
   return
@@ -61,6 +54,7 @@ ScrollLockToggle:
 
 ;for showText & showPic - I want to add code in that will downgrade to the next lowest code that does exist if it can't find whatever file it is sent.
 
+; showText is used to create and display a GUI for a text file as a Cheat Sheet
 showText(fileToShow){
   IfNotExist, %fileToShow%
     fileToShow := "SUPPORTING-FILES\AHK-KEYS-NO-CHEATSHEET.txt"
@@ -78,6 +72,8 @@ showText(fileToShow){
 return
 }
 
+; showPic is used to create and display a GUI for an image Cheat Sheet
+; showPic can only display single images in a single frame (see showImageTabs below for more than 1 image)
 showPic(picToShow, PictureWidth){
   SysGet, Mon1, Monitor, 1
   If (Mon1Right < PictureWidth)
@@ -96,6 +92,8 @@ showPic(picToShow, PictureWidth){
 return
 }
 
+; showImageTabs is used to create and display a GUI for multiple images in tabs
+; Once displayed, you can scroll up or down to change visible image tabs
 showImageTabs(picToshow, PictureWidth, numPages){
     SysGet, Mon1, Monitor, 1
     If (Mon1Right < PictureWidth)
@@ -136,7 +134,7 @@ showImageTabs(picToshow, PictureWidth, numPages){
     return
 }
 
-
+; used to destroy GUIs - I know this is not necessarily the best way to do these Cheat Sheets, but it works very quickly on my systems.
 killGui(whicGUI){
 Gui, Destroy
 return
@@ -145,19 +143,20 @@ return
 
 
 /*
-INI_Init(inifile)     ;prepares the global variables to be populated
-INI_Load(inifile)     ;Reads all the settings into the global variables from the file
-INI_Save(inifile)     ;Saves all the settings from the global variables into the file
+  This sections defines the Functions to Initialize, Read, and Saves the settings from the file defined by the variable %iniFile% - set in MASTER-SCRIPT.ahk (around line 37)
+  INI_Init(inifile)     ;prepares the global variables to be populated
+  INI_Load(inifile)     ;Reads all the settings into the global variables from the file
+  INI_Save(inifile)     ;Saves all the settings from the global variables into the file
 
-INI_ReadAll(inifile)  ;Synonym for INI_Load
-INI_WriteAll(inifile) ;Synonym for INI_Save
+  INI_ReadAll(inifile)  ;Synonym for INI_Load
+  INI_WriteAll(inifile) ;Synonym for INI_Save
 
 */
 INI_Init(inifile = "inifile.ini"){
   global
 
 ;the section below will check for the existance of the 'settings.ini' file. If it does not exist, then a default one will be created.
-  If !FileExist("settings.ini"){ ;remember an ! before the variable to test in an 'if' statement means 'logical not' - it's a way to invert the value for something where you only want to do a thing if the result is false. (i.e.-you don't need an if (true) stop...else (false) do soemthing
+  If !FileExist("settings.ini"){ ;remember an ! before the variable to test in an 'if' statement means 'logical not' - it's a way to invert the value for something where you only want to do a thing if the result is false. (i.e.-you don't need an if (true) stop...else (false) do something)
 		FileAppend,
       (
 [Location]
@@ -166,14 +165,23 @@ systemLocation1=This-PC
 [Scripts]
 loadScript1=1
 pathScript1=settings-made.ahk
+[Apps]
+loadApp1=1
+pathApp1=MASTER-SCRIPT.ahk
+nameApp1=Run MASTER-SCRIPT.AHK
+[Settings]
+timeoutPeriod=7000
+splashScreenTimeout=4000
+CapsLockToggleTimeoutThreshold=4
+CapsLockToggleOffTimeout=8
+CapsLockCheckPeriod=10000
       ), settings.ini
 	  FileAppend,
 	  (
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
-; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-MsgBox, 64, 'settings.ini' file created, The 'settings.ini' file has been created in D:\Dropbox\PostOp-Ben Share\Apps\AutoHotKey\AHK-SCRIPTS-working\using an ini file.``n``nYou can edit it in a text editor to add to it. Follow the format of the created file to add Locations and/or Scripts to Run at the Launch of MASTER-SCRIPT.AHK.``n``nFeel free to delete this script and it's corresponding settings once you have begun adding your own items.``n``nPress WIN+F11 to open the settings interface.
+MsgBox, 64, 'settings.ini' file created, The 'settings.ini' file has been created in %A_ScriptDir%.``n``nYou can edit it in a text editor to add to it. Follow the format of the created file to add Locations and/or Scripts to Run at the Launch of MASTER-SCRIPT.AHK.``n``nFeel free to delete this script and it's corresponding settings once you have begun adding your own items.``n``nPress ScrollLock+F11 to open the settings interface.
 	), settings-made.ahk
 	}
 
@@ -181,7 +189,7 @@ MsgBox, 64, 'settings.ini' file created, The 'settings.ini' file has been create
 
   local key
   inisections:=0
-
+;this loop will read the settings from the existing %iniFile%
   loop,read,%inifile%
   {
     if regexmatch(A_Loopreadline,"\[(\w+)]")
@@ -242,6 +250,9 @@ INI_Save(inifile="inifile.ini"){
 ;    WinTitle - Optional title of the window to activate.  Programs like
 ;    MS Outlook might have multiple windows open (main window and email
 ;    windows).  This parm allows activating a specific window.
+;
+; These functions are a bit flaky - Ben
+;
 ; ===========================================================================
 
 RunOrActivate(Target, WinTitle = "", Parameters = "")
