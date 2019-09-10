@@ -36,6 +36,8 @@ halfScreenWidth := (A_ScreenWidth / 2) ; determine what half the screen's width 
 quarterScreenHeight := (A_ScreenHeight / 4) ; determine what 1/4 the screen's height is for splash screens
 
 global iniFile := "settings.ini" ; the main settings file used by most of the BPTV-KB scripts
+global versionFile := "version.ini" ; the file which holds the current version of BPTV-KB
+global version
 global splashScreenSpacing := 150
 global splashScreenStartY := 50
 global splashScreenStartX := (halfScreenWidth - 300)
@@ -45,9 +47,10 @@ SetScrollLockState, off
 
 INI_Init(iniFile)
 INI_Load(iniFile)
+FileRead, version, %versionFile%
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading MASTER AHK Script.`nCAPS-F1 for CheatSheet of AHK Hotkeys.`nCAPS-Q to quit MASTER-SCRIPT & child scripts.`nCAPS-F11 to edit settings(MASTER-SETTINGS.ahk)
+SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading MASTER AHK Script - Version: %version%CAPS-F1 for CheatSheet of AHK Hotkeys.`nCAPS-Q to quit MASTER-SCRIPT & child scripts.`nCAPS-F11 to edit settings(MASTER-SETTINGS.ahk)
 WinMove, Launching %A_ScriptFullPath%, , %splashScreenStartX%, %splashScreenStartY%
 
 splashScreenStartY += splashScreenSpacing
