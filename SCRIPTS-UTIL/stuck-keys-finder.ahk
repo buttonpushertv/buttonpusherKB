@@ -20,7 +20,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #InstallKeybdHook
 #UseHook On
 #HotkeyModifierTimeout 0
-; The 2 lines below pertain to the 'reload on save' function below (CheckScriptUpdate). 
+; The 2 lines below pertain to the 'reload on save' function below (CheckScriptUpdate).
 ; They are required for it to work.
 FileGetTime ScriptStartModTime, %A_ScriptFullPath%
 SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
@@ -35,7 +35,7 @@ sleepDeep := 3500
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
-; combine below with key and '::' to define hotkey 
+; combine below with key and '::' to define hotkey
 ; e.g.- ^f1::Msgbox You pressed Control and F1
 ; #=Win | !=Alt | ^=Ctrl | +=Shift | &=combine keys | *=ignore other mods
 ; <=use left mod key| >=use right mod key  | UP=fires on release
@@ -60,6 +60,10 @@ Gui, Add, Text, x122 y25 w20 h20 vRctrlState, %stateRctrl%
 Gui, Add, Text, x122 y55 w20 h20 vRshiftState, %stateRshift%
 Gui, Add, Text, x122 y85 w20 h20 vRaltState, %stateRalt%
 Gui, Add, Text, x122 y115 w20 h20 vRwinState, %stateRwin%
+Gui, Add, Text, x152 y25 w20 h20 vRctrlStateP, %statePRctrl%
+Gui, Add, Text, x152 y55 w20 h20 vRshiftStateP, %statePRshift%
+Gui, Add, Text, x152 y85 w20 h20 vRaltStateP, %statePRalt%
+Gui, Add, Text, x152 y115 w20 h20 vRwinStateP, %statePRwin%
 Gui, Show, w200 h157, Finding Stuck Keys GUI
 Gosub, DebugStickyKeys
 return
@@ -68,24 +72,24 @@ DebugStickyKeys:
 ;If (stateLalt = 0 or statePLalt = 0) {
 ;    Send, {Lalt Up}
 ;}
-;If (stateRalt = 0 or statePRalt = 0) {
+;If (stateRalt = 1 or statePRalt = 1) {
 ;    Send, {Ralt Up}
 ;}
-stateLalt := GetKeyState("LAlt") 
+stateLalt := GetKeyState("LAlt")
 statePLalt := GetKeyState("LAlt", "P")
 stateLctrl := GetKeyState("LControl")
 statePLctrl := GetKeyState("LControl", "P")
-stateLshift := GetKeyState("LShift") 
+stateLshift := GetKeyState("LShift")
 statePLshift := GetKeyState("LShift", "P")
-stateLwin := GetKeyState("LWin") 
+stateLwin := GetKeyState("LWin")
 statePLwin := GetKeyState("LWin", "P")
-stateRalt := GetKeyState("RAlt") 
+stateRalt := GetKeyState("RAlt")
 statePRalt := GetKeyState("RAlt", "P")
 stateRctrl := GetKeyState("RControl")
 statePRctrl := GetKeyState("RControl", "P")
-stateRshift := GetKeyState("RShift") 
+stateRshift := GetKeyState("RShift")
 statePRshift := GetKeyState("RShift", "P")
-stateRwin := GetKeyState("RWin") 
+stateRwin := GetKeyState("RWin")
 statePRwin := GetKeyState("RWin", "P")
 GuiControl,, LctrlState, %stateLctrl%
 GuiControl,, LshiftState, %stateLshift%
@@ -99,6 +103,10 @@ GuiControl,, RctrlState, %stateRctrl%
 GuiControl,, RshiftState, %stateRshift%
 GuiControl,, RaltState, %stateRalt%
 GuiControl,, RwinState, %stateRwin%
+GuiControl,, RctrlStateP, %statePRctrl%
+GuiControl,, RshiftStateP, %statePRshift%
+GuiControl,, RaltStateP, %statePRalt%
+GuiControl,, RwinStateP, %statePRwin%
 
 return
 
