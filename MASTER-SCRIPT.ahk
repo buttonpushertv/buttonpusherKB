@@ -9,6 +9,11 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #Persistent ; Keeps script permanently running.
 #SingleInstance force ; Ensures that there is only a single instance of this script running.
+
+#InstallKeybdHook        ;Recent Window 10 updates have started getting the Alt key stuck down,
+#UseHook On              ;but only in AutoHotKey. These 3 commands are an attempt to fix that.
+#HotkeyModifierTimeout 0 ;It's not clear if this completely fixes it.
+
 Menu, Tray, Icon, imageres.dll, 187 ;tray icon is now a little keyboard, or piece of paper or something
 
 #MenuMaskKey vk07 ; This is needed to block the Window key from triggering the Start Menu when pressed by itself.
