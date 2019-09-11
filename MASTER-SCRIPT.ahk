@@ -115,7 +115,8 @@ SetTimer, CapsLockCheck, %Settings_CapsLockCheckPeriod% ; the main timer to chec
 ; don't know if this works for alt too...
 ~LAlt::Send {Blind}{vk07}
 
-ScrollLock & f11:: ; <-- Open the Settings GUI for MASTER-SCRIPT.AHK
+ScrollLock & f11::
+CapsLock & f11:: ; <-- Open the Settings GUI for MASTER-SCRIPT.AHK
 		ScrollLockOff()
 		Run, MASTER-SETTINGS.AHK
     return
@@ -160,7 +161,8 @@ CapsLock & p:: ; <-- Toggle CapsLockCheck on or Off
 	}
 
 CapsLock & q:: ; <-- Exit MASTER-SCRIPT and child AHK Scripts
-goto Quitting
+	goto Quitting
+return
 
 CapsLock & v:: ; <-- Backspace Key
 Send, {BackSpace}
@@ -287,7 +289,7 @@ CapsLockCheck:
 		If (stateRalt = 1 or statePRalt = 1) {  ; CapsLock test most of the time, this is a good place to force it up.
 		    Send, {RAlt Up}                     ; Not certain this is the best fix, but it seems to work.
 		}                                       ; The earlier commands #InstallKeybdHook & #UseHook seemed to catch
-																						; the Left Alt but not the Right Alt. Obviously, disabling the 
+																						; the Left Alt but not the Right Alt. Obviously, disabling the
 																						; CapsLockCheck breaks this fix.
 
 		If GetKeyState("CapsLock","T")
@@ -323,7 +325,9 @@ Quitting:
 		    pathKey := % section2_key%pathLookAhead%
 		    currentKeyValue := %section2%_%currentKey%
 		    currentPathValue := %section2%_%pathKey%
-		    currentKeyLeft7 := SubStr(currentKey, 1, 7)
+            currentPathSlashPos := InStr(currentPathValue, "\")
+            currentPathResolvedName := SubStr(String, currentPathSlashPos + 1)
+            currentKeyLeft7 := SubStr(currentKey, 1, 7)
 		    If (currentKeyLeft7 = "loadScr") {
 		        If (currentKeyValue) {
 		            SplashTextOn, 600, 50, Quitting AHK scripts, Quitting %currentPathValue%
@@ -341,7 +345,7 @@ Quitting:
 		}
 		    SplashTextOn, 600, 50, Quitting AHK scripts, All MASTER-SCRIPT.AHK shut down.`nGoodbye & thanks for all the fishes...
 		    WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
-		    Sleep, sleepMedium
+		    Sleep, sleepShort
 		    SplashTextOff
 		    ExitApp
 		    return
