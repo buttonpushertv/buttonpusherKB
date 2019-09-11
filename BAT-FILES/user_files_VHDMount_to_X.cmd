@@ -8,7 +8,6 @@ ECHO.
 ECHO +==============================+
 ECHO Running Admin Shell
 ECHO +==============================+
-pause
 :init
 setlocal DisableDelayedExpansion
 set "batchPath=%~0"
@@ -62,13 +61,13 @@ ECHO.
 	ECHO +==============================+
 
 	ECHO Checking for existence of X:
-	IF EXIST X:\ ( 
+	IF EXIST X:\ (
 		echo X: Drive already mounted.
 		echo.
 		echo Press CTRL-C to abort script.
 		pause
 		goto unLocked
-	) else ( 
+	) else (
 		echo.
 		echo X: not mounted
 		echo.
@@ -86,18 +85,18 @@ ECHO.
 	ECHO Unlocking X: drive
 
 	manage-bde -unlock x: -password
-	
+
 	if not %ERRORLEVEL% == 0 echo ==========================
 	if not %ERRORLEVEL% == 0 echo THAT PASSWORD IS INCORRECT
-	if not %ERRORLEVEL% == 0 echo 
+	if not %ERRORLEVEL% == 0 echo
 	if not %ERRORLEVEL% == 0 echo Please try again...
 	if not %ERRORLEVEL% == 0 echo ==========================
 	if not %ERRORLEVEL% == 0 goto accessDisk
-	
+
 	:unLocked
 REM	ECHO +==============================+
 REM	ECHO Starting Portable Apps on X:
-REM	
+REM
 REM	x:\start.exe
 REM (moved the above to BPTV-LAUNCHER)
 
