@@ -1,2 +1,0 @@
-cd C:\BPTV-KB
-MASTER-SCRIPT.ahk
