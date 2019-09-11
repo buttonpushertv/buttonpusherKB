@@ -121,12 +121,14 @@ CapsLock & f11:: ; <-- Open the Settings GUI for MASTER-SCRIPT.AHK
 		Run, MASTER-SETTINGS.AHK
     return
 
-ScrollLock & f12:: ; <-- Open BPTV-LAUNCHER
+ScrollLock & f12::
+CapsLock & f12:: ; <-- Open BPTV-LAUNCHER
 		ScrollLockOff()
 		Run, C:\BPTV-KB\BPTV-LAUNCHER.ahk
     return
 
-ScrollLock & Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
+ScrollLock & Backspace::
+CapsLock & Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
 		Reload
     Return
 
@@ -169,7 +171,7 @@ Send, {BackSpace}
 return
 
 CapsLock & f1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys
-    txt2show := "SUPPORTING-FILES\AHK-KEYS-F1-LOC" . Location_currentSystemLocation . ".txt"
+    txt2show := "SUPPORTING-FILES\KBF1-LOC" . Location_currentSystemLocation . ".txt"
     showText(txt2show)
     keywait, f1
     Gui, Text:Destroy
@@ -195,18 +197,18 @@ CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortc
     }
     else
     If WinActive("ahk_exe SubtitleEdit.exe") {
-        pic2Show := "SUPPORTING-FILES\CONTOUR-PRO-SUBTITLE-EDIT.jpg"
+        pic2Show := "SUPPORTING-FILES\KBF2-CONTOUR-PRO-SUBTITLE-EDIT.jpg"
         PictureWidth := 906
         numPages := 1
     }
     else
     If WinActive("ahk_exe stickies.exe") {
-        pic2Show := "C:\BPTV-KB\SUPPORTING-FILES\KBF2-STICKIES.png"
+        pic2Show := "SUPPORTING-FILES\KBF2-STICKIES.png"
         PictureWidth := 1920
         numPages := 1
     }
     else {
-        pic2Show := "SUPPORTING-FILES\NO-CHEAT-SHEET.png"
+        pic2Show := "SUPPORTING-FILES\NO-CHEATSHEET.png"
         PictureWidth := 579
         numPages := 1
     }
@@ -221,12 +223,12 @@ CapsLock & f3:: ; <--Display a Text File CheatSheet of App Specific AutoHotKeys
         showText("SUPPORTING-FILES\WINDOWS-DEFAULT-KEYS.txt")
     else
     If WinActive("ahk_exe Adobe Premiere Pro.exe")
-        showText("SUPPORTING-FILES\AHK-KEYS-F3-PPRO.txt")
+        showText("SUPPORTING-FILES\KBF3-PPRO.txt")
     else
     If WinActive("ahk_exe stickies.exe")
-        showText("SUPPORTING-FILES\AHK-KEYS-F3-STICKIES.txt")
+        showText("SUPPORTING-FILES\KBF3-STICKIES.txt")
     else
-        showText("SUPPORTING-FILES\AHK-KEYS-NO-CHEATSHEET.txt")
+        showText("SUPPORTING-FILES\NO-CHEATSHEET.txt")
     keywait, f3
     Gui, Text:Destroy
     return
