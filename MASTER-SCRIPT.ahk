@@ -282,12 +282,13 @@ CapsLockCheck:
 		return
 		}
 
-		stateRalt := GetKeyState("RAlt")
-		statePRalt := GetKeyState("RAlt", "P")
-		If (stateRalt = 1 or statePRalt = 1) {
-		    Send, {Ralt Up}
-				SoundPlay, SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_11.wav ; Assign your own sound
-		}
+		stateRalt := GetKeyState("RAlt")        ; Attempting to resolve a bug in AutoHotKey that cropped Summer of 2019
+		statePRalt := GetKeyState("RAlt", "P")  ; The Alt Keys kept getting stuck down. Since we are running the
+		If (stateRalt = 1 or statePRalt = 1) {  ; CapsLock test most of the time, this is a good place to force it up.
+		    Send, {RAlt Up}                     ; Not certain this is the best fix, but it seems to work.
+		}                                       ; The earlier commands #InstallKeybdHook & #UseHook seemed to catch
+																						; the Left Alt but not the Right Alt. Obviously, disabling the 
+																						; CapsLockCheck breaks this fix.
 
 		If GetKeyState("CapsLock","T")
     {
