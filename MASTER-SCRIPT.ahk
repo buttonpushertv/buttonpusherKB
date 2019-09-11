@@ -281,7 +281,15 @@ CapsLockCheck:
 		SetTimer, CapsLockCheck, off
 		return
 		}
-    If GetKeyState("CapsLock","T")
+
+		stateRalt := GetKeyState("RAlt")
+		statePRalt := GetKeyState("RAlt", "P")
+		If (stateRalt = 1 or statePRalt = 1) {
+		    Send, {Ralt Up}
+				SoundPlay, SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_11.wav ; Assign your own sound
+		}
+
+		If GetKeyState("CapsLock","T")
     {
     	CapsLockCounter += 1
 			If (CapsLockCounter <= Settings_CapsLockToggleTimeoutThreshold ) {
