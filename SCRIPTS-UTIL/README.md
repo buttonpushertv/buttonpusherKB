@@ -1,0 +1,1 @@
+The files in this folder support a variety of things. Mostly they are here because they don't have a specific app they are connected to (Premiere, Illustrator, etc) OR they are more generic in nature.
