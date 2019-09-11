@@ -42,7 +42,7 @@ INI_Load(inifile)
 ;Creating the Main GUI for the app - the bit that loads inititally when run
 ;setting width variables
 guiWidth := 560
-guiElementWidth := (guiWidth - 20) 
+guiElementWidth := (guiWidth - 20)
 ;figuring out how tall the whole GUI will be
 keyRows := (section3_keys / 3)
 guiHeight := (keyRows * 30)
@@ -59,7 +59,7 @@ Gui, Font, S12 CDefault, Franklin Gothic Medium
 
 ;Section 2 - Scripts To Run
 ;THIS SECTION IS SKIPPED FOR THE LAUNCHER. It is used by MASTER-SCRIPT.AHK to launch child AHK scripts.
-  
+
 ;Section 3 - Apps To Run - adding these elements to the GUI
 section3GroupH := (keyRows)
 currentAltCounter := 1
@@ -181,7 +181,7 @@ loop, %section3_keys%
   }
 INI_Save(inifile)
 Gui, Destroy
-Reload ;uncomment to reload immed. after save - to check what it saved
+Reload ;reloading after Save to launch the new set of enabled apps
 return
 
 GuiClose:
