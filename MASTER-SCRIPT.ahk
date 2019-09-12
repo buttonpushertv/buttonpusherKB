@@ -222,7 +222,7 @@ CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortc
 
 CapsLock & f3:: ; <--Display a Text File CheatSheet of App Specific AutoHotKeys
     If WinActive("ahk_exe Explorer.EXE")
-        showText("SUPPORTING-FILES\WINDOWS-DEFAULT-KEYS.txt")
+        showText("SUPPORTING-FILES\KBF3-WINDOWS-DEFAULT-KEYS.txt")
     else
     If WinActive("ahk_exe Adobe Premiere Pro.exe")
         showText("SUPPORTING-FILES\KBF3-PPRO.txt")
