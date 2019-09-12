@@ -165,12 +165,13 @@ systemLocation1=This-PC
 [Scripts]
 loadScript1=1
 pathScript1=settings-made.ahk
+nameScript1=settings-made.ahk (auto-created)
 [Apps]
 loadApp1=1
 pathApp1=MASTER-SCRIPT.ahk
 nameApp1=Run MASTER-SCRIPT.AHK
 [Settings]
-timeoutPeriod=7000
+timeoutPeriod=15000
 splashScreenTimeout=4000
 CapsLockToggleTimeoutThreshold=4
 CapsLockToggleOffTimeout=8
