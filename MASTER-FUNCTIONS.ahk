@@ -181,7 +181,7 @@ CapsLockCheckPeriod=10000
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-MsgBox, 64, 'settings.ini' file created, The 'settings.ini' file has been created in %A_ScriptDir%.``n``nYou can edit it in a text editor to add to it. Follow the format of the created file to add Locations and/or Scripts to Run at the Launch of MASTER-SCRIPT.AHK.``n``nFeel free to delete this script and it's corresponding settings once you have begun adding your own items.``n``nPress ScrollLock+F11 to open the settings interface.
+MsgBox, 64, 'settings.ini' file created, The 'settings.ini' file has been created in %A_ScriptDir%.``n``nYou can edit it in a text editor to add to it. Follow the format of the created file to add Locations, Apps (for BPTV-Launcher), and Scripts to Run at the Launch of MASTER-SCRIPT.AHK.``n``nFeel free to delete this script and it's corresponding settings once you have begun adding your own items.``n``nPress CapsLock OR ScrollLock+F11 to open the settings interface.
 	), settings-made.ahk
 	}
 
