@@ -115,21 +115,21 @@ SetTimer, CapsLockCheck, %Settings_CapsLockCheckPeriod% ; the main timer to chec
 ; don't know if this works for alt too...
 ~LAlt::Send {Blind}{vk07}
 
-ScrollLock & f11::
+ScrollLock & f11:: ; There are 2 hotkeys defined here because on my split keyboard it's easier to use ScrollLock & on my Kira/Preonic keyboards it's easier to use CapsLock.
 CapsLock & f11:: ; <-- Open the Settings GUI for MASTER-SCRIPT.AHK
 		ScrollLockOff()
-		Run, MASTER-SETTINGS.AHK
+		Run, MASTER-SETTINGS.AHK ; runs the settings configuration script for the whole suite.
     return
 
-ScrollLock & f12::
+ScrollLock & f12:: ; There are 2 hotkeys defined here because on my split keyboard it's easier to use ScrollLock & on my Kira/Preonic keyboards it's easier to use CapsLock.
 CapsLock & f12:: ; <-- Open BPTV-LAUNCHER
 		ScrollLockOff()
-		Run, C:\BPTV-KB\BPTV-LAUNCHER.ahk
+		Run, C:\BPTV-KB\BPTV-LAUNCHER.ahk ; runs the launcher that runs at boot. Should only be used if you are making changes to what gets run at boot or if anything stops working properly
     return
 
-ScrollLock & Backspace::
+ScrollLock & Backspace:: ; There are 2 hotkeys defined here because on my split keyboard it's easier to use ScrollLock & on my Kira/Preonic keyboards it's easier to use CapsLock.
 CapsLock & Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
-		Reload
+		Reload ; reloads the MASTER-SCRIPT.ahk - will also force a reload of any other script that is set to load when MASTER-SCRIPT runs
     Return
 
 CapsLock & WheelDown::Send ^{PGDN} ; <-- Send Control+Page Down - there was a reason for this at some point
@@ -144,10 +144,15 @@ CapsLock & n:: ; <-- Send 'ben@buttonpusher' as text  - you probably will want t
 return
 
 CapsLock & c:: ; <-- Delete Key
-	Send, {Delete}
+	Send, {Delete} ; where you often are using one hand on mouse/trackball and one hand on keys the delete & backspace keys can be a long reach (or on right-half of split keyboard)
+return
+
+CapsLock & v:: ; <-- Backspace Key
+Send, {BackSpace} ; same as above comment
 return
 
 CapsLock & p:: ; <-- Toggle CapsLockCheck on or Off
+; You may not always want to have this check running. This allows you to toggle it off or on and gives you a reminder ToolTip of it's state.
 	If (IgnoreCapsCheck) {
 		SetTimer, CapsLockCheck, %Settings_CapsLockCheckPeriod%
 		IgnoreCapsCheck := 0
@@ -163,14 +168,11 @@ CapsLock & p:: ; <-- Toggle CapsLockCheck on or Off
 	}
 
 CapsLock & q:: ; <-- Exit MASTER-SCRIPT and child AHK Scripts
-	goto Quitting
+	goto Quitting ; this subroutine will ID any of the scripts that have been launched (via enabled in settings.ini) and then quit them all
 return
 
-CapsLock & v:: ; <-- Backspace Key
-Send, {BackSpace}
-return
 
-CapsLock & f1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys
+CapsLock & f1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
     txt2show := "SUPPORTING-FILES\KBF1-LOC" . Location_currentSystemLocation . ".txt"
     showText(txt2show)
     keywait, f1
