@@ -19,7 +19,7 @@ sleepDeep = 3500
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
-; combine below with key and '::' to define hotkey 
+; combine below with key and '::' to define hotkey
 ; e.g.- ^f1::Msgbox You pressed Control and F1
 ; #=Win | !=Alt | ^=Ctrl | +=Shift | &=combine keys | *=ignore other mods
 ; <=use left mod key| >=use right mod key  | UP=fires on release
@@ -28,14 +28,14 @@ sleepDeep = 3500
 
 Run, C:\BPTV-KB\BAT-FILES\user_files_VHDMount_to_X.cmd,,OutputVarPID
 WinWait ahk_pid %OutputVarPID%
-Winset, AlwaysOnTop, On, ahk_exe cmd.exe
-Sleep, sleepDeep
-WinActivate, ahk_exe cmd.exe
-WinMaximize, ahk_exe cmd.exe
-Winset, AlwaysOnTop, On, ahk_exe cmd.exe
-Sleep, sleepDeep
-WinActivate, ahk_exe cmd.exe
-WinMaximize, ahk_exe cmd.exe
+Winset, AlwaysOnTop, On, ahk_exe cmd.exe ; all the commands that come after this are my attempt to force
+Sleep, sleepDeep                         ; the Command window to stay in the foreground so that it is easy
+WinActivate, ahk_exe cmd.exe             ; to type my BitLocker password into without having to mouse over
+WinMaximize, ahk_exe cmd.exe             ; to it and click and then type.
+Winset, AlwaysOnTop, On, ahk_exe cmd.exe ; All the other apps that load at boot keep stealing focus from this
+Sleep, sleepDeep                         ; Window. I had to run through these commands a few times because
+WinActivate, ahk_exe cmd.exe             ; other apps are rude and there's not an obvious way to force a Command
+WinMaximize, ahk_exe cmd.exe             ; window to always stay on top & keep focus no matter what.
 Winset, AlwaysOnTop, On, ahk_exe cmd.exe
 
 ;===== FUNCTIONS ===============================================================================
