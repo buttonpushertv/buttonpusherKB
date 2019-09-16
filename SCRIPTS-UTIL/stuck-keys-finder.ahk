@@ -64,7 +64,8 @@ Gui, Add, Text, x152 y25 w20 h20 vRctrlStateP, %statePRctrl%
 Gui, Add, Text, x152 y55 w20 h20 vRshiftStateP, %statePRshift%
 Gui, Add, Text, x152 y85 w20 h20 vRaltStateP, %statePRalt%
 Gui, Add, Text, x152 y115 w20 h20 vRwinStateP, %statePRwin%
-Gui, Show, w200 h157, Finding Stuck Keys GUI
+Gui, Show, w200 h157 X1670 Y50, Finding Stuck Keys GUI
+Gui, +AlwaysOnTop +ToolWindow
 Gosub, DebugStickyKeys
 return
 
