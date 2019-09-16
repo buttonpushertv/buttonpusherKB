@@ -115,9 +115,13 @@ SetTimer, CapsLockCheck, %Settings_CapsLockCheckPeriod% ; the main timer to chec
 
 ; don't know if this works for alt too...
 ~LAlt:: ; <-- Blocks Left Alt key from triggering the Start Menu when pressed by itself. The Right Alt key will still work in the default fashion.
-    Send {Blind}{vk07}
-    Send {LAlt Up} ; Added this to help with the stuck LAlt key.
+    sendinput, {SC0E9 down}
+    KeyWait, LAlt
     Return
+
+~LAlt up::
+sendinput, {SC0E9 up}
+return
 
 ScrollLock & f11:: ; There are 2 hotkeys defined here because on my split keyboard it's easier to use ScrollLock & on my Kira/Preonic keyboards it's easier to use CapsLock.
 CapsLock & f11:: ; <-- Open the Settings GUI for MASTER-SCRIPT.AHK
