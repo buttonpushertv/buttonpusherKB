@@ -105,9 +105,10 @@ SetTimer, CapsLockCheck, %Settings_CapsLockCheckPeriod% ; the main timer to chec
 ; #=Win | !=Alt | ^=Ctrl | +=Shift | &=combine keys | *=ignore other mods
 ; <=use left mod key| >=use right mod key  | UP=fires on release
 ;
-;
 ; After each Hotkey Defintion, place a comment using this format:
-; {hotkeyDef}:: ; <-- Define what HotKey does. This will be read by \BPTV-KB\UTIL-APPS\Hotkey Help.ahk to create a text cheat sheet of all HotKeys & Definitons. This text file can be used to create the Cheat Sheets shown with CAPS+F1, etc.
+; {hotkeyDef}:: ; <-- Define what HotKey does. 
+;
+;   This will be read by \BPTV-KB\UTIL-APPS\Hotkey Help.ahk to create a text cheat sheet of all HotKeys & Definitons. This text file can be used to create the Cheat Sheets shown with CAPS+F1, etc.
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
 
 ~LWin::Send {Blind}{vk07} ; <-- Blocks Left Window key from triggering the Start Menu when pressed by itself. The Right Window key will still work in the default fashion.
@@ -115,7 +116,7 @@ SetTimer, CapsLockCheck, %Settings_CapsLockCheckPeriod% ; the main timer to chec
 ; don't know if this works for alt too...
 ~LAlt:: ; <-- Blocks Left Alt key from triggering the Start Menu when pressed by itself. The Right Alt key will still work in the default fashion.
     Send {Blind}{vk07}
-    Send {LAlt Up}
+    Send {LAlt Up} ; Added this to help with the stuck LAlt key.
     Return
 
 ScrollLock & f11:: ; There are 2 hotkeys defined here because on my split keyboard it's easier to use ScrollLock & on my Kira/Preonic keyboards it's easier to use CapsLock.
