@@ -39,8 +39,8 @@ sleepDeep = 3500
 splashScreenX = %1%
 splashScreenY = %2%
 splashScreenTimeout = %3%
-;Location_currentSystemLocation = 1
 Location_currentSystemLocation = %4%
+
 
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
@@ -67,7 +67,6 @@ CapsLock & f1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys
 return
 
 CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
-
     If WinActive("ahk_exe Explorer.EXE") {
         pic2show := "SUPPORTING-FILES\KBF2-WIN-PAGE"
         PictureWidth := 2000
@@ -82,6 +81,12 @@ CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortc
     else
     If WinActive("ahk_exe AfterFX.exe") {
         pic2Show := "SUPPORTING-FILES\KBF2-AE.png"
+        PictureWidth := 2000
+        numPages := 1
+    }
+    else
+    If WinActive("ahk_exe Photoshop.exe") {
+        pic2Show := "SUPPORTING-FILES\KBF2-PS.png"
         PictureWidth := 2000
         numPages := 1
     }
@@ -103,9 +108,11 @@ CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortc
         numPages := 1
     }
     showImageTabs(pic2Show, PictureWidth, numPages)
+    ToolTipFM( "PLAIN`nCONTROL`nALT`nSHIFT`nCTRL+ALT`nCTRL+SHIFT`nALT+SHIFT`nCTRL+ALT+SHIFT")
     keywait, f2
     numPages := 0
     Gui, Picture:Destroy
+    ToolTipFM()
     WinActivate
 return
 
@@ -220,6 +227,57 @@ showImageTabs(picToshow, PictureWidth, numPages){
     Gui, Picture:Tab
     Gui, Picture:Show
     return
+}
+
+ToolTipFM(Text="", WhichToolTip=16, xOffset=16, yOffset=16) { ; ToolTip which Follows the Mouse
+static LastText, hwnd, VirtualScreenWidth, VirtualScreenHeight ; http://www.autohotkey.com/forum/post-430240.html#430240
+
+if (VirtualScreenWidth = "" or VirtualScreenHeight = "")
+{
+SysGet, VirtualScreenWidth, 78
+SysGet, VirtualScreenHeight, 79
+}
+
+if (Text = "") ; destroy tooltip
+{
+ToolTip,,,, % WhichToolTip
+LastText := "", hwnd := ""
+return
+}
+else ; move or recreate tooltip
+{
+CoordMode, Mouse, Screen
+MouseGetPos, x,y
+x += xOffset, y += yOffset
+WinGetPos,,,w,h, ahk_id %hwnd%
+
+; if necessary, adjust Tooltip position
+if ((x+w) > VirtualScreenWidth)
+AdjustX := 1
+if ((y+h) > VirtualScreenHeight)
+AdjustY := 1
+
+if (AdjustX and AdjustY)
+x := x - xOffset*2 - w, y := y - yOffset*2 - h
+else if AdjustX
+x := VirtualScreenWidth - w
+else if AdjustY
+y := VirtualScreenHeight - h
+
+if (Text = LastText) ; move tooltip
+DllCall("MoveWindow", A_PtrSize ? "UPTR" : "UInt",hwnd,"Int",x,"Int",y,"Int",w,"Int",h,"Int",0)
+else ; recreate tooltip
+{
+; Perfect solution would be to update tooltip text (TTM_UPDATETIPTEXT), but must be compatible with all versions of AHK_L and AHK Basic.
+; My Ask For Help link: http://www.autohotkey.com/forum/post-421841.html#421841
+CoordMode, ToolTip, Screen
+ToolTip,,,, % WhichToolTip ; destroy old
+ToolTip, % Text, x, y, % WhichToolTip ; show new
+hwnd := WinExist("ahk_class tooltips_class32 ahk_pid " DllCall("GetCurrentProcessId")), LastText := Text
+%A_ThisFunc%(Text, WhichToolTip, xOffset, yOffset) ; move new
+}
+Winset, AlwaysOnTop, on, ahk_id %hwnd%
+}
 }
 
 ; This function will auto-reload the script on save.
