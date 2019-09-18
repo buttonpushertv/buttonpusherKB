@@ -1,0 +1,38 @@
+== MASTER-SCRIPT ===========================================================
+
+LEFT WIN              <-- Will not activate the Start Menu when pressed by itself
+RIGHT WIN             <-- Works normally. Will open Start menu when pressed by itself
+
+LEFT ALT              <-- Should not activate App Menu Bar when pressed by itself
+RIGHT ALT             <-- Works normally. Will open App Menu Bar when pressed by itself
+
+WIN+F1                <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys (this file)
+WIN+F2                <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
+WIN+F3                <--Display a Text File CheatSheet of App Specific AutoHotKeys
+WIN+F4                <--Display an image CheatSheet for Preonic Keyboard
+WIN+T                 <--Send time & date as text (hh:mm AM/PM - YYYY-MMM-DD)
+WIN+W                 <--Display a Text File CheatSheet of Windows Default Keys
+
+WIN+C                 <--Delete Key
+WIN+V                 <--BackSpace
+
+WIN+B                 <--Send 'buttonpusher' as text
+ALT+WIN+B             <--Send 'ben@buttonpusher.tv' as text
+
+WIN+CTRL+SHIFT+F      <--Nuke Firefox (click Desktop first)
+WIN+CTRL+SHIFT+P      <--Nuke Premiere (click Desktop first)
+
+WIN+F11               <--Open the Settings GUI for MASTER-SCRIPT.AHK
+WIN+ALT+CTRL+BACKSP   <--Reload MASTER-SCRIPT.ahk
+WIN+ALT+CTRL+Q        <--Exit MASTER-SCRIPT and child AHK Scripts
+
+== STICKIES HOTKEYS -=======================================================
+
+WIN+ALT+S             <--New Sticky
+WIN+ALT+H             <--Show All/Show Hide
+WIN+SHIFT+ALT+S       <--New Sticky From Clipboard
+WIN+ALT+M             <--Open Manage Dialog
+WIN+ALT+SHIFT+W       <--Screen Grab An Area
+WIN+ALT+X             <--Reveal Secret Stickies
+
+============================================================================

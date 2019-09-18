@@ -12,7 +12,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #MaxHotkeysPerInterval 2000
 #WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm
 
-; The 2 lines below pertain to the 'reload on save' function below (CheckScriptUpdate). 
+; The 2 lines below pertain to the 'reload on save' function below (CheckScriptUpdate).
 ; They are required for it to work.
 FileGetTime ScriptStartModTime, %A_ScriptFullPath%
 SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
@@ -33,13 +33,13 @@ splashScreenTimeout = %3%
 #Include SCRIPTS-PPRO\PREMIERE-PRO-FUNCTIONS.ahk
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading PREMIERE PRO HOTKEYS Script.`n`nWin-[ to show CheatSheet of Keyboard Layout (BEN-CC19.kys).
+SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading PREMIERE PRO HOTKEYS Script.`n`nCAPS+F2 to show CheatSheet of Keyboard Layout (BEN-CC19.kys).
 WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
 SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 ;===== MODIFIER MEMORY HELPER ==================================================================
-; combine below with key and '::' to define hotkey 
+; combine below with key and '::' to define hotkey
 ; e.g.- ^f1::Msgbox You pressed Control and F1
 ; #=Win | !=Alt | ^=Ctrl | +=Shift | &=combine keys | *=ignore other mods
 ; <=use left mod key| >=use right mod key  | UP=fires on release
@@ -49,6 +49,36 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 ;===== PREMIERE PRO HOTKEY DEFINITIONS HERE ============================================
 
 #IfWinActive, ahk_exe Adobe Premiere Pro.exe
+
+CapsLock & F1::prFocus("timeline") ; <-- Focus the Timeline Window
+
+^1:: ; <-- PPRO: Step Left 1 second
+Send, ^+a
+sleep, sleepShort
+Send, {NumpadSub}
+sleep, sleepMicro
+Send, {Numpad1}
+sleep, sleepMicro
+Send, {NumpadDot}
+sleep, sleepMicro
+Send, {NumpadEnter}{NumpadEnter}
+return
+
+^2:: ; <-- PPRO: Step Left 5 seconds THEN Play
+Send, {2}
+sleep, sleepShort
+Send, ^+a
+sleep, sleepShort
+Send, {NumpadSub}
+sleep, sleepMicro
+Send, {Numpad5}
+sleep, sleepMicro
+Send, {NumpadDot}
+sleep, sleepMicro
+Send, {NumpadEnter}{NumpadEnter}
+sleep, sleepMicro
+Send, 3
+return
 
 ^+2:: ; <-- PPRO: Step Left 10 seconds THEN Play
 Send, {2}
@@ -68,34 +98,6 @@ sleep, sleepMicro
 Send, 3
 return
 
-^2:: ; <-- PPRO: Step Left 5 seconds THEN Play
-Send, {2}
-sleep, sleepShort
-Send, ^+a
-sleep, sleepShort
-Send, {NumpadSub}
-sleep, sleepMicro
-Send, {Numpad5}
-sleep, sleepMicro
-Send, {NumpadDot}
-sleep, sleepMicro
-Send, {NumpadEnter}{NumpadEnter}
-sleep, sleepMicro
-Send, 3
-return
-
-^1:: ; <-- PPRO: Step Left 1 second
-Send, ^+a
-sleep, sleepShort
-Send, {NumpadSub}
-sleep, sleepMicro
-Send, {Numpad1}
-sleep, sleepMicro
-Send, {NumpadDot}
-sleep, sleepMicro
-Send, {NumpadEnter}{NumpadEnter}
-return
-
 ^3:: ; <-- PPRO: Step Right 1 second
 Send, ^+a
 sleep, sleepShort
@@ -107,7 +109,6 @@ Send, {NumpadDot}
 sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
-
 
 !f:: ; <-- PPRO: closing the Menu that gets opened when this key combo is sent
 Send, !f{ESC}
@@ -125,9 +126,6 @@ return
 Send, d ; PPro Key for 'select clip at playhead'
 Send, {DEL} ; PPro Key for 'remove'
 return
-
-#'::prFocus("timeline")
-#;::prFocus("program")
 
 ;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
 
@@ -188,24 +186,7 @@ sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
 
-+^!f4:: ; <-- Step Left 5 seconds
-sleep, sleepMicro
-Send, ^+a
-sleep, sleepShort
-Send, {NumpadSub}
-sleep, sleepMicro
-Send, {Numpad5}
-sleep, sleepMicro
-Send, {NumpadDot}
-sleep, sleepMicro
-Send, {NumpadEnter}{NumpadEnter}
-return
-
-;+^!f5::
-;+^!f6::
-;+^!f7::
-;+^!f8::
-+^!f9:: ; <-- Step Right 2 Seconds
++^!f4:: ; <-- Step Right 2 Seconds
 sleep, sleepMicro
 Send, ^+a
 sleep, sleepShort
@@ -218,7 +199,24 @@ sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
 
-+^!f10:: ; <-- Step Right 5 Seconds
+;+^!f5::
+;+^!f6::
+
++^!f7:: ; <-- Step Left 5 seconds
+sleep, sleepMicro
+Send, ^+a
+sleep, sleepShort
+Send, {NumpadSub}
+sleep, sleepMicro
+Send, {Numpad5}
+sleep, sleepMicro
+Send, {NumpadDot}
+sleep, sleepMicro
+Send, {NumpadEnter}{NumpadEnter}
+return
+
+
++^!f8:: ; <-- Step Right 5 Seconds
 sleep, sleepMicro
 Send, ^+a
 sleep, sleepShort
@@ -230,6 +228,9 @@ Send, {NumpadDot}
 sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
+
+;+^!f9::
+;+^!f10::
 ;+^!f11::
 ;+^!f12::
 ;+^!f13::

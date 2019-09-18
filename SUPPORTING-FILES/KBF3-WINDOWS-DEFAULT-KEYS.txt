@@ -1,0 +1,39 @@
+﻿Windows 10 Keyboard Shortcuts
+
+Windows         Show the Windows 10 Start Menu
+
+Windows + A     Open Windows 10 notifications
+Windows + D     Show Windows desktop
+Windows + E     Open Windows Explorer
+Windows + G     Opens the Windows 10 Game Bar
+Windows + H     Share content (if supported by current app)
+Windows + I     Open Windows 10 settings
+Windows + K     Connect to wireless displays and audio devices
+Windows + L     Lock your Windows 10 device
+Windows + P     Project a screen
+Windows + Q     Search the web and Windows with Cortana (speech)
+Windows + R     Run a command
+Windows + S     Search the web and Windows with Cortana (keyboard input)
+Windows + X     Open Start button context menu
+Windows + [1,2,3...]Open programs that are pinned to task bar
+                    E.g. if first pinned program on your task bar is Windows Explorer (from left to right), the shortcut Windows + 1 opens Windows Explorer for you.
+
+Windows + Space     Switch keyboard input language (if you have added at least a second one)
+Windows + Tab       Launch Windows 10 Task View
+
+Windows + Shift + [Left][Right]     Move current Window from one monitor to another (when using a multiple monitor setup)
+Windows + [Left][Right][Up][Down]   Position windows on your screen
+                                    E.g. Windows + [Left] moves the current window to the left half of your screen.
+                                    If you use Windows + [Up] afterwards, the current window will be placed in the upper left quarter of your screen.
+                                    And, what’s very handy in my opinion: If you release the Windows key after positioning a window,
+                                    Task View shows up on the opposite side of the positioned window to select and position another app.
+
+Windows + Ctrl + D                  Create new virtual desktop
+Windows + Ctrl + [Left][Right]      Switch between virtual desktops
+Windows + Ctrl + F4                 Close current virtual desktop
+
+Alt + Tab       Switch to previous window
+Alt + Space     Restore, move, size, minimize, maximize or close current window. Also works like a charm for Windows 10 modern apps.
+                (If you run 'Launchy' this function is replaced)
+Alt + F4        a) Close current window
+                b) If you’re on your Windows 10 desktop, open Power dialogue to shut down or restart Windows, put your device in sleep mode, sign out or switch the current user

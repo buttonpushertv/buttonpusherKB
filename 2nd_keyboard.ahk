@@ -1,5 +1,8 @@
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
+; THIS IS A COPY OF TARANVH's 2nd Keyboard AHK F24 FILE. I'VE LEFT IT HERE FOR TESTING PURPOSES.
+
+
 ;SetKeyDelay, 0 ;IDK exactly what this does.
 
 
@@ -368,4 +371,3 @@ anotherFunction(yeah)
 msgbox, yup %yeah%
 ;Just delete this function, lol
 }
-
