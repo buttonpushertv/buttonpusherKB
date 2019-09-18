@@ -80,7 +80,7 @@ loop, %section2_keys% ; this loop will launch any scripts that are defined and e
               continue
               }
             else {
-            Run, %currentPathValue% %splashScreenStartX% %splashScreenStartY% %Settings_splashScreenTimeout%
+            Run, %currentPathValue% %splashScreenStartX% %splashScreenStartY% %Settings_splashScreenTimeout% %Location_currentSystemLocation%
             splashScreenStartY += splashScreenSpacing
             }
         }
@@ -106,7 +106,7 @@ SetTimer, CapsLockCheck, %Settings_CapsLockCheckPeriod% ; the main timer to chec
 ; <=use left mod key| >=use right mod key  | UP=fires on release
 ;
 ; After each Hotkey Defintion, place a comment using this format:
-; {hotkeyDef}:: ; <-- Define what HotKey does. 
+; {hotkeyDef}:: ; <-- Define what HotKey does.
 ;
 ;   This will be read by \BPTV-KB\UTIL-APPS\Hotkey Help.ahk to create a text cheat sheet of all HotKeys & Definitons. This text file can be used to create the Cheat Sheets shown with CAPS+F1, etc.
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
@@ -178,77 +178,6 @@ CapsLock & p:: ; <-- Toggle CapsLockCheck on or Off
 CapsLock & q:: ; <-- Exit MASTER-SCRIPT and child AHK Scripts
 	goto Quitting ; this subroutine will ID any of the scripts that have been launched (via enabled in settings.ini) and then quit them all
 return
-
-
-CapsLock & f1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
-    txt2show := "SUPPORTING-FILES\KBF1-LOC" . Location_currentSystemLocation . ".txt"
-    showText(txt2show)
-    keywait, f1
-    Gui, Text:Destroy
-    return
-
-CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
-    If WinActive("ahk_exe Explorer.EXE") {
-        pic2show := "SUPPORTING-FILES\KBF2-WIN-PAGE"
-        PictureWidth := 2000
-        numPages := 2
-    }
-    else
-    If WinActive("ahk_exe Adobe Premiere Pro.exe") {
-        pic2Show := "SUPPORTING-FILES\KBF2-PPRO.png"
-        PictureWidth := 2000
-        numPages := 1
-    }
-    else
-    If WinActive("ahk_exe AfterFX.exe") {
-        pic2Show := "SUPPORTING-FILES\KBF2-AE.png"
-        PictureWidth := 2000
-        numPages := 1
-    }
-    else
-    If WinActive("ahk_exe SubtitleEdit.exe") {
-        pic2Show := "SUPPORTING-FILES\KBF2-CONTOUR-PRO-SUBTITLE-EDIT.jpg"
-        PictureWidth := 906
-        numPages := 1
-    }
-    else
-    If WinActive("ahk_exe stickies.exe") {
-        pic2Show := "SUPPORTING-FILES\KBF2-STICKIES.png"
-        PictureWidth := 1920
-        numPages := 1
-    }
-    else {
-        pic2Show := "SUPPORTING-FILES\NO-CHEATSHEET.png"
-        PictureWidth := 579
-        numPages := 1
-    }
-    showImageTabs(pic2Show, PictureWidth, numPages)
-    keywait, f2
-    numPages := 0
-    Gui, Picture:Destroy
-    return
-
-CapsLock & f3:: ; <--Display a Text File CheatSheet of App Specific AutoHotKeys
-    If WinActive("ahk_exe Explorer.EXE")
-        showText("SUPPORTING-FILES\KBF3-WINDOWS-DEFAULT-KEYS.txt")
-    else
-    If WinActive("ahk_exe Adobe Premiere Pro.exe")
-        showText("SUPPORTING-FILES\KBF3-PPRO.txt")
-    else
-    If WinActive("ahk_exe stickies.exe")
-        showText("SUPPORTING-FILES\KBF3-STICKIES.txt")
-    else
-        showText("SUPPORTING-FILES\NO-CHEATSHEET.txt")
-    keywait, f3
-    Gui, Text:Destroy
-    return
-
-CapsLock & f4:: ; <--Display an image CheatSheet based on System Location Setting
-    locationPic := "SUPPORTING-FILES\KBF4-LOC" . Location_currentSystemLocation . ".png"
-    showPic(locationPic, 0)
-    keywait,f4
-    Gui, Picture:Destroy
-    return
 
 CapsLock & t:: ; <-- Send time & date as text
     FormatTime, now,, hh:mm tt
