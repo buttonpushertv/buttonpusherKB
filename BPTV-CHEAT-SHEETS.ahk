@@ -63,9 +63,11 @@ CapsLock & f1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys
     showText(txt2show)
     keywait, f1
     Gui, Text:Destroy
+    WinActivate
 return
 
 CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
+
     If WinActive("ahk_exe Explorer.EXE") {
         pic2show := "SUPPORTING-FILES\KBF2-WIN-PAGE"
         PictureWidth := 2000
@@ -104,6 +106,7 @@ CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortc
     keywait, f2
     numPages := 0
     Gui, Picture:Destroy
+    WinActivate
 return
 
 CapsLock & f3:: ; <--Display a Text File CheatSheet of App Specific AutoHotKeys
@@ -119,6 +122,7 @@ CapsLock & f3:: ; <--Display a Text File CheatSheet of App Specific AutoHotKeys
         showText("SUPPORTING-FILES\NO-CHEATSHEET.txt")
     keywait, f3
     Gui, Text:Destroy
+    WinActivate
 return
 
 CapsLock & f4:: ; <--Display an image CheatSheet based on System Location Setting
@@ -126,6 +130,7 @@ CapsLock & f4:: ; <--Display an image CheatSheet based on System Location Settin
     showPic(locationPic, 0)
     keywait,f4
     Gui, Picture:Destroy
+    WinActivate
 return
 
 ;===== FUNCTIONS ===============================================================================
