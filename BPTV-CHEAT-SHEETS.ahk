@@ -1,16 +1,5 @@
-﻿; AutoHotKey - Blank Template
+﻿; AutoHotKey - BPTV-KB Cheat Sheets
 ; by Ben Howard - ben@buttonpusher.tv
-
-; You can customize this template by editing "C:\Windows\ShellNew\Template.ahk"
-;===============================================================================================
-; This Template.ahk file contains several of the most common items that I find myself often
-; needing or adding to my scripts. It's not all essential. Here's a short list of what's here:
-; - Function (CheckScriptUpdate) that will auto-reload the script when it detects a change
-;	in the last modified timestamp on the script file itself
-; - Sleep duration shortcuts - so that sleep times can be modified in one place to affect all
-; - Modifier Memory Helper - just a comment section to remind you of what the codes are for things
-;
-; See comments througout the file to figure out what something is here for.
 
 ;===== START OF AUTO-EXECUTION SECTION =========================================================
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
@@ -22,7 +11,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #InstallKeybdHook        ;Recent Window 10 updates have started getting the Alt key stuck down,
 #UseHook On              ;but only in AutoHotKey. These 3 commands are an attempt to fix that.
 #HotkeyModifierTimeout 0 ;It's not clear if this completely fixes it.
-; SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of "exact"
+SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of "exact"
 
 ; The 2 lines below pertain to the 'reload on save' function below (CheckScriptUpdate).
 ; They are required for it to work.
@@ -41,7 +30,12 @@ splashScreenY = %2%
 splashScreenTimeout = %3%
 Location_currentSystemLocation = %4%
 
+If !(Location_currentSystemLocation) {
+  Location_currentSystemLocation := 1
+}
 
+global backgroundColor := "2D2A2B"
+global foregroundColor := "FFFFFF"
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 80, Launching %A_ScriptFullPath%, Loading BPTV-CHEAT-SHEETS
@@ -162,9 +156,9 @@ showText(fileToShow){
   FormatTime, now,, hh:mm tt
   today = %A_YYYY%-%A_MMM%-%A_DD%
   Gui, Text:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
-  Gui, Text:Color, 000000
+  Gui, Text:Color, %backgroundColor%
   Gui, Text:Margin, 30, 30
-  Gui, Text:font, s12 cFFFFFF, Consolas
+  Gui, Text:font, s12 c%foregroundColor%, Consolas
   Gui, Text:Add, Text, , %now% - %today%
   Gui, Text:add, text, , %textToShow%
   Gui, Text:add, text, , File: %A_ScriptDir%\%fileToShow%
@@ -183,9 +177,9 @@ showPic(picToShow, PictureWidth){
     PictureWidth := 579
   }
   Gui, Picture:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
-  Gui, Picture:Color, 000000
+  Gui, Picture:Color, %backgroundColor%
   Gui, Picture:Margin, 15, 15
-  Gui, Picture:font, s14 cFFFFFF, Consolas
+  Gui, Picture:font, s14 c%foregroundColor%, Consolas
   Gui, Picture:add, picture, w%PictureWidth% h-1 , %picToShow%
   Gui, Picture:add, text, , File: %A_ScriptDir%\%picToShow%
   Gui, Picture:Show
@@ -203,9 +197,9 @@ showImageTabs(picToshow, PictureWidth, numPages){
       return
     }
     Gui, Picture:+alwaysontop -sysmenu +owner -caption +toolwindow +0x02000000
-    Gui, Picture:Color, 111111
+    Gui, Picture:Color, %backgroundColor%
     Gui, Picture:Margin, 5, 5
-    Gui, Picture:font, s10 cFFFFFF, Consolas
+    Gui, Picture:font, s10 c%foregroundColor%, Consolas
     loop, %numPages% {
         nextTab := tabList . "Page" . A_Index . "|"
         tabList := nextTab
@@ -234,56 +228,6 @@ showImageTabs(picToshow, PictureWidth, numPages){
     return
 }
 
-ToolTipFM(Text="", WhichToolTip=16, xOffset=16, yOffset=16) { ; ToolTip which Follows the Mouse
-static LastText, hwnd, VirtualScreenWidth, VirtualScreenHeight ; http://www.autohotkey.com/forum/post-430240.html#430240
-
-if (VirtualScreenWidth = "" or VirtualScreenHeight = "")
-{
-SysGet, VirtualScreenWidth, 78
-SysGet, VirtualScreenHeight, 79
-}
-
-if (Text = "") ; destroy tooltip
-{
-ToolTip,,,, % WhichToolTip
-LastText := "", hwnd := ""
-return
-}
-else ; move or recreate tooltip
-{
-CoordMode, Mouse, Screen
-MouseGetPos, x,y
-x += xOffset, y += yOffset
-WinGetPos,,,w,h, ahk_id %hwnd%
-
-; if necessary, adjust Tooltip position
-if ((x+w) > VirtualScreenWidth)
-AdjustX := 1
-if ((y+h) > VirtualScreenHeight)
-AdjustY := 1
-
-if (AdjustX and AdjustY)
-x := x - xOffset*2 - w, y := y - yOffset*2 - h
-else if AdjustX
-x := VirtualScreenWidth - w
-else if AdjustY
-y := VirtualScreenHeight - h
-
-if (Text = LastText) ; move tooltip
-DllCall("MoveWindow", A_PtrSize ? "UPTR" : "UInt",hwnd,"Int",x,"Int",y,"Int",w,"Int",h,"Int",0)
-else ; recreate tooltip
-{
-; Perfect solution would be to update tooltip text (TTM_UPDATETIPTEXT), but must be compatible with all versions of AHK_L and AHK Basic.
-; My Ask For Help link: http://www.autohotkey.com/forum/post-421841.html#421841
-CoordMode, ToolTip, Screen
-ToolTip,,,, % WhichToolTip ; destroy old
-ToolTip, % Text, x, y, % WhichToolTip ; show new
-hwnd := WinExist("ahk_class tooltips_class32 ahk_pid " DllCall("GetCurrentProcessId")), LastText := Text
-%A_ThisFunc%(Text, WhichToolTip, xOffset, yOffset) ; move new
-}
-Winset, AlwaysOnTop, on, ahk_id %hwnd%
-}
-}
 
 ; This function will auto-reload the script on save.
 CheckScriptUpdate() {
@@ -292,8 +236,9 @@ CheckScriptUpdate() {
     If (curModTime <> ScriptStartModTime) {
         Loop
         {
-            reload
-            Sleep 300 ; ms
+            Run, "MASTER-SCRIPT.ahk" ; When run as part of the full BPTV-KB Suite, this script needs to be reloaded from MASTER-SCRIPT.ahk. It pulls location & other info from what that script reads from 'settings.ini' so this command will cause the whole suite to reload on save of changes to this file.
+            ;reload ; If you are running just this script by itself, you can comment the line above out & uncomment this line, so that it will just reload itself after you save it.
+            Sleep 3000 ; ms
             MsgBox 0x2, %A_ScriptName%, Reload failed. ; 0x2 = Abort/Retry/Ignore
             IfMsgBox Abort
                 ExitApp
