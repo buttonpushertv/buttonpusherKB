@@ -194,7 +194,7 @@ ToolTip, killed firefox
 RemoveToolTip(-2000)
 return
 
-#^p:: ; <-- Nuke Premiere
+#^+p:: ; <-- Nuke Premiere
     Process, Exist, Adobe Premiere Pro.exe
     If (ErrorLevel > 0)
         PID = %ErrorLevel%
@@ -203,6 +203,7 @@ return
     RemoveToolTip(-2000)
 return
 
+#IfWinActive
 ;===== FUNCTIONS ===============================================================================
 
 RemoveSplashScreen:
