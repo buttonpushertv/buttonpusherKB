@@ -59,11 +59,12 @@ SplashTextOff
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
 CapsLock & f1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
+    WinGetActiveTitle, activeWin
     txt2show := "SUPPORTING-FILES\KBF1-LOC" . Location_currentSystemLocation . ".txt"
     showText(txt2show)
     keywait, f1
     Gui, Text:Destroy
-    WinActivate
+    WinActivate, %activeWin%
 return
 
 CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
@@ -108,11 +109,11 @@ CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortc
         numPages := 1
     }
     showImageTabs(pic2Show, PictureWidth, numPages)
-    ToolTipFM( "PLAIN`nCONTROL`nALT`nSHIFT`nCTRL+ALT`nCTRL+SHIFT`nALT+SHIFT`nCTRL+ALT+SHIFT")
+    ;ToolTipFM( "PLAIN`nCONTROL`nALT`nSHIFT`nCTRL+ALT`nCTRL+SHIFT`nALT+SHIFT`nCTRL+ALT+SHIFT")
     keywait, f2
     numPages := 0
     Gui, Picture:Destroy
-    ToolTipFM()
+    ;ToolTipFM()
     WinActivate
 return
 
