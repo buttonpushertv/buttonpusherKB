@@ -59,15 +59,16 @@ SplashTextOff
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
 CapsLock & f1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
-    WinGetActiveTitle, activeWin
+    WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     txt2show := "SUPPORTING-FILES\KBF1-LOC" . Location_currentSystemLocation . ".txt"
     showText(txt2show)
     keywait, f1
     Gui, Text:Destroy
-    WinActivate, %activeWin%
+    WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
 CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
+    WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     If WinActive("ahk_exe Explorer.EXE") {
         pic2show := "SUPPORTING-FILES\KBF2-WIN-PAGE"
         PictureWidth := 2000
@@ -109,15 +110,17 @@ CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortc
         numPages := 1
     }
     showImageTabs(pic2Show, PictureWidth, numPages)
-    ;ToolTipFM( "PLAIN`nCONTROL`nALT`nSHIFT`nCTRL+ALT`nCTRL+SHIFT`nALT+SHIFT`nCTRL+ALT+SHIFT")
+    ;If you want some help recalling which line is which in the BPTV-KB templates, you can uncomment the ToolTip below. It will appear near the mouse cursor when the Cheat Sheet is invoked & clear with everything else. Make sure to also uncomment the plain ToolTip line a few lines down.
+    ;ToolTip, PLAIN`nCONTROL`nALT`nSHIFT`nCTRL+ALT`nCTRL+SHIFT`nALT+SHIFT`nCTRL+ALT+SHIFT
     keywait, f2
     numPages := 0
     Gui, Picture:Destroy
-    ;ToolTipFM()
-    WinActivate
+    ;ToolTip ; also uncomment this line to clear the ToolTip when done
+    WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
 CapsLock & f3:: ; <--Display a Text File CheatSheet of App Specific AutoHotKeys
+    WinGetActiveTitle, activeWin
     If WinActive("ahk_exe Explorer.EXE")
         showText("SUPPORTING-FILES\KBF3-WINDOWS-DEFAULT-KEYS.txt")
     else
@@ -130,15 +133,16 @@ CapsLock & f3:: ; <--Display a Text File CheatSheet of App Specific AutoHotKeys
         showText("SUPPORTING-FILES\NO-CHEATSHEET.txt")
     keywait, f3
     Gui, Text:Destroy
-    WinActivate
+    WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
 CapsLock & f4:: ; <--Display an image CheatSheet based on System Location Setting
+    WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     locationPic := "SUPPORTING-FILES\KBF4-LOC" . Location_currentSystemLocation . ".png"
     showPic(locationPic, 0)
     keywait,f4
     Gui, Picture:Destroy
-    WinActivate
+    WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
 ;===== FUNCTIONS ===============================================================================
