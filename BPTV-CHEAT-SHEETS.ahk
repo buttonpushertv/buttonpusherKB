@@ -76,9 +76,9 @@ CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortc
     }
     else
     If WinActive("ahk_exe AfterFX.exe") {
-        pic2Show := "SUPPORTING-FILES\KBF2-AE.png"
+        pic2Show := "SUPPORTING-FILES\KBF2-AE-PAGE"
         PictureWidth := 2000
-        numPages := 1
+        numPages := 2
     }
     else
     If WinActive("ahk_exe Photoshop.exe") {
