@@ -48,6 +48,7 @@ global splashScreenStartY := 50
 global splashScreenStartX := (halfScreenWidth - 300)
 global CapsLockCounter := 0 ; initial value for the CapsLock detection code below
 
+SetCapsLockState, off ; turn off CapsLock so that the checking function doesn't go off automatically
 SetScrollLockState, off ; since we're hacking ScrollLock to become a modifier key, we pretty much want it turned off all the time. This turns it off on script load. Most of the uses with this hacked-modifier will re-load the scripts.
 
 ; These 2 INI_ function calls will load the settings.ini info and load in the sections relevant for this script
@@ -233,7 +234,6 @@ CapsLockCheck:
 		}                                       ; The earlier commands #InstallKeybdHook & #UseHook seemed to catch
 																						; the Left Alt but not the Right Alt. Obviously, disabling the
 																						; CapsLockCheck breaks this fix.
-
 		If GetKeyState("CapsLock","T")
     {
     	CapsLockCounter += 1
