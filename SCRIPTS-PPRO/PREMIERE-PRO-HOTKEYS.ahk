@@ -50,7 +50,7 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 
 #IfWinActive, ahk_exe Adobe Premiere Pro.exe
 
-CapsLock & F1::prFocus("timeline") ; <-- Focus the Timeline Window
+#F1::prFocus("timeline") ; <-- Focus the Timeline Window
 
 ^1:: ; <-- PPRO: Step Left 1 second
 Send, ^+a
