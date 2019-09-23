@@ -27,6 +27,8 @@ global versionFile := "version.ini" ; the file which holds the current version o
 global version ; creating a global variable for the version info
 FileRead, version, %versionFile% ; reading the version from versionFile
 
+global currentSelectedSystemLocation :=
+global Location_currentSystemLocation :=
 ; This section will Initialize & Load the settiings from %inifile%
 ; code is commented below
 inifile = settings.ini
@@ -63,9 +65,10 @@ loop, %section1_keys%
     currentKey := % section1_key%A_Index%
     currentKeyValue := % %section1%_%currentKey%
     currentKeyValueForRadio := "Location" . currentAltCounter . " > " . currentKeyValue
-    if (currentAltCounter = Location_currentSystemLocation)
+    if (currentAltCounter = Location_currentSystemLocation) {
       Gui, Add, Radio, xs+20 vLocRadioGroup%currentAltCounter% Checked, %currentKeyValueForRadio%
-    else
+      global currentSelectedSystemLocation := currentKeyValue
+    } else
       Gui, Add, Radio, xs+20 vLocRadioGroup%currentAltCounter%, %currentKeyValueForRadio%
   }
 
@@ -133,8 +136,7 @@ Scripts_pathScript%newNumberOfKeySets% := newScriptPathValue
 Scripts_nameScript%newNumberOfKeySets% := newScriptNameValue
 section2_keys += 3
 INI_Save(inifile)
-FileDelete, C:\BPTV-KB\PERSONAL\location.txt
-FileAppend, %Location_currentSystemLocation%, C:\BPTV-KB\PERSONAL\location.txt
+ExternalLocationSave()
 reload
 return
 
@@ -162,8 +164,7 @@ loop, %section2_keys%
     Continue
   }
 INI_Save(inifile)
-FileDelete, C:\BPTV-KB\PERSONAL\location.txt
-FileAppend, %Location_currentSystemLocation%, C:\BPTV-KB\PERSONAL\location.txt
+ExternalLocationSave()
 ;Reload ;uncomment to reload immed. after save - to check what it saved
 splashScreenSpacing := 75
 splashScreenStartY := 100
@@ -211,4 +212,13 @@ GuiEscape:
 ExitApp
 
 ;===== FUNCTIONS ===============================================================================
-Quitting:
+
+ExternalLocationSave() {
+FileDelete, C:\BPTV-KB\PERSONAL\location.txt
+FileAppend,
+(
+%Location_currentSystemLocation%
+%currentSelectedSystemLocation%
+), C:\BPTV-KB\PERSONAL\location.txt
+return
+}
