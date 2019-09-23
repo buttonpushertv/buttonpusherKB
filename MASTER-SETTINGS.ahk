@@ -133,6 +133,8 @@ Scripts_pathScript%newNumberOfKeySets% := newScriptPathValue
 Scripts_nameScript%newNumberOfKeySets% := newScriptNameValue
 section2_keys += 3
 INI_Save(inifile)
+FileDelete, C:\BPTV-KB\PERSONAL\location.txt
+FileAppend, %Location_currentSystemLocation%, C:\BPTV-KB\PERSONAL\location.txt
 reload
 return
 
@@ -160,6 +162,8 @@ loop, %section2_keys%
     Continue
   }
 INI_Save(inifile)
+FileDelete, C:\BPTV-KB\PERSONAL\location.txt
+FileAppend, %Location_currentSystemLocation%, C:\BPTV-KB\PERSONAL\location.txt
 ;Reload ;uncomment to reload immed. after save - to check what it saved
 splashScreenSpacing := 75
 splashScreenStartY := 100
