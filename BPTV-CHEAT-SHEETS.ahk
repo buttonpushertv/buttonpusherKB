@@ -18,6 +18,8 @@ SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of
 FileGetTime ScriptStartModTime, %A_ScriptFullPath%
 SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
 
+Menu, Tray, Icon, shell32.dll, 214 ;tray icon is now a little keyboard, or piece of paper or something
+
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
 sleepShort = 333
