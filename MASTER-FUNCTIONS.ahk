@@ -154,6 +154,41 @@ INI_Save(inifile="inifile.ini"){
     }
 }
 
+openFCXE(pathToOpen){
+	pathToFCXE = "C:\Program Files\FreeCommander XE\FreeCommander.exe"
+	FCXEparams =  /C /T /R=
+	Run, %pathToFCXE% %FCXEparams%%pathToOpen%
+	Return
+}
+
+getFCXEPath(){
+  SetTitleMatchMode Slow
+  WinGet, f_window_id, ID, A
+  WinGetClass, f_class, ahk_id %f_window_id%
+  If f_class contains FreeCommanderXE
+  {
+	    savedPath := parseFCXEPath()
+	    pathToSave = % savedPath
+	    savePathForFCXE(pathToSave)
+  } else {
+	   MsgBox,,,You don't appear to be in a FreeCommanderXE window.,2
+   }
+}
+
+savePathForFCXE(savedPath){
+  FileDelete, %A_ScriptDir%\SavedPathForFCXE.txt
+	FileAppend, %savedPath%, %A_ScriptDir%\SavedPathForFCXE.txt
+	MsgBox,,,%savedPath%`nwas saved to %A_ScriptDir%, 2
+	return
+}
+
+parseFCXEPath() {
+	WinGetActiveTitle, winTitleFromFCXE
+	FoundPos := RegExMatch(winTitleFromFCXE, " -")
+	StringLeft, tempPathFromFCXE, winTitleFromFCXE, (FoundPos - 1)
+  pathFromFCXE := tempPathFromFCXE . "\"
+	return pathFromFCXE
+}
 
 ; ===========================================================================
 ; Run a program or switch to it if already running.

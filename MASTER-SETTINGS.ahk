@@ -215,10 +215,6 @@ ExitApp
 
 ExternalLocationSave() {
 FileDelete, C:\BPTV-KB\PERSONAL\location.txt
-FileAppend,
-(
-%Location_currentSystemLocation%
-%currentSelectedSystemLocation%
-), C:\BPTV-KB\PERSONAL\location.txt
+FileAppend, %currentSelectedSystemLocation%, C:\BPTV-KB\PERSONAL\location.txt
 return
 }
