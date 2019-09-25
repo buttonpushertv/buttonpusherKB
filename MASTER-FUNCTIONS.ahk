@@ -158,60 +158,6 @@ INI_Save(inifile="inifile.ini"){
     }
 }
 
-openFCXE(pathToOpen){
-	pathToFCXE = "C:\Program Files\FreeCommander XE\FreeCommander.exe"
-	FCXEparams =  /C /T /R=
-	Run, %pathToFCXE% %FCXEparams%%pathToOpen%
-	Return
-}
-
-getFCXEPath(){
-  SetTitleMatchMode Slow
-  WinGet, f_window_id, ID, A
-  WinGetClass, f_class, ahk_id %f_window_id%
-  If f_class contains FreeCommanderXE
-  {
-	    savedPath := parseFCXEPath()
-	    pathToSave = % savedPath
-	    savePathForFCXE(pathToSave)
-  } else {
-	   MsgBox,,,You don't appear to be in a FreeCommanderXE window.,2
-   }
-}
-
-savePathForFCXE(savedPath){
-  global Settings_rootFolder
-  FileDelete, %Settings_rootFolder%\PERSONAL\SavedPathForFCXE.txt
-	FileAppend, %savedPath%, %Settings_rootFolder%\PERSONAL\SavedPathForFCXE.txt
-	;MsgBox,,,%savedPath%`nwas saved to`n`n%Settings_rootFolder%\PERSONAL\SavedPathForFCXE.txt, 2
-	return
-}
-
-parseFCXEPath() {
-	WinGetActiveTitle, winTitleFromFCXE
-	FoundPos := RegExMatch(winTitleFromFCXE, " -")
-	StringLeft, tempPathFromFCXE, winTitleFromFCXE, (FoundPos - 1)
-  pathFromFCXE := tempPathFromFCXE . "\"
-	return pathFromFCXE
-}
-
-setWorkingProject() {
-  global Settings_rootFolder
-  getFCXEPath()
-  ;MsgBox, %Settings_rootFolder%\PERSONAL\CurrentWorkingProject.txt
-  FileDelete, %Settings_rootFolder%\PERSONAL\CurrentWorkingProject.txt
-  FileCopy, %Settings_rootFolder%\PERSONAL\SavedPathForFCXE.txt, %Settings_rootFolder%\PERSONAL\CurrentWorkingProject.txt
-}
-
-getWorkingProject() {
-  global Settings_rootFolder
-  projectPath := Settings_rootFolder . "\PERSONAL\CurrentWorkingProject.txt"
-  FileReadLine, readWorkingProject, %Settings_rootFolder%\PERSONAL\CurrentWorkingProject.txt, 1
-  currentWorkingProject = "%readWorkingProject%"
-  ;MsgBox, %currentWorkingProject%
-  openFCXE(currentWorkingProject)
-}
-
 ; ===========================================================================
 ; Run a program or switch to it if already running.
 ;    Target - Program to run. E.g. Calc.exe or C:\Progs\Bobo.exe

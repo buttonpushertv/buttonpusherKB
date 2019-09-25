@@ -1,5 +1,9 @@
 SetWorkingDir %A_ScriptDir%
-#Include %A_ScriptDir%\MASTER-REDIRECTOR.ahk
-
-getWorkingProject()
+#Include %A_ScriptDir%\FCXE-FUNCTIONS.ahk
+SetTitleMatchMode, 2
+currentProject := getWorkingProject()
+currentWorkingProject = % currentProject
+;MsgBox, %currentWorkingProject%
+openFCXE(currentWorkingProject)
+WinActivate, FreeCommander
 exitapp
