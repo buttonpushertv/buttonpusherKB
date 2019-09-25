@@ -3,6 +3,5 @@ SetWorkingDir %A_ScriptDir%
 projectSubfolder := "EXPORTS"
 currentProject := getWorkingProject()
 currentWorkingProject := currentProject . projectSubfolder
-;MsgBox, trying to open EXPORTS subfolder:`nprojectSubfolder:%projectSubfolder%`ncurrentProject:%currentProject%`ncurrenWorkingProject: %currentWorkingProject%
 openFCXE(currentWorkingProject)
 exitapp

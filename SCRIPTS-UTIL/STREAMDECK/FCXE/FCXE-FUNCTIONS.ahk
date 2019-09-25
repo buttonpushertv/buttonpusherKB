@@ -5,6 +5,7 @@ IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
 openFCXE(pathToOpen){
 	pathToFCXE = "C:\Program Files\FreeCommander XE\FreeCommander.exe"
 	FCXEparams =  /C /T /R=
+	pathToOpen = "%pathToOpen%"
 	Run, %pathToFCXE% %FCXEparams%%pathToOpen%
 	Return
 }
@@ -44,7 +45,7 @@ parseFCXEPath() {
 setWorkingProject() {
   global Settings_rootFolder
   getFCXEPath()
-  ;MsgBox, %Settings_rootFolder%\PERSONAL\CurrentWorkingProject.txt
+  MsgBox, %Settings_rootFolder%\PERSONAL\CurrentWorkingProject.txt
   FileDelete, %Settings_rootFolder%\PERSONAL\CurrentWorkingProject.txt
   FileCopy, %Settings_rootFolder%\PERSONAL\SavedPathForFCXE.txt, %Settings_rootFolder%\PERSONAL\CurrentWorkingProject.txt
 }
