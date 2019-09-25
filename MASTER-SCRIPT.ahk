@@ -42,6 +42,7 @@ quarterScreenHeight := (A_ScreenHeight / 4) ; determine what 1/4 the screen's he
 global iniFile := "settings.ini" ; the main settings file used by most of the BPTV-KB scripts
 global versionFile := "version.ini" ; the file which holds the current version of BPTV-KB
 global version ; creating a global variable for the version info
+global Settings_rootFolder
 ; The ScreenSpacing variables below place the splash screens across all scripts loaded after MASTER-SCRIPT.ahk
 global splashScreenSpacing := 150
 global splashScreenStartY := 50
@@ -56,6 +57,8 @@ INI_Init(iniFile)
 INI_Load(iniFile)
 
 FileRead, version, %versionFile% ; reading the version from versionFile
+
+
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading MASTER AHK Script - Version: %version%CAPS-F1 for CheatSheet of AHK Hotkeys.`nCAPS-Q to quit MASTER-SCRIPT & child scripts.`nCAPS-F11 to edit settings(MASTER-SETTINGS.ahk)
