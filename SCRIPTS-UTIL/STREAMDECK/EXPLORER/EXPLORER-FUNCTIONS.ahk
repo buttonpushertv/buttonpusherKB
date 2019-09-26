@@ -1,6 +1,14 @@
+; AutoHotKey -
+; by Ben Howard - ben@buttonpusher.tv
+
+; The InstantExplorer() function (along with Explorer_GetSelection(), Explorer_GetPath(), and saveLocation2()) are all pulled from TaranVH's 2nd-keyboard project (https://github.com/TaranVH/2nd-keyboard). I've modified & cleaned-up the code a little bit. Many thanks to Taran and his work.
+
+
+;===== START OF AUTO-EXECUTION SECTION =========================================================
 iniFile := "C:\BPTV-KB\settings.ini"
 IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
 ;MsgBox, From FCXE-FUNCTIONS(INITIALIZATION):`n%iniFile%`n%Settings_rootFolder%
+
 
 InstantExplorer(f_path,pleasePrepend := 0)
 {
@@ -150,7 +158,8 @@ else if f_class = ConsoleWindowClass ; In a console window, CD to that directory
 	SetKeyDelay, 0  ; This will be in effect only for the duration of this thread.
 	IfInString, f_path, :  ; It contains a drive letter
 		{
-		StringLeft, f_path_drive, f_path, 1
+    StringLeft, f_path_drive_temp, f_path, 2 ; scraping the first two characters - a double quote and the drive letter
+    StringRight, f_path_drive, f_path_drive_temp, 1 ; extracting just the drive letter without the quote
 		Send %f_path_drive%:{enter}
 		}
 	Send, cd %f_path%{Enter}
