@@ -298,24 +298,9 @@ return lePath
 #IfWinActive
 
 ; tweaked the function below to keep it consistent with the FCXE functions futher down.
-savePathForExplorer(){
-  global Settings_rootFolder
-f_text = 0
-SetTitleMatchMode Slow
-WinGet, f_window_id, ID, A
-WinGetClass, f_class, ahk_id %f_window_id%
-if f_class in ExploreWClass,CabinetWClass ;;,#32770 ; IF THE WINDOW CLASS IS AN EXPLORER WINDOW OF EITHER KIND.
-	{
-	thePath := Explorer_GetPath()
-	title = % thePath
-
+savePathForExplorer(pathToSave){
 	FileDelete, %Settings_rootFolder%\PERSONAL\SavedExplorerAddress.txt
-	FileAppend, %title% , %Settings_rootFolder%\PERSONAL\SavedExplorerAddress.txt
-	SavedExplorerAddress = %title%
-	;MSGBOX,,DEBUG, %title%`n`nwas saved as %Settings_rootFolder%\PERSONAL\SavedExplorerAddress.txt, 2
-	}
-else
-	msgbox,,, this is PROBABLY not an explorer window you chump,0.5
+	FileAppend, %title%, %Settings_rootFolder%\PERSONAL\SavedExplorerAddress.txt
 ;FOR SOME REASON, AFTER THIS SCRIPT RUNS, IT SOMETIMES ACTIVATES THE LAST ACTIVE WINDOW. IT DOESN'T MAKE ANY SENSE...
 }
 ;FOR FURTHER READING:
@@ -332,6 +317,18 @@ whichWindowType() {
   return f_class
 }
 
+setCurrentWorkingProject(pathToSet) {
+  global Settings_rootFolder
+  FileDelete, %Settings_rootFolder%\PERSONAL\CurrentWorkingProject.txt
+  FileAppend, %pathToSet%, %Settings_rootFolder%\PERSONAL\CurrentWorkingProject.txt
+  MsgBox, 262208, Set NEW Current Working Project, The Current Working Project is NOW SET TO:`n%pathToSet%, 4
+}
+
+getCurrentWorkingProject() {
+  projectPath := Settings_rootFolder . "\PERSONAL\CurrentWorkingProject.txt"
+  FileReadLine, currentWorkingProject, %Settings_rootFolder%\PERSONAL\CurrentWorkingProject.txt, 1
+  return currentWorkingProject
+}
 ;===== FreeCommanderXE FUNCTIONS ==================================================================
 
 ; I use FreeCommanderXE (https://freecommander.com/) as my primary file manager. Windows Explorer is lacking in many areas. I find FreeCommanderXE gives me a lot of support in those areas and makes things quicker & easier.
