@@ -4,10 +4,8 @@ projectSubfolder = COLOR
 f_class := whichWindowType()
 If f_class contains FreeCommander
     {
-    currentProject := getWorkingProject()
-    currentWorkingProject := currentProject . "\" . projectSubfolder
-    openFCXE(currentWorkingProject)
-    } else {
-      InstantExplorer(projectSubfolder,1)
+    openFCXE(projectSubfolder,1)
     }
-exitapp
+    else InstantExplorer(projectSubfolder,1)
+
+Exiting(projectSubfolder,1)

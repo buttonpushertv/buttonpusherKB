@@ -22,6 +22,10 @@ IniRead, Settings_FCXEParams, %iniFile%, Settings, FCXEParams
 Settings_pathToFCXE = "%Settings_pathToFCXE%"
 ;MSGBOX,,DEBUG, From DRAKE-FUNCTIONS(INITIALIZATION):`n%iniFile%`n%Settings_rootFolder%`n%Settings_pathToFCXE%`n%Settings_FCXEParams%
 
+global currentWorkingProject
+projectPath := Settings_rootFolder . "\PERSONAL\CurrentWorkingProject.txt"
+FileReadLine, currentWorkingProject, %Settings_rootFolder%\PERSONAL\CurrentWorkingProject.txt, 1
+;MsgBox,,DEBUG FROM DRAKE, %currentWorkingProject%
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
 ; combine below with key and '::' to define hotkey
@@ -31,6 +35,19 @@ Settings_pathToFCXE = "%Settings_pathToFCXE%"
 
 ;===== FUNCTIONS ===============================================================================
 ;
+Exiting(tipContent,pleasePrepend)
+{
+  global currentWorkingProject
+  if (pleasePrepend=1) {
+    tipContent := currentWorkingProject . "\" . tipContent
+  }
+  ;MSGBOX, ,DEBUG, from Exiting()`ntipContent:%tipContent%`ncurrentWorkingProject:%currentWorkingProject%`npleasePrepend:%pleasePrepend%
+  ToolTip, Opening %tipContent%
+  Sleep, 3000
+  ExitApp
+  Return
+  }
+
 ;===== START of TaranVH FUNCTIONS ================================================================
 ; The function below is used to navigate to folders in Windows Explorer windows, Save Dialogs, and Console Windows (cmd.exe)
 ;
@@ -49,15 +66,10 @@ InstantExplorer(f_path,pleasePrepend)
   ; I just find it easier to refer to it this way & it provides a bit more flexibility
   ; Basically, if pleasePrepend is set to '1', then it will prepend the 'currentWorkingProject' path onto whatever is sent to the Function.
   ; If you want to visit a location outside of the currentWorkingProject, then you can set pleasePrepend to 0 and send the full path to your location.
-if pleasePrepend = 1
-	{
-    ;MSGBOX,,DEBUG, f_path has a value: %f_path%
-	FileRead, SavedExplorerAddress, %Settings_rootFolder%\PERSONAL\CurrentWorkingProject.txt
-  if f_path {
-    f_path = %SavedExplorerAddress%\%f_path%
-    ;MSGBOX,,DEBUG, You should be in: %f_path%
-  } else f_path = %SavedExplorerAddress%
-  }
+;MSGBOX,,DEBUG, from InstantExplorer()`nf_path has a value: %f_path%
+if (pleasePrepend = 1) {
+    f_path = %currentWorkingProject%\%f_path%
+  } else f_path = %currentWorkingProject%
 
 ;;;SUPER IMPORTANT: YOU NEED TO GO INTO WINDOWS' FOLDER OPTIONS > VIEW > AND CHECK "DISPLAY THE FULL PATH IN THE TITLE BAR" OR THIS WON'T WORK.
 ;;;UPDATE: THE INSTRUCTION ABOVE MIGHT BE OBSOLETE NOW, I'VE FIGURED OUT A BETTER WAY TO DO THIS SHIT
@@ -82,11 +94,10 @@ if !FileExist(f_path)
 	}
 }
 
-f_path = %f_path%\ ;;THIS ADDS A \ AT THE VERY END OF THE FILE PATH, FOR THE SAKE OF OLD-STYLE SAVE AS DIALOUGE BOXES WHICH REQUIRE THEM IN ORDER TO UPDATE THE FOLDER PATH WHEN IT IS INSERTED INTO Edit1.
+;f_path = %f_path%\ ;;THIS ADDS A \ AT THE VERY END OF THE FILE PATH, FOR THE SAKE OF OLD-STYLE SAVE AS DIALOUGE BOXES WHICH REQUIRE THEM IN ORDER TO UPDATE THE FOLDER PATH WHEN IT IS INSERTED INTO Edit1.
 
 f_path := """" . f_path . """" ;THIS ADDS QUOTATION MARKS AROUND EVERYTHING SO THAT IT WORKS AS A STRING, NOT A VARIABLE.
-
-
+;MSGBOX,,DEBUG, from InstantExplorer()`nf_path has a value: %f_path%
 ; THESE FIRST FEW VARIABLES ARE SET HERE AND USED BY F_OPENFAVORITE:
 WinGet, f_window_id, ID, A
 WinGetClass, f_class, ahk_id %f_window_id%
@@ -153,6 +164,31 @@ if f_class = #32770    ; IT'S A DIALOG.
 			return
 			}
 		}
+
+    if WinActive("ahk_exe Photoshop.exe")
+      {
+      tooltip, you are inside of Photoshop
+      if (f_title = "Save As") or if (f_title = "Save Project")
+        {
+        ControlFocus, Edit1, ahk_id %f_window_id%
+        ;tooltip, you are here
+        sleep 1
+        ; ACTIVATE THE WINDOW SO THAT IF THE USER IS MIDDLE-CLICKING
+        ; OUTSIDE THE DIALOG, SUBSEQUENT CLICKS WILL ALSO WORK:
+        WinActivate ahk_id %f_window_id%
+        ; RETRIEVE ANY FILENAME THAT MIGHT ALREADY BE IN THE FIELD SO
+        ; THAT IT CAN BE RESTORED AFTER THE SWITCH TO THE NEW FOLDER:
+        ControlGetText, f_text, Edit1, ahk_id %f_window_id%
+        sleep 1
+        ControlSetText, Edit1, %f_path%, ahk_id %f_window_id%
+        ControlSend, Edit1, +{Enter}, ahk_id %f_window_id%
+        Sleep, 100  ; IT NEEDS EXTRA TIME ON SOME DIALOGS OR IN SOME CASES.
+        ControlSetText, Edit1, %f_text%, ahk_id %f_window_id%
+        tooltip,
+        return
+        }
+      }
+
 
 	; STUFF BEYOND HERE IS NOT IN PREMIERE
 	if f_Edit1Pos <>   ; AND IT HAS AN EDIT1 CONTROL.
@@ -302,11 +338,16 @@ whichWindowType() {
 ;
 ; While there are lots of keyboard commands within FreeCommanderXE, I found that if you are just opening locations, it was quicker to send it via the commandline interface that already exists in the app.
 
-openFCXE(pathToOpen){
+openFCXE(pathToOpen, pleasePrepend){
 	global Settings_pathToFCXE
 	global Settings_FCXEParams
-  pathToOpen = "%pathToOpen%"
-	Run, %Settings_pathToFCXE% %Settings_FCXEparams%%pathToOpen%
+  global currentWorkingProject
+  if (pleasePrepend = 1) {
+      pathToOpen = %currentWorkingProject%\%pathToOpen%
+    }
+    pathToOpen := """" . pathToOpen . """" ;THIS ADDS QUOTATION MARKS AROUND EVERYTHING SO THAT IT WORKS AS A STRING, NOT A VARIABLE.
+    ;MSGBOX,,DEBUG, from openFCXE()`npathToOpen has a value: %pathToOpen%
+  Run, %Settings_pathToFCXE% %Settings_FCXEparams%%pathToOpen%
 	Return
 }
 
@@ -349,10 +390,6 @@ setWorkingProject() {
 }
 
 getWorkingProject() {
-  global Settings_rootFolder
-  projectPath := Settings_rootFolder . "\PERSONAL\CurrentWorkingProject.txt"
-  FileReadLine, readWorkingProject, %Settings_rootFolder%\PERSONAL\CurrentWorkingProject.txt, 1
-  currentWorkingProject := readWorkingProject
-  ;MSGBOX,,DEBUG, from getWorkingProject function: %currentWorkingProject%
+  global currentWorkingProject
   return currentWorkingProject
 }

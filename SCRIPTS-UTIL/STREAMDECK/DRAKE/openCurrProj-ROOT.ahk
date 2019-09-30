@@ -1,15 +1,11 @@
 SetWorkingDir %A_ScriptDir%
 #Include %A_ScriptDir%\DRAKE-FUNCTIONS.ahk
-
+projectSubfolder :=
 f_class := whichWindowType()
 If f_class contains FreeCommander
     {
-    currentProject := getWorkingProject()
-    currentWorkingProject = % currentProject
-    openFCXE(currentWorkingProject)
+    openFCXE(projectSubfolder,1)
     }
-    else {
-      InstantExplorer("",1)
-    }
+    else InstantExplorer(projectSubfolder,1)
 
-exitapp
+Exiting(projectSubfolder,1)
