@@ -1,6 +1,6 @@
 SetWorkingDir %A_ScriptDir%
 #Include %A_ScriptDir%\DRAKE-FUNCTIONS.ahk
-projectSubfolder = _PROJECTS_
+projectSubfolder = EXPORTS\APPROVALS
 f_class := whichWindowType()
 If f_class contains FreeCommander
     {
