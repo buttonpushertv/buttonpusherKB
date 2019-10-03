@@ -33,7 +33,8 @@ sleepDeep := 3500
 iniFile := "..\settings.ini"
 IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
 IniRead, Settings_pathToFCXE, %iniFile%, Settings, pathToFCXE
-IniRead, Settings_FCXEParams, %iniFile%, Settings, FCXEParams
+;IniRead, Settings_FCXEParams, %iniFile%, Settings, FCXEParams ; reading these from settings will open in the same tab as DRAKE scripts. The value below will put them in the other tab. Swap the commenting to change this behavior.
+Settings_FCXEParams := "/C /L=" ; this should open the location in the upper pane of FCXE
 Settings_pathToFCXE = "%Settings_pathToFCXE%"
 
 ; The ScreenSpacing variables below place the splash screens across all scripts loaded after MASTER-SCRIPT.ahk
@@ -94,8 +95,14 @@ f_Hotkey = +MButton
 
 /*
 ITEMS IN FAVORITES MENU <-- Do not change this string.
-:My Documents    ; %A_MyDocuments%
-:Program Files   ; %A_ProgramFiles%
+:F:\Client Media	;	F:\Client Media
+:F:\Dropfolder	;	F:\Dropfolder
+:F:\EDIT2 ELEMENTS	;	F:\EDIT2 ELEMENTS
+
+D:\Dropbox (postopmedia)	;	D:\Dropbox (postopmedia)
+D:\Dropbox (postopmedia)\EDIT2\_CLIENT MEDIA_	;	D:\Dropbox (postopmedia)\EDIT2\_CLIENT MEDIA_
+
+
 
 :PostHaste Templates ; C:\Users\ben\OneDrive\Documents\Digital Rebellion\Post Haste\Templates
 :AE Scripts(2019) ; C:\Program Files\Adobe\Adobe After Effects CC 2019\Support Files\Scripts
