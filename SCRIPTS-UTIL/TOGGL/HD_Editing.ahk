@@ -14,7 +14,7 @@
 
 ;===== START OF AUTO-EXECUTION SECTION =========================================================
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
-SendMode, InputThenPlay  ; Recommended for new scripts due to its superior speed and reliability.
+SendMode, Event  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance force ; Ensures that there is only a single instance of this script running.
 ;#InstallKeybdHook
@@ -34,8 +34,7 @@ sleepDeep = 3500
 ; <=use left mod key| >=use right mod key  | UP=fires on release
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
-CoordMode, Mouse, Client
-
+CoordMode, Mouse, Window
 WinActivate, Toggl Desktop
 Sleep, sleepMedium
 Click, 20, 60
