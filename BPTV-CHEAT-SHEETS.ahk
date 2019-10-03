@@ -40,7 +40,7 @@ global backgroundColor := "2D2A2B"
 global foregroundColor := "FFFFFF"
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 80, Launching %A_ScriptFullPath%, Loading BPTV-CHEAT-SHEETS
+SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading BPTV-CHEAT-SHEETS
 WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
 SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 Sleep, sleepDeep

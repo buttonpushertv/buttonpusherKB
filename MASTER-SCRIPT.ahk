@@ -45,7 +45,7 @@ global version ; creating a global variable for the version info
 global Settings_rootFolder
 ; The ScreenSpacing variables below place the splash screens across all scripts loaded after MASTER-SCRIPT.ahk
 global splashScreenSpacing := 150
-global splashScreenStartY := 50
+global splashScreenStartY := 10
 global splashScreenStartX := (halfScreenWidth - 300)
 global CapsLockCounter := 0 ; initial value for the CapsLock detection code below
 
@@ -57,8 +57,6 @@ INI_Init(iniFile)
 INI_Load(iniFile)
 
 FileRead, version, %versionFile% ; reading the version from versionFile
-
-
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading MASTER AHK Script - Version: %version%CAPS-F1 for CheatSheet of AHK Hotkeys.`nCAPS-Q to quit MASTER-SCRIPT & child scripts.`nCAPS-F11 to edit settings(MASTER-SETTINGS.ahk)
@@ -279,7 +277,7 @@ Quitting:
     splashScreenStartY := 100
     splashScreenStartX := 100
     DetectHiddenWindows, On
-    MsgBox, ,Quitting, Quitting MASTER-SCRIPT & child AHK scripts`n`n`nVersion: %version%, 3
+    ;MsgBox, ,Quitting, Quitting MASTER-SCRIPT & child AHK scripts`n`n`nVersion: %version%, 3
     SetTitleMatchMode, 2
 		loop, %section2_keys%
 		{
@@ -297,6 +295,7 @@ Quitting:
 		            WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
 		            WinClose, %currentPathValue%
 		            splashScreenStartY += splashScreenSpacing
+								Sleep, sleepShort
 		        pathKey :=
 		        currentKeyValue :=
 		        currentPathValue :=
@@ -308,7 +307,7 @@ Quitting:
 		}
 		    SplashTextOn, 600, 50, Quitting AHK scripts, All MASTER-SCRIPT.AHK shut down.`nGoodbye & thanks for all the fishes...
 		    WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
-		    Sleep, sleepShort
+		    Sleep, sleepMedium
 		    SplashTextOff
 		    ExitApp
 		    return
