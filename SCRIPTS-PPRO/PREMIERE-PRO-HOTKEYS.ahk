@@ -229,7 +229,12 @@ sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
 
-;+^!f9::
++^!f9:: ; <-- Go to next edit then add edit to active tracks
+Send, {down}
+Sleep, sleepShort
+Send, {F4}
+return
+
 ;+^!f10::
 ;+^!f11::
 ;+^!f12::
