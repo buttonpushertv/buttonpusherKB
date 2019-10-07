@@ -12,10 +12,6 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #MaxHotkeysPerInterval 2000
 #WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm
 
-; The 2 lines below pertain to the 'reload on save' function below (CheckScriptUpdate).
-; They are required for it to work.
-FileGetTime ScriptStartModTime, %A_ScriptFullPath%
-SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
 
 Menu, Tray, Icon, shell32.dll, 110 ; this changes the tray icon to a filmstrip!
 ;===== INITIALIZATION - VARIABLES ==============================================================
@@ -74,7 +70,7 @@ Send, {CTRL Down}
 Sleep, sleepShort
 Send, V
 Sleep, sleepShort
-Send, {CTRL Up}   
+Send, {CTRL Up}
 Sleep, sleepShort
 WinActivate, ahk_exe Photoshop.exe
 return
@@ -101,12 +97,12 @@ Sleep, sleepShort
 MouseMove, %posX%, %posY%
 return
 
-;+^!f3:: 
-;+^!f4:: 
+;+^!f3::
+;+^!f4::
 ;+^!f5::
 ;+^!f6::
-;+^!f7:: 
-;+^!f8:: 
+;+^!f7::
+;+^!f8::
 ;+^!f9::
 ;+^!f10::
 ;+^!f11::
@@ -126,21 +122,3 @@ RemoveSplashScreen:
     SplashTextOff
     SetTimer RemoveSplashScreen, Off
     return
-
-; This function will auto-reload the script on save.
-CheckScriptUpdate() {
-    global ScriptStartModTime
-    FileGetTime curModTime, %A_ScriptFullPath%
-    If (curModTime <> ScriptStartModTime) {
-        Loop
-        {
-            reload
-            Sleep 300 ; ms
-            MsgBox 0x2, %A_ScriptName%, Reload failed. ; 0x2 = Abort/Retry/Ignore
-            IfMsgBox Abort
-                ExitApp
-            IfMsgBox Ignore
-                break
-        } ; loops reload on "Retry"
-    }
-}
