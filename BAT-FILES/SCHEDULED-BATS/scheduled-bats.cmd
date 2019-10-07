@@ -19,6 +19,9 @@ call 0_weekly.cmd
 REM run DAILY CMD
 call 0_daily.cmd %location%
 
+REM run DAILY CMD
+call 0_system_backup_reminder.cmd %location%
+
 @echo ------------------------
 @echo SCHEDULED BATS COMPLETED
 @echo ------------------------
