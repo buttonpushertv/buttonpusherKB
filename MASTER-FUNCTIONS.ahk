@@ -18,6 +18,10 @@ sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
 
+iniFile := "C:\BPTV-KB\settings.ini"
+IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
+;MsgBox, From MASTER-FUNCTIONS(INITIALIZATION): %iniFile%`n%Settings_rootFolder%
+
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
 ; combine below with key and '::' to define hotkey
@@ -50,96 +54,6 @@ ScrollLockToggle:
   Return
 
 }
-
-
-;for showText & showPic - I want to add code in that will downgrade to the next lowest code that does exist if it can't find whatever file it is sent.
-
-; showText is used to create and display a GUI for a text file as a Cheat Sheet
-showText(fileToShow){
-  IfNotExist, %fileToShow%
-    fileToShow := "SUPPORTING-FILES\AHK-KEYS-NO-CHEATSHEET.txt"
-  FileRead, textToShow, %fileToShow%
-  FormatTime, now,, hh:mm tt
-  today = %A_YYYY%-%A_MMM%-%A_DD%
-  Gui, Text:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
-  Gui, Text:Color, 000000
-  Gui, Text:Margin, 30, 30
-  Gui, Text:font, s12 cFFFFFF, Consolas
-  Gui, Text:Add, Text, , %now% - %today%
-  Gui, Text:add, text, , %textToShow%
-  Gui, Text:add, text, , File: %A_ScriptDir%\%fileToShow%
-  Gui, Text:Show
-return
-}
-
-; showPic is used to create and display a GUI for an image Cheat Sheet
-; showPic can only display single images in a single frame (see showImageTabs below for more than 1 image)
-showPic(picToShow, PictureWidth){
-  SysGet, Mon1, Monitor, 1
-  If (Mon1Right < PictureWidth)
-    PictureWidth -= 425
-  if !FileExist(picToShow) {
-    picToShow := "SUPPORTING-FILES\NO-CHEAT-SHEET.png"
-    PictureWidth := 579
-  }
-  Gui, Picture:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
-  Gui, Picture:Color, 000000
-  Gui, Picture:Margin, 15, 15
-  Gui, Picture:font, s14 cFFFFFF, Consolas
-  Gui, Picture:add, picture, w%PictureWidth% h-1 , %picToShow%
-  Gui, Picture:add, text, , File: %A_ScriptDir%\%picToShow%
-  Gui, Picture:Show
-return
-}
-
-; showImageTabs is used to create and display a GUI for multiple images in tabs
-; Once displayed, you can scroll up or down to change visible image tabs
-showImageTabs(picToshow, PictureWidth, numPages){
-    SysGet, Mon1, Monitor, 1
-    If (Mon1Right < PictureWidth)
-      PictureWidth -= 450
-    If (numPages = 1) {
-      showPic(picToshow, PictureWidth)
-      return
-    }
-    Gui, Picture:+alwaysontop -sysmenu +owner -caption +toolwindow +0x02000000
-    Gui, Picture:Color, 111111
-    Gui, Picture:Margin, 5, 5
-    Gui, Picture:font, s10 cFFFFFF, Consolas
-    loop, %numPages% {
-        nextTab := tabList . "Page" . A_Index . "|"
-        tabList := nextTab
-        }
-    Gui, Picture:add, Tab3,, %tabList%
-    loop, %numPages% {
-        fileToShow := picToShow . A_Index . ".png"
-          if !FileExist(fileToShow) {
-            picToShow := "SUPPORTING-FILES\NO-CHEAT-SHEET.png"
-            PictureWidth := 579
-            showPic(picToshow, PictureWidth)
-            Return
-          }
-        If (A_Index = 1) {
-            Gui, Picture:add, picture, w%PictureWidth% h-1 , %fileToShow%
-            Gui, Picture:add, text, , %PictureWidth% - File: %A_ScriptDir%\%fileToShow%
-        }
-        else {
-            Gui, Picture:Tab, %A_Index%
-            Gui, Picture:add, picture, w%PictureWidth% h-1 , %fileToShow%
-            Gui, Picture:add, text, , File: %A_ScriptDir%\%fileToShow%
-            }
-    }
-    Gui, Picture:Tab
-    Gui, Picture:Show
-    return
-}
-
-; used to destroy GUIs - I know this is not necessarily the best way to do these Cheat Sheets, but it works very quickly on my systems.
-killGui(whicGUI){
-Gui, Destroy
-return
-}
-
 
 
 /*
@@ -243,7 +157,6 @@ INI_Save(inifile="inifile.ini"){
         }
     }
 }
-
 
 ; ===========================================================================
 ; Run a program or switch to it if already running.

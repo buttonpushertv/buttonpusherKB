@@ -12,11 +12,6 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #MaxHotkeysPerInterval 2000
 #WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm
 
-; The 2 lines below pertain to the 'reload on save' function below (CheckScriptUpdate).
-; They are required for it to work.
-FileGetTime ScriptStartModTime, %A_ScriptFullPath%
-SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
-
 Menu, Tray, Icon, shell32.dll, 116 ; this changes the tray icon to a filmstrip!
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
@@ -50,7 +45,7 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 
 #IfWinActive, ahk_exe Adobe Premiere Pro.exe
 
-CapsLock & F1::prFocus("timeline") ; <-- Focus the Timeline Window
+#F1::prFocus("timeline") ; <-- Focus the Timeline Window
 
 ^1:: ; <-- PPRO: Step Left 1 second
 Send, ^+a
@@ -229,7 +224,12 @@ sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
 
-;+^!f9::
++^!f9:: ; <-- Go to next edit then add edit to active tracks
+Send, {down}
+Sleep, sleepShort
+Send, {F4}
+return
+
 ;+^!f10::
 ;+^!f11::
 ;+^!f12::
@@ -248,21 +248,3 @@ RemoveSplashScreen:
     SplashTextOff
     SetTimer RemoveSplashScreen, Off
     return
-
-; This function will auto-reload the script on save.
-CheckScriptUpdate() {
-    global ScriptStartModTime
-    FileGetTime curModTime, %A_ScriptFullPath%
-    If (curModTime <> ScriptStartModTime) {
-        Loop
-        {
-            reload
-            Sleep 300 ; ms
-            MsgBox 0x2, %A_ScriptName%, Reload failed. ; 0x2 = Abort/Retry/Ignore
-            IfMsgBox Abort
-                ExitApp
-            IfMsgBox Ignore
-                break
-        } ; loops reload on "Retry"
-    }
-}

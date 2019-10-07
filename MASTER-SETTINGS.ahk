@@ -23,7 +23,12 @@ sleepDeep := 3500
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
+global versionFile := "version.ini" ; the file which holds the current version of BPTV-KB
+global version ; creating a global variable for the version info
+FileRead, version, %versionFile% ; reading the version from versionFile
 
+global currentSelectedSystemLocation :=
+global Location_currentSystemLocation :=
 ; This section will Initialize & Load the settiings from %inifile%
 ; code is commented below
 inifile = settings.ini
@@ -48,7 +53,7 @@ currentAltCounter := 1
 Gui, Font, S12 CDefault, Franklin Gothic Medium
 Gui, Add, GroupBox, R%sectionGroupH% x10 y10 w300 , System Location
 Gui, Font, S10 CDefault, Franklin Gothic Medium
-Gui, Add, Text, x330 y20 w280, Select a Location at the left. This can be used to provide location specific settings.`n`nBelow, check the boxes for the scripts you'd like to launch when running MASTER-SCRIPT.ahk.
+Gui, Add, Text, x330 y20 w280, Select a Location at the left. This can be used to provide location specific settings.`n`nBelow, check the boxes for the scripts you'd like to launch when running MASTER-SCRIPT.ahk.`nVersion: %version%
 Gui, Font, S12 CDefault, Franklin Gothic Medium
 Gui, Add, Text, section x10 y10,
 loop, %section1_keys%
@@ -60,9 +65,10 @@ loop, %section1_keys%
     currentKey := % section1_key%A_Index%
     currentKeyValue := % %section1%_%currentKey%
     currentKeyValueForRadio := "Location" . currentAltCounter . " > " . currentKeyValue
-    if (currentAltCounter = Location_currentSystemLocation)
+    if (currentAltCounter = Location_currentSystemLocation) {
       Gui, Add, Radio, xs+20 vLocRadioGroup%currentAltCounter% Checked, %currentKeyValueForRadio%
-    else
+      global currentSelectedSystemLocation := currentKeyValue
+    } else
       Gui, Add, Radio, xs+20 vLocRadioGroup%currentAltCounter%, %currentKeyValueForRadio%
   }
 
@@ -130,6 +136,7 @@ Scripts_pathScript%newNumberOfKeySets% := newScriptPathValue
 Scripts_nameScript%newNumberOfKeySets% := newScriptNameValue
 section2_keys += 3
 INI_Save(inifile)
+ExternalLocationSave()
 reload
 return
 
@@ -157,6 +164,7 @@ loop, %section2_keys%
     Continue
   }
 INI_Save(inifile)
+ExternalLocationSave()
 ;Reload ;uncomment to reload immed. after save - to check what it saved
 splashScreenSpacing := 75
 splashScreenStartY := 100
@@ -204,4 +212,9 @@ GuiEscape:
 ExitApp
 
 ;===== FUNCTIONS ===============================================================================
-Quitting:
+
+ExternalLocationSave() {
+FileDelete, C:\BPTV-KB\PERSONAL\location.txt
+FileAppend, %currentSelectedSystemLocation%, C:\BPTV-KB\PERSONAL\location.txt
+return
+}

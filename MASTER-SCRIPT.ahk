@@ -42,12 +42,14 @@ quarterScreenHeight := (A_ScreenHeight / 4) ; determine what 1/4 the screen's he
 global iniFile := "settings.ini" ; the main settings file used by most of the BPTV-KB scripts
 global versionFile := "version.ini" ; the file which holds the current version of BPTV-KB
 global version ; creating a global variable for the version info
+global Settings_rootFolder
 ; The ScreenSpacing variables below place the splash screens across all scripts loaded after MASTER-SCRIPT.ahk
 global splashScreenSpacing := 150
-global splashScreenStartY := 50
+global splashScreenStartY := 10
 global splashScreenStartX := (halfScreenWidth - 300)
 global CapsLockCounter := 0 ; initial value for the CapsLock detection code below
 
+SetCapsLockState, off ; turn off CapsLock so that the checking function doesn't go off automatically
 SetScrollLockState, off ; since we're hacking ScrollLock to become a modifier key, we pretty much want it turned off all the time. This turns it off on script load. Most of the uses with this hacked-modifier will re-load the scripts.
 
 ; These 2 INI_ function calls will load the settings.ini info and load in the sections relevant for this script
@@ -80,7 +82,7 @@ loop, %section2_keys% ; this loop will launch any scripts that are defined and e
               continue
               }
             else {
-            Run, %currentPathValue% %splashScreenStartX% %splashScreenStartY% %Settings_splashScreenTimeout%
+            Run, %currentPathValue% %splashScreenStartX% %splashScreenStartY% %Settings_splashScreenTimeout% %Location_currentSystemLocation%
             splashScreenStartY += splashScreenSpacing
             }
         }
@@ -106,7 +108,7 @@ SetTimer, CapsLockCheck, %Settings_CapsLockCheckPeriod% ; the main timer to chec
 ; <=use left mod key| >=use right mod key  | UP=fires on release
 ;
 ; After each Hotkey Defintion, place a comment using this format:
-; {hotkeyDef}:: ; <-- Define what HotKey does. 
+; {hotkeyDef}:: ; <-- Define what HotKey does.
 ;
 ;   This will be read by \BPTV-KB\UTIL-APPS\Hotkey Help.ahk to create a text cheat sheet of all HotKeys & Definitons. This text file can be used to create the Cheat Sheets shown with CAPS+F1, etc.
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
@@ -179,77 +181,6 @@ CapsLock & q:: ; <-- Exit MASTER-SCRIPT and child AHK Scripts
 	goto Quitting ; this subroutine will ID any of the scripts that have been launched (via enabled in settings.ini) and then quit them all
 return
 
-
-CapsLock & f1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
-    txt2show := "SUPPORTING-FILES\KBF1-LOC" . Location_currentSystemLocation . ".txt"
-    showText(txt2show)
-    keywait, f1
-    Gui, Text:Destroy
-    return
-
-CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
-    If WinActive("ahk_exe Explorer.EXE") {
-        pic2show := "SUPPORTING-FILES\KBF2-WIN-PAGE"
-        PictureWidth := 2000
-        numPages := 2
-    }
-    else
-    If WinActive("ahk_exe Adobe Premiere Pro.exe") {
-        pic2Show := "SUPPORTING-FILES\KBF2-PPRO.png"
-        PictureWidth := 2000
-        numPages := 1
-    }
-    else
-    If WinActive("ahk_exe AfterFX.exe") {
-        pic2Show := "SUPPORTING-FILES\KBF2-AE.png"
-        PictureWidth := 2000
-        numPages := 1
-    }
-    else
-    If WinActive("ahk_exe SubtitleEdit.exe") {
-        pic2Show := "SUPPORTING-FILES\KBF2-CONTOUR-PRO-SUBTITLE-EDIT.jpg"
-        PictureWidth := 906
-        numPages := 1
-    }
-    else
-    If WinActive("ahk_exe stickies.exe") {
-        pic2Show := "SUPPORTING-FILES\KBF2-STICKIES.png"
-        PictureWidth := 1920
-        numPages := 1
-    }
-    else {
-        pic2Show := "SUPPORTING-FILES\NO-CHEATSHEET.png"
-        PictureWidth := 579
-        numPages := 1
-    }
-    showImageTabs(pic2Show, PictureWidth, numPages)
-    keywait, f2
-    numPages := 0
-    Gui, Picture:Destroy
-    return
-
-CapsLock & f3:: ; <--Display a Text File CheatSheet of App Specific AutoHotKeys
-    If WinActive("ahk_exe Explorer.EXE")
-        showText("SUPPORTING-FILES\KBF3-WINDOWS-DEFAULT-KEYS.txt")
-    else
-    If WinActive("ahk_exe Adobe Premiere Pro.exe")
-        showText("SUPPORTING-FILES\KBF3-PPRO.txt")
-    else
-    If WinActive("ahk_exe stickies.exe")
-        showText("SUPPORTING-FILES\KBF3-STICKIES.txt")
-    else
-        showText("SUPPORTING-FILES\NO-CHEATSHEET.txt")
-    keywait, f3
-    Gui, Text:Destroy
-    return
-
-CapsLock & f4:: ; <--Display an image CheatSheet based on System Location Setting
-    locationPic := "SUPPORTING-FILES\KBF4-LOC" . Location_currentSystemLocation . ".png"
-    showPic(locationPic, 0)
-    keywait,f4
-    Gui, Picture:Destroy
-    return
-
 CapsLock & t:: ; <-- Send time & date as text
     FormatTime, now,, hh:mm tt
     today = %A_YYYY%-%A_MMM%-%A_DD%
@@ -265,7 +196,7 @@ ToolTip, killed firefox
 RemoveToolTip(-2000)
 return
 
-#^p:: ; <-- Nuke Premiere
+#^+p:: ; <-- Nuke Premiere
     Process, Exist, Adobe Premiere Pro.exe
     If (ErrorLevel > 0)
         PID = %ErrorLevel%
@@ -274,6 +205,25 @@ return
     RemoveToolTip(-2000)
 return
 
+#IfWinActive
+
+;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
+;+^!f1::
+;+^!f2::
+;+^!f3::
+;+^!f4::
+;+^!f5::
+;+^!f6::
+;+^!f7::
+;+^!f8::
+;+^!f9::
+;+^!f10::
+;+^!f11::
++^!f12:: Send, HD Editing
+;+^!f13::
+;+^!f14::
+;+^!f15::
+;+^!f16::
 ;===== FUNCTIONS ===============================================================================
 
 RemoveSplashScreen:
@@ -303,7 +253,6 @@ CapsLockCheck:
 		}                                       ; The earlier commands #InstallKeybdHook & #UseHook seemed to catch
 																						; the Left Alt but not the Right Alt. Obviously, disabling the
 																						; CapsLockCheck breaks this fix.
-
 		If GetKeyState("CapsLock","T")
     {
     	CapsLockCounter += 1
@@ -328,7 +277,7 @@ Quitting:
     splashScreenStartY := 100
     splashScreenStartX := 100
     DetectHiddenWindows, On
-    MsgBox, ,Quitting, Quitting MASTER-SCRIPT & child AHK scripts`n`n`nVersion: %version%, 3
+    ;MsgBox, ,Quitting, Quitting MASTER-SCRIPT & child AHK scripts`n`n`nVersion: %version%, 3
     SetTitleMatchMode, 2
 		loop, %section2_keys%
 		{
@@ -346,6 +295,7 @@ Quitting:
 		            WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
 		            WinClose, %currentPathValue%
 		            splashScreenStartY += splashScreenSpacing
+								Sleep, sleepShort
 		        pathKey :=
 		        currentKeyValue :=
 		        currentPathValue :=
@@ -357,7 +307,7 @@ Quitting:
 		}
 		    SplashTextOn, 600, 50, Quitting AHK scripts, All MASTER-SCRIPT.AHK shut down.`nGoodbye & thanks for all the fishes...
 		    WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
-		    Sleep, sleepShort
+		    Sleep, sleepMedium
 		    SplashTextOff
 		    ExitApp
 		    return

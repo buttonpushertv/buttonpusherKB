@@ -1,30 +1,34 @@
-== MASTER-SCRIPT ===========================================================
+==== MASTER-SCRIPT ===========================================================
 
-LEFT WIN              <-- Will not activate the Start Menu when pressed by itself
-RIGHT WIN             <-- Works normally. Will open Start menu when pressed by itself
+                LEFT WIN   <-- Will not activate the Start Menu when pressed by itself
+                RIGHT WIN  <-- Works normally. Will open Start menu when pressed by itself
 
-LEFT ALT              <-- Should not activate App Menu Bar when pressed by itself
-RIGHT ALT             <-- Works normally. Will open App Menu Bar when pressed by itself
+                LEFT ALT   <-- Should not activate App Menu Bar when pressed by itself
+                RIGHT ALT  <-- Works normally. Will open App Menu Bar when pressed by itself
 
-WIN+F1                <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys (this file)
-WIN+F2                <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
-WIN+F3                <--Display a Text File CheatSheet of App Specific AutoHotKeys
-WIN+F4                <--Display an image CheatSheet for Preonic Keyboard
-WIN+T                 <--Send time & date as text (hh:mm AM/PM - YYYY-MMM-DD)
-WIN+W                 <--Display a Text File CheatSheet of Windows Default Keys
+                CAPS+F1    <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys (this file)
+                CAPS+F2    <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
+                CAPS+F3    <--Display a Text File CheatSheet of App Specific AutoHotKeys
+                CAPS+F4    <--Display an image CheatSheet for Preonic Keyboard
 
-WIN+C                 <--Delete Key
-WIN+V                 <--BackSpace
+                CAPS+B     <--Send 'buttonpusher' as text
+                CAPS+E     <--Send 'ben@buttonpusher.tv' as text
 
-WIN+B                 <--Send 'buttonpusher' as text
-ALT+WIN+B             <--Send 'ben@buttonpusher.tv' as text
+                CAPS+T     <--Send time & date as text (hh:mm AM/PM - YYYY-MMM-DD)
 
-WIN+CTRL+SHIFT+F      <--Nuke Firefox (click Desktop first)
-WIN+CTRL+SHIFT+P      <--Nuke Premiere (click Desktop first)
 
-WIN+F11               <--Open the Settings GUI for MASTER-SCRIPT.AHK
-WIN+ALT+CTRL+BACKSP   <--Reload MASTER-SCRIPT.ahk
-WIN+ALT+CTRL+Q        <--Exit MASTER-SCRIPT and child AHK Scripts
+                CAPS+C     <--Delete Key
+                CAPS+V     <--BackSpace
+
+                CAPS+P     <-- Toggle CapsLockCheck On or Off
+
+         WIN+CTRL+SHIFT+F  <--Nuke Firefox (click Desktop first)
+         WIN+CTRL+SHIFT+P  <--Nuke Premiere (click Desktop first)
+
+  (CAPS+F11) SCRLK+F11     <--Open the Settings GUI for MASTER-SCRIPT.AHK
+  (CAPS+F12) SCRLK+F12     <--Open BPTV-KB LAUNCH-X
+ (CAPS+BKSP) SCRLK+BACKSP  <--Reload MASTER-SCRIPT.ahk
+             CAPS+Q        <--Exit MASTER-SCRIPT and child AHK Scripts
 
 == STICKIES HOTKEYS -=======================================================
 
