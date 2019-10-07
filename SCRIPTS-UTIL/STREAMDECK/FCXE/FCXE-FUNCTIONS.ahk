@@ -27,9 +27,9 @@ getFCXEPath(){
 
 savePathForFCXE(savedPath){
   global Settings_rootFolder
-  FileDelete, %Settings_rootFolder%\PERSONAL\SavedPathForFCXE.txt
-	FileAppend, %savedPath%, %Settings_rootFolder%\PERSONAL\SavedPathForFCXE.txt
-	;MsgBox,,savePathForFCXE,%savedPath%`nwas saved to`n`n%Settings_rootFolder%\PERSONAL\SavedPathForFCXE.txt, 2
+  FileDelete, %Settings_rootFolder%\PRIVATE\SavedPathForFCXE.txt
+	FileAppend, %savedPath%, %Settings_rootFolder%\PRIVATE\SavedPathForFCXE.txt
+	;MsgBox,,savePathForFCXE,%savedPath%`nwas saved to`n`n%Settings_rootFolder%\PRIVATE\SavedPathForFCXE.txt, 2
 	return
 }
 
@@ -45,15 +45,15 @@ parseFCXEPath() {
 setWorkingProject() {
   global Settings_rootFolder
   getFCXEPath()
-  MsgBox, %Settings_rootFolder%\PERSONAL\CurrentWorkingProject.txt
-  FileDelete, %Settings_rootFolder%\PERSONAL\CurrentWorkingProject.txt
-  FileCopy, %Settings_rootFolder%\PERSONAL\SavedPathForFCXE.txt, %Settings_rootFolder%\PERSONAL\CurrentWorkingProject.txt
+  MsgBox, %Settings_rootFolder%\PRIVATE\CurrentWorkingProject.txt
+  FileDelete, %Settings_rootFolder%\PRIVATE\CurrentWorkingProject.txt
+  FileCopy, %Settings_rootFolder%\PRIVATE\SavedPathForFCXE.txt, %Settings_rootFolder%\PRIVATE\CurrentWorkingProject.txt
 }
 
 getWorkingProject() {
   global Settings_rootFolder
-  projectPath := Settings_rootFolder . "\PERSONAL\CurrentWorkingProject.txt"
-  FileReadLine, readWorkingProject, %Settings_rootFolder%\PERSONAL\CurrentWorkingProject.txt, 1
+  projectPath := Settings_rootFolder . "\PRIVATE\CurrentWorkingProject.txt"
+  FileReadLine, readWorkingProject, %Settings_rootFolder%\PRIVATE\CurrentWorkingProject.txt, 1
   currentWorkingProject := readWorkingProject
   ;MsgBox, from getWorkingProject function: %currentWorkingProject%
   return currentWorkingProject

@@ -18,7 +18,7 @@ InstantExplorer(f_path,pleasePrepend := 0)
 
 if pleasePrepend = 1 ;i think this is for the changeable stream deck folder shortcuts
 	{
-	FileRead, SavedExplorerAddress, %Settings_rootFolder%\PERSONAL\SavedExplorerAddress.txt
+	FileRead, SavedExplorerAddress, %Settings_rootFolder%\PRIVATE\SavedExplorerAddress.txt
   if f_path {
     f_path = %SavedExplorerAddress%\%f_path%
   } else f_path = %SavedExplorerAddress%
@@ -249,10 +249,10 @@ if f_class in ExploreWClass,CabinetWClass ;;,#32770 ; if the window class is an 
 	thePath := Explorer_GetPath()
 	title = % thePath
 
-	FileDelete, %Settings_rootFolder%\PERSONAL\SavedExplorerAddress.txt
-	FileAppend, %title% , %Settings_rootFolder%\PERSONAL\SavedExplorerAddress.txt
+	FileDelete, %Settings_rootFolder%\PRIVATE\SavedExplorerAddress.txt
+	FileAppend, %title% , %Settings_rootFolder%\PRIVATE\SavedExplorerAddress.txt
 	SavedExplorerAddress = %title%
-	msgbox, , , %title%`n`nwas saved as %Settings_rootFolder%\PERSONAL\SavedExplorerAddress.txt, 5
+	msgbox, , , %title%`n`nwas saved as %Settings_rootFolder%\PRIVATE\SavedExplorerAddress.txt, 5
 	}
 else
 	msgbox,,, this is PROBABLY not an explorer window you chump,0.5

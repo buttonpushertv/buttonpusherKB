@@ -5,7 +5,7 @@
 @echo.
 @echo.
 
-for /f "delims=" %%a in (C:\BPTV-KB\PERSONAL\location.txt) do set location=%%a
+for /f "delims=" %%a in (C:\BPTV-KB\PRIVATE\location.txt) do set location=%%a
 
 REM Set working directory to the location of the SCHEDULED-BATS
 CD C:\BPTV-KB\BAT-FILES\SCHEDULED-BATS

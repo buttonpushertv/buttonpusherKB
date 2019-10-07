@@ -34,7 +34,7 @@ sleepDeep := 3500
 
 ;BH-This prfocus() function was taken from Taran's 2nd Keyboard Project...modified to work on my system.
 
-prFocus(panel) ;this function allows you to have ONE spot where you define your personal shortcuts that "focus" panels in premiere.
+prFocus(panel) ;this function allows you to have ONE spot where you define your PRIVATE shortcuts that "focus" panels in premiere.
 {
 
 if (panel = "effects")

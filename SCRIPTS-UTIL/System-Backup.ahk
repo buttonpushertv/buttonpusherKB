@@ -30,7 +30,7 @@ sleepDeep = 3500
 
 #Include ..\MASTER-FUNCTIONS.ahk
 
-FileReadLine, dayssince, ..\PERSONAL\days_since_system_backup.txt, 1
+FileReadLine, dayssince, ..\PRIVATE\days_since_system_backup.txt, 1
 
 If (dayssince < 15) {
   ExitApp
@@ -90,8 +90,8 @@ Gui, Hide
 MsgBox, 36, BackUp App Launched, You launched the Backup App.`n`nSuccessfully backed up?
 IfMsgBox, Yes
 {
-    FileDelete, C:\BPTV-KB\PERSONAL\days_since_system_backup.txt
-    FileAppend, 0, C:\BPTV-KB\PERSONAL\days_since_system_backup.txt
+    FileDelete, C:\BPTV-KB\PRIVATE\days_since_system_backup.txt
+    FileAppend, 0, C:\BPTV-KB\PRIVATE\days_since_system_backup.txt
 }
 IfMsgBox, No
 {
