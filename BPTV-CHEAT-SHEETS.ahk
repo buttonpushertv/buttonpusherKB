@@ -13,11 +13,6 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #HotkeyModifierTimeout 0 ;It's not clear if this completely fixes it.
 SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of "exact"
 
-; The 2 lines below pertain to the 'reload on save' function below (CheckScriptUpdate).
-; They are required for it to work.
-FileGetTime ScriptStartModTime, %A_ScriptFullPath%
-SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
-
 Menu, Tray, Icon, shell32.dll, 214 ;tray icon is now a little keyboard, or piece of paper or something
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
@@ -46,6 +41,7 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 Sleep, sleepDeep
 SplashTextOff
 
+
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
 ; combine below with key and '::' to define hotkey
@@ -53,7 +49,7 @@ SplashTextOff
 ; #=Win | !=Alt | ^=Ctrl | +=Shift | &=combine keys | *=ignore other mods
 ; <=use left mod key| >=use right mod key  | UP=fires on release
 
-;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
+;===== MAIN HOTKEY DEFINITIONS HERE ============================================================ 
 CapsLock & F1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     txt2show := "SUPPORTING-FILES\KBF1-LOC" . Location_currentSystemLocation . ".txt"
@@ -228,24 +224,4 @@ showImageTabs(picToshow, PictureWidth, numPages){
     Gui, Picture:Tab
     Gui, Picture:Show
     return
-}
-
-
-; This function will auto-reload the script on save.
-CheckScriptUpdate() {
-    global ScriptStartModTime
-    FileGetTime curModTime, %A_ScriptFullPath%
-    If (curModTime <> ScriptStartModTime) {
-        Loop
-        {
-            Run, "MASTER-SCRIPT.ahk" ; When run as part of the full BPTV-KB Suite, this script needs to be reloaded from MASTER-SCRIPT.ahk. It pulls location & other info from what that script reads from 'settings.ini' so this command will cause the whole suite to reload on save of changes to this file.
-            ;reload ; If you are running just this script by itself, you can comment the line above out & uncomment this line, so that it will just reload itself after you save it.
-            Sleep 3000 ; ms
-            MsgBox 0x2, %A_ScriptName%, Reload failed. ; 0x2 = Abort/Retry/Ignore
-            IfMsgBox Abort
-                ExitApp
-            IfMsgBox Ignore
-                break
-        } ; loops reload on "Retry"
-    }
 }
