@@ -49,7 +49,7 @@ SplashTextOff
 ; #=Win | !=Alt | ^=Ctrl | +=Shift | &=combine keys | *=ignore other mods
 ; <=use left mod key| >=use right mod key  | UP=fires on release
 
-;===== MAIN HOTKEY DEFINITIONS HERE ============================================================ 
+;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
 CapsLock & F1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     txt2show := "SUPPORTING-FILES\KBF1-LOC" . Location_currentSystemLocation . ".txt"
@@ -68,9 +68,9 @@ CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortc
     }
     else
     If WinActive("ahk_exe Adobe Premiere Pro.exe") {
-        pic2Show := "SUPPORTING-FILES\KBF2-PPRO.png"
+        pic2Show := "SUPPORTING-FILES\KBF2-PPRO-PAGE"
         PictureWidth := 2000
-        numPages := 1
+        numPages := 2
     }
     else
     If WinActive("ahk_exe AfterFX.exe") {
@@ -213,7 +213,7 @@ showImageTabs(picToshow, PictureWidth, numPages){
           }
         If (A_Index = 1) {
             Gui, Picture:add, picture, w%PictureWidth% h-1 , %fileToShow%
-            Gui, Picture:add, text, , %PictureWidth% - File: %A_ScriptDir%\%fileToShow%
+            Gui, Picture:add, text, , File: %A_ScriptDir%\%fileToShow%
         }
         else {
             Gui, Picture:Tab, %A_Index%
