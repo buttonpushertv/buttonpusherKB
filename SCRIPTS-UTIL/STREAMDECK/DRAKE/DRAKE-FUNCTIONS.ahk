@@ -93,7 +93,7 @@ if !FileExist(fullPathToOpen)
     }
   }
 
-f_path := quotedPathToOpen ; did this to maintain the code lifted from TaranVH below. 
+f_path := quotedPathToOpen ; did this to maintain the code lifted from TaranVH below.
 
 ;f_path = %f_path%\ ;;THIS ADDS A \ AT THE VERY END OF THE FILE PATH, FOR THE SAKE OF OLD-STYLE SAVE AS DIALOUGE BOXES WHICH REQUIRE THEM IN ORDER TO UPDATE THE FOLDER PATH WHEN IT IS INSERTED INTO Edit1.
 
@@ -360,7 +360,8 @@ openFCXE(pathToOpen, pleasePrepend){
         goto checkForPath
         }
     } else {
-    Run, %Settings_pathToFCXE% %Settings_FCXEparams%%quotedPathToOpen%
+    Run, %Settings_pathToFCXE% %Settings_FCXEparams% %quotedPathToOpen%
+    ; There is a trick about the way FCXE recieves it's parameters: If you are sending the one where you tell it which panel to open in ('/L=' or '/R=') it must not have a space between the parameter and the path you want to open. However, if you just want to open the path in the active panel of the current instance you must send '/C' with a space. SO, if you want to force it to open in a specific panel, you will need to remove the space between the 2 %'s above (like this: "%Settings_FCXEparams%%quotedPathToOpen%")
     }
     Return
 }
