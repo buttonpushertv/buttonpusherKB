@@ -56,7 +56,7 @@ Exiting(tipContent,pleasePrepend)
 ;   I GOT MOST OF THIS CODE FROM HTTPS://AUTOHOTKEY.COM/DOCS/SCRIPTS/FAVORITEFOLDERS.HTM
 ;   AND MODIFIED IT TO WORK WITH ANY GIVEN KEYPRESS, RATHER THAN MIDDLE MOUSE CLICK AS IT HAD BEFORE.
 ;
-InstantExplorer(f_path,pleasePrepend)
+InstantExplorer(originalPath,pleasePrepend)
 {
   global Settings_rootFolder
 
@@ -68,35 +68,35 @@ InstantExplorer(f_path,pleasePrepend)
   ; If you want to visit a location outside of the currentWorkingProject, then you can set pleasePrepend to 0 and send the full path to your location.
 ;MSGBOX,,DEBUG, from InstantExplorer()`nf_path has a value: %f_path%
 if (pleasePrepend = 1) {
-    f_path = %currentWorkingProject%\%f_path%
-  } else f_path = %currentWorkingProject%
+    fullPathToOpen = %currentWorkingProject%\%originalPath%
+  } else fullPathToOpen = %currentWorkingProject%
 
 ;;;SUPER IMPORTANT: YOU NEED TO GO INTO WINDOWS' FOLDER OPTIONS > VIEW > AND CHECK "DISPLAY THE FULL PATH IN THE TITLE BAR" OR THIS WON'T WORK.
 ;;;UPDATE: THE INSTRUCTION ABOVE MIGHT BE OBSOLETE NOW, I'VE FIGURED OUT A BETTER WAY TO DO THIS SHIT
 
-instantExplorerTryAgain: ; this is going to be triggered if the path you are trying to access does not exist.
-; fUTURE iDEA - you could add an option in here to create the path if it didn't already exist...
-if !FileExist(f_path)
+quotedPathToOpen := """" . fullPathToOpen . """" ;THIS ADDS QUOTATION MARKS AROUND EVERYTHING SO THAT IT WORKS AS A STRING, NOT A VARIABLE.
+
+checkForExplorerPath: ; this is going to be triggered if the path you are trying to access does not exist.
+if !FileExist(fullPathToOpen)
 {
-	;MSGBOX,,DEBUG,, %f_path%`nNo such path exists`, but we will go down in folders until it does.,1.0
-	if InStr(f_path, "\"){
-		FoundPos := InStr(f_path, "\", , StartingPos := 0, Occurrence := 1)
-		Length := StrLen(f_path)
-		trimThis := Length - FoundPos
-		NewString := SubStr(f_path, 1, FoundPos-1)
-		f_path := NewString
-		GOTO, instantExplorerTryAgain
-	}
-	else
-	{
-		MSGBOX,,DEBUG,, %f_path%`n`nNo such path exists.,1.0
-		GOTO, instantExplorerEnd
-	}
-}
+  MsgBox, 8244, PATH DOES NOT EXIST, %quotedPathToOpen% does not exist.`n`nWould you like to create & open it?`n`n`nSelect 'No' to open Root of Current Working Project:`n%currentWorkingProject%
+  IfMsgBox Yes
+    {
+    FileCreateDir, %fullPathToOpen%
+    goto checkForExplorerPath
+    }
+  IfMsgBox No
+    {
+    fullPathToOpen = %currentWorkingProject%
+    quotedPathToOpen := """" . fullPathToOpen . """"
+    goto checkForExplorerPath
+    }
+  }
+
+f_path := quotedPathToOpen ; did this to maintain the code lifted from TaranVH below. 
 
 ;f_path = %f_path%\ ;;THIS ADDS A \ AT THE VERY END OF THE FILE PATH, FOR THE SAKE OF OLD-STYLE SAVE AS DIALOUGE BOXES WHICH REQUIRE THEM IN ORDER TO UPDATE THE FOLDER PATH WHEN IT IS INSERTED INTO Edit1.
 
-f_path := """" . f_path . """" ;THIS ADDS QUOTATION MARKS AROUND EVERYTHING SO THAT IT WORKS AS A STRING, NOT A VARIABLE.
 ;MSGBOX,,DEBUG, from InstantExplorer()`nf_path has a value: %f_path%
 ; THESE FIRST FEW VARIABLES ARE SET HERE AND USED BY F_OPENFAVORITE:
 WinGet, f_window_id, ID, A
@@ -340,12 +340,29 @@ openFCXE(pathToOpen, pleasePrepend){
 	global Settings_FCXEParams
   global currentWorkingProject
   if (pleasePrepend = 1) {
-      pathToOpen = %currentWorkingProject%\%pathToOpen%
+      fullPathToOpen = %currentWorkingProject%\%pathToOpen%
     }
-    pathToOpen := """" . pathToOpen . """" ;THIS ADDS QUOTATION MARKS AROUND EVERYTHING SO THAT IT WORKS AS A STRING, NOT A VARIABLE.
-    ;MSGBOX,,DEBUG, from openFCXE()`npathToOpen has a value: %pathToOpen%
-  Run, %Settings_pathToFCXE% %Settings_FCXEparams%%pathToOpen%
-	Return
+    quotedPathToOpen := """" . fullPathToOpen . """" ;THIS ADDS QUOTATION MARKS AROUND EVERYTHING SO THAT IT WORKS AS A STRING, NOT A VARIABLE.
+    ;MSGBOX,,DEBUG, from openFCXE()`nfullPathToOpen has a value: %fullPathToOpen%`nAnd quotedPathToOpen is:%quotedPathToOpen%
+    checkForPath:
+    if !FileExist(fullPathToOpen)
+    {
+      MsgBox, 8244, PATH DOES NOT EXIST, %quotedPathToOpen% does not exist.`n`nWould you like to create & open it?`n`n`nSelect 'No' to open Root of Current Working Project:`n%currentWorkingProject%
+      IfMsgBox Yes
+        {
+        FileCreateDir, %fullPathToOpen%
+        goto checkForPath
+        }
+      IfMsgBox No
+        {
+        fullPathToOpen = %currentWorkingProject%
+        quotedPathToOpen := """" . fullPathToOpen . """"
+        goto checkForPath
+        }
+    } else {
+    Run, %Settings_pathToFCXE% %Settings_FCXEparams%%quotedPathToOpen%
+    }
+    Return
 }
 
 getFCXEPath(){
