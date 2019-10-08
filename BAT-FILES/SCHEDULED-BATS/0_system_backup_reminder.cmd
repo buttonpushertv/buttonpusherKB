@@ -3,7 +3,7 @@ REM @echo off
 @echo RUNNING SYSTEM BACKUP REMINDER BAT
 @echo ==================================
 
-IF NOT EXIST C:\BPTV-KB\PRIVATE\%computername%\days_since_system_backup.txt echo 15>C:\BPTV-KB\PRIVATE\days_since_system_backup.txt
+IF NOT EXIST C:\BPTV-KB\PRIVATE\%computername%\days_since_system_backup.txt echo 15>C:\BPTV-KB\PRIVATE\%computername%\days_since_system_backup.txt
 
 for /f "delims=" %%a in (C:\BPTV-KB\PRIVATE\%computername%\days_since_system_backup.txt) do set /a dayssince=%%a
 
