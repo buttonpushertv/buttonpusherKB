@@ -23,8 +23,8 @@ Settings_pathToFCXE = "%Settings_pathToFCXE%"
 ;MSGBOX,,DEBUG, From DRAKE-FUNCTIONS(INITIALIZATION):`n%iniFile%`n%Settings_rootFolder%`n%Settings_pathToFCXE%`n%Settings_FCXEParams%
 
 global currentWorkingProject
-projectPath := Settings_rootFolder . "\PRIVATE\CurrentWorkingProject.txt"
-FileReadLine, currentWorkingProject, %Settings_rootFolder%\PRIVATE\CurrentWorkingProject.txt, 1
+projectPath := Settings_rootFolder . "\PRIVATE\%A_Computername%\CurrentWorkingProject.txt"
+FileReadLine, currentWorkingProject, %Settings_rootFolder%\PRIVATE\%A_Computername%\CurrentWorkingProject.txt, 1
 ;MsgBox,,DEBUG FROM DRAKE, %currentWorkingProject%
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -299,8 +299,8 @@ return lePath
 
 ; tweaked the function below to keep it consistent with the FCXE functions futher down.
 savePathForExplorer(pathToSave){
-	FileDelete, %Settings_rootFolder%\PRIVATE\SavedExplorerAddress.txt
-	FileAppend, %title%, %Settings_rootFolder%\PRIVATE\SavedExplorerAddress.txt
+	FileDelete, %Settings_rootFolder%\PRIVATE\%A_Computername%\SavedExplorerAddress.txt
+	FileAppend, %title%, %Settings_rootFolder%\PRIVATE\%A_Computername%\SavedExplorerAddress.txt
 ;FOR SOME REASON, AFTER THIS SCRIPT RUNS, IT SOMETIMES ACTIVATES THE LAST ACTIVE WINDOW. IT DOESN'T MAKE ANY SENSE...
 }
 ;FOR FURTHER READING:
@@ -319,14 +319,14 @@ whichWindowType() {
 
 setCurrentWorkingProject(pathToSet) {
   global Settings_rootFolder
-  FileDelete, %Settings_rootFolder%\PRIVATE\CurrentWorkingProject.txt
-  FileAppend, %pathToSet%, %Settings_rootFolder%\PRIVATE\CurrentWorkingProject.txt
+  FileDelete, %Settings_rootFolder%\PRIVATE\%A_Computername%\CurrentWorkingProject.txt
+  FileAppend, %pathToSet%, %Settings_rootFolder%\PRIVATE\%A_Computername%\CurrentWorkingProject.txt
   MsgBox, 262208, Set NEW Current Working Project, The Current Working Project is NOW SET TO:`n%pathToSet%, 4
 }
 
 getCurrentWorkingProject() {
-  projectPath := Settings_rootFolder . "\PRIVATE\CurrentWorkingProject.txt"
-  FileReadLine, currentWorkingProject, %Settings_rootFolder%\PRIVATE\CurrentWorkingProject.txt, 1
+  projectPath := Settings_rootFolder . "\PRIVATE\%A_Computername%\CurrentWorkingProject.txt"
+  FileReadLine, currentWorkingProject, %Settings_rootFolder%\PRIVATE\%A_Computername%\CurrentWorkingProject.txt, 1
   return currentWorkingProject
 }
 ;===== FreeCommanderXE FUNCTIONS ==================================================================
@@ -363,8 +363,8 @@ getFCXEPath(){
 
 savePathForFCXE(savedPath){
   global Settings_rootFolder
-  FileDelete, %Settings_rootFolder%\PRIVATE\SavedPathForFCXE.txt
-	FileAppend, %savedPath%, %Settings_rootFolder%\PRIVATE\SavedPathForFCXE.txt
+  FileDelete, %Settings_rootFolder%\PRIVATE\%A_Computername%\SavedPathForFCXE.txt
+	FileAppend, %savedPath%, %Settings_rootFolder%\PRIVATE\%A_Computername%\SavedPathForFCXE.txt
 	;MSGBOX,,DEBUG,savePathForFCXE,%savedPath%`nwas saved to`n`n%Settings_rootFolder%\PRIVATE\SavedPathForFCXE.txt, 2
 	return
 }
@@ -376,14 +376,6 @@ parseFCXEPath() {
   ;pathFromFCXE := tempPathFromFCXE . "\"
   ;MSGBOX,,DEBUG, from parseFCXEPath:`nwinTitleFromFCXE:%winTitleFromFCXE%`ntempPathFromFCXE:%tempPathFromFCXE%
   return tempPathFromFCXE
-}
-
-setWorkingProject() {
-  global Settings_rootFolder
-  getFCXEPath()
-  ;MSGBOX,,DEBUG, %Settings_rootFolder%\PRIVATE\CurrentWorkingProject.txt
-  FileDelete, %Settings_rootFolder%\PRIVATE\CurrentWorkingProject.txt
-  FileCopy, %Settings_rootFolder%\PRIVATE\SavedPathForFCXE.txt, %Settings_rootFolder%\PRIVATE\CurrentWorkingProject.txt
 }
 
 getWorkingProject() {
