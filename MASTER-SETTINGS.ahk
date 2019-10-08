@@ -136,7 +136,6 @@ Scripts_pathScript%newNumberOfKeySets% := newScriptPathValue
 Scripts_nameScript%newNumberOfKeySets% := newScriptNameValue
 section2_keys += 3
 INI_Save(inifile)
-ExternalLocationSave()
 reload
 return
 
