@@ -11,9 +11,7 @@ if %dayssince% == 0 goto zerodayskip
 
 set /a checkwindow = 15
 
-set /a backupreminder = %dayssince% %% %checkwindow%
-
-if %backupreminder% == 0 (call "C:\BPTV-KB\BAT-FILES\launch System-Backup.cmd")
+if /I %dayssince% GEQ %checkwindow% (call "C:\BPTV-KB\BAT-FILES\launch System-Backup.cmd")
 
 :zerodayskip
 set /a backupdays=%dayssince%+1
