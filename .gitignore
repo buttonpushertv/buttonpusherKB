@@ -1,4 +1,5 @@
 .sync
 settings.ini
-UTIL-APPS/vnchelper/vnchelper.ini
-PERSONAL/
+PRIVATE/
+UTIL-APPS/vnchelper/
+UTIL-APPS/QAP/

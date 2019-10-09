@@ -30,7 +30,7 @@ sleepDeep = 3500
 
 #Include ..\MASTER-FUNCTIONS.ahk
 
-FileReadLine, dayssince, ..\PERSONAL\days_since_system_backup.txt, 1
+FileReadLine, dayssince, ..\PRIVATE\%A_Computername%\days_since_system_backup.txt, 1
 
 If (dayssince < 15) {
   ExitApp
@@ -45,7 +45,7 @@ backupApplication := "C:\Program Files (x86)\EaseUS\Todo Backup\bin\Loader.exe"
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
-; combine below with key and '::' to define hotkey 
+; combine below with key and '::' to define hotkey
 ; e.g.- ^f1::Msgbox You pressed Control and F1
 ; #=Win | !=Alt | ^=Ctrl | +=Shift | &=combine keys | *=ignore other mods
 ; <=use left mod key| >=use right mod key  | UP=fires on release
@@ -90,8 +90,8 @@ Gui, Hide
 MsgBox, 36, BackUp App Launched, You launched the Backup App.`n`nSuccessfully backed up?
 IfMsgBox, Yes
 {
-    FileDelete, C:\BPTV-KB\PERSONAL\days_since_system_backup.txt
-    FileAppend, 0, C:\BPTV-KB\PERSONAL\days_since_system_backup.txt
+    FileDelete, C:\BPTV-KB\PRIVATE\days_since_system_backup.txt
+    FileAppend, 0, C:\BPTV-KB\PRIVATE\days_since_system_backup.txt
 }
 IfMsgBox, No
 {

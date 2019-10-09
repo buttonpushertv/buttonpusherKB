@@ -136,7 +136,6 @@ Scripts_pathScript%newNumberOfKeySets% := newScriptPathValue
 Scripts_nameScript%newNumberOfKeySets% := newScriptNameValue
 section2_keys += 3
 INI_Save(inifile)
-ExternalLocationSave()
 reload
 return
 
@@ -164,7 +163,6 @@ loop, %section2_keys%
     Continue
   }
 INI_Save(inifile)
-ExternalLocationSave()
 ;Reload ;uncomment to reload immed. after save - to check what it saved
 splashScreenSpacing := 75
 splashScreenStartY := 100
@@ -212,9 +210,3 @@ GuiEscape:
 ExitApp
 
 ;===== FUNCTIONS ===============================================================================
-
-ExternalLocationSave() {
-FileDelete, C:\BPTV-KB\PERSONAL\location.txt
-FileAppend, %currentSelectedSystemLocation%, C:\BPTV-KB\PERSONAL\location.txt
-return
-}
