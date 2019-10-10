@@ -12,7 +12,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #MaxHotkeysPerInterval 2000
 #WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm
 
-; The 2 lines below pertain to the 'reload on save' function below (CheckScriptUpdate). 
+; The 2 lines below pertain to the 'reload on save' function below (CheckScriptUpdate).
 ; They are required for it to work.
 FileGetTime ScriptStartModTime, %A_ScriptFullPath%
 SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
@@ -37,7 +37,7 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 ;===== MODIFIER MEMORY HELPER ==================================================================
-; combine below with key and '::' to define hotkey 
+; combine below with key and '::' to define hotkey
 ; e.g.- ^f1::Msgbox You pressed Control and F1
 ; #=Win | !=Alt | ^=Ctrl | +=Shift | &=combine keys | *=ignore other mods
 ; <=use left mod key| >=use right mod key  | UP=fires on release
@@ -58,25 +58,25 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 ; keystroke combo to execute.
 
 ;+^!f1:: ; <-- Resetting a Keyboard Template Key to Default Values & all labels set to opacity 10%
-    
-    /* 
+
+    /*
     global Choice
     global xposP
     global yposP
-    
+
     Choice1 := "none"
-    
+
     ;Setting the coordinate mode is really important. This ensures that pixel distances are consistant for everything, everywhere.
     coordmode, pixel, Window
     coordmode, mouse, Window
     SetKeyDelay, 1
-    
+
     MouseGetPos, xposP, yposP
-    
+
     MsgBox, Mouse: %xposP%, %yposP%
-    
+
     Gui, Add, DropDownList, vChoice, PLAIN||CONTROL|ALT|SHIFT|CTRL+ALT|CTRL+SHIFT|ALT+SHIFT|CTRL+ALT+SHIFT
-    Gui, Add, Button,, Cancel 
+    Gui, Add, Button,, Cancel
     Gui, Add, Button, Default, Submit
     Gui, show
     Return
@@ -85,15 +85,16 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
     ButtonCancel:
     Gui, destroy
     return
-    
+
     ButtonSubmit:
     MsgBox, Choice %Choice%
     WinActivate, ahk_exe Illustrator.exe
     Chooser(Choice)
     Gui, destroy
     return
+    test
     */
-    
+
 +^!f2:: ; <-- Resetting a PLAIN Keyboard Template Key to PLAIN & set to opacity 10%
     ;ITEM LOOP STARTS HERE
     Sleep, sleepMedium
@@ -287,7 +288,7 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
     Sleep, sleepShort
     Send, {Control Up}
     Sleep, sleepMedium
-    Send, CTRL{+}SHIFT 
+    Send, CTRL{+}SHIFT
     Sleep, sleepMedium
     Send, {ESC}
     Sleep, sleepMedium
@@ -323,7 +324,7 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
     Sleep, sleepShort
     Send, {Control Up}
     Sleep, sleepMedium
-    Send, ALT{+}SHIFT 
+    Send, ALT{+}SHIFT
     Sleep, sleepMedium
     Send, {ESC}
     Sleep, sleepMedium
@@ -387,7 +388,7 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
     coordmode, pixel, Window
     coordmode, mouse, Window
     coordmode, Caret, Window
-    SetKeyDelay, 1 
+    SetKeyDelay, 1
     ;ITEM LOOP STARTS HERE
     Sleep, sleepShort
     Click
