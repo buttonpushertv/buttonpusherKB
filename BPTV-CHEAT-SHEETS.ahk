@@ -118,7 +118,15 @@ CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortc
         numPages := 1
         PictureStartY := -1
     }
-    else {
+		else
+		If WinActive("ahk_exe atom.exe") {
+				pic2Show := "SUPPORTING-FILES\KBF2-ATOM-PAGE"
+				PictureWidth := 2000
+				numPages := 2
+				PictureStartY := -1
+		}
+    else
+		{
         pic2Show := "SUPPORTING-FILES\NO-CHEATSHEET.png"
         PictureWidth := 579
         numPages := 1
