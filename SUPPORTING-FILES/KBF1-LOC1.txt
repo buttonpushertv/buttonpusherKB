@@ -1,21 +1,21 @@
 +==KINESIS KEYBOARD=======+==== MASTER-SCRIPT ===========================================================
 | M1         | M2         |
-| BACKSPACE  | DEL        |  LEFT WIN           <-- Will not activate the Start Menu when pressed by itself
+| HOME       | DEL        |  LEFT WIN           <-- Will not activate the Start Menu when pressed by itself
 |            |            |  RIGHT WIN          <-- Works normally. Will open Start menu when pressed by itself
 |-------------------------|
 | M3         | M4         |  LEFT ALT           <-- Should not activate App Menu Bar when pressed by itself
-| SHIFT+V    | SHIFT+B    |  RIGHT ALT          <-- Works normally. Will open App Menu Bar when pressed by itself
+| END        | BACKSPC    |  RIGHT ALT          <-- Works normally. Will open App Menu Bar when pressed by itself
 |            |            |
 |-------------------------|  CAPS+F1             <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys (this file)
 | M5         | M6         |  CAPS+F2             <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
-|            |            |  CAPS+F3             <--Display a Text File CheatSheet of App Specific AutoHotKeys
+| PG UP      |            |  CAPS+F3             <--Display a Text File CheatSheet of App Specific AutoHotKeys
 |            |            |  CAPS+F4             <--Display an image CheatSheet for Preonic Keyboard
 |-------------------------|
 | M7         | M8         |  CAPS+B              <--Send 'buttonpusher' as text
-|            | s33KriT    |  CAPS+E              <--Send 'ben@buttonpusher.tv' as text
-|            |            |
+| PG DN      | ENTER      |  CAPS+E              <--Send 'ben@buttonpusher.tv' as text
+| (F-Skt4)   | (F-Skt5)   |
 |-------------------------|  CAPS+T              <--Send time & date as text (hh:mm AM/PM - YYYY-MMM-DD)
-| REMAPS                  |  
+| REMAPS                  |
 | PAUSE -> INSERT         |
 | Fn INSERT -> PAUSE      |  CAPS+C              <--Delete Key
 |                         |  CAPS+V              <--BackSpace

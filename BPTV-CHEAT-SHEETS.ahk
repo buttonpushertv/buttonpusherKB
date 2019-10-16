@@ -126,6 +126,13 @@ CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortc
 				PictureStartY := -1
 		}
     else
+		If WinActive("ahk_exe FreeCommander.exe") {
+				pic2Show := "SUPPORTING-FILES\KBF2-FCXE.png"
+				PictureWidth := 2000
+				numPages := 1
+				PictureStartY := -1
+		}
+		else
 		{
         pic2Show := "SUPPORTING-FILES\NO-CHEATSHEET.png"
         PictureWidth := 579
