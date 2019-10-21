@@ -90,12 +90,12 @@ Gui, Hide
 MsgBox, 36, BackUp App Launched, You launched the Backup App.`n`nSuccessfully backed up?
 IfMsgBox, Yes
 {
-    FileDelete, C:\BPTV-KB\PRIVATE\days_since_system_backup.txt
-    FileAppend, 0, C:\BPTV-KB\PRIVATE\days_since_system_backup.txt
+    FileDelete, C:\BPTV-KB\PRIVATE\%A_Computername%\days_since_system_backup.txt
+    FileAppend, 0, C:\BPTV-KB\PRIVATE\%A_Computername%\days_since_system_backup.txt
 }
 IfMsgBox, No
 {
-    MsgBox,,Backup UNsuccessful?, Very well.`n`nRe-run %A_ScriptName% when you're ready., 4
+    MsgBox,,Backup Unsuccessful?, Very well.`n`nRe-run %A_ScriptName% when you're ready., 4
 }
 ExitApp
 return
