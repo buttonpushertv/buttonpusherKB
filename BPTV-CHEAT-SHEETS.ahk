@@ -47,6 +47,7 @@ global foregroundColor := "FFFFFF"
 global showTaskBarPicture = 0
 global yposP
 global xposP
+global activeWin
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading BPTV-CHEAT-SHEETS
@@ -64,16 +65,20 @@ SplashTextOff
 ; <=use left mod key| >=use right mod key  | UP=fires on release
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
-CapsLock & F1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
++^!f12:: ; <--(SCAF12) Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
+; Trying a switch to using SCAF keys for the Cheat Sheets.
+;CapsLock & F1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     txt2show := "SUPPORTING-FILES\KBF1-LOC" . Location_currentSystemLocation . ".txt"
     showText(txt2show)
-    keywait, f1
+    keywait, f12 ; this will need to change back to F1 if you go back to using CapsLock
     Gui, Text:Destroy
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
-CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
++^!f11:: ; <--(SCAF11) Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
+; Trying a switch to using SCAF keys for the Cheat Sheets.
+;CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     If WinActive("ahk_exe Explorer.EXE") {
         pic2show := "SUPPORTING-FILES\KBF2-WIN-PAGE"
@@ -145,7 +150,7 @@ CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortc
       showTaskBarPic(taskBarPic) ; as an extra little helper, this will display an indicator above the Windows TaskBar to remind you which apps can be launched/activated by pressing Windows plus that number key.
     }
     WinActivate, Picture
-    keywait, f2
+    keywait, f11 ; this will need to change back to F2 if you go back to using CapsLock
     numPages := 0
     Gui, Picture:Destroy ; this kills the main cheatsheet GUI window
     destroyGDIplusGUI() ; this kills the TaskBar CheatSheet
@@ -153,7 +158,9 @@ CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortc
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
-CapsLock & f3:: ; <--Display a Text File CheatSheet of App Specific AutoHotKeys
++^!f10:: ; <--(SCAF10) Display a Text File CheatSheet of App Specific AutoHotKeys
+; Trying a switch to using SCAF keys for the Cheat Sheets.
+;CapsLock & f3:: ; <--Display a Text File CheatSheet of App Specific AutoHotKeys
     ;WinGetActiveTitle, activeWin
     If WinActive("ahk_exe Explorer.EXE")
         showText("SUPPORTING-FILES\KBF3-WINDOWS-DEFAULT-KEYS.txt")
@@ -165,16 +172,18 @@ CapsLock & f3:: ; <--Display a Text File CheatSheet of App Specific AutoHotKeys
         showText("SUPPORTING-FILES\KBF3-STICKIES.txt")
     else
         showText("SUPPORTING-FILES\NO-CHEATSHEET.txt")
-    keywait, f3
+    keywait, f10 ; this will need to change back to F3 if you go back to using CapsLock
     Gui, Text:Destroy
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
-CapsLock & f4:: ; <--Display an image CheatSheet based on System Location Setting
++^!f9:: ; <--(SCAF9) Display a Text File CheatSheet of App Specific AutoHotKeys
+; Trying a switch to using SCAF keys for the Cheat Sheets.
+;CapsLock & f4:: ; <--Display an image CheatSheet based on System Location Setting
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     locationPic := "SUPPORTING-FILES\KBF4-LOC" . Location_currentSystemLocation . ".png"
     showPic(locationPic, 0)
-    keywait,f4
+    keywait,f9 ; this will need to change back to F4 if you go back to using CapsLock
     Gui, Picture:Destroy
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
