@@ -19,6 +19,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance force ; Ensures that there is only a single instance of this script running.
 ; SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of "exact"
 
+FileEncoding, UTF-8 ; this is here to make sure any files that we need to work with get created/opened/read as UTF-8
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times

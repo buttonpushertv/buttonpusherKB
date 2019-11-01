@@ -13,6 +13,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #HotkeyModifierTimeout 0 ;It's not clear if this completely fixes it.
 SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of "exact"
 
+FileEncoding, UTF-8 ; this is here to make sure any files that we need to work with get created/opened/read as UTF-8
+
 #include LIB\gdip.ahk
 ;Thanks to tic (Tariq Porter) for his GDI+ Library
 ;ahkscript.org/boards/viewtopic.php?t=6517

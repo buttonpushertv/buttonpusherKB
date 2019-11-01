@@ -19,6 +19,8 @@ sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
 
+FileEncoding, UTF-8 ; this is here to make sure any files that we need to work with get created/opened/read as UTF-8
+
 #Include MASTER-FUNCTIONS.ahk
 
 ;===== END OF AUTO-EXECUTE =====================================================================
@@ -26,6 +28,8 @@ sleepDeep := 3500
 global versionFile := "version.ini" ; the file which holds the current version of BPTV-KB
 global version ; creating a global variable for the version info
 FileRead, version, %versionFile% ; reading the version from versionFile
+global scriptRootFolder := A_ScriptDir ; sets the scriptRootFolder value to A_ScriptDir. This should then auto-set the rootFolder value in the settings.ini file. The idea here is that this should make it possible to change the name of the root folder where all of this gets installed and then it should propagate throughout the script.
+; ...of course this means, now I need to scrun through the whole suite and remove any hard-coded references to 'C:\BPTV-KB"....sigh....
 
 global currentSelectedSystemLocation :=
 global Location_currentSystemLocation :=
@@ -53,7 +57,7 @@ currentAltCounter := 1
 Gui, Font, S12 CDefault, Franklin Gothic Medium
 Gui, Add, GroupBox, R%sectionGroupH% x10 y10 w300 , System Location
 Gui, Font, S10 CDefault, Franklin Gothic Medium
-Gui, Add, Text, x330 y20 w280, Select a Location at the left. This can be used to provide location specific settings.`n`nBelow, check the boxes for the scripts you'd like to launch when running MASTER-SCRIPT.ahk.`nVersion: %version%
+Gui, Add, Text, x330 y20 w280, Select a Location at the left. This can be used to provide location specific settings.`n`nRoot Folder: %Settings_rootFolder%`nVersion: %version%`nBelow, check the boxes for the scripts you'd like to launch when running MASTER-SCRIPT.ahk.
 Gui, Font, S12 CDefault, Franklin Gothic Medium
 Gui, Add, Text, section x10 y10,
 loop, %section1_keys%
