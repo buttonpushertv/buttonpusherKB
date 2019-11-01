@@ -6,8 +6,8 @@ REM @echo off
 REM Gets the name of the day of the week
 for /f %%i in ('powershell ^(get-date^).DayOfWeek') do set dow=%%i
 
-REM run day-based CMD files
-if %dow% == Monday (call 1_monday.cmd)
+REM run day-based CMD files if you needed to.
+REM if %dow% == Monday (call 1_monday.cmd)
 REM if "%dow%"=="Tuesday" (call 2_tuesday.cmd)
 REM if "%dow%"=="Wednesday" (call 3_wednesday.cmd)
 REM if "%dow%"=="Thursday" (call 4_thursday.cmd)
