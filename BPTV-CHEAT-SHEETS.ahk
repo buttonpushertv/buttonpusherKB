@@ -67,37 +67,37 @@ SplashTextOff
 ; <=use left mod key| >=use right mod key  | UP=fires on release
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
-; Using the AHK command: "Hotkey" we can define a hotkey and call a sub-routinekjkjjjjjjjjjjjjjjjjjjkkkkkkkkkjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
-HotKey, ^!+f12, firstShower ; This sets the initial value of the SCAF hot key to show the Cheat Sheet
-firstShowerWaitKey := "f12" ; This sets the value for keywait to the SCAF key in the sub-routine below
-If (Location_currentSystemLocation = 3) { ; if the script is running on Location #3 then...
-	HotKey, ^!+f12, off ; disables the SCAF key set earlier
-	firstShowerWaitKey := "f1" ; This sets the alternate value for keywait in the sub-routine below
-	HotKey, CapsLock & F1, firstShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
+; Using the AHK command: "Hotkey" we can define a hotkey and call a sub-routine instead of using the double colon method. This allows the hotkey to be updated or changed based on variables (like Location_currentSystemLocation as we use below). By Default, we'll use the CapsLock plus Function method we've used previously. When we have SCAF macro pads or keys defined on a keybaord, we can use alternate hot key definitions, as we do below when we're in location #1...we can even flop the order of the keys, so they are easy to locate without too much looking.
+HotKey, CapsLock & F1, firstShower ; This sets the initial value of the hot key to show the Cheat Sheet using CapsLock plus a Function Key
+firstShowerWaitKey := "f1" ; This sets the value for keywait to the hot key in the sub-routine below
+If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
+	HotKey, CapsLock & F1, off ; disables the CapsLock hot key set earlier
+	firstShowerWaitKey := "f12" ; This sets the alternate value for keywait in the sub-routine below
+	HotKey, ^!+f12, firstShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
 }
 
-HotKey, ^!+f11, secondShower ; This sets the initial value of the SCAF hot key to show the Cheat Sheet
-secondShowerWaitKey := "f11" ; This sets the value for keywait to the SCAF key in the sub-routine below
-If (Location_currentSystemLocation = 3) { ; if the script is running on Location #3 then...
-	HotKey, ^!+f11, off ; disables the SCAF key set earlier
-	secondShowerWaitKey := "f2" ; This sets the alternate value for keywait in the sub-routine below
-	HotKey, CapsLock & F2, secondShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
+HotKey, CapsLock & F2, secondShower ; This sets the initial value of the hot key to show the Cheat Sheet using CapsLock plus a Function Key
+secondShowerWaitKey := "f2" ; This sets the value for keywait to the hot key in the sub-routine below
+If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
+	HotKey, CapsLock & F2, off ; disables the CapsLock hot key set earlier
+	secondShowerWaitKey := "f11" ; This sets the alternate value for keywait in the sub-routine below
+	HotKey, ^!+f11, secondShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
 }
 
-HotKey, ^!+f10, thirdShower ; This sets the initial value of the SCAF hot key to show the Cheat Sheet
-thirdShowerWaitKey := "f10" ; This sets the value for keywait to the SCAF key in the sub-routine below
-If (Location_currentSystemLocation = 3) { ; if the script is running on Location #3 then...
-	HotKey, ^!+f10, off ; disables the SCAF key set earlier
-	thirdShowerWaitKey := "f3" ; This sets the alternate value for keywait in the sub-routine below
-	HotKey, CapsLock & F3, thirdShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
+HotKey, CapsLock & F3, thirdShower ; This sets the initial value of the hot key to show the Cheat Sheet using CapsLock plus a Function Key
+thirdShowerWaitKey := "f3" ; This sets the value for keywait to the hot key in the sub-routine below
+If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
+	HotKey, CapsLock & F3, off ; disables the CapsLock hot key set earlier
+	thirdShowerWaitKey := "f10" ; This sets the alternate value for keywait in the sub-routine below
+	HotKey, ^!+f10, thirdShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
 }
 
-HotKey, ^!+f9, fourthShower ; This sets the initial value of the SCAF hot key to show the Cheat Sheet
-fourthShowerWaitKey := "f9" ; This sets the value for keywait to the SCAF key in the sub-routine below
-If (Location_currentSystemLocation = 3) { ; if the script is running on Location #3 then...
-	HotKey, ^!+f9, off ; disables the SCAF key set earlier
-	fourthShowerWaitKey := "f4" ; This sets the alternate value for keywait in the sub-routine below
-	HotKey, CapsLock & F4, fourthShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
+HotKey, CapsLock & F4, fourthShower ; This sets the initial value of the hot key to show the Cheat Sheet using CapsLock plus a Function Key
+fourthShowerWaitKey := "f4" ; This sets the value for keywait to the hot key in the sub-routine below
+If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
+	HotKey, CapsLock & F4, off ; disables the CapsLock hot key set earlier
+	fourthShowerWaitKey := "f9" ; This sets the alternate value for keywait in the sub-routine below
+	HotKey, ^!+f9, fourthShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
 }
 
 firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
@@ -201,16 +201,16 @@ thirdShower:
         showText("SUPPORTING-FILES\KBF3-STICKIES.txt")
     else
         showText("SUPPORTING-FILES\NO-CHEATSHEET.txt")
-    keywait, f10 ; this will need to change back to F3 if you go back to using CapsLock
+    keywait, %thirdShowerWaitKey% ; this will need to change back to F3 if you go back to using CapsLock
     Gui, Text:Destroy
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
-fouthShower:
+fourthShower:
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     locationPic := "SUPPORTING-FILES\KBF4-LOC" . Location_currentSystemLocation . ".png"
     showPic(locationPic, 0)
-    keywait,f9 ; this will need to change back to F4 if you go back to using CapsLock
+    keywait, %fourthShowerWaitKey% ; this will need to change back to F4 if you go back to using CapsLock
     Gui, Picture:Destroy
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
