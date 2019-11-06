@@ -18,9 +18,11 @@ sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
 
-iniFile := "C:\BPTV-KB\settings.ini"
-IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
-;MsgBox, From MASTER-FUNCTIONS(INITIALIZATION): %iniFile%`n%Settings_rootFolder%
+FileEncoding, UTF-8 ; this is here to make sure any files that we need to work with get created/opened/read as UTF-8
+
+global scriptRootFolder := A_ScriptDir ; sets the scriptRootFolder value to A_ScriptDir. This should then auto-set the rootFolder value in the settings.ini file. The idea here is that this should make it possible to change the name of the root folder where all of this gets installed and then it should propagate throughout the script.
+
+iniFile := A_ScriptDir . "\settings.ini"
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -85,6 +87,15 @@ loadApp1=1
 pathApp1=MASTER-SCRIPT.ahk
 nameApp1=Run MASTER-SCRIPT.AHK
 [Settings]
+rootFolder=
+), settings.ini
+    FileAppend,
+    (
+      %scriptRootFolder%
+      ), settings.ini
+    FileAppend,
+    (
+      
 timeoutPeriod=15000
 splashScreenTimeout=4000
 CapsLockToggleTimeoutThreshold=4
