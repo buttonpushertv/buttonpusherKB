@@ -65,20 +65,49 @@ SplashTextOff
 ; <=use left mod key| >=use right mod key  | UP=fires on release
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
-+^!f12:: ; <--(SCAF12) Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
-; Trying a switch to using SCAF keys for the Cheat Sheets.
-;CapsLock & F1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
+; Using the AHK command: "Hotkey" we can define a hotkey and call a sub-routinekjkjjjjjjjjjjjjjjjjjjkkkkkkkkkjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+HotKey, ^!+f12, firstShower ; This sets the initial value of the SCAF hot key to show the Cheat Sheet
+firstShowerWaitKey := "f12" ; This sets the value for keywait to the SCAF key in the sub-routine below
+If (Location_currentSystemLocation = 3) { ; if the script is running on Location #3 then...
+	HotKey, ^!+f12, off ; disables the SCAF key set earlier
+	firstShowerWaitKey := "f1" ; This sets the alternate value for keywait in the sub-routine below
+	HotKey, CapsLock & F1, firstShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
+}
+
+HotKey, ^!+f11, secondShower ; This sets the initial value of the SCAF hot key to show the Cheat Sheet
+secondShowerWaitKey := "f11" ; This sets the value for keywait to the SCAF key in the sub-routine below
+If (Location_currentSystemLocation = 3) { ; if the script is running on Location #3 then...
+	HotKey, ^!+f11, off ; disables the SCAF key set earlier
+	secondShowerWaitKey := "f2" ; This sets the alternate value for keywait in the sub-routine below
+	HotKey, CapsLock & F2, secondShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
+}
+
+HotKey, ^!+f10, thirdShower ; This sets the initial value of the SCAF hot key to show the Cheat Sheet
+thirdShowerWaitKey := "f10" ; This sets the value for keywait to the SCAF key in the sub-routine below
+If (Location_currentSystemLocation = 3) { ; if the script is running on Location #3 then...
+	HotKey, ^!+f10, off ; disables the SCAF key set earlier
+	thirdShowerWaitKey := "f3" ; This sets the alternate value for keywait in the sub-routine below
+	HotKey, CapsLock & F3, thirdShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
+}
+
+HotKey, ^!+f9, fourthShower ; This sets the initial value of the SCAF hot key to show the Cheat Sheet
+fourthShowerWaitKey := "f9" ; This sets the value for keywait to the SCAF key in the sub-routine below
+If (Location_currentSystemLocation = 3) { ; if the script is running on Location #3 then...
+	HotKey, ^!+f9, off ; disables the SCAF key set earlier
+	fourthShowerWaitKey := "f4" ; This sets the alternate value for keywait in the sub-routine below
+	HotKey, CapsLock & F4, fourthShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
+}
+
+firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     txt2show := "SUPPORTING-FILES\KBF1-LOC" . Location_currentSystemLocation . ".txt"
     showText(txt2show)
-    keywait, f12 ; this will need to change back to F1 if you go back to using CapsLock
-    Gui, Text:Destroy
+    keywait, %firstShowerWaitKey% ; the firstShowerWaitKey variable is set above, based on the Location_currentSystemLocation
+    Gui, Text:Destroy ; destroys the Text:GUI
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
-+^!f11:: ; <--(SCAF11) Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
-; Trying a switch to using SCAF keys for the Cheat Sheets.
-;CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
+secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     If WinActive("ahk_exe Explorer.EXE") {
         pic2show := "SUPPORTING-FILES\KBF2-WIN-PAGE"
@@ -150,7 +179,7 @@ return
       showTaskBarPic(taskBarPic) ; as an extra little helper, this will display an indicator above the Windows TaskBar to remind you which apps can be launched/activated by pressing Windows plus that number key.
     }
     WinActivate, Picture
-    keywait, f11 ; this will need to change back to F2 if you go back to using CapsLock
+    keywait, %secondShowerWaitKey% ; this will need to change back to F2 if you go back to using CapsLock
     numPages := 0
     Gui, Picture:Destroy ; this kills the main cheatsheet GUI window
     destroyGDIplusGUI() ; this kills the TaskBar CheatSheet
@@ -158,10 +187,8 @@ return
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
-+^!f10:: ; <--(SCAF10) Display a Text File CheatSheet of App Specific AutoHotKeys
-; Trying a switch to using SCAF keys for the Cheat Sheets.
-;CapsLock & f3:: ; <--Display a Text File CheatSheet of App Specific AutoHotKeys
-    ;WinGetActiveTitle, activeWin
+thirdShower:
+    WinGetActiveTitle, activeWin
     If WinActive("ahk_exe Explorer.EXE")
         showText("SUPPORTING-FILES\KBF3-WINDOWS-DEFAULT-KEYS.txt")
     else
@@ -177,9 +204,7 @@ return
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
-+^!f9:: ; <--(SCAF9) Display a Text File CheatSheet of App Specific AutoHotKeys
-; Trying a switch to using SCAF keys for the Cheat Sheets.
-;CapsLock & f4:: ; <--Display an image CheatSheet based on System Location Setting
+fouthShower:
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     locationPic := "SUPPORTING-FILES\KBF4-LOC" . Location_currentSystemLocation . ".png"
     showPic(locationPic, 0)
