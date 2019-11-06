@@ -13,6 +13,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #HotkeyModifierTimeout 0 ;It's not clear if this completely fixes it.
 SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of "exact"
 
+FileEncoding, UTF-8 ; this is here to make sure any files that we need to work with get created/opened/read as UTF-8
+
 #include LIB\gdip.ahk
 ;Thanks to tic (Tariq Porter) for his GDI+ Library
 ;ahkscript.org/boards/viewtopic.php?t=6517
@@ -47,6 +49,7 @@ global foregroundColor := "FFFFFF"
 global showTaskBarPicture = 0
 global yposP
 global xposP
+global activeWin
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading BPTV-CHEAT-SHEETS
@@ -64,16 +67,49 @@ SplashTextOff
 ; <=use left mod key| >=use right mod key  | UP=fires on release
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
-CapsLock & F1:: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
+; Using the AHK command: "Hotkey" we can define a hotkey and call a sub-routine instead of using the double colon method. This allows the hotkey to be updated or changed based on variables (like Location_currentSystemLocation as we use below). By Default, we'll use the CapsLock plus Function method we've used previously. When we have SCAF macro pads or keys defined on a keybaord, we can use alternate hot key definitions, as we do below when we're in location #1...we can even flop the order of the keys, so they are easy to locate without too much looking.
+HotKey, CapsLock & F1, firstShower ; This sets the initial value of the hot key to show the Cheat Sheet using CapsLock plus a Function Key
+firstShowerWaitKey := "f1" ; This sets the value for keywait to the hot key in the sub-routine below
+If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
+	HotKey, CapsLock & F1, off ; disables the CapsLock hot key set earlier
+	firstShowerWaitKey := "f12" ; This sets the alternate value for keywait in the sub-routine below
+	HotKey, ^!+f12, firstShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
+}
+
+HotKey, CapsLock & F2, secondShower ; This sets the initial value of the hot key to show the Cheat Sheet using CapsLock plus a Function Key
+secondShowerWaitKey := "f2" ; This sets the value for keywait to the hot key in the sub-routine below
+If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
+	HotKey, CapsLock & F2, off ; disables the CapsLock hot key set earlier
+	secondShowerWaitKey := "f11" ; This sets the alternate value for keywait in the sub-routine below
+	HotKey, ^!+f11, secondShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
+}
+
+HotKey, CapsLock & F3, thirdShower ; This sets the initial value of the hot key to show the Cheat Sheet using CapsLock plus a Function Key
+thirdShowerWaitKey := "f3" ; This sets the value for keywait to the hot key in the sub-routine below
+If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
+	HotKey, CapsLock & F3, off ; disables the CapsLock hot key set earlier
+	thirdShowerWaitKey := "f10" ; This sets the alternate value for keywait in the sub-routine below
+	HotKey, ^!+f10, thirdShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
+}
+
+HotKey, CapsLock & F4, fourthShower ; This sets the initial value of the hot key to show the Cheat Sheet using CapsLock plus a Function Key
+fourthShowerWaitKey := "f4" ; This sets the value for keywait to the hot key in the sub-routine below
+If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
+	HotKey, CapsLock & F4, off ; disables the CapsLock hot key set earlier
+	fourthShowerWaitKey := "f9" ; This sets the alternate value for keywait in the sub-routine below
+	HotKey, ^!+f9, fourthShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
+}
+
+firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     txt2show := "SUPPORTING-FILES\KBF1-LOC" . Location_currentSystemLocation . ".txt"
     showText(txt2show)
-    keywait, f1
-    Gui, Text:Destroy
+    keywait, %firstShowerWaitKey% ; the firstShowerWaitKey variable is set above, based on the Location_currentSystemLocation
+    Gui, Text:Destroy ; destroys the Text:GUI
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
-CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
+secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     If WinActive("ahk_exe Explorer.EXE") {
         pic2show := "SUPPORTING-FILES\KBF2-WIN-PAGE"
@@ -145,7 +181,7 @@ CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortc
       showTaskBarPic(taskBarPic) ; as an extra little helper, this will display an indicator above the Windows TaskBar to remind you which apps can be launched/activated by pressing Windows plus that number key.
     }
     WinActivate, Picture
-    keywait, f2
+    keywait, %secondShowerWaitKey% ; this will need to change back to F2 if you go back to using CapsLock
     numPages := 0
     Gui, Picture:Destroy ; this kills the main cheatsheet GUI window
     destroyGDIplusGUI() ; this kills the TaskBar CheatSheet
@@ -153,8 +189,8 @@ CapsLock & f2:: ; <--Display an image CheatSheet of App Specific Keyboard Shortc
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
-CapsLock & f3:: ; <--Display a Text File CheatSheet of App Specific AutoHotKeys
-    ;WinGetActiveTitle, activeWin
+thirdShower:
+    WinGetActiveTitle, activeWin
     If WinActive("ahk_exe Explorer.EXE")
         showText("SUPPORTING-FILES\KBF3-WINDOWS-DEFAULT-KEYS.txt")
     else
@@ -165,16 +201,16 @@ CapsLock & f3:: ; <--Display a Text File CheatSheet of App Specific AutoHotKeys
         showText("SUPPORTING-FILES\KBF3-STICKIES.txt")
     else
         showText("SUPPORTING-FILES\NO-CHEATSHEET.txt")
-    keywait, f3
+    keywait, %thirdShowerWaitKey% ; this will need to change back to F3 if you go back to using CapsLock
     Gui, Text:Destroy
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
-CapsLock & f4:: ; <--Display an image CheatSheet based on System Location Setting
+fourthShower:
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     locationPic := "SUPPORTING-FILES\KBF4-LOC" . Location_currentSystemLocation . ".png"
     showPic(locationPic, 0)
-    keywait,f4
+    keywait, %fourthShowerWaitKey% ; this will need to change back to F4 if you go back to using CapsLock
     Gui, Picture:Destroy
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return

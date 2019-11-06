@@ -7,3 +7,6 @@ Super helpful if you have several other machines on your network that you need t
 
 Quick Access Popup (https://www.quickaccesspopup.com/)
 Great shortcut pop-up menu. Get the portable version.
+
+initool (https://github.com/dbohdan/initool)
+Reading, writing, manipulating INI files/items from command line

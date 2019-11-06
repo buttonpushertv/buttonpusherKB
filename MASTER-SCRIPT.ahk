@@ -21,6 +21,8 @@ Menu, Tray, Icon, imageres.dll, 187 ;tray icon is now a little keyboard, or piec
 if not A_IsAdmin
 	Run *RunAs "%A_ScriptFullPath%" ; (A_AhkPath is usually optional if the script has the .ahk extension.) You would typically check first.
 
+FileEncoding, UTF-8 ; this is here to make sure any files that we need to work with get created/opened/read as UTF-8
+
 ; The 2 lines below pertain to the 'reload on save' function below (CheckScriptUpdate).
 ; They are required for it to work.
 FileGetTime ScriptStartModTime, %A_ScriptFullPath%
