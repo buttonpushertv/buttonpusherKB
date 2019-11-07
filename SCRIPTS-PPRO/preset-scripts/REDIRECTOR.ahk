@@ -1,4 +1,7 @@
-﻿#include C:\BPTV-KB\SCRIPTS-PPRO\PREMIERE-PRO-FUNCTIONS.ahk
+iniFile := "..\..\settings.ini"
+IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
+
+#include %Settings_rootFolder%\SCRIPTS-PPRO\PREMIERE-PRO-FUNCTIONS.ahk
 
 ;rather than pointing ALL the individual scripts directly to Almost_All_Premiere_Functions.ahk, I'm pointing them all to THIS redirect file, which in turn points to Almost_All_Premiere_Functions.ahk.
 

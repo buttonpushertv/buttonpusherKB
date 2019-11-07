@@ -14,7 +14,7 @@ REM Set working directory to the location of the SCHEDULED-BATS
 CD %var%\BAT-FILES\SCHEDULED-BATS
 
 REM run DAILY CMD
-call 0_daily.cmd %var%
+call 0_system_backup_reminder.cmd %var%
 
 CD ..
 

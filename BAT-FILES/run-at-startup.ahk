@@ -17,6 +17,9 @@ sleepMedium = 666
 sleepLong = 1500
 sleepDeep = 3500
 
+iniFile := "..\settings.ini"
+IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
+
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
 ; combine below with key and '::' to define hotkey
@@ -26,7 +29,7 @@ sleepDeep = 3500
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
 
-Run, C:\BPTV-KB\BAT-FILES\user_files_VHDMount_to_X.cmd,,OutputVarPID
+Run, %Settings_rootFolder%\BAT-FILES\user_files_VHDMount_to_X.cmd,,OutputVarPID
 WinWait ahk_pid %OutputVarPID%
 Winset, AlwaysOnTop, On, ahk_exe cmd.exe ; all the commands that come after this are my attempt to force
 Sleep, sleepDeep                         ; the Command window to stay in the foreground so that it is easy

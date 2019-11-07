@@ -27,10 +27,15 @@ sleepShort = 333
 sleepMedium = 666
 sleepLong = 1500
 sleepDeep = 3500
+iniFile := "..\settings.ini"
+IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
 
-#Include ..\MASTER-FUNCTIONS.ahk
+If !FileExist("%Settings_rootFolder%\PRIVATE\%A_Computername%\days_since_system_backup.txt"){
+  FileAppend, 0, %Settings_rootFolder%\PRIVATE\%A_Computername%\days_since_system_backup.txt
+}
+;#Include ..\MASTER-FUNCTIONS.ahk
 
-FileReadLine, dayssince, ..\PRIVATE\%A_Computername%\days_since_system_backup.txt, 1
+FileReadLine, dayssince, %Settings_rootFolder%\PRIVATE\%A_Computername%\days_since_system_backup.txt, 1
 
 If (dayssince < 15) {
   ExitApp
@@ -65,7 +70,7 @@ Gui, Font, S12 CDefault, Franklin Gothic Medium
 Gui, Add, Button, Default x175 y140 w100 h40 , &No
 Gui, Add, Button, x50 y140 w100 h40 , &Yes
 
-Gui, Show, w%guiWidth% h%guiHeight%, Untitled GUI
+Gui, Show, w%guiWidth% h%guiHeight%, System Backup Checker
 
 ;timer code section here
 ;the timeout period is stored in settings.ini - under the [Settings] section as milliseconds - other values designated in above GUI code
@@ -90,8 +95,8 @@ Gui, Hide
 MsgBox, 36, BackUp App Launched, You launched the Backup App.`n`nSuccessfully backed up?
 IfMsgBox, Yes
 {
-    FileDelete, C:\BPTV-KB\PRIVATE\%A_Computername%\days_since_system_backup.txt
-    FileAppend, 0, C:\BPTV-KB\PRIVATE\%A_Computername%\days_since_system_backup.txt
+    FileDelete, %Settings_rootFolder%\PRIVATE\%A_Computername%\days_since_system_backup.txt
+    FileAppend, 0, %Settings_rootFolder%\PRIVATE\%A_Computername%\days_since_system_backup.txt
 }
 IfMsgBox, No
 {

@@ -134,13 +134,13 @@ return
 ScrollLock & f11:: ; There are 2 hotkeys defined here because on my split keyboard it's easier to use ScrollLock & on my Kira/Preonic keyboards it's easier to use CapsLock.
 CapsLock & f11:: ; <-- Open the Settings GUI for MASTER-SCRIPT.AHK
 		ScrollLockOff()
-		Run, MASTER-SETTINGS.AHK ; runs the settings configuration script for the whole suite.
+		Run, %A_ScriptDir%\MASTER-SETTINGS.AHK ; runs the settings configuration script for the whole suite.
     return
 
 ScrollLock & f12:: ; There are 2 hotkeys defined here because on my split keyboard it's easier to use ScrollLock & on my Kira/Preonic keyboards it's easier to use CapsLock.
 CapsLock & f12:: ; <-- Open BPTV-LAUNCHER
 		ScrollLockOff()
-		Run, C:\BPTV-KB\BPTV-LAUNCHER.ahk ; runs the launcher that runs at boot. Should only be used if you are making changes to what gets run at boot or if anything stops working properly
+		Run, %A_ScriptDir%\BPTV-LAUNCHER.ahk ; runs the launcher that runs at boot. Should only be used if you are making changes to what gets run at boot or if anything stops working properly
     return
 
 ScrollLock & Backspace:: ; There are 2 hotkeys defined here because on my split keyboard it's easier to use ScrollLock & on my Kira/Preonic keyboards it's easier to use CapsLock.

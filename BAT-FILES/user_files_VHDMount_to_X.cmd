@@ -100,7 +100,10 @@ REM
 REM	x:\start.exe
 REM (moved the above to BPTV-LAUNCHER)
 
+REM This will use initool.exe to read the location of the rootFolder from settings.ini
+@FOR /F "tokens=* USEBACKQ" %%F IN (`..\UTIL-APPS\initool\initool.exe g ..\settings.ini Settings rootFolder --value-only`) DO (
+SET rootFolder=%%F
+)
 	ECHO Launching BPTV-LAUNCHER
-	c:
-	cd \BPTV-KB
-	C:\BPTV-KB\BPTV-LAUNCHER.ahk
+	cd %rootFolder%
+	BPTV-LAUNCHER.ahk
