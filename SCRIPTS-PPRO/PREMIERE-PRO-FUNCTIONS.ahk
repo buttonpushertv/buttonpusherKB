@@ -23,7 +23,7 @@ sleepDeep := 3500
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
-; combine below with key and '::' to define hotkey 
+; combine below with key and '::' to define hotkey
 ; e.g.- ^f1::Msgbox You pressed Control and F1
 ; #=Win | !=Alt | ^=Ctrl | +=Shift | &=combine keys | *=ignore other mods
 ; <=use left mod key| >=use right mod key  | UP=fires on release
@@ -39,9 +39,9 @@ prFocus(panel) ;this function allows you to have ONE spot where you define your 
 
 if (panel = "effects")
     {
-    Send {F8} ;bring focus to the effects panel, in order to "clear" the current focus on the MAIN monitor
+    Send {F7} ;bring focus to the effects panel, in order to "clear" the current focus on the MAIN monitor
     sleep sleepMini
-    Send {F8} ;do it AGAIN, just in case a panel was full-screened... it would only have exited full screen, and not switched to the effects panel as it should have.
+    Send {F7} ;do it AGAIN, just in case a panel was full-screened... it would only have exited full screen, and not switched to the effects panel as it should have.
     sleep sleepMini
     goto FocusEnd ;should be in the correct panel, so end function
     }
@@ -50,11 +50,11 @@ else if (panel = "timeline")
 else if (panel = "program") ;program monitor
         Send {F8}
 else if (panel = "source") ;source monitor
-        Send {Shift Down}{F8}{Shift Up}
+        Send {Control Down}{F8}{Control Up}
 else if (panel = "project") ;AKA a "bin" or "folder"
         Send {F9}
 else if (panel = "effect controls")
-        Send {F7}
+        Send {F6}
 
 FocusEnd:
 }
@@ -76,7 +76,7 @@ preset(item)
 	goto theEnding ;and this line is here just in case the function is called while not inside premiere.
 
     ;BH-My Effects Panel is alomst always on a different monitor than my timeline. I've set the coordmode to be the Screen here intiially and later will set it to Window mode to grab the preset location. And then we'll flip it back to Screen mode again for the click & drag back on to the timeline clip.
-    
+
     ;Setting the coordinate mode is really important. This ensures that pixel distances are consistant for everything, everywhere.
     coordmode, pixel, Screen
     coordmode, mouse, Screen
@@ -89,8 +89,8 @@ preset(item)
 
     ;NO DELAY BETWEEN TYPED STUFF! It might actually be best to put this at "1" though.
     ;BH-seems to work better with it at '1'
-    SetKeyDelay, 1 
-    
+    SetKeyDelay, 1
+
     Sendinput, 2 ;shuttle STOP
     sleep, sleepMicro
     Sendinput, 2 ;shuttle STOP
@@ -104,7 +104,7 @@ preset(item)
     sleep sleepMicro
     Sendinput, +f ; set in premiere to "select find box"
     sleep sleepMicro
-    ;Any text in the Effects panel's find box has now been highlighted. There is also a blinking "text insertion point" at the end of that text. This is the vertical blinking line, or "caret."  
+    ;Any text in the Effects panel's find box has now been highlighted. There is also a blinking "text insertion point" at the end of that text. This is the vertical blinking line, or "caret."
     if (A_CaretX = "")
     {
     ;No Caret (blinking vertical line) can be found.
@@ -154,7 +154,7 @@ preset(item)
     MouseGetPos, , , Window, classNN
     WinGetClass, class, ahk_id %Window%
 
-    ;;;I think ControlGetPos is not affected by coordmode??  Or at least, it gave me the wrong coordinates if premiere is not fullscreened... https://autohotkey.com/docs/commands/ControlGetPos.htm 
+    ;;;I think ControlGetPos is not affected by coordmode??  Or at least, it gave me the wrong coordinates if premiere is not fullscreened... https://autohotkey.com/docs/commands/ControlGetPos.htm
     ControlGetPos, XX, YY, Width, Height, %classNN%, ahk_class %class%, SubWindow, SubWindow ;-I tried to exclude subwindows but I don't think it works...?
     ;;my results:  59, 1229, 252, 21,      Edit1,    ahk_class Premiere Pro
 
@@ -173,7 +173,7 @@ preset(item)
     Send %item%
     sleep sleepMicro
     ;MouseMove, 62, 95, 0, R ;----------------------(for 150% UI) relative to the position of the magnifying glass (established earlier,) this moves the cursor down and directly onto the preset's icon. In my case, it is inside the "presets" folder, then inside of another folder, and the written name should be completely unique so that it is the first and only item.
-    MouseMove, 41, 63, 0, R ;----------------------(for 100% UI) 
+    MouseMove, 41, 63, 0, R ;----------------------(for 100% UI)
     sleep sleepMicro
     MouseGetPos, iconX, iconY, Window, classNN ;---now we have to figure out the ahk_class of the current panel we are on. It used to be DroverLord - Window Class14, but the number changes anytime you move panels around... so i must always obtain the information anew.
     sleep sleepMicro
@@ -189,26 +189,26 @@ preset(item)
     ;tooltip, should be back on the effect's icon
     ;sleep 50
     sleep sleepMicro
-    
+
     ;BH-Here is where we flip coormdoe back to Screen so that we can reuse the original coords we first grabbed. Uncomment line below to see if your cursor is starting exactly over the preset's icon.
     ;msgbox, The cursor should be directly on top of the preset's icon. `n If not, the script needs modification.
-    
+
     ;Setting the coordinate mode is really important. This ensures that pixel distances are consistant for everything, everywhere.
     coordmode, pixel, Screen
     coordmode, mouse, Screen
     coordmode, Caret, Screen
-    
-    MouseGetPos, xIconPosP, yIconPosP 
-    
+
+    MouseGetPos, xIconPosP, yIconPosP
+
     ;BH-the above line grabs the Screen X & Y coords of the Preset's Icon for the drag. The line below will use these vars as the starting point for the drag. The ending point will be where the cursor was when you first launched this function.
-    
+
     MouseClickDrag, Left, %xIconPosP%, %yIconPosP%, %xposP%, %yposP% ;---clicks the left button down, drags this effect to the cursor's pervious coordinates and releases the left mouse button, which should be above a clip, on the TIMELINE panel.
-    
+
     ;BlockInput, Off
     ;MsgBox,,BREAKPOINT, About to try to clear the Effects Panel Find Box...,3
-        
+
     sleep sleepMedium
-    
+
     ;BH-and we should clear the Effects Panel Find text so things are cleared for the next visit
     prFocus("effects") ;brings focus to the effects panel
     sleep sleepMicro
@@ -216,10 +216,10 @@ preset(item)
     sleep sleepMicro
     Sendinput, {Backspace}{Enter}
     sleep sleepMicro
-    
+
     MouseClick, middle, , , 1 ;this returns focus to the panel the cursor is hovering above, WITHOUT selecting anything. great!
     Blockinput, MouseMoveOff ;returning mouse movement ability
-    BlockInput, off ;do not comment out or delete this line -- or you won't regain control of the keyboard!! However, CTRL+ALT+DEL will still work if you get stuck!! Cool.    
+    BlockInput, off ;do not comment out or delete this line -- or you won't regain control of the keyboard!! However, CTRL+ALT+DEL will still work if you get stuck!! Cool.
 
 theEnding:
 }
