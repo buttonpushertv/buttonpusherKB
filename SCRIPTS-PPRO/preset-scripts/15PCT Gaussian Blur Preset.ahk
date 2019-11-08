@@ -1,5 +1,4 @@
 preset("15PCT Gaussian Blur Preset")
-            exitapp
+exitapp
 
-            SetWorkingDir %A_ScriptDir%
-            #Include %A_ScriptDir%\REDIRECTOR.ahk
+#Include %A_LineFile%\..\..\PREMIERE-PRO-FUNCTIONS.ahk

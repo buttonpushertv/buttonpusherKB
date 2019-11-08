@@ -57,18 +57,17 @@ sleepDeep := 3500
                     IfMsgBox No
                         MsgBox,,File Not Deleted,preset-scripts\%fileToCreate%.ahk left on disk.,3
                     }
-                }    
+                }
             createPresetFile:
             FileAppend,
             (
-            preset("%fileToCreate%")
-            exitapp
-            
-            SetWorkingDir `%A_ScriptDir`%
-            #Include `%A_ScriptDir`%\REDIRECTOR.ahk
+preset("%fileToCreate%")
+exitapp
+
+#Include %A_LineFile%\..\..\PREMIERE-PRO-FUNCTIONS.ahk
             ), preset-scripts\%fileToCreate%.ahk
         MsgBox Preset saved to preset-scripts\%fileToCreate%.ahk
         }
     ExitApp
-    
+
 ;===== FUNCTIONS ===============================================================================
