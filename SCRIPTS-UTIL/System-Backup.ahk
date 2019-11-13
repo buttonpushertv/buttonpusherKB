@@ -30,11 +30,6 @@ sleepDeep = 3500
 iniFile := "..\settings.ini"
 IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
 
-If !FileExist("%Settings_rootFolder%\PRIVATE\%A_Computername%\days_since_system_backup.txt"){
-  FileAppend, 0, %Settings_rootFolder%\PRIVATE\%A_Computername%\days_since_system_backup.txt
-}
-;#Include ..\MASTER-FUNCTIONS.ahk
-
 FileReadLine, dayssince, %Settings_rootFolder%\PRIVATE\%A_Computername%\days_since_system_backup.txt, 1
 
 If (dayssince < 15) {
