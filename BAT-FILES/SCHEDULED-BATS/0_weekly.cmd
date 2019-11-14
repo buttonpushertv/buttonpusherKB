@@ -1,4 +1,3 @@
-REM @echo off
 @echo ===================
 @echo RUNNING WEEKLY BATS
 @echo ===================

@@ -1,10 +1,17 @@
-@echo off
 @echo =================
 @echo RUNNING DAILY BAT
 @echo =================
 
-REM Backing up various settings that have paths that are universal. These files exist in the same location on any system they are installed on.
-REM To backup items which have unique paths or are located in different places on different systems, use the SYSTEM SPECIFIC SCRIPT at the end of this section.
+@REM Backing up various settings that have paths that are universal. These files exist in the same location on any system they are installed on.
+@REM To backup items which have unique paths or are located in different places on different systems, use the SYSTEM SPECIFIC SCRIPT at the end of this section.
+IF EXIST %1\PRIVATE\%computername%\last_daily_run.txt (
+  for %%a in (%1\PRIVATE\%computername%\last_daily_run.txt) do set lastDailyRun=%%~ta
+  ) ELSE (
+  set /a lastDailyRun = NONE
+  )
+@echo lastDailyRun is set to: %lastDailyRun%
+
+if /i %lastDailyRun:~0,10% EQU %date:~4,10% exit /b
 
 REM This backs up the BPTV-KB settings for this system. You want to back these up for each system (e.g.-location) because you likely have different settings for each.
 copy %1\settings.ini %1\PRIVATE\%computername%\SETTINGS-BACKUPS\
@@ -18,6 +25,7 @@ call %1\BAT-FILES\Backup-StreamDeck-Profiles.cmd %1
 
 call %1\PRIVATE\%computername%-BACKUPS.cmd %1
 
+@echo %date% > %1\PRIVATE\%computername%\last_daily_run.txt
 @echo ------------------
 @echo DAILY BAT COMPLETE
 @echo ------------------

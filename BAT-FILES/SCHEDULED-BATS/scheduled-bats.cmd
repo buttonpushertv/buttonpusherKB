@@ -1,4 +1,4 @@
-@echo off
+@echo on
 @echo ===========================
 @echo RUNNING SCHEDULED BAT FILES
 @echo ===========================
@@ -33,4 +33,7 @@ call 0_system_backup_reminder.cmd %rootFolder%
 @echo SCHEDULED BATS COMPLETED
 @echo ------------------------
 @echo.
+@REM The pause command will keep the window open until you press a key - useful for debugging
+@PAUSE
+@REM This TIMEOUT command will auto-close the window after 10 seconds - adjust if you'd like
 TIMEOUT /T 10
