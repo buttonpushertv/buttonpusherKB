@@ -8,8 +8,7 @@ IF NOT EXIST %1\PRIVATE\%computername%\days_since_system_backup.txt echo 15>%1\P
 REM The next command sets the variable 'daysSince' to the content of the days_since_system_backup.txt file. This is used further down to compare to 'checkWindow'. It's set to run the System-Backup.cmd script if it has been 15 days or more since the last time a backup was made.
 for /f "delims=" %%a in (%1\PRIVATE\%computername%\days_since_system_backup.txt) do set /a daysSince=%%a
 
-REM The line below gets the date the days_since_system_backup.txt
- file was last modified.
+REM The line below gets the date the days_since_system_backup.txt file was last modified.
 for %%a in (%1\PRIVATE\%computername%\days_since_system_backup.txt) do set fileDate=%%~ta
 
 REM The check below compares that to the current date. If they match, then we can exit this script (so we don't keep incrementing the daysSince counter.)
