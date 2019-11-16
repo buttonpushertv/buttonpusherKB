@@ -107,11 +107,13 @@ loop, %section2_keys%
 
 Gui, Font, S12 CDefault, Franklin Gothic Medium
 Gui, Add, Button, x30 y%buttonStartingY% w100 h30, Add Script
+Gui, Add, Button, x150 y%buttonStartingY% w100 h30, Delete Script
+Gui, Add, Button, x275 y%buttonStartingY% w100 h30, Variables ; Uncomment if you wish to have a button to show Variables assigned by the script
 Gui, Add, Button, x400 y%buttonStartingY% w100 h30, Cancel
 Gui, Add, Button, x520 yp w100 h30, SAVE
 Gui, Font, S10 CDefault, Franklin Gothic Medium
 Gui, Add, Text, x30 yp+40 w650, Clicking 'SAVE' will save the settings above and reload MASTER-SCRIPT.ahk and the checked scripts above.
-;Gui, Add, Button, x400 yp+32 w220 h20, Variables ; Uncomment if you wish to have a button to show Variables assigned by the script
+
 Gui, Show, w%guiWidth% h%guiHeight%
 return
 
@@ -141,6 +143,59 @@ section2_keys += 3
 INI_Save(inifile)
 reload
 return
+
+ButtonDeleteScript:
+scriptSectionKeys := round(section2_keys / 3)
+delScriptGUIH := (scriptSectionKeys * 40)
+delScriptGUIW := 580
+delScriptLVH := (delScriptGUIH - 40)
+delScriptLVW := 560
+
+Gui, DelScript:New, , Delete a Script
+Gui, DelScript:Font, S12 CDefault, Franklin Gothic Medium
+Gui, DelScript:Add, Text, , Double-click the script you would like to remove below:
+Gui, DelScript:Add, ListView, r%scriptSectionKeys% w%delScriptLVW% h%delScriptLVH% gdelListView, #|Script|Enabled?
+
+loop, %scriptSectionKeys%
+  {
+    LV_Add(,A_Index, Scripts_nameScript%A_Index%, Scripts_loadScript%A_Index% )
+  }
+LV_ModifyCol(2)
+Gui, DelScript:Show, w580 h%delScriptGUIH%
+
+delListView:
+if (A_GuiEvent = "DoubleClick")
+  {
+    LV_GetText(RowText, A_EventInfo)
+    scriptToDel := % Scripts_nameScript%A_EventInfo%  ; Get the text from the row's first field.
+    MsgBox, 36, Delete this Script?, Is this the script you want to delete?`n#%A_EventInfo%: %scriptToDel%
+    IfMsgBox, No
+      delScriptNo()
+    IfMsgBox, Yes
+      numberOfKeySets := round(section2_keys / 3)
+      newNumberOfKeySets := (numberOfKeySets + 1)
+      newScriptEnableKey := (section2_keys + 1)
+      newScriptPathKey := (section2_keys + 2)
+      newScriptNameKey := (section2_keys + 3)
+      section2_key%newScriptEnableKey% := "loadScript" . newNumberOfKeySets
+      section2_key%newScriptPathKey% := "pathScript" . newNumberOfKeySets
+      section2_key%newScriptNameKey% := "nameScript" . newNumberOfKeySets
+      Scripts_loadScript%newNumberOfKeySets% := 1
+      Scripts_pathScript%newNumberOfKeySets% := newScriptPathValue
+      Scripts_nameScript%newNumberOfKeySets% := newScriptNameValue
+      section2_keys += 3
+      ;INI_Save(inifile)
+      reload
+  }
+return
+
+delScriptNo(){
+  MSGBOX, , DEBUG, pressed no
+  Gui, DelScript:Destroy
+  Return
+}
+
+Return
 
 ButtonSAVE:
 Gui, Submit
