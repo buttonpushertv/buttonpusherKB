@@ -107,11 +107,13 @@ loop, %section2_keys%
 
 Gui, Font, S12 CDefault, Franklin Gothic Medium
 Gui, Add, Button, x30 y%buttonStartingY% w100 h30, Add Script
+Gui, Add, Button, x150 y%buttonStartingY% w100 h30, Delete Script
+;Gui, Add, Button, x275 y%buttonStartingY% w100 h30, Variables ; Uncomment if you wish to have a button to show Variables assigned by the script
 Gui, Add, Button, x400 y%buttonStartingY% w100 h30, Cancel
 Gui, Add, Button, x520 yp w100 h30, SAVE
 Gui, Font, S10 CDefault, Franklin Gothic Medium
 Gui, Add, Text, x30 yp+40 w650, Clicking 'SAVE' will save the settings above and reload MASTER-SCRIPT.ahk and the checked scripts above.
-;Gui, Add, Button, x400 yp+32 w220 h20, Variables ; Uncomment if you wish to have a button to show Variables assigned by the script
+
 Gui, Show, w%guiWidth% h%guiHeight%
 return
 
@@ -140,6 +142,77 @@ Scripts_nameScript%newNumberOfKeySets% := newScriptNameValue
 section2_keys += 3
 INI_Save(inifile)
 reload
+return
+
+ButtonDeleteScript:
+scriptSectionKeys := round(section2_keys / 3)
+delScriptGUIH := (scriptSectionKeys * 40)
+delScriptGUIW := 580
+delScriptLVH := (delScriptGUIH - 40)
+delScriptLVW := 560
+
+Gui, DelScript:New, , Delete a Script
+Gui, DelScript:Font, S12 CDefault, Franklin Gothic Medium
+Gui, DelScript:Add, Text, , Double-click the script you would like to remove below:
+Gui, DelScript:Add, ListView, r%scriptSectionKeys% w%delScriptLVW% h%delScriptLVH% gdelListView, #|Script|Enabled?
+
+loop, %scriptSectionKeys%
+  {
+    LV_Add(,A_Index, Scripts_nameScript%A_Index%, Scripts_loadScript%A_Index% )
+  }
+LV_ModifyCol(2)
+Gui, DelScript:Show, w580 h%delScriptGUIH%
+
+delListView:
+if (A_GuiEvent = "DoubleClick")
+  {
+    LV_GetText(RowText, A_EventInfo)
+    scriptToDel := % Scripts_nameScript%A_EventInfo%  ; Get the text from the row's first field.
+    MsgBox, 36, Delete this Script?, Is this the script you want to delete?`n#%A_EventInfo%: %scriptToDel%
+    IfMsgBox, No
+      goto delScriptNo
+    IfMsgBox, Yes
+      newNumberOfKeySets := (section2_keys - 3)
+      currentAltCounter := 1
+      Loop, %scriptSectionKeys%
+      {
+        If (A_Index = A_EventInfo) {
+          Continue
+        }
+        tempScripts_loadScript%currentAltCounter% := % Scripts_loadScript%A_Index%
+        tempScripts_nameScript%currentAltCounter% := % Scripts_nameScript%A_Index%
+        tempScripts_pathScript%currentAltCounter% := % Scripts_pathScript%A_Index%
+        currentNameValue := % tempScripts_nameScript%currentAltCounter%
+        currentPathValue := % tempScripts_pathScript%currentAltCounter%
+        currentLoadValue := % tempScripts_loadScript%currentAltCounter%
+        currentAltCounter += 1
+      }
+      Loop, %section2_keys%
+      {
+        Scripts_loadScript%A_Index% := % tempScripts_loadScript%A_Index%
+        Scripts_nameScript%A_Index% := % tempScripts_nameScript%A_Index%
+        Scripts_pathScript%A_Index% := % tempScripts_pathScript%A_Index%
+      }
+      Scripts_loadScript%scriptSectionKeys% := 0
+      Scripts_nameScript%scriptSectionKeys% :=
+      Scripts_pathScript%scriptSectionKeys% :=
+      IniDelete, %inifile%, Scripts, loadScript%scriptSectionKeys%
+      IniDelete, %inifile%, Scripts, nameScript%scriptSectionKeys%
+      IniDelete, %inifile%, Scripts, pathScript%scriptSectionKeys%
+      scriptSectionKeys -= 1
+      Loop, %scriptSectionKeys%
+      {
+        currentLoadValue := % Scripts_loadScript%A_Index%
+        currentNameValue := % Scripts_nameScript%A_Index%
+        currentPathValue := % Scripts_pathScript%A_Index%
+        IniWrite, %currentLoadValue%, %inifile%, Scripts, loadScript%A_Index%
+        IniWrite, %currentNameValue%, %inifile%, Scripts, nameScript%A_Index%
+        IniWrite, %currentPathValue%, %inifile%, Scripts, pathScript%A_Index%
+      }
+      delScriptNo:
+      Gui, DelScript:Destroy
+      reload
+  }
 return
 
 ButtonSAVE:

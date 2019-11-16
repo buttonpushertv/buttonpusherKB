@@ -114,12 +114,12 @@ Gui, Show, w%guiWidth% h%guiHeight%
 
 ;timer code section here
 ;the timeout period is stored in settings.ini - under the [Settings] section as milliseconds - other values designated in above GUI code
-
-;this code creates and upadtes the timer text & progress bar
+launcherTimeoutSleep := 1000
+;this code creates and updates the timer text & progress bar
 loop, %timeoutSegments%
   {
   GuiControl, , timeoutTextProgress, %timeoutRemaining%
-  sleep, 1000
+  sleep, %launcherTimeoutSleep%
   GuiControl, , timeoutProgress, +1
   timeoutRemaining := (timeoutSegments - A_Index)
   }
@@ -214,7 +214,80 @@ reload
 return
 
 ButtonDeleteApp:
-MsgBox Not implemented yet. Edit the settings.ini file to remove items for now.
+launcherTimeoutSleep := 10000
+delTimeoutRemain := (timeoutRemaining * 10)
+delAppGUIH := 40
+appSectionKeys := round(section3_keys / 3)
+delAppGUIH += (appSectionKeys * 60)
+delAppGUIW := 580
+delAppLVH := (delAppGUIH - 60)
+delAppLVW := 560
+
+Gui, DelApp:New, , Delete an App
+Gui, DelApp:Font, S12 CDefault, Franklin Gothic Medium
+Gui, DelApp:Add, Text, x10 y10 , Double-click the app you would like to remove below:
+Gui, DelApp:Font, S9 CDefault, Franklin Gothic Medium
+Gui, DelApp:Add, Text, x10 y30 , (You have about %delTimeoutRemain% seconds to make a choice.)
+Gui, DelApp:Font, S12 CDefault, Franklin Gothic Medium
+Gui, DelApp:Add, ListView, r%appSectionKeys% w%delAppLVW% h%delAppLVH% gdelListView, #|App|Enabled?
+
+loop, %appSectionKeys%
+  {
+    LV_Add(,A_Index, Apps_nameApp%A_Index%, Apps_loadApp%A_Index% )
+  }
+LV_ModifyCol(2)
+Gui, DelApp:Show, w580 h%delAppGUIH%
+
+delListView:
+if (A_GuiEvent = "DoubleClick")
+  {
+    LV_GetText(RowText, A_EventInfo)
+    appToDel := % Apps_nameApp%A_EventInfo%  ; Get the text from the row's first field.
+    MsgBox, 36, Delete this App?, Is this the app you want to delete?`n#%A_EventInfo%: %appToDel%
+    IfMsgBox, No
+      goto delAppNo
+    IfMsgBox, Yes
+      newNumberOfKeySets := (section3_keys - 3)
+      currentAltCounter := 1
+      Loop, %appSectionKeys%
+      {
+        If (A_Index = A_EventInfo) {
+          Continue
+        }
+        tempApps_loadApp%currentAltCounter% := % Apps_loadApp%A_Index%
+        tempApps_nameApp%currentAltCounter% := % Apps_nameApp%A_Index%
+        tempApps_pathApp%currentAltCounter% := % Apps_pathApp%A_Index%
+        currentNameValue := % tempApps_nameApp%currentAltCounter%
+        currentPathValue := % tempApps_pathApp%currentAltCounter%
+        currentLoadValue := % tempApps_loadApp%currentAltCounter%
+        currentAltCounter += 1
+      }
+      Loop, %section2_keys%
+      {
+        Apps_loadApp%A_Index% := % tempApps_loadApp%A_Index%
+        Apps_nameApp%A_Index% := % tempApps_nameApp%A_Index%
+        Apps_pathApp%A_Index% := % tempApps_pathApp%A_Index%
+      }
+      Apps_loadApp%appSectionKeys% := 0
+      Apps_nameApp%appSectionKeys% :=
+      Apps_pathApp%appSectionKeys% :=
+      IniDelete, %inifile%, Apps, loadApp%appSectionKeys%
+      IniDelete, %inifile%, Apps, nameApp%appSectionKeys%
+      IniDelete, %inifile%, Apps, pathApp%appSectionKeys%
+      appSectionKeys -= 1
+      Loop, %appSectionKeys%
+      {
+        currentLoadValue := % Apps_loadApp%A_Index%
+        currentNameValue := % Apps_nameApp%A_Index%
+        currentPathValue := % Apps_pathApp%A_Index%
+        IniWrite, %currentLoadValue%, %inifile%, Apps, loadApp%A_Index%
+        IniWrite, %currentNameValue%, %inifile%, Apps, nameApp%A_Index%
+        IniWrite, %currentPathValue%, %inifile%, Apps, pathApp%A_Index%
+      }
+      delAppNo:
+      Gui, DelApp:Destroy
+      reload
+  }
 return
 
 ButtonChangeTimeout:
