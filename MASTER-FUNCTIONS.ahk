@@ -95,7 +95,7 @@ rootFolder=
       ), settings.ini
     FileAppend,
     (
-      
+
 timeoutPeriod=15000
 splashScreenTimeout=4000
 CapsLockToggleTimeoutThreshold=4
