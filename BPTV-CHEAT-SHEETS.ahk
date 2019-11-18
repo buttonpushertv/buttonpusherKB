@@ -203,6 +203,9 @@ thirdShower:
 		If WinActive("ahk_exe atom.exe")
         showText("SUPPORTING-FILES\KBF3-ATOM.txt")
     else
+		If WinActive("ahk_exe WindowsTerminal.exe")
+				showText("SUPPORTING-FILES\KBF3-WINTERMpvw.txt")
+		else
         showText("SUPPORTING-FILES\NO-CHEATSHEET.txt")
     keywait, %thirdShowerWaitKey% ; this will need to change back to F3 if you go back to using CapsLock
     Gui, Text:Destroy

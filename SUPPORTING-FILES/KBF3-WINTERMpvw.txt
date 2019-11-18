@@ -1,0 +1,31 @@
++=====================================================================+
+| Commands for Windows Terminal (Preview)                             |
++=====================================================================+
+
+KEY COMBO         TASK                  KEY COMBO         TASK
+------------------------------------------------------------------------
+CTRL+SHIFT+W      CLOSE PANE            CTRL+,            OPEN SETTINGS
+ALT+F4            CLOSE WINDOW
+
+CTRL+SHIFT+C      COPY                  CTRL+SHIFT+V      PASTE
+
+CTRL+SHIFT+DOWN   SCROLL DOWN           CTRL+SHIFT+PGDN   SCROLL DOWN PAGE
+CTRL+SHIFT+UP     SCROLL UP             CTRL+SHIFT+PGUP   SCROLL UP PAGE
+
+CTRL+-            DECREASE FONT SIZE    CTRL+=            INCREASE FONT SIZE
+CTRL+SHIFT+-      DECREASE OPACITY*      CTRL+SHIFT+=      INCREASE OPACITY*
+
+CTRL+SHIFT+SPACE  OPEN NEW TAB DROPDOWN
+CTRL+SHIFT+TAB    PREV TAB              CTRL+TAB          NEXT TAB
+CTRL+SHIFT+T      NEW TAB               CTRL+SHIFT+D      DUPLICATE TAB
+CTRL+SHIFT+1      NEW TAB PROFILE0      CTRL+ALT+1        SWITCH TO TAB0
+CTRL+SHIFT+2      NEW TAB PROFILE1      CTRL+ALT+2        SWITCH TO TAB1
+CTRL+SHIFT+3      NEW TAB PROFILE2      CTRL+ALT+3        SWITCH TO TAB2
+CTRL+SHIFT+4      NEW TAB PROFILE3      CTRL+ALT+4        SWITCH TO TAB3
+CTRL+SHIFT+5      NEW TAB PROFILE4      CTRL+ALT+5        SWITCH TO TAB4
+CTRL+SHIFT+6      NEW TAB PROFILE5      CTRL+ALT+6        SWITCH TO TAB5
+CTRL+SHIFT+7      NEW TAB PROFILE6      CTRL+ALT+7        SWITCH TO TAB6
+CTRL+SHIFT+8      NEW TAB PROFILE7      CTRL+ALT+8        SWITCH TO TAB7
+CTRL+SHIFT+9      NEW TAB PROFILE8      CTRL+ALT+9        SWITCH TO TAB8
+
+* - Only works for windows with "useAcrylic" set to true
