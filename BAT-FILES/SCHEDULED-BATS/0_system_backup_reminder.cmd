@@ -20,7 +20,7 @@ if %daysSince% == 0 goto zerodayskip
 set /a checkWindow = 15
 
 REM This is where we launch a script that will launch the backup program/script. I don't recall why I'm doing the thing where I launch a script that just launches yet another script here. It's working and I don't want to change it but it looks as though you could just run the \SCRIPTS-UTIL\System-Backup.ahk directly here.
-if /I %daysSince% GEQ %checkWindow% (call "%1\BAT-FILES\launch System-Backup.cmd")
+if /I %daysSince% GEQ %checkWindow% (call "%1\BAT-FILES\launch System-Backup.cmd" & EXIT)
 
 :zerodayskip
 REM This is where the days_since_system_backup.txt gets updated with an incremented number of days. It is only adding to the existing number in the file but it is overwriting the file, so it shouldn't be appending another line with the new number each time - it should just overwrite the whole file.
