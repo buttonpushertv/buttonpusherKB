@@ -111,6 +111,7 @@ return
 
 secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
+		MSGBOX, , DEBUG, %activeWin%
     If WinActive("ahk_exe Explorer.EXE") {
         pic2show := "SUPPORTING-FILES\KBF2-WIN-PAGE"
         PictureWidth := 2000
@@ -123,7 +124,7 @@ secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcu
     If WinActive("ahk_exe Adobe Premiere Pro.exe") {
         pic2Show := "SUPPORTING-FILES\KBF2-PPRO-PAGE"
         PictureWidth := 2000
-        numPages := 2
+        numPages := 3
         PictureStartY := -1 ; setting the starting coords to '-1' will make it center vertically on the screen
     }
     else
