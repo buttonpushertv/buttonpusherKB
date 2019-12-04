@@ -333,8 +333,7 @@ showTaskBarPic(sFile){
 	global xposP, yposP        ; we are going to store the position of your cursor when you show
 	coordmode, mouse, Screen   ; this cheatsheet so that we can put the cursor back where it was
 	MouseGetPos, xposP, yposP  ; when we are done showing this because...
-	;newCursorPos := (a_screenwidth/2+500) ; this will set the cursor off to the right
-  DllCall("SetCursorPos", "int", (a_screenwidth/2+500), "int", a_screenheight) ; this will force the cursor to move to the bottom-middle of the screen so that the taskbar will unhide itself. The '/2+500' bit after a_screenwidth above will move the cursor over to the right 500 pixels - this is to prevent any running app icons from showing a preview window if the cursor lands on them. If you have that many running apps at one time then you have other problems. Also, if you don't run with the Taskbar auto-hiding (you monster!) you can probably comment this line out
+  DllCall("SetCursorPos", "int", (a_screenwidth/2+300), "int", a_screenheight) ; this will force the cursor to move to the bottom-middle of the screen so that the taskbar will unhide itself. The '/2+300' bit after a_screenwidth above will move the cursor over to the right 300 pixels - this is to prevent any running app icons from showing a preview window if the cursor lands on them. If you have that many running apps at one time then you have other problems. Also, if you don't run with the Taskbar auto-hiding (you monster!) you can probably comment this line out
 
 	; this is all blackmagic provided by GDI+
   Gui, TaskBarPicture:  -Caption +E0x80000 +LastFound +OwnDialogs +Owner +hwndhwnd +alwaysontop
