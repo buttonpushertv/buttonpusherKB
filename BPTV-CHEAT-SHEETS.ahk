@@ -69,6 +69,8 @@ SplashTextOff
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
 ; IMPORTANT CHANGE: I've changed the way that you get out of a Cheat Sheet. Previously the script waited until you released whichever hotkey you used to show a given sheet. That was getting annoying to hold down the key the whole time. Now I've changed it so that Escape will close the open cheat sheet. Beware that the cheatsheets are set to be 'alwaysontop'
 
+; I've also added a Tooltip that reminds you that Escape is how you close the sheets. And how to switch tabs for the KBF2 cheaetsheet (the app-specific image one).
+
 ; Using the AHK command: "Hotkey" we can define a hotkey and call a sub-routine instead of using the double colon method. This allows the hotkey to be updated or changed based on variables (like Location_currentSystemLocation as we use below). By Default, we'll use the CapsLock plus Function method we've used previously. When we have SCAF macro pads or keys defined on a keybaord, we can use alternate hot key definitions, as we do below when we're in location #1...we can even flop the order of the keys, so they are easy to locate without too much looking.
 HotKey, CapsLock & F1, firstShower ; This sets the initial value of the hot key to show the Cheat Sheet using CapsLock plus a Function Key
 If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
