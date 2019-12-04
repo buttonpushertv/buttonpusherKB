@@ -100,18 +100,20 @@ If (Location_currentSystemLocation = 1) { ; if the script is running on Location
 	HotKey, ^!+f9, fourthShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
 }
 
+return
+
 firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     txt2show := "SUPPORTING-FILES\KBF1-LOC" . Location_currentSystemLocation . ".txt"
     showText(txt2show)
-    keywait, %firstShowerWaitKey% ; the firstShowerWaitKey variable is set above, based on the Location_currentSystemLocation
-    Gui, Text:Destroy ; destroys the Text:GUI
+		Sleep, sleepMedium
+    keywait, %firstShowerWaitKey%, D ; the firstShowerWaitKey variable is set above, based on the Location_currentSystemLocation
+		Gui, Text:Destroy ; destroys the Text:GUI
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
-return
+		return
 
 secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
-		MSGBOX, , DEBUG, %activeWin%
     If WinActive("ahk_exe Explorer.EXE") {
         pic2show := "SUPPORTING-FILES\KBF2-WIN-PAGE"
         PictureWidth := 2000
@@ -160,7 +162,7 @@ secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcu
 				pic2Show := "SUPPORTING-FILES\KBF2-ATOM-PAGE"
 				PictureWidth := 2000
 				numPages := 2
-				PictureStartY := -1
+				PictureStartY := 70
 		}
     else
 		If WinActive("ahk_exe FreeCommander.exe") {
@@ -182,7 +184,7 @@ secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcu
       showTaskBarPic(taskBarPic) ; as an extra little helper, this will display an indicator above the Windows TaskBar to remind you which apps can be launched/activated by pressing Windows plus that number key.
     }
     WinActivate, Picture
-    keywait, %secondShowerWaitKey% ; this will need to change back to F2 if you go back to using CapsLock
+    keywait, %secondShowerWaitKey%, D ; this will need to change back to F2 if you go back to using CapsLock
     numPages := 0
     Gui, Picture:Destroy ; this kills the main cheatsheet GUI window
     destroyGDIplusGUI() ; this kills the TaskBar CheatSheet
@@ -331,7 +333,8 @@ showTaskBarPic(sFile){
 	global xposP, yposP        ; we are going to store the position of your cursor when you show
 	coordmode, mouse, Screen   ; this cheatsheet so that we can put the cursor back where it was
 	MouseGetPos, xposP, yposP  ; when we are done showing this because...
-  DllCall("SetCursorPos", "int", (a_screenwidth/2), "int", a_screenheight) ; this will force the cursor to move to the bottom-middle of the screen so that the taskbar will unhide itself. If you don't run with the Taskbar auto-hiding (you monster!) you can probably comment this out
+	;newCursorPos := (a_screenwidth/2+500) ; this will set the cursor off to the right
+  DllCall("SetCursorPos", "int", (a_screenwidth/2+500), "int", a_screenheight) ; this will force the cursor to move to the bottom-middle of the screen so that the taskbar will unhide itself. The '/2+500' bit after a_screenwidth above will move the cursor over to the right 500 pixels - this is to prevent any running app icons from showing a preview window if the cursor lands on them. If you have that many running apps at one time then you have other problems. Also, if you don't run with the Taskbar auto-hiding (you monster!) you can probably comment this line out
 
 	; this is all blackmagic provided by GDI+
   Gui, TaskBarPicture:  -Caption +E0x80000 +LastFound +OwnDialogs +Owner +hwndhwnd +alwaysontop
@@ -376,3 +379,9 @@ GdiplusExit:
 ; gdi+ may now be shutdown on exiting the program
 Gdip_Shutdown(pToken)
 ExitApp
+
+GuiEscape:
+	Gui, Text:Destroy ; destroys the Text:GUI window
+  Gui, Picture:Destroy ; this kills the Picture:GUI window
+	WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
+	Return
