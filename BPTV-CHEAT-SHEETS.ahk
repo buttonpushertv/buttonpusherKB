@@ -67,47 +67,38 @@ SplashTextOff
 ; <=use left mod key| >=use right mod key  | UP=fires on release
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
+; IMPORTANT CHANGE: I've changed the way that you get out of a Cheat Sheet. Previously the script waited until you released whichever hotkey you used to show a given sheet. That was getting annoying to hold down the key the whole time. Now I've changed it so that Escape will close the open cheat sheet. Beware that the cheatsheets are set to be 'alwaysontop'
+
 ; Using the AHK command: "Hotkey" we can define a hotkey and call a sub-routine instead of using the double colon method. This allows the hotkey to be updated or changed based on variables (like Location_currentSystemLocation as we use below). By Default, we'll use the CapsLock plus Function method we've used previously. When we have SCAF macro pads or keys defined on a keybaord, we can use alternate hot key definitions, as we do below when we're in location #1...we can even flop the order of the keys, so they are easy to locate without too much looking.
 HotKey, CapsLock & F1, firstShower ; This sets the initial value of the hot key to show the Cheat Sheet using CapsLock plus a Function Key
-firstShowerWaitKey := "f1" ; This sets the value for keywait to the hot key in the sub-routine below
 If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
-	HotKey, CapsLock & F1, off ; disables the CapsLock hot key set earlier
-	firstShowerWaitKey := "f12" ; This sets the alternate value for keywait in the sub-routine below
-	HotKey, ^!+f12, firstShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
+	HotKey, ^!+f12, firstShower ; This enables SCAF Key hotkey as the alternate invocation method
 }
 
 HotKey, CapsLock & F2, secondShower ; This sets the initial value of the hot key to show the Cheat Sheet using CapsLock plus a Function Key
-secondShowerWaitKey := "f2" ; This sets the value for keywait to the hot key in the sub-routine below
 If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
-	HotKey, CapsLock & F2, off ; disables the CapsLock hot key set earlier
-	secondShowerWaitKey := "f11" ; This sets the alternate value for keywait in the sub-routine below
-	HotKey, ^!+f11, secondShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
+	HotKey, ^!+f11, secondShower ; This enables SCAF Key hotkey as the alternate invocation method
 }
 
 HotKey, CapsLock & F3, thirdShower ; This sets the initial value of the hot key to show the Cheat Sheet using CapsLock plus a Function Key
-thirdShowerWaitKey := "f3" ; This sets the value for keywait to the hot key in the sub-routine below
 If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
-	HotKey, CapsLock & F3, off ; disables the CapsLock hot key set earlier
-	thirdShowerWaitKey := "f10" ; This sets the alternate value for keywait in the sub-routine below
-	HotKey, ^!+f10, thirdShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
+	HotKey, ^!+f10, thirdShower ; This enables SCAF Key hotkey as the alternate invocation method
 }
 
 HotKey, CapsLock & F4, fourthShower ; This sets the initial value of the hot key to show the Cheat Sheet using CapsLock plus a Function Key
-fourthShowerWaitKey := "f4" ; This sets the value for keywait to the hot key in the sub-routine below
 If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
-	HotKey, CapsLock & F4, off ; disables the CapsLock hot key set earlier
-	fourthShowerWaitKey := "f9" ; This sets the alternate value for keywait in the sub-routine below
-	HotKey, ^!+f9, fourthShower ; This enables CapsLock plus Function Key hotkey as the alternate invocation method
+	HotKey, ^!+f9, fourthShower ; This enables SCAF Key hotkey as the alternate invocation method
 }
 
-return
+return ; this prevents the script from processing the labels below at script launch (at least the firstShower label...)
 
 firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     txt2show := "SUPPORTING-FILES\KBF1-LOC" . Location_currentSystemLocation . ".txt"
     showText(txt2show)
-		Sleep, sleepMedium
-    keywait, %firstShowerWaitKey%, D ; the firstShowerWaitKey variable is set above, based on the Location_currentSystemLocation
+		ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes)
+		RemoveToolTip(3000)
+    keywait, ESC, D ; wait for ESCAPE to be pressed down
 		Gui, Text:Destroy ; destroys the Text:GUI
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 		return
@@ -127,49 +118,49 @@ secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcu
         pic2Show := "SUPPORTING-FILES\KBF2-PPRO-PAGE"
         PictureWidth := 2000
         numPages := 3
-        PictureStartY := -1 ; setting the starting coords to '-1' will make it center vertically on the screen
+        PictureStartY := 50 ; setting the starting coords to '-1' will make it center vertically on the screen
     }
     else
     If WinActive("ahk_exe AfterFX.exe") {
         pic2Show := "SUPPORTING-FILES\KBF2-AE-PAGE"
         PictureWidth := 2000
         numPages := 2
-        PictureStartY := -1
+        PictureStartY := 50
     }
     else
     If WinActive("ahk_exe Photoshop.exe") {
         pic2Show := "SUPPORTING-FILES\KBF2-PS.png"
         PictureWidth := 2000
         numPages := 1
-        PictureStartY := -1
+        PictureStartY := 50
     }
     else
     If WinActive("ahk_exe SubtitleEdit.exe") {
         pic2Show := "SUPPORTING-FILES\KBF2-CONTOUR-PRO-SUBTITLE-EDIT.jpg"
         PictureWidth := 906
         numPages := 1
-        PictureStartY := -1
+        PictureStartY := 50
     }
     else
     If WinActive("ahk_exe stickies.exe") {
         pic2Show := "SUPPORTING-FILES\KBF2-STICKIES.png"
         PictureWidth := 1920
         numPages := 1
-        PictureStartY := -1
+        PictureStartY := 50
     }
 		else
 		If WinActive("ahk_exe atom.exe") {
 				pic2Show := "SUPPORTING-FILES\KBF2-ATOM-PAGE"
 				PictureWidth := 2000
 				numPages := 2
-				PictureStartY := 70
+				PictureStartY := 50
 		}
     else
 		If WinActive("ahk_exe FreeCommander.exe") {
 				pic2Show := "SUPPORTING-FILES\KBF2-FCXE.png"
 				PictureWidth := 2000
 				numPages := 1
-				PictureStartY := -1
+				PictureStartY := 50
 		}
 		else
 		{
@@ -184,7 +175,9 @@ secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcu
       showTaskBarPic(taskBarPic) ; as an extra little helper, this will display an indicator above the Windows TaskBar to remind you which apps can be launched/activated by pressing Windows plus that number key.
     }
     WinActivate, Picture
-    keywait, %secondShowerWaitKey%, D ; this will need to change back to F2 if you go back to using CapsLock
+		ToolTip, Press ESC to close Cheatsheet`n`nLeft/Right (or Caps+Scroll Up/Down) to switch Tabs`n`n(This window will remain on top until it closes)
+		RemoveToolTip(4000)
+    keywait, ESC, D ; wait for ESCAPE to be pressed down
     numPages := 0
     Gui, Picture:Destroy ; this kills the main cheatsheet GUI window
     destroyGDIplusGUI() ; this kills the TaskBar CheatSheet
@@ -210,7 +203,9 @@ thirdShower:
 				showText("SUPPORTING-FILES\KBF3-WINTERMpvw.txt")
 		else
         showText("SUPPORTING-FILES\NO-CHEATSHEET.txt")
-    keywait, %thirdShowerWaitKey% ; this will need to change back to F3 if you go back to using CapsLock
+		ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes)
+		RemoveToolTip(3000)
+    keywait, ESC, D ; wait for ESCAPE to be pressed down
     Gui, Text:Destroy
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
@@ -219,7 +214,9 @@ fourthShower:
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     locationPic := "SUPPORTING-FILES\KBF4-LOC" . Location_currentSystemLocation . ".png"
     showPic(locationPic, 0)
-    keywait, %fourthShowerWaitKey% ; this will need to change back to F4 if you go back to using CapsLock
+		ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes)
+		RemoveToolTip(3000)
+    keywait, ESC, D ; wait for ESCAPE to be pressed down
     Gui, Picture:Destroy
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
@@ -228,7 +225,7 @@ CapsLock & F5:: ;<-- Testing the TaskBar CheatSheet
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     taskBarPic := "SUPPORTING-FILES\WIN-TASKBAR\windows-taskbar-keyboard-cheaetsheet-DKYELLOW.png"
     showTaskBarPic(taskBarPic)
-    keywait,f5
+    keywait, ESC, D ; wait for ESCAPE to be pressed down
     destroyGDIplusGUI()
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
@@ -239,6 +236,16 @@ RemoveSplashScreen:
     SplashTextOff
     SetTimer RemoveSplashScreen, Off
 return
+
+; use this function to Remove ToolTips - pretty self-explanatory
+RemoveToolTip(duration) {
+  SetTimer, ToolTipOff, %duration%
+  Return
+
+ToolTipOff:
+    ToolTip
+    return
+}
 
 ;for showText & showPic - I want to add code in that will downgrade to the next lowest location code that does exist if it can't find whatever file it is sent.
 
