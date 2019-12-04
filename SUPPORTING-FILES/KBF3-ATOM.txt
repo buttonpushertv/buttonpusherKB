@@ -1,6 +1,6 @@
-SCAF1 <-- SNIPPET01
+SCAF1 <-- Run SNIPPETS\SNIPPET01.ahk
 SCAF2
 SCAF3
 SCAF4
 SCAF5 <-- Make a DEBUG MsgBox
-SCAF6 <-- Search AHK Help for Token Word under cursor
+SCAF6 <-- Search AHK Help for Token Word under cursor (Run search-for-AHK-token.ahk)

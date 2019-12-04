@@ -52,12 +52,12 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 ; any kind of repetitive task or other function that may not have an existing (or inconvinient)
 ; keystroke combo to execute.
 
-+^!f1::Run, "SNIPPETS\SNIPPET01.ahk"
++^!f1::Run, "SNIPPETS\SNIPPET01.ahk" ; <-- Run SNIPPETS\SNIPPET01.ahk
 ;+^!f2::
 ;+^!f3::
 ;+^!f4::
-+^!f5:: Send, MSGBOX, , DEBUG,
-+^!f6:: Run, "search-for-AHK-token.ahk"
++^!f5:: Send, MSGBOX, , DEBUG, ; <-- Make a DEBUG MsgBox
++^!f6:: Run, "search-for-AHK-token.ahk" ; <-- Search AHK Help for Token Word under cursor (Run search-for-AHK-token.ahk)
 ;+^!f7::
 ;+^!f8::
 ;+^!f9::

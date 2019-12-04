@@ -72,24 +72,15 @@ SplashTextOff
 ; I've also added a Tooltip that reminds you that Escape is how you close the sheets. And how to switch tabs for the KBF2 cheaetsheet (the app-specific image one).
 
 ; Using the AHK command: "Hotkey" we can define a hotkey and call a sub-routine instead of using the double colon method. This allows the hotkey to be updated or changed based on variables (like Location_currentSystemLocation as we use below). By Default, we'll use the CapsLock plus Function method we've used previously. When we have SCAF macro pads or keys defined on a keybaord, we can use alternate hot key definitions, as we do below when we're in location #1...we can even flop the order of the keys, so they are easy to locate without too much looking.
-HotKey, CapsLock & F1, firstShower ; This sets the initial value of the hot key to show the Cheat Sheet using CapsLock plus a Function Key
+HotKey, CapsLock & F1, firstShower ; <-- Hotkey for KBF1 (firstShower: a text file shower)
+HotKey, CapsLock & F2, secondShower ; <-- Hotkey for KBF2 (secondShower: a image file shower - App-Specific)
+HotKey, CapsLock & F3, thirdShower ; <-- Hotkey for KBF3 (thirdShower: a text file shower - App-Specific)
+HotKey, CapsLock & F4, fourthShower ; <-- Hotkey for KBF4 (fourthShower: a image file shower - Location Specific)
 If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
-	HotKey, ^!+f12, firstShower ; This enables SCAF Key hotkey as the alternate invocation method
-}
-
-HotKey, CapsLock & F2, secondShower ; This sets the initial value of the hot key to show the Cheat Sheet using CapsLock plus a Function Key
-If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
-	HotKey, ^!+f11, secondShower ; This enables SCAF Key hotkey as the alternate invocation method
-}
-
-HotKey, CapsLock & F3, thirdShower ; This sets the initial value of the hot key to show the Cheat Sheet using CapsLock plus a Function Key
-If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
-	HotKey, ^!+f10, thirdShower ; This enables SCAF Key hotkey as the alternate invocation method
-}
-
-HotKey, CapsLock & F4, fourthShower ; This sets the initial value of the hot key to show the Cheat Sheet using CapsLock plus a Function Key
-If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
-	HotKey, ^!+f9, fourthShower ; This enables SCAF Key hotkey as the alternate invocation method
+	HotKey, ^!+f12, firstShower ; Set 2nd Hotkey for KBF1 (firstShower: a text file shower)
+	HotKey, ^!+f11, secondShower ; Set 2nd Hotkey for KBF2 (secondShower: a image file shower - App-Specific)
+	HotKey, ^!+f10, thirdShower ; Set 2nd Hotkey for KBF3 (thirdShower: a text file shower - App-Specific)
+	HotKey, ^!+f9, fourthShower ; Set 2nd Hotkey for KBF4 (fourthShower: a image file shower - Location Specific)
 }
 
 return ; this prevents the script from processing the labels below at script launch (at least the firstShower label...)
@@ -99,8 +90,9 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
     txt2show := "SUPPORTING-FILES\KBF1-LOC" . Location_currentSystemLocation . ".txt"
     showText(txt2show)
 		ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes)
-		RemoveToolTip(3000)
+		RemoveToolTip(4000)
     keywait, ESC, D ; wait for ESCAPE to be pressed down
+		Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
 		Gui, Text:Destroy ; destroys the Text:GUI
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 		return
@@ -180,6 +172,7 @@ secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcu
 		ToolTip, Press ESC to close Cheatsheet`n`nLeft/Right (or Caps+Scroll Up/Down) to switch Tabs`n`n(This window will remain on top until it closes)
 		RemoveToolTip(4000)
     keywait, ESC, D ; wait for ESCAPE to be pressed down
+		Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
     numPages := 0
     Gui, Picture:Destroy ; this kills the main cheatsheet GUI window
     destroyGDIplusGUI() ; this kills the TaskBar CheatSheet
@@ -206,8 +199,9 @@ thirdShower:
 		else
         showText("SUPPORTING-FILES\NO-CHEATSHEET.txt")
 		ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes)
-		RemoveToolTip(3000)
+		RemoveToolTip(4000)
     keywait, ESC, D ; wait for ESCAPE to be pressed down
+		Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
     Gui, Text:Destroy
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
@@ -217,8 +211,9 @@ fourthShower:
     locationPic := "SUPPORTING-FILES\KBF4-LOC" . Location_currentSystemLocation . ".png"
     showPic(locationPic, 0)
 		ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes)
-		RemoveToolTip(3000)
+		RemoveToolTip(4000)
     keywait, ESC, D ; wait for ESCAPE to be pressed down
+		Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
     Gui, Picture:Destroy
     WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return

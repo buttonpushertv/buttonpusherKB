@@ -120,44 +120,38 @@ GroupAdd, altBlocked, ahk_exe Adobe Premiere Pro.exe ; items added to the group 
 
 #IfWinActive, ahk_group altBlocked
 ; don't know if this works for alt too...
-~LAlt:: ; <-- Blocks Left Alt key from triggering the Start Menu when pressed by itself. The Right Alt key will still work in the default fashion.
+~LAlt:: ; <-- Blocks Left Alt key from triggering the menus when pressed by itself. The Right Alt key will still work in the default fashion.
     sendinput, {SC07E down}
     KeyWait, LAlt
     Return
 
-~LAlt up::
-sendinput, {SC07E up}
-return
+~LAlt up:: ; <-- Part of blocking Left Alt Key from triggering menus
+		sendinput, {SC07E up}
+		return
 
 #IfWinActive
 
-ScrollLock & f11:: ; There are 2 hotkeys defined here because on my split keyboard it's easier to use ScrollLock & on my Kira/Preonic keyboards it's easier to use CapsLock.
+; There are 2 hotkeys defined for the Hotkeys below because on my split keyboard it's easier to use ScrollLock & on my Kira/Preonic keyboards it's easier to use CapsLock.
+
+ScrollLock & f11:: ; <-- Open the Settings GUI for MASTER-SCRIPT.AHK
 CapsLock & f11:: ; <-- Open the Settings GUI for MASTER-SCRIPT.AHK
 		ScrollLockOff()
 		Run, %A_ScriptDir%\MASTER-SETTINGS.AHK ; runs the settings configuration script for the whole suite.
     return
 
-ScrollLock & f12:: ; There are 2 hotkeys defined here because on my split keyboard it's easier to use ScrollLock & on my Kira/Preonic keyboards it's easier to use CapsLock.
+ScrollLock & f12:: ; <-- Open BPTV-LAUNCHER
 CapsLock & f12:: ; <-- Open BPTV-LAUNCHER
 		ScrollLockOff()
 		Run, %A_ScriptDir%\BPTV-LAUNCHER.ahk ; runs the launcher that runs at boot. Should only be used if you are making changes to what gets run at boot or if anything stops working properly
     return
 
-ScrollLock & Backspace:: ; There are 2 hotkeys defined here because on my split keyboard it's easier to use ScrollLock & on my Kira/Preonic keyboards it's easier to use CapsLock.
+ScrollLock & Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
 CapsLock & Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
 		Reload ; reloads the MASTER-SCRIPT.ahk - will also force a reload of any other script that is set to load when MASTER-SCRIPT runs
     Return
 
 CapsLock & WheelDown::Send ^{PGDN} ; <-- Send Control+Page Down - for changing tabs in apps that support it (Chrome, Atom)
 CapsLock & WheelUp::Send ^{PGUP} ; <-- Send Control+Page Up - for changing tabs in apps that support it (Chrome, Atom)
-
-CapsLock & b:: ; <-- Send 'buttonpusher' as text - you probably will want to change this for yourself
-	Send, buttonpusher
-return
-
-CapsLock & e:: ; <-- Send 'ben@buttonpusher' as text  - you probably will want to change this for yourself
-	Send, ben@buttonpusher.tv
-return
 
 CapsLock & c:: ; <-- Delete Key
 	Send, {Delete} ; where you often are using one hand on mouse/trackball and one hand on keys the delete & backspace keys can be a long reach (or on right-half of split keyboard)
@@ -186,13 +180,6 @@ CapsLock & p:: ; <-- Toggle CapsLockCheck on or Off
 CapsLock & q:: ; <-- Exit MASTER-SCRIPT and child AHK Scripts
 	goto Quitting ; this subroutine will ID any of the scripts that have been launched (via enabled in settings.ini) and then quit them all
 return
-
-CapsLock & t:: ; <-- Send time & date as text
-    FormatTime, now,, hh:mm tt
-    today = %A_YYYY%-%A_MMM%-%A_DD%
-    theTimeStamp = %now% - %today%
-    Send, %theTimeStamp%
-    return
 
 #IfWinActive, ahk_exe Explorer.EXE
 

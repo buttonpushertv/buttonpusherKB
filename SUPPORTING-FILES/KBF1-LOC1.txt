@@ -1,35 +1,30 @@
 +==KINESIS KEYBOARD=======+==== MASTER-SCRIPT ===========================================================
 | M1         | M2         |
-| HOME       | DEL        |  LEFT WIN           <-- Will not activate the Start Menu when pressed by itself
-|            |            |  RIGHT WIN          <-- Works normally. Will open Start menu when pressed by itself
+| HOME       | DEL        |  LEFT WIN            <-- Will not activate the Start Menu when pressed by itself
+|            |            |  RIGHT WIN           <-- Works normally. Will open Start menu when pressed by itself
 |-------------------------|
-| M3         | M4         |  LEFT ALT           <-- Should not activate App Menu Bar when pressed by itself
-| END        | BACKSPC    |  RIGHT ALT          <-- Works normally. Will open App Menu Bar when pressed by itself
+| M3         | M4         |  LEFT ALT            <-- Should not activate App Menu Bar when pressed by itself
+| END        | BACKSPC    |  RIGHT ALT           <-- Works normally. Will open App Menu Bar when pressed by itself
 |            |            |
 |-------------------------|  CAPS+F1             <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys (this file)
 | M5         | M6         |  CAPS+F2             <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
 | PG UP      |            |  CAPS+F3             <--Display a Text File CheatSheet of App Specific AutoHotKeys
 |            |            |  CAPS+F4             <--Display an image CheatSheet for Preonic Keyboard
 |-------------------------|
-| M7         | M8         |  CAPS+B              <--Send 'buttonpusher' as text
-| PG DN      | ENTER      |  CAPS+E              <--Send 'ben@buttonpusher.tv' as text
+| M7         | M8         |  CAPS+C              <--Delete Key
+| PG DN      | ENTER      |  CAPS+V              <--BackSpace
 | (F-Skt4)   | (F-Skt5)   |
-|-------------------------|  CAPS+T              <--Send time & date as text (hh:mm AM/PM - YYYY-MMM-DD)
+|-------------------------|  CAPS+P              <-- Toggle CapsLockCheck On or Off
 | REMAPS                  |
-| PAUSE -> INSERT         |
-| Fn INSERT -> PAUSE      |  CAPS+C              <--Delete Key
-|                         |  CAPS+V              <--BackSpace
-|-------------------------|
-| Fn LAYER KEYS           |  CAPS+P             <-- Toggle CapsLockCheck On or Off
+| PAUSE -> INSERT         |  (For these below you can use CAPS or SCRLK as the modifier)
+| Fn INSERT -> PAUSE      |  CAPS/SCRLK+F11      <--Open the Settings GUI for MASTER-SCRIPT.AHK
+|                         |  CAPS/SCRLK+F12      <--Open BPTV-LAUNCHER
+|-------------------------|  CAPS/SCRLK+BACKSP   <--Reload MASTER-SCRIPT.ahk
+| Fn LAYER KEYS           |  CAPS/SCRLK+Q        <--Exit MASTER-SCRIPT and child AHK Scripts
 | MEDIA KEYS AS LABELLED  |
 | Fn C -> CALCULATOR      |
 |                         |  WIN+CTRL+SHIFT+F    <--Nuke Firefox (click Desktop first)
 +=========================+  WIN+CTRL+SHIFT+P    <--Nuke Premiere (click Desktop first)
-
-                  (CAPS+F11) SCRLK+F11           <--Open the Settings GUI for MASTER-SCRIPT.AHK
-                  (CAPS+F12) SCRLK+F12           <--Open BPTV-KB LAUNCH-X
-                 (CAPS+BKSP) SCRLK+BACKSP        <--Reload MASTER-SCRIPT.ahk
-                             CAPS+Q              <--Exit MASTER-SCRIPT and child AHK Scripts
 
 == STICKIES HOTKEYS -=======================================================
 

@@ -1,34 +1,30 @@
-==== MASTER-SCRIPT ===========================================================
+== MASTER-SCRIPT ===========================================================
 
-                LEFT WIN   <-- Will not activate the Start Menu when pressed by itself
-                RIGHT WIN  <-- Works normally. Will open Start menu when pressed by itself
+  LEFT WIN            <-- Will not activate the Start Menu when pressed by itself
+  RIGHT WIN           <-- Works normally. Will open Start menu when pressed by itself
 
-                LEFT ALT   <-- Should not activate App Menu Bar when pressed by itself
-                RIGHT ALT  <-- Works normally. Will open App Menu Bar when pressed by itself
+  LEFT ALT            <-- Should not activate App Menu Bar when pressed by itself
+  RIGHT ALT           <-- Works normally. Will open App Menu Bar when pressed by itself
 
-                CAPS+F1    <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys (this file)
-                CAPS+F2    <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
-                CAPS+F3    <--Display a Text File CheatSheet of App Specific AutoHotKeys
-                CAPS+F4    <--Display an image CheatSheet for Preonic Keyboard
+  CAPS+F1             <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys (this file)
+  CAPS+F2             <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
+  CAPS+F3             <--Display a Text File CheatSheet of App Specific AutoHotKeys
+  CAPS+F4             <--Display an image CheatSheet for Preonic Keyboard
 
-                CAPS+B     <--Send 'buttonpusher' as text
-                CAPS+E     <--Send 'ben@buttonpusher.tv' as text
+  CAPS+C              <--Delete Key
+  CAPS+V              <--BackSpace
 
-                CAPS+T     <--Send time & date as text (hh:mm AM/PM - YYYY-MMM-DD)
+  CAPS+P              <-- Toggle CapsLockCheck On or Off
+
+  (For these below you can use CAPS or SCRLK as the modifier)
+  CAPS/SCRLK+F11      <--Open the Settings GUI for MASTER-SCRIPT.AHK
+  CAPS/SCRLK+F12      <--Open BPTV-LAUNCHER
+  CAPS/SCRLK+BACKSP   <--Reload MASTER-SCRIPT.ahk
+  CAPS/SCRLK+Q        <--Exit MASTER-SCRIPT and child AHK Scripts
 
 
-                CAPS+C     <--Delete Key
-                CAPS+V     <--BackSpace
-
-                CAPS+P     <-- Toggle CapsLockCheck On or Off
-
-         WIN+CTRL+SHIFT+F  <--Nuke Firefox (click Desktop first)
-         WIN+CTRL+SHIFT+P  <--Nuke Premiere (click Desktop first)
-
-  (CAPS+F11) SCRLK+F11     <--Open the Settings GUI for MASTER-SCRIPT.AHK
-  (CAPS+F12) SCRLK+F12     <--Open BPTV-KB LAUNCH-X
- (CAPS+BKSP) SCRLK+BACKSP  <--Reload MASTER-SCRIPT.ahk
-             CAPS+Q        <--Exit MASTER-SCRIPT and child AHK Scripts
+  WIN+CTRL+SHIFT+F    <--Nuke Firefox (click Desktop first)
+  WIN+CTRL+SHIFT+P    <--Nuke Premiere (click Desktop first)
 
 == STICKIES HOTKEYS -=======================================================
 
