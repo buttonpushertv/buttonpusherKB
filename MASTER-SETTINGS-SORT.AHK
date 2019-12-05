@@ -1,4 +1,4 @@
-﻿; AutoHotKey - MASTER-SETTINGS for MASTER-SCRIPT
+; AutoHotKey - MASTER-SETTINGS for MASTER-SCRIPT
 ; by Ben Howard - ben@buttonpusher.tv
 ; based on an example given in this post:
 ; https://autohotkey.com/board/topic/19650-auto-readload-and-save-an-ini-file-updated/
@@ -46,15 +46,16 @@ guiElementWidth := (guiWidth - 20)
 ;figuring out how tall the whole GUI will be
 keyRows := (section1_keys - 1)
 keyRows += (section2_keys / 3)
-guiHeight := (keyRows * 30)
+guiHeight := (keyRows * 27)
 guiHeight += 180 ; this is to add the bit at the bottom for the buttons, text
-buttonStartingY := (guiHeight - 80)
+buttonStartingY := (guiHeight - 100)
+global scriptSectionKeys := round(section2_keys / 3)
 
 ;Section 1 - System Location
-sectionGroupH := (section1_keys - 1)
+section1GroupH := (section1_keys - 1)
 currentAltCounter := 1
 Gui, Font, S12 CDefault, Franklin Gothic Medium
-Gui, Add, GroupBox, R%sectionGroupH% x10 y10 w300 , System Location
+Gui, Add, GroupBox, R%section1GroupH% x10 y10 w300 , System Location
 Gui, Font, S10 CDefault, Franklin Gothic Medium
 Gui, Add, Text, x330 y20 w280, Select a Location at the left. This can be used to provide location specific settings.`n`nRoot Folder: %Settings_rootFolder%`nVersion: %version%`nBelow, check the boxes for the scripts you'd like to launch when running MASTER-SCRIPT.ahk.
 Gui, Font, S12 CDefault, Franklin Gothic Medium
@@ -76,9 +77,9 @@ loop, %section1_keys%
   }
 
 ;Section 2 - Scripts To Run
-sectionGroupH := (section2_keys / 3)
+section2GroupH := (section2_keys / 3) - 1.75
 currentAltCounter := 1
-Gui, Add, GroupBox, R%sectionGroupH% x10 yp+50 w630 , Scripts to Load
+Gui, Add, GroupBox, R%section2GroupH% x10 yp+50 w630 , Scripts to Load
 Gui, Add, Text, section xp yp+10,
 loop, %section2_keys%
   {
@@ -93,7 +94,7 @@ loop, %section2_keys%
     currentKeyLeft7 := SubStr(currentKey, 1, 7)
     If (currentKeyLeft7 = "loadScr"){
       scriptCheckboxEnable%A_Index% = %currentKeyValue%
-      Gui, Add, Checkbox, xs+20 yp+20 vscriptCheckboxEnable%currentAltCounter% Checked%currentKeyValue%, %currentPathValue%
+      Gui, Add, Checkbox, xs+20 yp+20 vscriptCheckboxEnable%currentAltCounter% Checked%currentKeyValue%, %currentNameValue%
       currentAltCounter += 1
       pathKey :=
 	  nameKey :=
@@ -106,14 +107,16 @@ loop, %section2_keys%
   }
 
 Gui, Font, S12 CDefault, Franklin Gothic Medium
-;Gui, Add, Button, x275 yp+40 w100 h30, Variables ; Uncomment if you wish to have a button to show Variables assigned by the script
-Gui, Add, Button, x30 y%buttonStartingY% w100 h30, &Add Script
-Gui, Add, Button, x150 y%buttonStartingY% w100 h30, &Delete Script
-;Gui, Add, Button, x275 y%buttonStartingY% w100 h30, Sort &By Name
-Gui, Add, Button, x400 y%buttonStartingY% w100 h30, &Cancel
+Gui, Add, Button, x520 yp w100 h30, Variables ; Uncomment if you wish to have a button to show Variables assigned by the script
+Gui, Add, Button, x30 y%buttonStartingY% w150 h30, &Manage Scripts
+;Gui, Add, Button, x30 y%buttonStartingY% w100 h30, &Add Script
+;Gui, Add, Button, x150 yp w100 h30, &Delete Script
+;Gui, Add, Button, x275 yp w100 h30, Sort Scri&pts
+Gui, Add, Button, x400 yp w100 h30, &Cancel
 Gui, Add, Button, x520 yp w100 h30, &SAVE
+Gui, Add, Button, x30 yp+33 w590 h30, &RELAUNCH MASTER-SCRIPT
 Gui, Font, S10 CDefault, Franklin Gothic Medium
-Gui, Add, Text, x30 yp+40 w650, Clicking 'SAVE' will save the settings above and reload MASTER-SCRIPT.ahk and the checked scripts above.
+Gui, Add, Text, x30 yp+30 w650, Clicking 'SAVE' will just save the settings above.`nClick 'RELAUNCH MASTER-SCRIPT' to save & relaunch all the checked scripts.
 
 Gui, Show, w%guiWidth% h%guiHeight%
 return
@@ -122,52 +125,46 @@ ButtonVariables:
 Listvars
 return
 
-ButtonAddScript:
-InputBox, newScriptNameValue, Name or Description, Enter a Name or Description for the new app.
-InputBox, newScriptPathValue, File Path, Enter the full path to the new script.`n(include path relative to %A_ScriptName%`nwhich is located in %A_ScriptDir%)
-if (!newScriptPathValue) {
-  MsgBox You must enter, at least, a path to an app. Please try again.
-  return
-  }
-numberOfKeySets := round(section2_keys / 3)
-newNumberOfKeySets := (numberOfKeySets + 1)
-newScriptEnableKey := (section2_keys + 1)
-newScriptPathKey := (section2_keys + 2)
-newScriptNameKey := (section2_keys + 3)
-section2_key%newScriptEnableKey% := "loadScript" . newNumberOfKeySets
-section2_key%newScriptPathKey% := "pathScript" . newNumberOfKeySets
-section2_key%newScriptNameKey% := "nameScript" . newNumberOfKeySets
-Scripts_loadScript%newNumberOfKeySets% := 1
-Scripts_pathScript%newNumberOfKeySets% := newScriptPathValue
-Scripts_nameScript%newNumberOfKeySets% := newScriptNameValue
-section2_keys += 3
-INI_Save(inifile)
-reload
-return
+ButtonManageScripts:
+	manageScriptsGUIH := (scriptSectionKeys * 50) + 40
+	manageScriptsGUIW := 880
+	manageScriptsLVH := (manageScriptsGUIH - 130)
+	manageScriptsLVW := 850
 
-ButtonDeleteScript:
-scriptSectionKeys := round(section2_keys / 3)
-delScriptGUIH := (scriptSectionKeys * 40)
-delScriptGUIW := 580
-delScriptLVH := (delScriptGUIH - 40)
-delScriptLVW := 560
+	Gui, manageScripts:New, , Manage Scripts
+	Gui, manageScripts:Font, S12 CDefault, Franklin Gothic Medium
+	Gui, manageScripts:Add, Text, , Current Script Order:
+	Gui, manageScripts:Add, ListView, x15 r%scriptSectionKeys% w%manageScriptsLVW% h%manageScriptsLVH% gmanageLVevent -ReadOnly, Script|Enabled?|Path
+	Gui, manageScripts:Font, S10 CDefault, Franklin Gothic Medium
+	Gui, manageScripts:Add, Text, yp+%manageScriptsLVH% , SORT: Click Column Headers (2nd click to reverse order)`nEDIT NAME: Select Script `& press F2.`nEDIT PATH: Right-Double-Click on Script
+	Gui, manageScripts:Add, Text, x440 yp , ADD SCRIPT: Use 'Add Script' button below.`nDELETE SCRIPT: Double-click individual Script name then confirm deletion.`nCANCEL: Press Escape.
+	Gui, manageScripts:Font, S12 CDefault, Franklin Gothic Medium
+	Gui, manageScripts:Add, Button, x15 yp+55 w100 h30 gmanageAddScript, &Add Script
+	Gui, manageScripts:Add, Button, x635 yp w100 h30, &Cancel
+	Gui, manageScripts:Add, Button, x765 yp w100 h30 gmanageSaveSorted, &Save Sorted
+	loop, %scriptSectionKeys%
+	  {
+		LV_Add(,Scripts_nameScript%A_Index%, Scripts_loadScript%A_Index%, Scripts_pathScript%A_Index%)
+	  }
+	LV_ModifyCol(1)
+	Gui, manageScripts:Show, w%manageScriptsGUIW% h%manageScriptsGUIH%
+	return
 
-Gui, DelScript:New, , Delete a Script
-Gui, DelScript:Font, S12 CDefault, Franklin Gothic Medium
-Gui, DelScript:Add, Text, , Double-click the script you would like to remove below:
-Gui, DelScript:Add, ListView, r%scriptSectionKeys% w%delScriptLVW% h%delScriptLVH% gdelListView, #|Script|Enabled?
-
-loop, %scriptSectionKeys%
-  {
-    LV_Add(,A_Index, Scripts_nameScript%A_Index%, Scripts_loadScript%A_Index% )
-  }
-LV_ModifyCol(2)
-Gui, DelScript:Show, w580 h%delScriptGUIH%
-
-delListView:
-if (A_GuiEvent = "DoubleClick")
-  {
-    LV_GetText(RowText, A_EventInfo)
+manageLVevent:
+	if (A_GuiEvent = "ColClick") {
+	Loop, %scriptSectionKeys%
+	{
+		LV_GetText(new_name, A_Index, 1)
+		LV_GetText(new_enabled, A_Index, 2)
+		LV_GetText(new_path, A_Index, 3)
+		newScripts_loadScript%A_Index% := new_enabled
+		newScripts_nameScript%A_Index% := new_name
+		newScripts_pathScript%A_Index% := new_path
+		
+	}
+	}
+	if (A_GuiEvent = "DoubleClick") {
+	LV_GetText(RowText, A_EventInfo)
     scriptToDel := % Scripts_nameScript%A_EventInfo%  ; Get the text from the row's first field.
     MsgBox, 36, Delete this Script?, Is this the script you want to delete?`n#%A_EventInfo%: %scriptToDel%
     IfMsgBox, No
@@ -188,7 +185,7 @@ if (A_GuiEvent = "DoubleClick")
         currentLoadValue := % tempScripts_loadScript%currentAltCounter%
         currentAltCounter += 1
       }
-      Loop, %section2_keys%
+      Loop, %scriptSectionKeys%
       {
         Scripts_loadScript%A_Index% := % tempScripts_loadScript%A_Index%
         Scripts_nameScript%A_Index% := % tempScripts_nameScript%A_Index%
@@ -210,15 +207,80 @@ if (A_GuiEvent = "DoubleClick")
         IniWrite, %currentNameValue%, %inifile%, Scripts, nameScript%A_Index%
         IniWrite, %currentPathValue%, %inifile%, Scripts, pathScript%A_Index%
       }
+	  reload
       delScriptNo:
-      Gui, DelScript:Destroy
-      reload
-  }
-return
+      return
+	}
+	If (A_GuiEvent = "R") {
+		LV_GetText(pathToEdit, A_EventInfo, 3)
+		InputBox, newScriptPathValue, Edit File Path, Enter the full path to the new script.`n(include path relative to %A_ScriptName%`nwhich is located in %A_ScriptDir%),,,,,,,,%pathToEdit%
+		Scripts_pathScript%A_EventInfo% := newScriptPathValue
+		Gui, manageScripts:Destroy
+		Goto ButtonManageScripts
+	return
+	}
+	return
 
-ButtonSortByName:
-  MSGBOX, , DEBUG,Sort by name here
-  return
+manageScriptsGuiEscape:
+manageScriptsButtonCancel:
+	Gui, manageScripts:Destroy
+	return
+
+manageAddScript:
+	InputBox, newScriptNameValue, Name or Description, Enter a Name or Description for the new app.
+	InputBox, newScriptPathValue, File Path, Enter the full path to the new script.`n(include path relative to %A_ScriptName%`nwhich is located in %A_ScriptDir%)
+	if (!newScriptPathValue) {
+	  MsgBox You must enter, at least, a path to an app. Please try again.
+	  return
+	  }
+	numberOfKeySets := round(section2_keys / 3)
+	newNumberOfKeySets := (numberOfKeySets + 1)
+	newScriptEnableKey := (section2_keys + 1)
+	newScriptPathKey := (section2_keys + 2)
+	newScriptNameKey := (section2_keys + 3)
+	section2_key%newScriptEnableKey% := "loadScript" . newNumberOfKeySets
+	section2_key%newScriptPathKey% := "pathScript" . newNumberOfKeySets
+	section2_key%newScriptNameKey% := "nameScript" . newNumberOfKeySets
+	Scripts_loadScript%newNumberOfKeySets% := 1
+	Scripts_pathScript%newNumberOfKeySets% := newScriptPathValue
+	Scripts_nameScript%newNumberOfKeySets% := newScriptNameValue
+	section2_keys += 3
+	INI_Save(inifile)
+	reload
+	return
+
+manageEditPath:
+	LV_GetText(pathToEdit, A_EventInfo, 3)
+	;pathToEdit := % Scripts_pathScript%A_EventInfo%  ; Get the text from the row's third field.
+	;MsgBox, %A_EventInfo%`n%pathToEdit%
+	InputBox, newScriptPathValue, Edit File Path, Enter the full path to the new script.`n(include path relative to %A_ScriptName%`nwhich is located in %A_ScriptDir%),,,,,,,,%pathToEdit%
+	return
+
+manageSaveSorted:
+	Loop, %scriptSectionKeys%
+	{
+		scriptCheckboxEnable%A_Index% :=
+		Scripts_loadScript%A_Index% :=
+		Scripts_loadScript%A_Index% := newScripts_loadScript%A_Index%
+		scriptCheckboxEnable%A_Index% := newScripts_loadScript%A_Index%
+		Scripts_nameScript%A_Index% := newScripts_nameScript%A_Index%
+		Scripts_pathScript%A_Index% := newScripts_pathScript%A_Index%
+	}
+	Goto, ButtonSave
+	return
+
+	;~ Gui, newsortScript:New, , NEW Sorted Scripts
+ 	;~ Gui, newsortScript:Font, S12 CDefault, Franklin Gothic Medium
+	;~ Gui, newsortScript:Add, Text, , Current Script Order:
+	;~ Gui, newsortScript:Add, ListView, r%scriptSectionKeys% w%sortScriptLVW% h%sortScriptLVH% gsortListView, #|Script|Enabled?|Path
+	
+	;~ loop, %scriptSectionKeys%
+	;~ {
+		;~ LV_Add(,A_Index, newScripts_nameScript%A_Index%, newScripts_loadScript%A_Index%, newScripts_pathScript%A_Index% )
+  	  ;~ }
+  	;~ LV_ModifyCol(2)
+	;~ Gui, newsortScript:Show, w%sortScriptGUIW% h%sortScriptGUIH%
+	;~ return
 
 ButtonSAVE:
 Gui, Submit
@@ -236,7 +298,7 @@ loop, %section1_keys%
 currentAltCounter := 1
 loop, %section2_keys%
   {
-  if mod(A_Index,2) {
+  if mod(A_Index,3) {
     Scripts_loadScript%currentAltCounter% = % scriptCheckboxEnable%currentAltCounter%
     currentAltCounter += 1
   }
@@ -244,7 +306,32 @@ loop, %section2_keys%
     Continue
   }
 INI_Save(inifile)
-;Reload ;uncomment to reload immed. after save - to check what it saved
+Reload ;uncomment to reload immed. after save - to check what it saved
+
+ButtonRelaunchMaster-Script:
+Gui, Submit
+;Setting the location if it got changed
+loop, %section1_keys%
+  {
+    if (A_Index = 1)
+      Continue
+    currentAltCounter := (A_Index - 1)
+    currentRadioGroup := % LocRadioGroup%currentAltCounter%
+    if LocRadioGroup%currentAltCounter%
+      Location_currentSystemLocation = %currentAltCounter%
+  }
+;Setting Scripts_loadScriptX to new values
+currentAltCounter := 1
+loop, %section2_keys%
+  {
+  if mod(A_Index,3) {
+    Scripts_loadScript%currentAltCounter% = % scriptCheckboxEnable%currentAltCounter%
+    currentAltCounter += 1
+  }
+  else
+    Continue
+  }
+INI_Save(inifile)
 splashScreenSpacing := 75
 splashScreenStartY := 100
 splashScreenStartX := 100
@@ -280,10 +367,10 @@ loop, %section2_keys%
     Sleep, sleepMedium
     SplashTextOff
     WinClose, MASTER-SCRIPT.ahk
-Run, "MASTER-SCRIPT.ahk" ; forcing the MASTER-SCRIPT.ahk to reload. Since '#SingleInstance force' is defined in MASTER-SCRIPT.ahk, by just running the script again will reload it.
-Gui, Destroy
-ExitApp
-return
+	Run, "MASTER-SCRIPT.ahk" ; forcing the MASTER-SCRIPT.ahk to reload. Since '#SingleInstance force' is defined in MASTER-SCRIPT.ahk, by just running the script again will reload it.
+	Gui, Destroy
+	ExitApp
+	return
 
 ButtonCancel:
 GuiClose:
@@ -291,3 +378,34 @@ GuiEscape:
 ExitApp
 
 ;===== FUNCTIONS ===============================================================================
+SortArray(Array, Order="A") {
+    ;Order A: Ascending, D: Descending, R: Reverse
+    MaxIndex := ObjMaxIndex(Array)
+    If (Order = "R") {
+        count := 0
+        Loop, % MaxIndex
+            ObjInsert(Array, ObjRemove(Array, MaxIndex - count++))
+        Return
+    }
+    Partitions := "|" ObjMinIndex(Array) "," MaxIndex
+    Loop {
+        comma := InStr(this_partition := SubStr(Partitions, InStr(Partitions, "|", False, 0)+1), ",")
+        spos := pivot := SubStr(this_partition, 1, comma-1) , epos := SubStr(this_partition, comma+1)    
+        if (Order = "A") {    
+            Loop, % epos - spos {
+                if (Array[pivot] > Array[A_Index+spos])
+                    ObjInsert(Array, pivot++, ObjRemove(Array, A_Index+spos))    
+            }
+        } else {
+            Loop, % epos - spos {
+                if (Array[pivot] < Array[A_Index+spos])
+                    ObjInsert(Array, pivot++, ObjRemove(Array, A_Index+spos))    
+            }
+        }
+        Partitions := SubStr(Partitions, 1, InStr(Partitions, "|", False, 0)-1)
+        if (pivot - spos) > 1    ;if more than one elements
+            Partitions .= "|" spos "," pivot-1        ;the left partition
+        if (epos - pivot) > 1    ;if more than one elements
+            Partitions .= "|" pivot+1 "," epos        ;the right partition
+    } Until !Partitions
+}
