@@ -50,6 +50,7 @@ guiHeight := (keyRows * 27)
 guiHeight += 180 ; this is to add the bit at the bottom for the buttons, text
 buttonStartingY := (guiHeight - 100)
 global scriptSectionKeys := round(section2_keys / 3)
+global appSectionKeys := round(section3_keys / 3)
 
 ;Section 1 - System Location
 section1GroupH := (section1_keys - 1)
@@ -109,9 +110,7 @@ loop, %section2_keys%
 Gui, Font, S12 CDefault, Franklin Gothic Medium
 Gui, Add, Button, x520 yp w100 h30, Variables ; Uncomment if you wish to have a button to show Variables assigned by the script
 Gui, Add, Button, x30 y%buttonStartingY% w150 h30, &Manage Scripts
-;Gui, Add, Button, x30 y%buttonStartingY% w100 h30, &Add Script
-;Gui, Add, Button, x150 yp w100 h30, &Delete Script
-;Gui, Add, Button, x275 yp w100 h30, Sort Scri&pts
+Gui, Add, Button, x200 y%buttonStartingY% w150 h30, Manage &Apps
 Gui, Add, Button, x400 yp w100 h30, &Cancel
 Gui, Add, Button, x520 yp w100 h30, &SAVE
 Gui, Add, Button, x30 yp+33 w590 h30, &RELAUNCH MASTER-SCRIPT
@@ -134,14 +133,14 @@ ButtonManageScripts:
 	Gui, manageScripts:New, , Manage Scripts
 	Gui, manageScripts:Font, S12 CDefault, Franklin Gothic Medium
 	Gui, manageScripts:Add, Text, , Current Script Order:
-	Gui, manageScripts:Add, ListView, x15 r%scriptSectionKeys% w%manageScriptsLVW% h%manageScriptsLVH% gmanageLVevent -ReadOnly, Script|Enabled?|Path
+	Gui, manageScripts:Add, ListView, x15 r%scriptSectionKeys% w%manageScriptsLVW% h%manageScriptsLVH% gmanageScriptsLVevent -ReadOnly, Script|Enabled?|Path
 	Gui, manageScripts:Font, S10 CDefault, Franklin Gothic Medium
 	Gui, manageScripts:Add, Text, yp+%manageScriptsLVH% , SORT: Click Column Headers (2nd click to reverse order)`nEDIT NAME: Select Script `& press F2.`nEDIT PATH: Right-Double-Click on Script
 	Gui, manageScripts:Add, Text, x440 yp , ADD SCRIPT: Use 'Add Script' button below.`nDELETE SCRIPT: Double-click individual Script name then confirm deletion.`nCANCEL: Press Escape.
 	Gui, manageScripts:Font, S12 CDefault, Franklin Gothic Medium
-	Gui, manageScripts:Add, Button, x15 yp+55 w100 h30 gmanageAddScript, &Add Script
+	Gui, manageScripts:Add, Button, x15 yp+55 w100 h30 gmanageScriptsAddScript, &Add Script
 	Gui, manageScripts:Add, Button, x635 yp w100 h30, &Cancel
-	Gui, manageScripts:Add, Button, x765 yp w100 h30 gmanageSaveSorted, &Save Sorted
+	Gui, manageScripts:Add, Button, x765 yp w100 h30 gmanageScriptsSaveSorted, &Save Sorted
 	loop, %scriptSectionKeys%
 	  {
 		LV_Add(,Scripts_nameScript%A_Index%, Scripts_loadScript%A_Index%, Scripts_pathScript%A_Index%)
@@ -150,7 +149,7 @@ ButtonManageScripts:
 	Gui, manageScripts:Show, w%manageScriptsGUIW% h%manageScriptsGUIH%
 	return
 
-manageLVevent:
+manageScriptsLVevent:
 	if (A_GuiEvent = "ColClick") {
 	Loop, %scriptSectionKeys%
 	{
@@ -160,7 +159,6 @@ manageLVevent:
 		newScripts_loadScript%A_Index% := new_enabled
 		newScripts_nameScript%A_Index% := new_name
 		newScripts_pathScript%A_Index% := new_path
-		
 	}
 	}
 	if (A_GuiEvent = "DoubleClick") {
@@ -226,7 +224,7 @@ manageScriptsButtonCancel:
 	Gui, manageScripts:Destroy
 	return
 
-manageAddScript:
+manageScriptsAddScript:
 	InputBox, newScriptNameValue, Name or Description, Enter a Name or Description for the new app.
 	InputBox, newScriptPathValue, File Path, Enter the full path to the new script.`n(include path relative to %A_ScriptName%`nwhich is located in %A_ScriptDir%)
 	if (!newScriptPathValue) {
@@ -249,64 +247,247 @@ manageAddScript:
 	reload
 	return
 
-manageEditPath:
+manageScriptsEditPath:
 	LV_GetText(pathToEdit, A_EventInfo, 3)
-	;pathToEdit := % Scripts_pathScript%A_EventInfo%  ; Get the text from the row's third field.
-	;MsgBox, %A_EventInfo%`n%pathToEdit%
 	InputBox, newScriptPathValue, Edit File Path, Enter the full path to the new script.`n(include path relative to %A_ScriptName%`nwhich is located in %A_ScriptDir%),,,,,,,,%pathToEdit%
+  LV_Modify(A_EventInfo, ,,,newScriptPathValue)
 	return
 
-manageSaveSorted:
+manageScriptsSaveSorted:
 	Loop, %scriptSectionKeys%
 	{
-		scriptCheckboxEnable%A_Index% :=
+    scriptCheckboxEnable%A_Index% :=
 		Scripts_loadScript%A_Index% :=
-		Scripts_loadScript%A_Index% := newScripts_loadScript%A_Index%
-		scriptCheckboxEnable%A_Index% := newScripts_loadScript%A_Index%
-		Scripts_nameScript%A_Index% := newScripts_nameScript%A_Index%
-		Scripts_pathScript%A_Index% := newScripts_pathScript%A_Index%
+		Scripts_loadScript%A_Index% := % newScripts_loadScript%A_Index%
+		scriptCheckboxEnable%A_Index% := % newScripts_loadScript%A_Index%
+		Scripts_nameScript%A_Index% := % newScripts_nameScript%A_Index%
+		Scripts_pathScript%A_Index% := % newScripts_pathScript%A_Index%
 	}
-	Goto, ButtonSave
-	return
 
-	;~ Gui, newsortScript:New, , NEW Sorted Scripts
- 	;~ Gui, newsortScript:Font, S12 CDefault, Franklin Gothic Medium
-	;~ Gui, newsortScript:Add, Text, , Current Script Order:
-	;~ Gui, newsortScript:Add, ListView, r%scriptSectionKeys% w%sortScriptLVW% h%sortScriptLVH% gsortListView, #|Script|Enabled?|Path
-	
-	;~ loop, %scriptSectionKeys%
-	;~ {
-		;~ LV_Add(,A_Index, newScripts_nameScript%A_Index%, newScripts_loadScript%A_Index%, newScripts_pathScript%A_Index% )
-  	  ;~ }
-  	;~ LV_ModifyCol(2)
-	;~ Gui, newsortScript:Show, w%sortScriptGUIW% h%sortScriptGUIH%
-	;~ return
+  /*
+   Gui, newsortScript:New, , NEW Sorted Scripts
+ 	 Gui, newsortScript:Font, S12 CDefault, Franklin Gothic Medium
+	 Gui, newsortScript:Add, Text, , Current Script Order:
+	 Gui, newsortScript:Add, ListView, r%scriptSectionKeys% w%manageScriptsLVW% h%manageScriptsLVH%, Script|Enabled?|Path
+	 loop, %scriptSectionKeys%
+	 {
+     currentLoadValue := % Scripts_loadScript%A_Index%
+     currentNameValue := % Scripts_nameScript%A_Index%
+     currentPathValue := % Scripts_pathScript%A_Index%
+     ;Msgbox, ,DEBUG,%A_Index%`n%currentNameValue%`n%currentLoadValue%`n%currentPathValue%
+     LV_Add(,currentNameValue, currentLoadValue, currentPathValue)
+  	   }
+  	 LV_ModifyCol(1)
+	 Gui, newsortScript:Show, w%manageScriptsGUIW% h%manageScriptsGUIH%
+
+   MsgBox, 36, Does this look correct?
+   IfMsgBox, No
+     goto saveSortedNo
+    IfMsgBox, Yes
+   	Goto, ButtonSave
+    saveSortedNo:
+    Gui, newsortScript:Destroy
+    */
+    Goto, ButtonSave
+   return
+
+ButtonManageApps:
+   	manageAppsGUIH := (appSectionKeys * 50) + 150
+   	manageAppsGUIW := 880
+   	manageAppsLVH := (manageAppsGUIH - 130)
+   	manageAppsLVW := 850
+
+   	Gui, manageApps:New, ,Manage Apps
+   	Gui, manageApps:Font, S12 CDefault, Franklin Gothic Medium
+   	Gui, manageApps:Add, Text, , Current App Order:
+   	Gui, manageApps:Add, ListView, x15 r%appSectionKeys% w%manageAppsLVW% h%manageAppsLVH% gmanageAppsLVevent -ReadOnly, App|Enabled?|Path
+   	Gui, manageApps:Font, S10 CDefault, Franklin Gothic Medium
+   	Gui, manageApps:Add, Text, yp+%manageAppsLVH% , SORT: Click Column Headers (2nd click to reverse order)`nEDIT NAME: Select App `& press F2.`nEDIT PATH: Right-Double-Click on App
+   	Gui, manageApps:Add, Text, x440 yp , ADD App: Use 'Add App' button below.`nDELETE App: Double-click individual App name then confirm deletion.`nCANCEL: Press Escape.
+   	Gui, manageApps:Font, S12 CDefault, Franklin Gothic Medium
+   	Gui, manageApps:Add, Button, x15 yp+55 w100 h30 gmanageAppsAddApp, &Add App
+   	Gui, manageApps:Add, Button, x635 yp w100 h30, &Cancel
+   	Gui, manageApps:Add, Button, x765 yp w100 h30 gmanageAppsSaveSorted, &Save Sorted
+    ;Gui, manageApps:Default
+   	loop, %appSectionKeys%
+   	  {
+        currentAppsLoadValue := % Apps_loadApp%A_Index%
+        currentAppsNameValue := % Apps_nameApp%A_Index%
+        currentAppsPathValue := % Apps_pathApp%A_Index%
+        ;MSGBOX, , DEBUG,%A_DefaultListView%`n%currentAppsNameValue%`n%currentAppsLoadValue%`n%currentAppsPathValue%
+        LV_Add(,currentAppsNameValue, currentAppsLoadValue, currentAppsPathValue)
+   	  }
+   	LV_ModifyCol(1)
+   	Gui, manageApps:Show, w%manageAppsGUIW% h%manageAppsGUIH%
+   	return
+
+   manageAppsLVevent:
+   	if (A_GuiEvent = "ColClick") {
+   	Loop, %appSectionKeys%
+   	{
+   		LV_GetText(new_name, A_Index, 1)
+   		LV_GetText(new_enabled, A_Index, 2)
+   		LV_GetText(new_path, A_Index, 3)
+   		newApps_loadApp%A_Index% := new_enabled
+   		newApps_nameApp%A_Index% := new_name
+   		newApps_pathApp%A_Index% := new_path
+   	}
+   	}
+   	if (A_GuiEvent = "DoubleClick") {
+   	LV_GetText(RowText, A_EventInfo)
+       AppToDel := % Apps_nameApp%A_EventInfo%  ; Get the text from the row's first field.
+       MsgBox, 36, Delete this App?, Is this the App you want to delete?`n#%A_EventInfo%: %AppToDel%
+       IfMsgBox, No
+         goto delAppNo
+       IfMsgBox, Yes
+         newNumberOfKeySets := (section3_keys - 3)
+         currentAltCounter := 1
+         Loop, %appSectionKeys%
+         {
+           If (A_Index = A_EventInfo) {
+             Continue
+           }
+           tempApps_loadApp%currentAltCounter% := % Apps_loadApp%A_Index%
+           tempApps_nameApp%currentAltCounter% := % Apps_nameApp%A_Index%
+           tempApps_pathApp%currentAltCounter% := % Apps_pathApp%A_Index%
+           currentNameValue := % tempApps_nameApp%currentAltCounter%
+           currentPathValue := % tempApps_pathApp%currentAltCounter%
+           currentLoadValue := % tempApps_loadApp%currentAltCounter%
+           currentAltCounter += 1
+         }
+         Loop, %appSectionKeys%
+         {
+           Apps_loadApp%A_Index% := % tempApps_loadApp%A_Index%
+           Apps_nameApp%A_Index% := % tempApps_nameApp%A_Index%
+           Apps_pathApp%A_Index% := % tempApps_pathApp%A_Index%
+         }
+         Apps_loadApp%appSectionKeys% := 0
+         Apps_nameApp%appSectionKeys% :=
+         Apps_pathApp%appSectionKeys% :=
+         IniDelete, %inifile%, Apps, loadApp%appSectionKeys%
+         IniDelete, %inifile%, Apps, nameApp%appSectionKeys%
+         IniDelete, %inifile%, Apps, pathApp%appSectionKeys%
+         appSectionKeys -= 1
+         Loop, %appSectionKeys%
+         {
+           currentLoadValue := % Apps_loadApp%A_Index%
+           currentNameValue := % Apps_nameApp%A_Index%
+           currentPathValue := % Apps_pathApp%A_Index%
+           IniWrite, %currentLoadValue%, %inifile%, Apps, loadApp%A_Index%
+           IniWrite, %currentNameValue%, %inifile%, Apps, nameApp%A_Index%
+           IniWrite, %currentPathValue%, %inifile%, Apps, pathApp%A_Index%
+         }
+   	  reload
+         delAppNo:
+         return
+   	}
+   	If (A_GuiEvent = "R") {
+   		LV_GetText(pathToEdit, A_EventInfo, 3)
+   		InputBox, newAppPathValue, Edit File Path, Enter the full path to the new App.`n(include path relative to %A_ScriptName%`nwhich is located in %A_ScriptDir%),,,,,,,,%pathToEdit%
+   		Apps_pathApp%A_EventInfo% := newAppPathValue
+   		Gui, manageApps:Destroy
+   		Goto ButtonManageApps
+   	return
+   	}
+   	return
+
+   manageAppsGuiEscape:
+   manageAppsButtonCancel:
+   	Gui, manageApps:Destroy
+   	return
+
+   manageAppsAddApp:
+   	InputBox, newAppNameValue, Name or DeAppion, Enter a Name or DeAppion for the new app.
+   	InputBox, newAppPathValue, File Path, Enter the full path to the new App.`n(include path relative to %A_ScriptName%`nwhich is located in %A_ScriptDir%)
+   	if (!newAppPathValue) {
+   	  MsgBox You must enter, at least, a path to an app. Please try again.
+   	  return
+   	  }
+   	numberOfKeySets := round(section2_keys / 3)
+   	newNumberOfKeySets := (numberOfKeySets + 1)
+   	newAppEnableKey := (section2_keys + 1)
+   	newAppPathKey := (section2_keys + 2)
+   	newAppNameKey := (section2_keys + 3)
+   	section2_key%newAppEnableKey% := "loadApp" . newNumberOfKeySets
+   	section2_key%newAppPathKey% := "pathApp" . newNumberOfKeySets
+   	section2_key%newAppNameKey% := "nameApp" . newNumberOfKeySets
+   	Apps_loadApp%newNumberOfKeySets% := 1
+   	Apps_pathApp%newNumberOfKeySets% := newAppPathValue
+   	Apps_nameApp%newNumberOfKeySets% := newAppNameValue
+   	section2_keys += 3
+   	INI_Save(inifile)
+   	reload
+   	return
+
+   manageAppsEditAppPath:
+   	LV_GetText(pathToEdit, A_EventInfo, 3)
+   	InputBox, newAppPathValue, Edit File Path, Enter the full path to the new App.`n(include path relative to %A_ScriptName%`nwhich is located in %A_ScriptDir%),,,,,,,,%pathToEdit%
+     LV_Modify(A_EventInfo, ,,,newAppPathValue)
+   	return
+
+   manageAppsSaveSorted:
+   	Loop, %appSectionKeys%
+   	{
+      AppCheckboxEnable%A_Index% :=
+   		Apps_loadApp%A_Index% :=
+   		Apps_loadApp%A_Index% := % newApps_loadApp%A_Index%
+   		AppCheckboxEnable%A_Index% := % newApps_loadApp%A_Index%
+   		Apps_nameApp%A_Index% := % newApps_nameApp%A_Index%
+   		Apps_pathApp%A_Index% := % newApps_pathApp%A_Index%
+   	}
+
+    Gui, newsortApp:New, , NEW Sorted Apps
+    Gui, newsortApp:Font, S12 CDefault, Franklin Gothic Medium
+    Gui, newsortApp:Add, Text, , Current App Order:
+    Gui, newsortApp:Add, ListView, r%appSectionKeys% w%manageAppsLVW% h%manageAppsLVH%, App|Enabled?|Path
+    loop, %appSectionKeys%
+    {
+        currentLoadValue := % Apps_loadApp%A_Index%
+        currentNameValue := % Apps_nameApp%A_Index%
+        currentPathValue := % Apps_pathApp%A_Index%
+        LV_Add(,currentNameValue, currentLoadValue, currentPathValue)
+     	   }
+     	 LV_ModifyCol(1)
+   	 Gui, newsortApp:Show, w%manageAppsGUIW% h%manageAppsGUIH%
+
+      MsgBox, 36, Does this look correct?
+      IfMsgBox, No
+        goto saveSortedNo
+       IfMsgBox, Yes
+      	Goto, ButtonSave
+       saveSortedNo:
+       Gui, newsortApp:Destroy
+
+       ;Goto, ButtonSave
+      return
+
 
 ButtonSAVE:
-Gui, Submit
-;Setting the location if it got changed
-loop, %section1_keys%
-  {
-    if (A_Index = 1)
+  Gui, Submit
+  ;Setting the location if it got changed
+  loop, %section1_keys%
+    {
+      if (A_Index = 1)
+        Continue
+      currentAltCounter := (A_Index - 1)
+      currentRadioGroup := % LocRadioGroup%currentAltCounter%
+      if LocRadioGroup%currentAltCounter%
+        Location_currentSystemLocation = %currentAltCounter%
+    }
+  ;Setting Scripts_loadScriptX to new values
+  currentAltCounter := 1
+  loop, %section2_keys%
+    {
+    if mod(A_Index,3) {
+      Scripts_loadScript%currentAltCounter% = % scriptCheckboxEnable%currentAltCounter%
+      currentAltCounter += 1
+    }
+    else
       Continue
-    currentAltCounter := (A_Index - 1)
-    currentRadioGroup := % LocRadioGroup%currentAltCounter%
-    if LocRadioGroup%currentAltCounter%
-      Location_currentSystemLocation = %currentAltCounter%
-  }
-;Setting Scripts_loadScriptX to new values
-currentAltCounter := 1
-loop, %section2_keys%
-  {
-  if mod(A_Index,3) {
-    Scripts_loadScript%currentAltCounter% = % scriptCheckboxEnable%currentAltCounter%
-    currentAltCounter += 1
-  }
-  else
-    Continue
-  }
-INI_Save(inifile)
-Reload ;uncomment to reload immed. after save - to check what it saved
+    }
+  INI_Save(inifile)
+  Reload
+Return
 
 ButtonRelaunchMaster-Script:
 Gui, Submit
@@ -390,16 +571,16 @@ SortArray(Array, Order="A") {
     Partitions := "|" ObjMinIndex(Array) "," MaxIndex
     Loop {
         comma := InStr(this_partition := SubStr(Partitions, InStr(Partitions, "|", False, 0)+1), ",")
-        spos := pivot := SubStr(this_partition, 1, comma-1) , epos := SubStr(this_partition, comma+1)    
-        if (Order = "A") {    
+        spos := pivot := SubStr(this_partition, 1, comma-1) , epos := SubStr(this_partition, comma+1)
+        if (Order = "A") {
             Loop, % epos - spos {
                 if (Array[pivot] > Array[A_Index+spos])
-                    ObjInsert(Array, pivot++, ObjRemove(Array, A_Index+spos))    
+                    ObjInsert(Array, pivot++, ObjRemove(Array, A_Index+spos))
             }
         } else {
             Loop, % epos - spos {
                 if (Array[pivot] < Array[A_Index+spos])
-                    ObjInsert(Array, pivot++, ObjRemove(Array, A_Index+spos))    
+                    ObjInsert(Array, pivot++, ObjRemove(Array, A_Index+spos))
             }
         }
         Partitions := SubStr(Partitions, 1, InStr(Partitions, "|", False, 0)-1)
