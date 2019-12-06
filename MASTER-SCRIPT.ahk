@@ -133,12 +133,6 @@ GroupAdd, altBlocked, ahk_exe Adobe Premiere Pro.exe ; items added to the group 
 
 ; There are 2 hotkeys defined for the Hotkeys below because on my split keyboard it's easier to use ScrollLock & on my Kira/Preonic keyboards it's easier to use CapsLock.
 
-ScrollLock & f10:: ; <-- WITH SORTING - Open the Settings GUI for MASTER-SCRIPT-SORT.AHK
-CapsLock & f10:: ; <-- WITH SORTING - Open the Settings GUI for MASTER-SCRIPT-SORT.AHK
-		ScrollLockOff()
-		Run, %A_ScriptDir%\MASTER-SETTINGS-SORT.AHK ; runs the settings configuration script for the whole suite.
-    return
-
 ScrollLock & f11:: ; <-- Open the Settings GUI for MASTER-SCRIPT.AHK
 CapsLock & f11:: ; <-- Open the Settings GUI for MASTER-SCRIPT.AHK
 		ScrollLockOff()

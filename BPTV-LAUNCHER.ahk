@@ -40,6 +40,16 @@ inifile = settings.ini
 INI_Init(inifile)
 INI_Load(inifile)
 
+; this little section detects if the MASTER-SCRIPT.ahk is already running. That would be a sign that this launcher may have already been run. Since we don't usually want to run this launcher a second time (while the apps it launches are already running) we will set the timeout period to something very high so you have time to interact with the GUI and not have it quickly launch everything over again.
+SetTitleMatchMode, 2
+DetectHiddenWindows, On
+if WinExist("MASTER-SCRIPT.ahk") {
+  Settings_timeoutPeriod := 9000000
+  timeoutSegments := Round(Settings_timeoutPeriod / 1000)
+  Tooltip, MASTER-SCRIPT.ahk IS ALREADY RUNNING.`nThe timeout is set to %timeoutSegments% seconds temporarily.`nQuit all checked apps `& scripts to reset timeout period.
+  RemoveTooltip(4000)
+}
+
 ;Creating the Main GUI for the app - the bit that loads inititally when run
 ;setting width variables
 guiWidth := 560
@@ -55,7 +65,7 @@ currentSystemLocation = % Location_systemLocation%Location_currentSystemLocation
 Gui, Font, S10 CDefault, Franklin Gothic Medium
 Gui, Add, Text, x20 y10 , Current Selected System Location: %currentSystemLocation%
 Gui, Font, S8 CDefault, Franklin Gothic Medium
-Gui, Add, Text, xp yp+15, (This can be changed in MASTER-SETTINGS.AHK)
+Gui, Add, Text, xp yp+15, (This can be changed via MASTER-SETTINGS.AHK - see button below)
 Gui, Font, S12 CDefault, Franklin Gothic Medium
 
 ;Section 2 - Scripts To Run
@@ -92,10 +102,12 @@ loop, %section3_keys%
   }
 Gui, Font, S8 CDefault, Franklin Gothic Medium
 Gui, Font, S12 CDefault, Franklin Gothic Medium
-Gui, Add, Button, x10 y%buttonStartingY% w100 h50, &Add App
-Gui, Add, Button, xp+110 yp w100 h50, &Delete App
-Gui, Add, Button, xp+110 yp w100 h50, &Edit`nsettings.ini
-Gui, Add, Button, xp+110 yp w100 h50, Change &Timeout
+Gui, Add, Button, x10 y%buttonStartingY% w80 h50, &Add App
+Gui, Add, Button, xp+90 yp w80 h50, &Delete App
+Gui, Font, S10 CDefault, Franklin Gothic Medium
+Gui, Add, Button, xp+90 yp w120 h50, &Launch MASTER-SETTINGS
+Gui, Font, S12 CDefault, Franklin Gothic Medium
+Gui, Add, Button, xp+130 yp w100 h50, Change &Timeout
 Gui, Add, Button, xp+110 yp w100 h50, &Save Changes
 timeoutSegments := Round(Settings_timeoutPeriod / 1000)
 timeoutText := "Launching Apps in " . timeoutSegments . " seconds.        Launching in:                 Press ESC to Cancel."
@@ -110,11 +122,10 @@ Gui, Add, Button, Default x10 yp+30 w%guiElementWidth% h30, Launch Apps &Now
 ;Gui, Add, Button, x10 yp+40 w430 h30, Variables
 Gui, Show, w%guiWidth% h%guiHeight%
 
-
-
 ;timer code section here
 ;the timeout period is stored in settings.ini - under the [Settings] section as milliseconds - other values designated in above GUI code
 launcherTimeoutSleep := 1000
+
 ;this code creates and updates the timer text & progress bar
 loop, %timeoutSegments%
   {
@@ -125,6 +136,7 @@ loop, %timeoutSegments%
   }
   goto launchApps
 return
+
 
 launchApps:
 loop, %section3_keys%
@@ -191,6 +203,7 @@ ExitApp
 return
 
 ButtonAddApp:
+launcherTimeoutSleep := 10000
 InputBox, newAppNameValue, Name or Description, Enter a Name or Description for the new app.
 InputBox, newAppPathValue, File Path, Enter the full path to the new app.`n(include path relative to %A_ScriptName%`nwhich is located in %A_ScriptDir%)
 if (!newAppPathValue) {
@@ -291,7 +304,7 @@ if (A_GuiEvent = "DoubleClick")
 return
 
 ButtonChangeTimeout:
-InputBox, OutputVar, Change Timeout Delay, Set the amount of time to wait before launching checked apps.`n`n(Enter time in milliseconds. 6 seconds would be 6000ms, etc.))
+InputBox, OutputVar, Change Timeout Delay, Set the amount of time to wait before launching checked apps.`n`n(Enter time in milliseconds. 6 seconds would be 6000ms, etc.)),,,,,,,%Settings_timeoutPeriod%
 if OutputVar=                                 ;IF NONE IS SELECTED , RETURN
   return
 Settings_timeoutPeriod := OutputVar
@@ -299,9 +312,8 @@ INI_Save(inifile)
 reload
 return
 
-ButtonEditsettings.ini:
-MsgBox, 262449, WARNING, You are opening the 'settings.ini' file in a text editor!`n`nThis file controls all aspects of how this set of scripts operates.`n`nPlease be very careful in here.`n`nIf you are going in to remove Apps or Scripts`, be sure to update the numbers after any items you delete (loadscript1, enableApp3, etc). Stuff will break if you don't.`n`nCANCEL to turn back...`n`nAfter exiting the text editor, this script will reload with your changes.
-RunWait, notepad.exe settings.ini, %A_ScriptDir%, Max
-Reload
+ButtonLaunchMaster-Settings:
+  Run, %A_ScriptDir%\MASTER-SETTINGS.AHK ; runs the settings configuration script for the whole suite.
+  ExitApp
 return
 ;===== FUNCTIONS ===============================================================================
