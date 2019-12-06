@@ -465,7 +465,7 @@ mainWindowButtonSAVE:
   Reload
 Return
 
-mainWindowButtonRelaunchMaster-Script:
+mainWindowButtonSaveAndRelaunchMaster-Script:
 Gui, Submit
 ;Setting the location if it got changed
 loop, %section1_keys%
