@@ -26,8 +26,7 @@
 |                         |  WIN+CTRL+SHIFT+F    <--Nuke Firefox (click Desktop first)
 +=========================+  WIN+CTRL+SHIFT+P    <--Nuke Premiere (click Desktop first)
 
-== STICKIES HOTKEYS -=======================================================
-
+== STICKIES HOTKEYS ===================================================================
 WIN+ALT+S             <--New Sticky
 WIN+ALT+H             <--Show All/Show Hide
 WIN+SHIFT+ALT+S       <--New Sticky From Clipboard
@@ -35,4 +34,10 @@ WIN+ALT+M             <--Open Manage Dialog
 WIN+ALT+SHIFT+W       <--Screen Grab An Area
 WIN+ALT+X             <--Reveal Secret Stickies
 
-============================================================================
+== QUICKTYPE ==========================================================================
+]d                <-- Send date ONLY as text
+]t                <-- Send time ONLY as text
+]ts               <-- Send time & date as text
+bp                = buttonpusher
+embp              = ben@buttonpusher.tv
+empom             = ben@postopmedia.com
