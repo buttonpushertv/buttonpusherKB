@@ -44,23 +44,28 @@ INI_Load(inifile)
 guiWidth := 660
 guiElementWidth := (guiWidth - 20)
 ;figuring out how tall the whole GUI will be
-keyRows := (section1_keys - 1)
-keyRows += (section2_keys / 3)
-guiHeight := (keyRows * 27)
-guiHeight += 180 ; this is to add the bit at the bottom for the buttons, text
-buttonStartingY := (guiHeight - 100)
+section1H := (section1_keys - 1)
+section2H := (section2_keys / 3)
+section3H := (section3_keys / 3)
+keyRows := section1H
+keyRows += section2H
+keyRows += section3H
+
+guiHeight := (keyRows * 32)
+guiHeight += 200 ; this is to add the bit at the bottom for the buttons, text
+buttonStartingY := (guiHeight - 115)
 global scriptSectionKeys := round(section2_keys / 3)
 global appSectionKeys := round(section3_keys / 3)
 
 ;Section 1 - System Location
 section1GroupH := (section1_keys - 1)
 currentAltCounter := 1
-Gui, Font, S12 CDefault, Franklin Gothic Medium
-Gui, Add, GroupBox, R%section1GroupH% x10 y10 w300 , System Location
-Gui, Font, S10 CDefault, Franklin Gothic Medium
-Gui, Add, Text, x330 y20 w280, Select a Location at the left. This can be used to provide location specific settings.`n`nRoot Folder: %Settings_rootFolder%`nVersion: %version%`nBelow, check the boxes for the scripts you'd like to launch when running MASTER-SCRIPT.ahk.
-Gui, Font, S12 CDefault, Franklin Gothic Medium
-Gui, Add, Text, section x10 y10,
+Gui, mainWindow:Font, S12 CDefault, Franklin Gothic Medium
+Gui, mainWindow:Add, GroupBox, R%section1GroupH% x10 y10 w300 , System Location
+Gui, mainWindow:Font, S10 CDefault, Franklin Gothic Medium
+Gui, mainWindow:Add, Text, x330 y20 w280, Select a Location at the left. This can be used to provide location specific settings.`n`nRoot Folder: %Settings_rootFolder%`nVersion: %version%
+Gui, mainWindow:Font, S12 CDefault, Franklin Gothic Medium
+Gui, mainWindow:Add, Text, section x10 y10,
 loop, %section1_keys%
   {
     if (A_Index = 1) {
@@ -71,17 +76,17 @@ loop, %section1_keys%
     currentKeyValue := % %section1%_%currentKey%
     currentKeyValueForRadio := "Location" . currentAltCounter . " > " . currentKeyValue
     if (currentAltCounter = Location_currentSystemLocation) {
-      Gui, Add, Radio, xs+20 vLocRadioGroup%currentAltCounter% Checked, %currentKeyValueForRadio%
+      Gui, mainWindow:Add, Radio, xs+20 vLocRadioGroup%currentAltCounter% Checked, %currentKeyValueForRadio%
       global currentSelectedSystemLocation := currentKeyValue
     } else
-      Gui, Add, Radio, xs+20 vLocRadioGroup%currentAltCounter%, %currentKeyValueForRadio%
+      Gui, mainWindow:Add, Radio, xs+20 vLocRadioGroup%currentAltCounter%, %currentKeyValueForRadio%
   }
 
 ;Section 2 - Scripts To Run
-section2GroupH := (section2_keys / 3) - 1.75
+section2GroupH := scriptSectionKeys - 1
 currentAltCounter := 1
-Gui, Add, GroupBox, R%section2GroupH% x10 yp+50 w630 , Scripts to Load
-Gui, Add, Text, section xp yp+10,
+Gui, mainWindow:Add, GroupBox, R%section2GroupH% x10 yp+50 w630 , Scripts to Load (loaded via MASTER-SCRIPT.ahk)
+Gui, mainWindow:Add, Text, section xp yp+10,
 loop, %section2_keys%
   {
     scriptCheckboxEnable%A_Index% := 0
@@ -96,8 +101,7 @@ loop, %section2_keys%
     currentKeyLeft7 := SubStr(currentKey, 1, 7)
     If (currentKeyLeft7 = "loadScr"){
       scriptCheckboxEnable%A_Index% := currentKeyValue
-      ;MSGBOX, , DEBUG, currentKey: %currentKey%`ncurrentKeyValue: %currentKeyValue%`ncurrentPathValue: %currentPathValue%`ncurrentNameValue: %currentNameValue%`npathKey: %pathKey%`nnameKey: %nameKey%
-      Gui, Add, Checkbox, xs+20 yp+20 vscriptCheckboxEnable%currentAltCounter% Checked%currentKeyValue%, %currentNameValue%
+      Gui, mainWindow:Add, Checkbox, xs+20 yp+20 vscriptCheckboxEnable%currentAltCounter% Checked%currentKeyValue%, %currentNameValue%
       currentAltCounter += 1
       pathKey :=
 	  nameKey :=
@@ -109,24 +113,58 @@ loop, %section2_keys%
       Continue
   }
 
-Gui, Font, S12 CDefault, Franklin Gothic Medium
-Gui, Add, Button, x520 yp w100 h30, Variables ; Uncomment if you wish to have a button to show Variables assigned by the script
-Gui, Add, Button, x30 y%buttonStartingY% w150 h30, &Manage Scripts
-Gui, Add, Button, x200 y%buttonStartingY% w150 h30, Manage &Apps
-Gui, Add, Button, x400 yp w100 h30, &Cancel
-Gui, Add, Button, x520 yp w100 h30, &SAVE
-Gui, Add, Button, x30 yp+33 w590 h30, &RELAUNCH MASTER-SCRIPT
-Gui, Font, S10 CDefault, Franklin Gothic Medium
-Gui, Add, Text, x30 yp+30 w650, Clicking 'SAVE' will just save the settings above.`nClick 'RELAUNCH MASTER-SCRIPT' to save & relaunch all the checked scripts.
+;Section 3 - Apps To Load
+section3GroupH := appSectionKeys - 1
+currentAltCounter := 1
+Gui, mainWindow:Add, GroupBox, R%section3GroupH% x10 yp+75 w630 , Apps to Load (loaded via BPTV-LAUNCHER.ahk*)
+Gui, mainWindow:Add, Text, section xp yp+10,
+loop, %section3_keys%
+    {
+      appCheckboxEnable%A_Index% := 0
+      currentKey := % section3_key%A_Index%
+      pathLookAhead := A_Index + 1
+      nameLookAhead := A_Index + 2
+      pathKey := % section3_key%pathLookAhead%
+      nameKey := % section3_key%nameLookAhead%
+      currentKeyValue := %section3%_%currentKey%
+      currentPathValue := %section3%_%pathKey%
+      currentNameValue := %section3%_%nameKey%
+      currentKeyLeft7 := SubStr(currentKey, 1, 7)
+      If (currentKeyLeft7 = "loadApp"){
+        appCheckboxEnable%A_Index% := currentKeyValue
+        Gui, mainWindow:Add, Checkbox, xs+20 yp+20 vappCheckboxEnable%currentAltCounter% Checked%currentKeyValue%, %currentNameValue%
+        currentAltCounter += 1
+        pathKey :=
+  	  nameKey :=
+        currentKeyValue :=
+        currentPathValue :=
 
-Gui, Show, w%guiWidth% h%guiHeight%
+      }
+      else
+        Continue
+    }
+
+Gui, mainWindow:Font, S8 CDefault, Franklin Gothic Medium
+Gui, mainWindow:Add, Text, x30 yp+30 w650, *-App enabling/disabling will take effect when BPTV-LAUNCHER is relaunched. Changes made here will be saved.`nAll enabled and/or open apps should be closed before relaunching BPTV-LAUNCHER.
+
+Gui, mainWindow:Font, S12 CDefault, Franklin Gothic Medium
+;Gui, mainWindow:Add, Button, x520 yp w100 h30, Variables ; Uncomment if you wish to have a button to show Variables assigned by the script
+Gui, mainWindow:Add, Button, x30 y%buttonStartingY% w150 h30, &Manage Scripts
+Gui, mainWindow:Add, Button, x200 y%buttonStartingY% w150 h30, Manage &Apps
+Gui, mainWindow:Add, Button, x400 yp w100 h30, &Cancel
+Gui, mainWindow:Add, Button, x520 yp w100 h30, &SAVE
+Gui, mainWindow:Add, Button, x30 yp+33 w590 h30, SAVE AND &RELAUNCH MASTER-SCRIPT
+Gui, mainWindow:Font, S10 CDefault, Franklin Gothic Medium
+Gui, mainWindow:Add, Text, x30 yp+30 w650, Clicking 'SAVE' will just save the settings above and reload this panel.`nClick 'SAVE AND RELAUNCH MASTER-SCRIPT' to save and relaunch all the checked scripts and exit this panel.
+Gui, mainWindow:Show, w%guiWidth% h%guiHeight%
+Gui, mainWindow:Default
 return
 
-ButtonVariables:
+mainWindowButtonVariables:
 Listvars
 return
 
-ButtonManageScripts:
+mainWindowButtonManageScripts:
 	manageScriptsGUIH := (scriptSectionKeys * 50) + 40
 	manageScriptsGUIW := 880
 	manageScriptsLVH := (manageScriptsGUIH - 130)
@@ -158,9 +196,9 @@ manageScriptsLVevent:
 		LV_GetText(new_name, A_Index, 1)
 		LV_GetText(new_enabled, A_Index, 2)
 		LV_GetText(new_path, A_Index, 3)
-		newScripts_loadScript%A_Index% := new_enabled
-		newScripts_nameScript%A_Index% := new_name
-		newScripts_pathScript%A_Index% := new_path
+		Scripts_loadScript%A_Index% := new_enabled
+		Scripts_nameScript%A_Index% := new_name
+		Scripts_pathScript%A_Index% := new_path
 	}
 	}
 	if (A_GuiEvent = "DoubleClick") {
@@ -215,8 +253,10 @@ manageScriptsLVevent:
 		LV_GetText(pathToEdit, A_EventInfo, 3)
 		InputBox, newScriptPathValue, Edit File Path, Enter the full path to the new script.`n(include path relative to %A_ScriptName%`nwhich is located in %A_ScriptDir%),,,,,,,,%pathToEdit%
 		Scripts_pathScript%A_EventInfo% := newScriptPathValue
+    INI_Save(inifile)
 		Gui, manageScripts:Destroy
-		Goto ButtonManageScripts
+    Gui, mainWindow:Default
+		Goto mainWindowButtonManageScripts
 	return
 	}
 	return
@@ -224,6 +264,7 @@ manageScriptsLVevent:
 manageScriptsGuiEscape:
 manageScriptsButtonCancel:
 	Gui, manageScripts:Destroy
+  Gui, mainWindow:Default
 	return
 
 manageScriptsAddScript:
@@ -256,43 +297,12 @@ manageScriptsEditPath:
 	return
 
 manageScriptsSaveSorted:
-	Loop, %scriptSectionKeys%
-	{
-    scriptCheckboxEnable%A_Index% :=
-		Scripts_loadScript%A_Index% :=
-		Scripts_loadScript%A_Index% := % newScripts_loadScript%A_Index%
-		scriptCheckboxEnable%A_Index% := % newScripts_loadScript%A_Index%
-		Scripts_nameScript%A_Index% := % newScripts_nameScript%A_Index%
-		Scripts_pathScript%A_Index% := % newScripts_pathScript%A_Index%
-	}
+    INI_Save(inifile)
+    Gui, manageScripts:Destroy
+    Gui, mainWindow:Default
+    return
 
-  /*
-   Gui, newsortScript:New, , NEW Sorted Scripts
- 	 Gui, newsortScript:Font, S12 CDefault, Franklin Gothic Medium
-	 Gui, newsortScript:Add, Text, , Current Script Order:
-	 Gui, newsortScript:Add, ListView, r%scriptSectionKeys% w%manageScriptsLVW% h%manageScriptsLVH%, Script|Enabled?|Path
-	 loop, %scriptSectionKeys%
-	 {
-     currentLoadValue := % Scripts_loadScript%A_Index%
-     currentNameValue := % Scripts_nameScript%A_Index%
-     currentPathValue := % Scripts_pathScript%A_Index%
-     LV_Add(,currentNameValue, currentLoadValue, currentPathValue)
-  	   }
-  	 LV_ModifyCol(1)
-	 Gui, newsortScript:Show, w%manageScriptsGUIW% h%manageScriptsGUIH%
-
-   MsgBox, 36, Does this look correct?
-   IfMsgBox, No
-     goto saveSortedNo
-    IfMsgBox, Yes
-   	Goto, ButtonSave
-    saveSortedNo:
-    Gui, newsortScript:Destroy
-    */
-    Goto, ButtonSave
-   return
-
-ButtonManageApps:
+mainWindowButtonManageApps:
    	manageAppsGUIH := (appSectionKeys * 50) + 150
    	manageAppsGUIW := 880
    	manageAppsLVH := (manageAppsGUIH - 130)
@@ -309,28 +319,28 @@ ButtonManageApps:
    	Gui, manageApps:Add, Button, x15 yp+55 w100 h30 gmanageAppsAddApp, &Add App
    	Gui, manageApps:Add, Button, x635 yp w100 h30, &Cancel
    	Gui, manageApps:Add, Button, x765 yp w100 h30 gmanageAppsSaveSorted, &Save Sorted
+    Gui, manageApps:Default
    	loop, %appSectionKeys%
    	  {
         currentAppsLoadValue := % Apps_loadApp%A_Index%
         currentAppsNameValue := % Apps_nameApp%A_Index%
         currentAppsPathValue := % Apps_pathApp%A_Index%
-        ;MSGBOX, , DEBUG,%A_DefaultListView%`n%currentAppsNameValue%`n%currentAppsLoadValue%`n%currentAppsPathValue%
         LV_Add(,currentAppsNameValue, currentAppsLoadValue, currentAppsPathValue)
    	  }
    	LV_ModifyCol(1)
    	Gui, manageApps:Show, w%manageAppsGUIW% h%manageAppsGUIH%
    	return
 
-   manageAppsLVevent:
+manageAppsLVevent:
    	if (A_GuiEvent = "ColClick") {
    	Loop, %appSectionKeys%
    	{
    		LV_GetText(new_name, A_Index, 1)
    		LV_GetText(new_enabled, A_Index, 2)
    		LV_GetText(new_path, A_Index, 3)
-   		newApps_loadApp%A_Index% := new_enabled
-   		newApps_nameApp%A_Index% := new_name
-   		newApps_pathApp%A_Index% := new_path
+   		Apps_loadApp%A_Index% := new_enabled
+   		Apps_nameApp%A_Index% := new_name
+   		Apps_pathApp%A_Index% := new_path
    	}
    	}
    	if (A_GuiEvent = "DoubleClick") {
@@ -382,22 +392,25 @@ ButtonManageApps:
          return
    	}
    	If (A_GuiEvent = "R") {
-   		LV_GetText(pathToEdit, A_EventInfo, 3)
-   		InputBox, newAppPathValue, Edit File Path, Enter the full path to the new App.`n(include path relative to %A_ScriptName%`nwhich is located in %A_ScriptDir%),,,,,,,,%pathToEdit%
-   		Apps_pathApp%A_EventInfo% := newAppPathValue
-   		Gui, manageApps:Destroy
-   		Goto ButtonManageApps
-   	return
+      LV_GetText(pathToEdit, A_EventInfo, 3)
+     	InputBox, newAppPathValue, Edit File Path, Enter the full path to the new App.`n(include path relative to %A_ScriptName%`nwhich is located in %A_ScriptDir%),,,,,,,,%pathToEdit%
+      LV_Modify(A_EventInfo, ,,,newAppPathValue)
+      Apps_pathApp%A_EventInfo% := newAppPathValue
+      INI_Save(inifile)
+      Gui, manageApps:Destroy
+      Gui, mainWindow:Default
+      Goto mainWindowButtonManageApps
    	}
    	return
 
-   manageAppsGuiEscape:
-   manageAppsButtonCancel:
+manageAppsGuiEscape:
+manageAppsButtonCancel:
    	Gui, manageApps:Destroy
+    Gui, mainWindow:Default
    	return
 
-   manageAppsAddApp:
-   	InputBox, newAppNameValue, Name or DeAppion, Enter a Name or DeAppion for the new app.
+manageAppsAddApp:
+   	InputBox, newAppNameValue, Name or Description, Enter a Name or Description for the new app.
    	InputBox, newAppPathValue, File Path, Enter the full path to the new App.`n(include path relative to %A_ScriptName%`nwhich is located in %A_ScriptDir%)
    	if (!newAppPathValue) {
    	  MsgBox You must enter, at least, a path to an app. Please try again.
@@ -419,53 +432,14 @@ ButtonManageApps:
    	reload
    	return
 
-   manageAppsEditAppPath:
-   	LV_GetText(pathToEdit, A_EventInfo, 3)
-   	InputBox, newAppPathValue, Edit File Path, Enter the full path to the new App.`n(include path relative to %A_ScriptName%`nwhich is located in %A_ScriptDir%),,,,,,,,%pathToEdit%
-     LV_Modify(A_EventInfo, ,,,newAppPathValue)
-   	return
-
-   manageAppsSaveSorted:
-   	Loop, %appSectionKeys%
-   	{
-      AppCheckboxEnable%A_Index% :=
-   		Apps_loadApp%A_Index% :=
-   		Apps_loadApp%A_Index% := % newApps_loadApp%A_Index%
-   		AppCheckboxEnable%A_Index% := % newApps_loadApp%A_Index%
-   		Apps_nameApp%A_Index% := % newApps_nameApp%A_Index%
-   		Apps_pathApp%A_Index% := % newApps_pathApp%A_Index%
-   	}
-
-    /*
-    Gui, newsortApp:New, , NEW Sorted Apps
-    Gui, newsortApp:Font, S12 CDefault, Franklin Gothic Medium
-    Gui, newsortApp:Add, Text, , Current App Order:
-    Gui, newsortApp:Add, ListView, r%appSectionKeys% w%manageAppsLVW% h%manageAppsLVH%, App|Enabled?|Path
-    loop, %appSectionKeys%
-    {
-        currentLoadValue := % Apps_loadApp%A_Index%
-        currentNameValue := % Apps_nameApp%A_Index%
-        currentPathValue := % Apps_pathApp%A_Index%
-        LV_Add(,currentNameValue, currentLoadValue, currentPathValue)
-     	   }
-     	 LV_ModifyCol(1)
-   	 Gui, newsortApp:Show, w%manageAppsGUIW% h%manageAppsGUIH%
-
-      MsgBox, 36, Does this look correct?
-      IfMsgBox, No
-        goto saveSortedNo
-       IfMsgBox, Yes
-      	INI_Save(inifile)
-       saveSortedNo:
-       Gui, newsortApp:Destroy
-      */
-       INI_Save(inifile)
-       Gui, manageApps:Destroy
-       reload
+manageAppsSaveSorted:
+      INI_Save(inifile)
+      Gui, manageApps:Destroy
+      Gui, mainWindow:Default
       return
 
 
-ButtonSAVE:
+mainWindowButtonSAVE:
   Gui, Submit
   ;Setting the location if it got changed
   loop, %section1_keys%
@@ -481,13 +455,17 @@ ButtonSAVE:
   loop, %scriptSectionKeys%
     {
     Scripts_loadScript%A_Index% = % scriptCheckboxEnable%A_Index%
-    ;MSGBOX, , DEBUG, % Scripts_loadScript%A_Index%
     }
+    ;Setting Apps_loadAppX to new values
+    loop, %appSectionKeys%
+      {
+      Apps_loadApp%A_Index% = % appCheckboxEnable%A_Index%
+      }
   INI_Save(inifile)
   Reload
 Return
 
-ButtonRelaunchMaster-Script:
+mainWindowButtonRelaunchMaster-Script:
 Gui, Submit
 ;Setting the location if it got changed
 loop, %section1_keys%
@@ -500,16 +478,11 @@ loop, %section1_keys%
       Location_currentSystemLocation = %currentAltCounter%
   }
 ;Setting Scripts_loadScriptX to new values
-currentAltCounter := 1
-loop, %section2_keys%
+loop, %scriptSectionKeys%
   {
-  if mod(A_Index,3) {
-    Scripts_loadScript%currentAltCounter% = % scriptCheckboxEnable%currentAltCounter%
-    currentAltCounter += 1
+  Scripts_loadScript%A_Index% = % scriptCheckboxEnable%A_Index%
   }
-  else
-    Continue
-  }
+
 INI_Save(inifile)
 splashScreenSpacing := 75
 splashScreenStartY := 100
@@ -551,9 +524,9 @@ loop, %section2_keys%
 	ExitApp
 	return
 
-ButtonCancel:
+mainWindowButtonCancel:
 GuiClose:
-GuiEscape:
+mainWindowGuiEscape:
 ExitApp
 
 ;===== FUNCTIONS ===============================================================================
