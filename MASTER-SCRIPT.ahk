@@ -198,6 +198,9 @@ return
     RemoveToolTip(-2000)
 return
 
++^!f6::Run Edit "PRIVATE\QUICKTYPE-HOTSTRINGS.txt"
+
+
 #IfWinActive
 
 ;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
