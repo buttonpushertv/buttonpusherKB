@@ -59,12 +59,7 @@ SplashTextOff
 ; ::shortcut::Text to type in place of shortcut
 ; (This is documented in the AHK docs here - https://www.autohotkey.com/docs/Hotstrings.htm)
 
-::bp::buttonpusher
-::embp::ben@buttonpusher.tv
-::empmben::ben@postopmedia.com
-::empmbh::bhoward@postopmedia.com
-
-
+#Include A_ScriptDir\..\PRIVATE\QUICKTYPE-HOTSTRINGS.txt
 
 ::]ts:: ; <-- Send time & date as text
 FormatTime, now,, hh:mm tt
