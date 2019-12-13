@@ -37,8 +37,8 @@ sleepDeep := 3500
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 DetectHiddenWindows, On
-LaunchCode := "C:\Program Files\Adobe\Adobe Premiere Pro CC 2020\Adobe Premiere Pro.exe"
-WindowTitle := "ahk_exe Adobe Premiere Pro.exe"
+LaunchCode := "C:\Program Files\Adobe\Adobe Audition 2020\Adobe Audition.exe"
+WindowTitle := "ahk_exe Adobe Audition.exe"
 
 ;MsgBox,,Attempt,Trying to run or activate:`n%WindowLaunch%,2
 RunOrActivate(LaunchCode, WindowTitle)
