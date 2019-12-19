@@ -76,12 +76,14 @@ HotKey, CapsLock & F1, firstShower ; <-- Hotkey for KBF1 (firstShower: a text fi
 HotKey, CapsLock & F2, secondShower ; <-- Hotkey for KBF2 (secondShower: a image file shower - App-Specific)
 HotKey, CapsLock & F3, thirdShower ; <-- Hotkey for KBF3 (thirdShower: a text file shower - App-Specific)
 HotKey, CapsLock & F4, fourthShower ; <-- Hotkey for KBF4 (fourthShower: a image file shower - Location Specific)
-If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
-	HotKey, ^!+f12, firstShower ; Set 2nd Hotkey for KBF1 (firstShower: a text file shower)
-	HotKey, ^!+f11, secondShower ; Set 2nd Hotkey for KBF2 (secondShower: a image file shower - App-Specific)
-	HotKey, ^!+f10, thirdShower ; Set 2nd Hotkey for KBF3 (thirdShower: a text file shower - App-Specific)
-	HotKey, ^!+f9, fourthShower ; Set 2nd Hotkey for KBF4 (fourthShower: a image file shower - Location Specific)
-}
+
+; The section below will allow you to define different hotkeys based on location. I thought I'd want to do this but then it became annoying to recall which hotkeys worked where. But, I want to keep this around because with some incoming keyboard changes, this will be useful again.
+;If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
+;	HotKey, ^!+f12, firstShower ; Set 2nd Hotkey for KBF1 (firstShower: a text file shower)
+;	HotKey, ^!+f11, secondShower ; Set 2nd Hotkey for KBF2 (secondShower: a image file shower - App-Specific)
+;	HotKey, ^!+f10, thirdShower ; Set 2nd Hotkey for KBF3 (thirdShower: a text file shower - App-Specific)
+;	HotKey, ^!+f9, fourthShower ; Set 2nd Hotkey for KBF4 (fourthShower: a image file shower - Location Specific)
+;}
 
 return ; this prevents the script from processing the labels below at script launch (at least the firstShower label...)
 
@@ -93,8 +95,9 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 		RemoveToolTip(4000)
     keywait, ESC, D ; wait for ESCAPE to be pressed down
 		Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
-		Gui, Text:Destroy ; destroys the Text:GUI
-    WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
+		squashGUI(activeWin)
+		;Gui, Text:Destroy ; destroys the Text:GUI
+    ;WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 		return
 
 secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
@@ -174,10 +177,11 @@ secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcu
     keywait, ESC, D ; wait for ESCAPE to be pressed down
 		Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
     numPages := 0
-    Gui, Picture:Destroy ; this kills the main cheatsheet GUI window
-    destroyGDIplusGUI() ; this kills the TaskBar CheatSheet
+		squashGUI(activeWin)
+    ;Gui, Picture:Destroy ; this kills the main cheatsheet GUI window
+    ;destroyGDIplusGUI() ; this kills the TaskBar CheatSheet
     ;ToolTip ; also uncomment this line to clear the ToolTip when done
-    WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
+    ;WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
 thirdShower:
@@ -202,8 +206,9 @@ thirdShower:
 		RemoveToolTip(4000)
     keywait, ESC, D ; wait for ESCAPE to be pressed down
 		Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
-    Gui, Text:Destroy
-    WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
+		squashGUI(activeWin)
+		;Gui, Text:Destroy
+    ;WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
 fourthShower:
@@ -214,8 +219,9 @@ fourthShower:
 		RemoveToolTip(4000)
     keywait, ESC, D ; wait for ESCAPE to be pressed down
 		Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
-    Gui, Picture:Destroy
-    WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
+    squashGUI(activeWin)
+		;Gui, Picture:Destroy
+    ;WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
 CapsLock & F5:: ;<-- Testing the TaskBar CheatSheet
@@ -223,8 +229,9 @@ CapsLock & F5:: ;<-- Testing the TaskBar CheatSheet
     taskBarPic := "SUPPORTING-FILES\WIN-TASKBAR\windows-taskbar-keyboard-cheaetsheet-DKYELLOW.png"
     showTaskBarPic(taskBarPic)
     keywait, ESC, D ; wait for ESCAPE to be pressed down
-    destroyGDIplusGUI()
-    WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
+		squashGUI(activeWin)
+    ;destroyGDIplusGUI()
+    ;WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
 ;===== FUNCTIONS ===============================================================================
@@ -382,6 +389,15 @@ GdiplusExit:
 ; gdi+ may now be shutdown on exiting the program
 Gdip_Shutdown(pToken)
 ExitApp
+
+squashGUI(activeWin){
+	;this function should destroy the GUI - no matter which kind it is
+	Gui, Text:Destroy ; destroys the Text:GUI
+	Gui, Picture:Destroy ; this kills the main cheatsheet GUI window
+	destroyGDIplusGUI() ; this kills the TaskBar CheatSheet
+
+	WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
+}
 
 GuiEscape:
 	Gui, Text:Destroy ; destroys the Text:GUI window
