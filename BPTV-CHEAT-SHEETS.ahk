@@ -201,6 +201,9 @@ thirdShower:
 		If WinActive("ahk_exe WindowsTerminal.exe")
 				showText("SUPPORTING-FILES\KBF3-WINTERMpvw.txt")
 		else
+		If WinActive("ahk_exe SubtitleEdit.exe")
+				showText("SUPPORTING-FILES\KBF3-SUBTITLE-EDIT.txt")
+		else
         showText("SUPPORTING-FILES\NO-CHEATSHEET.txt")
 		ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes)
 		RemoveToolTip(4000)
