@@ -198,7 +198,7 @@ return
     RemoveToolTip(-2000)
 return
 
-+^!f6::Run Edit "PRIVATE\QUICKTYPE-HOTSTRINGS.txt"
++^!Q::Run Edit "PRIVATE\QUICKTYPE-HOTSTRINGS.txt"
 
 
 #IfWinActive
