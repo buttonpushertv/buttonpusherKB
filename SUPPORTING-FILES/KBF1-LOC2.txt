@@ -22,9 +22,10 @@ CAPS/SCRLK+F12      <--Open BPTV-LAUNCHER
 CAPS/SCRLK+BACKSP   <--Reload MASTER-SCRIPT.ahk
 CAPS/SCRLK+Q        <--Exit MASTER-SCRIPT and child AHK Scripts
 
-
+{ON WINDOWS DESKTOP ONLY}
 WIN+CTRL+SHIFT+F    <--Nuke Firefox (click Desktop first)
 WIN+CTRL+SHIFT+P    <--Nuke Premiere (click Desktop first)
+WIN+CTRL+SHIFT+Q    <--Edit PRIVATE\QUICKTYPE-HOTSTRINGS.txt
 
 == STICKIES HOTKEYS ===================================================================
 WIN+ALT+S             <--New Sticky
