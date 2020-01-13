@@ -187,16 +187,16 @@ secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcu
       showTaskBarPic(taskBarPic) ; as an extra little helper, this will display an indicator above the Windows TaskBar to remind you which apps can be launched/activated by pressing Windows plus that number key.
     }
     WinActivate, Picture
-		ToolTip, Press ESC to close Cheatsheet`n`nLeft/Right (or Caps+Scroll Up/Down) to switch Tabs`n`n(This window will remain on top until it closes)
-		RemoveToolTip(4000)
-    keywait, ESC, D ; wait for ESCAPE to be pressed down
-		Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
+		If (Location_currentSystemLocation = 1) { ; based on the location this will change how the release of the invoking Hotkey will close the GUI
+			keywait, %A_ThisHotKey% ; this will just keep GUI window open while hotkey is depressed
+		} else {
+			ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
+			RemoveToolTip(4000)
+			keywait, ESC, D ; you can release the invoking hotkey and this will wait for ESCAPE to be pressed down
+			Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
+		}
     numPages := 0
 		squashGUI(activeWin)
-    ;Gui, Picture:Destroy ; this kills the main cheatsheet GUI window
-    ;destroyGDIplusGUI() ; this kills the TaskBar CheatSheet
-    ;ToolTip ; also uncomment this line to clear the ToolTip when done
-    ;WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
 thirdShower:
