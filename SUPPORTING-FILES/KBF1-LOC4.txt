@@ -1,30 +1,30 @@
 == MASTER-SCRIPT ===========================================================
 
-  LEFT WIN            <-- Will not activate the Start Menu when pressed by itself
-  RIGHT WIN           <-- Works normally. Will open Start menu when pressed by itself
+LEFT WIN            <-- Will not activate the Start Menu when pressed by itself
+RIGHT WIN           <-- Works normally. Will open Start menu when pressed by itself
 
-  LEFT ALT            <-- Should not activate App Menu Bar when pressed by itself
-  RIGHT ALT           <-- Works normally. Will open App Menu Bar when pressed by itself
+LEFT ALT            <-- Should not activate App Menu Bar when pressed by itself
+RIGHT ALT           <-- Works normally. Will open App Menu Bar when pressed by itself
 
-  CAPS+F1             <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys (this file)
-  CAPS+F2             <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
-  CAPS+F3             <--Display a Text File CheatSheet of App Specific AutoHotKeys
-  CAPS+F4             <--Display an image CheatSheet for Preonic Keyboard
+CAPS+F1             <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys (this file)
+CAPS+F2             <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
+CAPS+F3             <--Display a Text File CheatSheet of App Specific AutoHotKeys
+CAPS+F4             <--Display an image CheatSheet for Preonic Keyboard
 
-  CAPS+C              <--Delete Key
-  CAPS+V              <--BackSpace
+CAPS+C              <--Delete Key
+CAPS+V              <--BackSpace
 
-  CAPS+P              <-- Toggle CapsLockCheck On or Off
+CAPS+P              <-- Toggle CapsLockCheck On or Off
 
-  (For these below you can use CAPS or SCRLK as the modifier)
-  CAPS/SCRLK+F11      <--Open the Settings GUI for MASTER-SCRIPT.AHK
-  CAPS/SCRLK+F12      <--Open BPTV-LAUNCHER
-  CAPS/SCRLK+BACKSP   <--Reload MASTER-SCRIPT.ahk
-  CAPS/SCRLK+Q        <--Exit MASTER-SCRIPT and child AHK Scripts
+(For these below you can use CAPS or SCRLK as the modifier)
+CAPS/SCRLK+F11      <--Open the Settings GUI for MASTER-SCRIPT.AHK
+CAPS/SCRLK+F12      <--Open BPTV-LAUNCHER
+CAPS/SCRLK+BACKSP   <--Reload MASTER-SCRIPT.ahk
+CAPS/SCRLK+Q        <--Exit MASTER-SCRIPT and child AHK Scripts
 
 
-  WIN+CTRL+SHIFT+F    <--Nuke Firefox (click Desktop first)
-  WIN+CTRL+SHIFT+P    <--Nuke Premiere (click Desktop first)
+WIN+CTRL+SHIFT+F    <--Nuke Firefox (click Desktop first)
+WIN+CTRL+SHIFT+P    <--Nuke Premiere (click Desktop first)
 
 == STICKIES HOTKEYS -=======================================================
 
@@ -35,4 +35,12 @@ WIN+ALT+M             <--Open Manage Dialog
 WIN+ALT+SHIFT+W       <--Screen Grab An Area
 WIN+ALT+X             <--Reveal Secret Stickies
 
-============================================================================
+== QUICKTYPE ================================================================
+]d                <-- Send date ONLY as text
+]t                <-- Send time ONLY as text
+]ts               <-- Send time & date as text
+bp                = buttonpusher
+embp              = ben@buttonpusher.tv
+embptv            = buttonpushertv@gmail.com
+empmben           = ben@postopmedia.com
+empmbh            = bhoward@postopmedia.com

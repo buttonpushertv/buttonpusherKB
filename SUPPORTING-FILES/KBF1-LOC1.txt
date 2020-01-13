@@ -40,5 +40,6 @@ WIN+ALT+X             <--Reveal Secret Stickies
 ]ts               <-- Send time & date as text
 bp                = buttonpusher
 embp              = ben@buttonpusher.tv
+embptv            = buttonpushertv@gmail.com
 empmben           = ben@postopmedia.com
 empmbh            = bhoward@postopmedia.com
