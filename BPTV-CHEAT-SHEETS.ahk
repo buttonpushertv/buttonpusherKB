@@ -86,15 +86,6 @@ If (Location_currentSystemLocation = 1 or Location_currentSystemLocation = 4) { 
 	HotKey, CapsLock & F4, fourthShower ; <-- Hotkey for KBF4 (fourthShower: a image file shower - Location Specific)
 }
 
-
-; The section below will allow you to define different hotkeys based on location. I thought I'd want to do this but then it became annoying to recall which hotkeys worked where. But, I want to keep this around because with some incoming keyboard changes, this will be useful again.
-;If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
-;	HotKey, ^!+f12, firstShower ; Set 2nd Hotkey for KBF1 (firstShower: a text file shower)
-;	HotKey, ^!+f11, secondShower ; Set 2nd Hotkey for KBF2 (secondShower: a image file shower - App-Specific)
-;	HotKey, ^!+f10, thirdShower ; Set 2nd Hotkey for KBF3 (thirdShower: a text file shower - App-Specific)
-;	HotKey, ^!+f9, fourthShower ; Set 2nd Hotkey for KBF4 (fourthShower: a image file shower - Location Specific)
-;}
-
 return ; this prevents the script from processing the labels below at script launch (at least the firstShower label...)
 
 firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
