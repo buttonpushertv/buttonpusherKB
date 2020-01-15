@@ -122,6 +122,19 @@ Send, d ; PPro Key for 'select clip at playhead'
 Send, {DEL} ; PPro Key for 'remove'
 return
 
++!i:: ; <-- Get Current Timecode of Sequence
+  CoordMode, Mouse, Client
+  BlockInput, On
+  Click, 1850, 605, 0
+  Sleep, sleepShort
+  Send, {Click}
+  Sleep, sleepShort
+  Send, ^C
+  Sleep, sleepShort
+  Send, {Esc}
+  BlockInput, Off
+  return
+
 ;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
 
 +^!f1:: ; <-- move ahead 3 secs, mark in, go to next xsit, back 1 frame, mark out, & extract
