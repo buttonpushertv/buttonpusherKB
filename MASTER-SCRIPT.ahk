@@ -23,10 +23,11 @@ if not A_IsAdmin
 
 FileEncoding, UTF-8 ; this is here to make sure any files that we need to work with get created/opened/read as UTF-8
 
+; THE FUNCTION TO CHECK IF THE SCRIPT HAS BEEN CHANGED IS TEMPORARILY DISABLED. I'M TRYING TO FIGURE OUT WHAT'S UP WITH MY SYSTEM - IT'S BEEN DROPPING FRAMES LATELY.
 ; The 2 lines below pertain to the 'reload on save' function below (CheckScriptUpdate).
 ; They are required for it to work.
-FileGetTime ScriptStartModTime, %A_ScriptFullPath%
-SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
+;FileGetTime ScriptStartModTime, %A_ScriptFullPath%
+;SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
 
 #Include MASTER-FUNCTIONS.ahk
 
