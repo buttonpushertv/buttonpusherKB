@@ -73,11 +73,11 @@ SplashTextOff
 
 ; Using the AHK command: "Hotkey" we can define a hotkey and call a sub-routine instead of using the double colon method. This allows the hotkey to be updated or changed based on variables (like Location_currentSystemLocation as we use below). By Default, we'll use the CapsLock plus Function method we've used previously. When we have SCAF macro pads or keys defined on a keybaord, we can use alternate hot key definitions, as we do below when we're in location #1...we can even flop the order of the keys, so they are easy to locate without too much looking.
 
-If (Location_currentSystemLocation = 1) { ; if the script is running on Location #1 then...
-	HotKey, F13, firstShower ; Set 2nd Hotkey for KBF1 (firstShower: a text file shower)
-	HotKey, F14, secondShower ; Set 2nd Hotkey for KBF2 (secondShower: a image file shower - App-Specific)
-	HotKey, F15, thirdShower ; Set 2nd Hotkey for KBF3 (thirdShower: a text file shower - App-Specific)
-	HotKey, F16, fourthShower ; Set 2nd Hotkey for KBF4 (fourthShower: a image file shower - Location Specific)
+If (Location_currentSystemLocation = 1 or Location_currentSystemLocation = 4) { ; if the script is running on Location #1 then...
+	HotKey, ^!+F13, firstShower ; Set 2nd Hotkey for KBF1 (firstShower: a text file shower)
+	HotKey, ^!+F14, secondShower ; Set 2nd Hotkey for KBF2 (secondShower: a image file shower - App-Specific)
+	HotKey, ^!+F15, thirdShower ; Set 2nd Hotkey for KBF3 (thirdShower: a text file shower - App-Specific)
+	HotKey, ^!+F16, fourthShower ; Set 2nd Hotkey for KBF4 (fourthShower: a image file shower - Location Specific)
 	;The goal here is to be able to define the above Hotkeys based on the location or use the Hotkeys below by default if not specified above.
 } else {
 	HotKey, CapsLock & F1, firstShower ; <-- Hotkey for KBF1 (firstShower: a text file shower)
@@ -102,7 +102,7 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
     txt2show := "SUPPORTING-FILES\KBF1-LOC" . Location_currentSystemLocation . ".txt"
     showText(txt2show)
 		If (Location_currentSystemLocation = 1) { ; based on the location this will change how the release of the invoking Hotkey will close the GUI
-			keywait, %A_ThisHotKey% ; this will just keep GUI window open while hotkey is depressed
+			keywait, F13 ; this will just keep GUI window open while hotkey is depressed
 		} else {
 			ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
 			RemoveToolTip(4000)
@@ -188,7 +188,7 @@ secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcu
     }
     WinActivate, Picture
 		If (Location_currentSystemLocation = 1) { ; based on the location this will change how the release of the invoking Hotkey will close the GUI
-			keywait, %A_ThisHotKey% ; this will just keep GUI window open while hotkey is depressed
+			keywait, F14 ; this will just keep GUI window open while hotkey is depressed
 		} else {
 			ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
 			RemoveToolTip(4000)
@@ -220,10 +220,16 @@ thirdShower:
 				showText("SUPPORTING-FILES\KBF3-SUBTITLE-EDIT.txt")
 		else
         showText("SUPPORTING-FILES\NO-CHEATSHEET.txt")
-		ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes)
-		RemoveToolTip(4000)
-    keywait, ESC, D ; wait for ESCAPE to be pressed down
-		Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
+
+ 		If (Location_currentSystemLocation = 1) { ; based on the location this will change how the release of the invoking Hotkey will close the GUI
+					keywait, F15 ; this will just keep GUI window open while hotkey is depressed
+				} else {
+					ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
+					RemoveToolTip(4000)
+					keywait, ESC, D ; you can release the invoking hotkey and this will wait for ESCAPE to be pressed down
+					Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
+				}
+
 		squashGUI(activeWin)
 		;Gui, Text:Destroy
     ;WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
@@ -233,10 +239,14 @@ fourthShower:
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     locationPic := "SUPPORTING-FILES\KBF4-LOC" . Location_currentSystemLocation . ".png"
     showPic(locationPic, 0)
-		ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes)
-		RemoveToolTip(4000)
-    keywait, ESC, D ; wait for ESCAPE to be pressed down
-		Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
+		If (Location_currentSystemLocation = 1) { ; based on the location this will change how the release of the invoking Hotkey will close the GUI
+			keywait, F16 ; this will just keep GUI window open while hotkey is depressed
+		} else {
+			ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
+			RemoveToolTip(4000)
+			keywait, ESC, D ; you can release the invoking hotkey and this will wait for ESCAPE to be pressed down
+			Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
+		}
     squashGUI(activeWin)
 		;Gui, Picture:Destroy
     ;WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
