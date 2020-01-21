@@ -92,7 +92,7 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     txt2show := "SUPPORTING-FILES\KBF1-LOC" . Location_currentSystemLocation . ".txt"
     showText(txt2show)
-		If (Location_currentSystemLocation = 1) { ; based on the location this will change how the release of the invoking Hotkey will close the GUI
+		If (Location_currentSystemLocation = 1 or Location_currentSystemLocation = 4) { ; based on the location this will change how the release of the invoking Hotkey will close the GUI
 			keywait, F13 ; this will just keep GUI window open while hotkey is depressed
 		} else {
 			ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
@@ -178,7 +178,7 @@ secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcu
       showTaskBarPic(taskBarPic) ; as an extra little helper, this will display an indicator above the Windows TaskBar to remind you which apps can be launched/activated by pressing Windows plus that number key.
     }
     WinActivate, Picture
-		If (Location_currentSystemLocation = 1) { ; based on the location this will change how the release of the invoking Hotkey will close the GUI
+		If (Location_currentSystemLocation = 1 or Location_currentSystemLocation = 4) { ; based on the location this will change how the release of the invoking Hotkey will close the GUI
 			keywait, F14 ; this will just keep GUI window open while hotkey is depressed
 		} else {
 			ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
@@ -212,7 +212,7 @@ thirdShower:
 		else
         showText("SUPPORTING-FILES\NO-CHEATSHEET.txt")
 
- 		If (Location_currentSystemLocation = 1) { ; based on the location this will change how the release of the invoking Hotkey will close the GUI
+ 		If (Location_currentSystemLocation = 1 or Location_currentSystemLocation = 4) { ; based on the location this will change how the release of the invoking Hotkey will close the GUI
 					keywait, F15 ; this will just keep GUI window open while hotkey is depressed
 				} else {
 					ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
@@ -230,7 +230,7 @@ fourthShower:
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     locationPic := "SUPPORTING-FILES\KBF4-LOC" . Location_currentSystemLocation . ".png"
     showPic(locationPic, 0)
-		If (Location_currentSystemLocation = 1) { ; based on the location this will change how the release of the invoking Hotkey will close the GUI
+		If (Location_currentSystemLocation = 1 or Location_currentSystemLocation = 4) { ; based on the location this will change how the release of the invoking Hotkey will close the GUI
 			keywait, F16 ; this will just keep GUI window open while hotkey is depressed
 		} else {
 			ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
