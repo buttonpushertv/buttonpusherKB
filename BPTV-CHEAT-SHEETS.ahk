@@ -253,6 +253,28 @@ CapsLock & F5:: ;<-- Testing the TaskBar CheatSheet
     ;WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
+^!+F18:: ; <-- Testing a new idea for the KBF1 Cheat Sheet - a Tabbed GUI that can contain multiple pieces of content
+	FileRead, firstTab, "SUPPORTING-FILES\KBF1-LOC1.txt"
+	FileRead, secondTab, "PRIVATE\QUICKTYPE-HOTSTRINGS.txt"
+	FormatTime, now,, hh:mm tt
+	today = %A_YYYY%-%A_MMM%-%A_DD%
+	Gui, TabText:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
+	Gui, TabText:Color, %backgroundColor%
+	Gui, TabText:Margin, 30, 30
+	Gui, TabText:font, s12 c%foregroundColor%, Consolas
+	Gui, TabText:Add, Text, , %now% - %today%
+	Gui, TabText:Tab, 1
+	Gui, TabText:add, Tab3,, Main
+	Gui, TabText:add, text,, %firstTab%
+	Gui, TabText:Tab, 2
+	Gui, TabText:add, Tab3,, QuickType
+	Gui, TabText:add, text,, %secondTab%
+	Gui, TabText:Tab
+	Gui, TabText:Show
+	keywait, F18
+	Gui, TabText:Destroy
+	Return
+
 ;===== FUNCTIONS ===============================================================================
 
 RemoveSplashScreen:
