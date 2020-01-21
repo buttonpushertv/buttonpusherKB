@@ -182,6 +182,52 @@ CapsLock & q:: ; <-- Exit MASTER-SCRIPT and child AHK Scripts
 	goto Quitting ; this subroutine will ID any of the scripts that have been launched (via enabled in settings.ini) and then quit them all
 return
 
+; USING THE HYPER KEY
+; In Windows 10, Microsoft has hard-coded the HYPER Key (Control+Shift+Alt+Windows) to open the Office Hub. There some ways to remove that coding. They involve editing the Registry, so it's not something you should do lightly.
+;
+; You can learn about all of this here:
+; https://www.howtogeek.com/445318/how-to-remap-the-office-key-on-your-keyboard/
+;
+; TLDR: Run Powershell as Admin & paste this code into it:
+;
+; REG ADD HKCU\Software\Classes\ms-officeapp\Shell\Open\Command /t REG_SZ /d rundll32
+;
+; That will stop the Hyper Key from opening the Office Hub & make it available to use as another modifier.
+; If you still need to use the Office Hub, you can launch it via the Windows App icon (see below for a way to get it back as a HotKey).
+; There are, however, several HYPER+key definitions that are more deeply hard-coded that may be more difficult to remove. These HYPER+keys are: T, Y, O, P, D, L, X, N, and Space.
+
+/*
+FWIW, Here are what the HYPER+keys do:
+HYPER+D <-- Open your OneDrive in Explorer
+HYPER+L <-- Open LinkedIn in browser
+HYPER+N <-- Open OneNote
+HYPER+O <-- Open Outlook
+HYPER+P <-- Open PowerPoint
+HYPER+T <-- Open Microsoft Teams
+HYPER+W <-- Open Word
+HYPER+X <-- Open Excel
+HYPER+Y <-- Open Yammer
+HYPER+Space <-- Open Emoji Menu
+*/
+;
+; On that page linked above there is a very hackish way of removing them. Follow the instructions there if you wish. I have only done the RegEdit hack & blocked just the HYPER key opening Office Hub (as I can't really see a reason I'd want to use it.)
+;
+; As an example, here's how you would code a HYPER+key hotkey in AHK:
+#^!+F13::
+	MsgBox, You pressed HYPER + F13
+	Return
+
+; You can even still open the Office Hub as a AHK hotkey. You need to get the AUMID (Aoplication User Model ID - aka Microsoft Store Apps unique identifiers). These are a pain to get. There are a few methods. This page (https://jcutrer.com/windows/find-aumid) lists several. The easiest is to use the BAT file method.
+;
+; In BPTV-KB\BAT-FILES, there is a BAT file called 'aumidsearch.bat' From a commandline, sitting in the BAT-FILES directory, type 'aumidsearch' + a space + your search term (in this case - 'aumidsearch office'). Copy the text that appears in the third column & paste after the 'Run' comnmand.
+
+#^!+Q::
+	ToolTip, Standby. Launching Office Hub. Release HYPER key quickly to prevent Office Hub from hiding itself.
+	Sleep, sleepLong ; this Sleep is here to give you time to get your fingers off of the triggering keys. If Office Hub sees you press the HYPER combination while open, it will hide itself.
+	Run shell:AppsFolder\Microsoft.MicrosoftOfficeHub_8wekyb3d8bbwe!Microsoft.MicrosoftOfficeHub
+	Tooltip
+	Return
+
 #IfWinActive, ahk_exe Explorer.EXE
 
 #^+f:: ; <-- Nuke Firefox
@@ -200,25 +246,6 @@ return
 return
 
 +^!Q::Run Edit "PRIVATE\QUICKTYPE-HOTSTRINGS.txt"
-
-; USING THE HYPER KEY
-; In Windows 10, Microsoft has hard-coded the HYPER Key (Control+Shift+Alt+Windows) to open the Office Hub. There some ways to remove that coding. They involve editing the Registry, so it's not something you should do lightly.
-;
-; You can learn about all of this here:
-; https://www.howtogeek.com/445318/how-to-remap-the-office-key-on-your-keyboard/
-;
-; TLDR: Run Powershell as Admin & paste this code into it:
-; 
-; REG ADD HKCU\Software\Classes\ms-officeapp\Shell\Open\Command /t REG_SZ /d rundll32
-;
-; That will stop the Hyper Key from opening the Office Hub & make it available to use as another modifier. There are, however, several HYPER+key definitions that are more deeply hard-coded that may be more difficult to remove. These HYPER+keys are: T, Y, O, P, D, L, X, N, and Space
-;
-; On that page linked above there is a very hackish way of removing them. Follow the instructions there if you wish. I have only done the RegEdit hack & blocked just the HYPER key opening Office Hub (as I can't really see a reason I'd want to use it.)
-;
-; As an example, here's how you would code a HYPER+key hotkey in AHK:
-#^!+F13::
-	MsgBox, You pressed HYPER-F13
-	Return
 
 #IfWinActive
 
