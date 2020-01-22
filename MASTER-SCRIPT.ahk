@@ -77,6 +77,7 @@ loop, %section2_keys% ; this loop will launch any scripts that are defined and e
     pathKey := % section2_key%pathLookAhead%
     currentKeyValue := %section2%_%currentKey%
     currentPathValue := %section2%_%pathKey%
+		currentSystemLocationName := % Location_systemLocation%Location_currentSystemLocation%
     currentKeyLeft7 := SubStr(currentKey, 1, 7)
     If (currentKeyLeft7 = "loadScr") {
         If (currentKeyValue) {
@@ -85,7 +86,7 @@ loop, %section2_keys% ; this loop will launch any scripts that are defined and e
               continue
               }
             else {
-            Run, %currentPathValue% %splashScreenStartX% %splashScreenStartY% %Settings_splashScreenTimeout% %Location_currentSystemLocation%
+            Run, %currentPathValue% %splashScreenStartX% %splashScreenStartY% %Settings_splashScreenTimeout% %Location_currentSystemLocation% %currentSystemLocationName%
             splashScreenStartY += splashScreenSpacing
             }
         }

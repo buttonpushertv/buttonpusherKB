@@ -1,0 +1,36 @@
+== MASTER-SCRIPT ======================================================================
+
+LEFT WIN            <-- Will not activate the Start Menu when pressed by itself
+RIGHT WIN           <-- Works normally. Will open Start menu when pressed by itself
+
+LEFT ALT            <-- Should not activate App Menu Bar when pressed by itself
+RIGHT ALT           <-- Works normally. Will open App Menu Bar when pressed by itself
+
+SCAF13 or CAPS+F1   <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys (this file)
+SCAF14 or CAPS+F2   <--Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
+SCAF15 or CAPS+F3   <--Display a Text File CheatSheet of App Specific AutoHotKeys
+SCAF16 or CAPS+F4   <--Display an image CheatSheet for System Keyboard (Location Specific)
+
+CAPS+C              <--Delete Key
+CAPS+V              <--BackSpace
+
+CAPS+P              <-- Toggle CapsLockCheck On or Off
+
+(For these below you can use CAPS or SCRLK as the modifier)
+CAPS/SCRLK+F11      <--Open the Settings GUI for MASTER-SCRIPT.AHK
+CAPS/SCRLK+F12      <--Open BPTV-LAUNCHER
+CAPS/SCRLK+BACKSP   <--Reload MASTER-SCRIPT.ahk
+CAPS/SCRLK+Q        <--Exit MASTER-SCRIPT and child AHK Scripts
+
+{ON WINDOWS DESKTOP ONLY}
+WIN+CTRL+SHIFT+F    <--Nuke Firefox (click Desktop first)
+WIN+CTRL+SHIFT+P    <--Nuke Premiere (click Desktop first)
+WIN+CTRL+SHIFT+Q    <--Edit PRIVATE\QUICKTYPE-HOTSTRINGS.txt
+
+== STICKIES HOTKEYS ===================================================================
+WIN+ALT+S             <--New Sticky
+WIN+ALT+H             <--Show All/Show Hide
+WIN+SHIFT+ALT+S       <--New Sticky From Clipboard
+WIN+ALT+M             <--Open Manage Dialog
+WIN+ALT+SHIFT+W       <--Screen Grab An Area
+WIN+ALT+X             <--Reveal Secret Stickies

@@ -39,10 +39,14 @@ splashScreenX = %1%
 splashScreenY = %2%
 splashScreenTimeout = %3%
 Location_currentSystemLocation = %4%
+currentSystemLocationName = %5%
 
 If !(Location_currentSystemLocation) {
   Location_currentSystemLocation := 1
 }
+
+If InStr(currentSystemLocationName, "MONSTAsplit")
+	MONSTAsplit	= TRUE
 
 global backgroundColor := "2D2A2B"
 global foregroundColor := "FFFFFF"
@@ -50,6 +54,10 @@ global showTaskBarPicture = 0
 global yposP
 global xposP
 global activeWin
+
+iniFile := "settings.ini"
+IniRead, pathToEditor, %iniFile%, Settings, pathToEditor
+IniRead, keyboardHasF13toF24, %iniFile%, Settings, keyboardHasF13toF24
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading BPTV-CHEAT-SHEETS
@@ -73,7 +81,7 @@ SplashTextOff
 
 ; Using the AHK command: "Hotkey" we can define a hotkey and call a sub-routine instead of using the double colon method. This allows the hotkey to be updated or changed based on variables (like Location_currentSystemLocation as we use below). By Default, we'll use the CapsLock plus Function method we've used previously. When we have SCAF macro pads or keys defined on a keybaord, we can use alternate hot key definitions, as we do below when we're in location #1...we can even flop the order of the keys, so they are easy to locate without too much looking.
 
-If (Location_currentSystemLocation = 1 or Location_currentSystemLocation = 4) { ; if the script is running on Location #1 then...
+If (keyboardHasF13toF24) { ; if the script is running on Location #1 then...
 	HotKey, ^!+F13, firstShower ; Set 2nd Hotkey for KBF1 (firstShower: a text file shower)
 	HotKey, ^!+F14, secondShower ; Set 2nd Hotkey for KBF2 (secondShower: a image file shower - App-Specific)
 	HotKey, ^!+F15, thirdShower ; Set 2nd Hotkey for KBF3 (thirdShower: a text file shower - App-Specific)
@@ -90,9 +98,63 @@ return ; this prevents the script from processing the labels below at script lau
 
 firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
+		; first we define paths to the various files we want to have on this Cheat Sheet GUI
+			firstTabFile := "SUPPORTING-FILES\CHEAT-SHEETS\KB1-MAIN.txt"
+			secondTabFile := "SUPPORTING-FILES\CHEAT-SHEETS\KB1-OFFICE.txt"
+			thirdTabFile := "PRIVATE\QUICKTYPE-HOTSTRINGS.txt"
+		; next we read them into variables
+			FileRead, firstTab, %firstTabFile%
+			FileRead, secondTab, %secondTabFile%
+			FileRead, thirdTab, %thirdTabFile%
+		; a few commands here to format some time related text elements
+			FormatTime, now,, hh:mm tt
+			today = %A_YYYY%-%A_MMM%-%A_DD%
+		; and now we define the GUI
+			Gui, TabText:+alwaysontop -sysmenu +owner -caption +toolwindow +0x02000000
+			Gui, TabText:Color, %backgroundColor%
+			Gui, TabText:Margin, 30, 30
+			Gui, TabText:font, s12 c%foregroundColor%, Consolas
+		; the line below is where we define the number and names of tabs. If you wish to add tabs, you will need to add the new tabs here. Make sure the order you put them into matches the order of the tab content you define above.
+			Gui, TabText:add, Tab3,, Main|Office|Quicktype
+			Gui, TabText:Tab, 1
+			Gui, TabText:add, text, h-1 , %firstTab%
+			Gui, TabText:Tab, 2
+			Gui, TabText:add, text, h-1, %secondTab%
+			Gui, TabText:Tab, 3
+			Gui, TabText:add, text, h-1, %thirdTab%
+		; below we unset working with any tab.
+			Gui, TabText:Tab
+		; since tabs are unset (no longer being worked with) this button appears outside of the tabs area
+			Gui, TabText:Add, Button, w180, &Edit Sheets
+			Gui, TabText:Add, Text, , %now% - %today%      -      Current System Location: %currentSystemLocationName% ; displaying time and date text.
+			Gui, TabText:Show
+
+			If (keyboardHasF13toF24) { ; based on the keyboard you are using this will change how the release of the invoking Hotkey will close the GUI
+				ToolTip, Hold F13 to keep Cheat Sheet open. Release key to dismiss.
+				RemoveToolTip(3000)
+				keywait, F13 ; this will just keep GUI window open while hotkey is depressed
+			} else {
+				ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
+				RemoveToolTip(4000)
+				keywait, ESC, D ; you can release the invoking hotkey and this will wait for ESCAPE to be pressed down
+				Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
+			}
+			goto CloseTabTextGui
+
+			TabTextButtonEditSheets:
+				Run %pathToEditor% %firstTabFile% %secondTabFile% %thirdTabFile%
+
+			CloseTabTextGui:
+				squashGUI(activeWin)
+			Return
+
+/*
+	ALL OF THIS COMMENTED CODE IS HANGING OUT. IT IS THE OLD VERSIONS KBF1 CODE. JUST NOT SURE I'M DONE WITH ALL OF IT YET
     txt2show := "SUPPORTING-FILES\KBF1-LOC" . Location_currentSystemLocation . ".txt"
     showText(txt2show)
-		If (Location_currentSystemLocation = 1 or Location_currentSystemLocation = 4) { ; based on the location this will change how the release of the invoking Hotkey will close the GUI
+		If (keyboardHasF13toF24) { ; based on the keyboard you are using this will change how the release of the invoking Hotkey will close the GUI
+			ToolTip, Hold F13 to keep Cheat Sheet open. Release key to dismiss.
+			RemoveToolTip(3000)
 			keywait, F13 ; this will just keep GUI window open while hotkey is depressed
 		} else {
 			ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
@@ -105,7 +167,7 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 		;Gui, Text:Destroy ; destroys the Text:GUI
     ;WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 		return
-
+*/
 secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     If WinActive("ahk_exe Explorer.EXE") {
@@ -253,28 +315,54 @@ CapsLock & F5:: ;<-- Testing the TaskBar CheatSheet
     ;WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
+;^!+F24::
+;Listvars
+;return
+
+/* CODE HANGING OUT HERE WHILE IT GETS IMPLEMENTED UP IN firstShower
 ^!+F18:: ; <-- Testing a new idea for the KBF1 Cheat Sheet - a Tabbed GUI that can contain multiple pieces of content
-	FileRead, firstTab, "SUPPORTING-FILES\KBF1-LOC1.txt"
-	FileRead, secondTab, "PRIVATE\QUICKTYPE-HOTSTRINGS.txt"
+
+; first we define paths to the various files we want to have on this Cheat Sheet GUI
+	firstTabFile := "SUPPORTING-FILES\CHEAT-SHEETS\KB1-MAIN.txt"
+	secondTabFile := "SUPPORTING-FILES\CHEAT-SHEETS\KB1-OFFICE.txt"
+	thirdTabFile := "PRIVATE\QUICKTYPE-HOTSTRINGS.txt"
+; next we read them into variables
+	FileRead, firstTab, %firstTabFile%
+	FileRead, secondTab, %secondTabFile%
+	FileRead, thirdTab, %thirdTabFile%
+; a few commands here to format some time related text elements
 	FormatTime, now,, hh:mm tt
 	today = %A_YYYY%-%A_MMM%-%A_DD%
-	Gui, TabText:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
+; and now we define the GUI
+	Gui, TabText:+alwaysontop -sysmenu +owner -caption +toolwindow +0x02000000
 	Gui, TabText:Color, %backgroundColor%
 	Gui, TabText:Margin, 30, 30
 	Gui, TabText:font, s12 c%foregroundColor%, Consolas
-	Gui, TabText:Add, Text, , %now% - %today%
+; the line below is where we define the number and names of tabs. If you wish to add tabs, you will need to add the new tabs here. Make sure the order you put them into matches the order of the tab content you define above.
+	Gui, TabText:add, Tab3,, Main|Office|Quicktype
 	Gui, TabText:Tab, 1
-	Gui, TabText:add, Tab3,, Main
-	Gui, TabText:add, text,, %firstTab%
+	Gui, TabText:add, text, h-1 , %firstTab%
 	Gui, TabText:Tab, 2
-	Gui, TabText:add, Tab3,, QuickType
-	Gui, TabText:add, text,, %secondTab%
+	Gui, TabText:add, text, h-1, %secondTab%
+	Gui, TabText:Tab, 3
+	Gui, TabText:add, text, h-1, %thirdTab%
+; below we unset working with any tab.
 	Gui, TabText:Tab
+; since tabs are unset (no longer being worked with) this button appears outside of the tabs area
+	Gui, TabText:Add, Button, w180, &Edit Sheets
+	Gui, TabText:Add, Text, , %now% - %today%      -      Current System Location: %currentSystemLocationName% ; displaying time and date text.
 	Gui, TabText:Show
-	keywait, F18
-	Gui, TabText:Destroy
-	Return
 
+	keywait, F18
+	goto CloseTabTextGui
+
+	TabTextButtonEditSheets:
+		Run %pathToEditor% %firstTabFile% %secondTabFile% %thirdTabFile%
+
+	CloseTabTextGui:
+		Gui, TabText:Destroy
+	Return
+*/
 ;===== FUNCTIONS ===============================================================================
 
 RemoveSplashScreen:
@@ -434,6 +522,7 @@ ExitApp
 squashGUI(activeWin){
 	;this function should destroy the GUI - no matter which kind it is
 	Gui, Text:Destroy ; destroys the Text:GUI
+	Gui, TabText:Destroy ; destroys any TabText GUI
 	Gui, Picture:Destroy ; this kills the main cheatsheet GUI window
 	destroyGDIplusGUI() ; this kills the TaskBar CheatSheet
 

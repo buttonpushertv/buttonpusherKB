@@ -1,0 +1,27 @@
+Office 365 Shortcuts
+====================
+
+The HYPER key is Control+Alt+Shift+Windows keys, all pressed simlutaneously.
+
+AHK DEFINED
+-----------
+HYPER+Q <-- Open Office Hub
+
+OFFICE PRE-DEFINED
+------------------
+HYPER   <-- Open Office Hub (Disabled by Registry Edit - see link below)
+HYPER+D <-- Open your OneDrive in Explorer
+HYPER+L <-- Open LinkedIn in browser
+HYPER+N <-- Open OneNote
+HYPER+O <-- Open Outlook
+HYPER+P <-- Open PowerPoint
+HYPER+T <-- Open Microsoft Teams
+HYPER+W <-- Open Word
+HYPER+X <-- Open Excel
+HYPER+Y <-- Open Yammer
+HYPER+Space <-- Open Emoji Menu
+
+
+===================
+To change HYPER key behavior see - 
+https://www.howtogeek.com/445318/how-to-remap-the-office-key-on-your-keyboard/
