@@ -214,15 +214,15 @@ HYPER+Space <-- Open Emoji Menu
 ; On that page linked above there is a very hackish way of removing them. Follow the instructions there if you wish. I have only done the RegEdit hack & blocked just the HYPER key opening Office Hub (as I can't really see a reason I'd want to use it.)
 ;
 ; As an example, here's how you would code a HYPER+key hotkey in AHK:
-#^!+F13::
-	MsgBox, You pressed HYPER + F13
-	Return
+;#^!+F13::
+;	MsgBox, You pressed HYPER + F13
+;	Return
 
 ; You can even still open the Office Hub as a AHK hotkey. You need to get the AUMID (Aoplication User Model ID - aka Microsoft Store Apps unique identifiers). These are a pain to get. There are a few methods. This page (https://jcutrer.com/windows/find-aumid) lists several. The easiest is to use the BAT file method.
 ;
 ; In BPTV-KB\BAT-FILES, there is a BAT file called 'aumidsearch.bat' From a commandline, sitting in the BAT-FILES directory, type 'aumidsearch' + a space + your search term (in this case - 'aumidsearch office'). Copy the text that appears in the third column & paste after the 'Run' comnmand.
 
-#^!+Q::
+#^!+Q:: ; <-- Launches Office Hub
 	ToolTip, Standby. Launching Office Hub. Release HYPER key quickly to prevent Office Hub from hiding itself.
 	Sleep, sleepLong ; this Sleep is here to give you time to get your fingers off of the triggering keys. If Office Hub sees you press the HYPER combination while open, it will hide itself.
 	Run shell:AppsFolder\Microsoft.MicrosoftOfficeHub_8wekyb3d8bbwe!Microsoft.MicrosoftOfficeHub
@@ -246,8 +246,10 @@ return
     RemoveToolTip(-2000)
 return
 
-+^!Q::Run Edit "PRIVATE\QUICKTYPE-HOTSTRINGS.txt"
-
++^!S::Run "%Settings_pathToEditor%" "PRIVATE\MASTER-SCAF-KEYS.ahk" ;<-- Edit PRIVATE\MASTER-SCAF-KEYS.ahk
+; Above edits master file of app-specific & one-off SCAF keys. Just keeping them in one place, so I don't need to create scripts for each and every app I want/need to make SCAF keys in. See comments in that file for more info
++^!Q::Run "%Settings_pathToEditor%" "PRIVATE\QUICKTYPE-HOTSTRINGS.txt" ;<-- Edit PRIVATE\QUICKTYPE-HOTSTRINGS.txt
+; Above edits my Quicktype Hotstrings. These commands will do auto-replacment of commands as you type. See comments in SCRIPS-UTIL\QuickType.ahk & the above .txt file for more info
 #IfWinActive
 
 #Include PRIVATE\MASTER-SCAF-KEYS.ahk
