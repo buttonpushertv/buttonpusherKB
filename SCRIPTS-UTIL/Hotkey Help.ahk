@@ -58,7 +58,7 @@ Pos_Info = 25
 
 ; Parse Delimiter and OmitChar.  Sometimes changing these can give better results.
 Parse_Delimiter := "`n"
-Parse_OmitChar := "`r" 
+Parse_OmitChar := "`r"
 
 ; Default Settings if Not Changed by Ini File
 Set_ShowBlank		= 1
@@ -201,7 +201,7 @@ Gui, Excluded:Add, Edit, x20 y100 vGui_Excluded -E0x200, %Gui_Excluded%
 SplashTextOn, 600, 80, Launching %A_ScriptFullPath%, Win+F12 to generate list of Hotkeys`nin running AutoHotKey scripts.`n`nControl-F within HotKey Help to find text.
 Sleep, 3500
 SplashTextOff
-	
+
 ;
 ;}-----------------------------------------------
 ; END OF AUTO-EXECUTE
@@ -210,12 +210,12 @@ SplashTextOff
 ;{-----------------------------------------------
 ;
 
-#f12::	;{ <--  ~ Display Help ~
++f19::	;{ <--  ~ Display Help ~
 	Refresh:
 	Help := {}				; Main Array for Storing Help Information
 	Scripts_Scan := {}		; AHK Scripts to Scan
 	Scripts_Include := {}	; Scripts Added with #Include
-	File_Paths_Txt := {}	; File Paths of Text 
+	File_Paths_Txt := {}	; File Paths of Text
 	Setting_AutoTrim := A_AutoTrim
 	AutoTrim, On
 	Setting_WorkingDir := A_WorkingDir
@@ -361,7 +361,7 @@ SplashTextOff
 						StringReplace, Match1, Match1, +, Shift%Set_Hotkey_Mod_Delimiter%
 						StringReplace, Match1, Match1, <^>!, AltGr%Set_Hotkey_Mod_Delimiter%
 						StringReplace, Match1, Match1, <, Left, All
-						StringReplace, Match1, Match1, >, Right, All 
+						StringReplace, Match1, Match1, >, Right, All
 						StringReplace, Match1, Match1, !, Alt%Set_Hotkey_Mod_Delimiter%
 						StringReplace, Match1, Match1, ^, Ctrl%Set_Hotkey_Mod_Delimiter%
 						StringReplace, Match1, Match1, #, Win%Set_Hotkey_Mod_Delimiter%
@@ -522,10 +522,10 @@ SplashTextOff
 				Display .= "`r`n" String_Wings(" " File " ",,"+-")
 		for File, element in Help
 			if (Help[File,"Type"] = "EXE_UNKNOWN"  and Set_ShowExe)
-				Display .= "`r`n" String_Wings(" " File " ",,"?+") 
+				Display .= "`r`n" String_Wings(" " File " ",,"?+")
 		for File, element in Help
 			if (Help[File,"Count"] = 0 and Help[File,"Type"] = "AHK" and !Help[File,"Include"])
-				Display .= "`r`n" String_Wings(" " File " ",,"-") 
+				Display .= "`r`n" String_Wings(" " File " ",,"-")
 		for File, element in Help
 			if (Help[File,"Count"] = 0 and Help[File,"Type"] = "AHK" and Help[File,"Include"] and Set_ShowBlankInclude)
 				Display .= "`r`n" String_Wings(" " File " ",,"--o--")
@@ -534,10 +534,10 @@ SplashTextOff
 	Display := RegExReplace(Display,"^\s*(.*)\s*$", "$1")
 	if Display_CreateOnly
 		return
-	
+
 	; Create Main Gui first time then only display unless contents change then recreate to get automatic sizing of Edit
 	if Gui_Created
-	{		
+	{
 		if !(Display == Previous_Display)
 		{
 			if Set_TextOut
@@ -563,7 +563,7 @@ SplashTextOff
 			Gui, Show,, Hotkey Help
 			Send ^{Home}
 		}
-	}	
+	}
 	else
 	{
 		if Set_TextOut
@@ -591,18 +591,18 @@ SplashTextOff
 return
 ;}
 
-#!f12::	;{ <-- Settings
++F20::	;{ <-- Settings
 	Gui, Set:Show,, Hotkey Help - Settings
 return
 ;}
 
-#^f12::	;{ <-- Excluded Files, Hotkeys, and Hotstrings
++F21::	;{ <-- Excluded Files, Hotkeys, and Hotstrings
 	Gui, Excluded:Show, AutoSize, Hotkey Help - Excluded
 	Send ^{Home}
 return
 ;}
 
-#!^f12::	;{ <-- Raw Hotkey List
++F22::	;{ <-- Raw Hotkey List
 	Scripts_List := AHKScripts(Scripts)	; Get Path of all AHK Scripts
 	Raw_Hotkeys := {}
 	for index, Script in Scripts	; Loop Through All AHK Script Files
@@ -621,7 +621,7 @@ return
 			StringReplace, Hotkey_Keys, Hotkey_Keys, +, Shift%Set_Hotkey_Mod_Delimiter%
 			StringReplace, Hotkey_Keys, Hotkey_Keys, <^>!, AltGr%Set_Hotkey_Mod_Delimiter%
 			StringReplace, Hotkey_Keys, Hotkey_Keys, <, Left, All
-			StringReplace, Hotkey_Keys, Hotkey_Keys, >, Right, All 
+			StringReplace, Hotkey_Keys, Hotkey_Keys, >, Right, All
 			StringReplace, Hotkey_Keys, Hotkey_Keys, !, Alt%Set_Hotkey_Mod_Delimiter%
 			StringReplace, Hotkey_Keys, Hotkey_Keys, ^, Ctrl%Set_Hotkey_Mod_Delimiter%
 			StringReplace, Hotkey_Keys, Hotkey_Keys, #, Win%Set_Hotkey_Mod_Delimiter%
@@ -660,7 +660,7 @@ return
 		Send ^{Home}
 		Gui_Raw_Created := true
 	}
-	Previous_Raw_Display := Raw_Display 
+	Previous_Raw_Display := Raw_Display
 return
 ;}
 
@@ -770,7 +770,7 @@ return
 
 MenuBuild:
 	DetectHiddenWindows, % (Setting_A_DetectHiddenWindows := A_DetectHiddenWindows) ? "On" :
-	Menu, MenuMain, UseErrorLevel	
+	Menu, MenuMain, UseErrorLevel
 	Menu, MenuMain, Delete
 	for index, Script in Scripts
 	{
@@ -779,7 +779,7 @@ MenuBuild:
 		; Force the script to update its Pause/Suspend checkmarks.
 		SendMessage, 0x211,,,, ahk_id %script_id%  ; WM_ENTERMENULOOP
 		SendMessage, 0x212,,,, ahk_id %script_id%  ; WM_EXITMENULOOP
-		
+
 		; Get script status from its main menu.
 		mainMenu := DllCall("GetMenu", "uint", script_id)
 		fileMenu := DllCall("GetSubMenu", "uint", mainMenu, "int", 0)
@@ -787,7 +787,7 @@ MenuBuild:
 		isSuspended := DllCall("GetMenuState", "uint", fileMenu, "uint", 5, "uint", 0x400) >> 3 & 1
 		DllCall("CloseHandle", "uint", fileMenu)
 		DllCall("CloseHandle", "uint", mainMenu)
-		
+
 		Menu, MenuStop, Add, %Title%, ScriptStop
 		Menu, MenuPause, Add, %Title%, ScriptPause
 		if isPaused
@@ -904,7 +904,7 @@ ButtonExportDialog:
 	else
 	{
 		Display_CreateOnly := true
-		gosub #F12
+		gosub +F19
 		Display_CreateOnly := false
 		gosub TextOut
 		Display := ""
@@ -970,7 +970,7 @@ ScriptHotkeys(Script)
 }
 
 ; Expand File Path
-Get_Full_Path(path) 
+Get_Full_Path(path)
 {
 	Loop, %path%, 1
 		return A_LoopFileLongPath
@@ -1053,7 +1053,7 @@ class SearchEdit
 		}
 		if (FindInput<>pFindInput)
 			Found := false, StartingPos := 1
-		FindInput := pFindInput				
+		FindInput := pFindInput
 		WrapToTop:
 		StartingPos := SearchEdit.FindText(FindInput, GuiControlID,, StartingPos)
 		GuiControl,, FindText_Var, %FindInput%
@@ -1116,7 +1116,7 @@ class SearchEdit
 	}
 	WM_WINDOWPOSCHANGED(wParam, lParam, msg, Hwnd) ; Private Method
 	{
-		
+
 		if (Hwnd != SearchEdit.ParentID or !SearchEdit.Visible)
 			return
 		if !WinExist("ahk_id " Hwnd)
@@ -1212,11 +1212,10 @@ AHKScripts(ByRef Array)
 		Array[A_Index,"Title"] := File_Title
 		Array[A_Index,"hWnd"] := hWnd
 		list .= File_Path "`n"
-		
+
 	}
 	DetectHiddenWindows, %Setting_A_DetectHiddenWindows%
 	return Trim(list, " `n")
 }
 ;}
 ;}
-
