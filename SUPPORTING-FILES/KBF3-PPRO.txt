@@ -6,6 +6,8 @@ CTRL+3                  <-- PPRO: Step Left 5 seconds THEN Play
 CTRL+4                  <-- PPRO: Step Left 1 second
 CTRL+5                  <-- PPRO: Step Right 1 second
 
+ALT+SHIFT+I             <-- Get Current Timecode of Sequence
+
 SCAF-----
 SHIFT+CTRL+ALT+F3       <-- Step Left 2 seconds
 SHIFT+CTRL+ALT+F4       <-- Step Left 5 seconds
