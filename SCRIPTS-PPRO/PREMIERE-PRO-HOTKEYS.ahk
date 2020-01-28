@@ -124,15 +124,19 @@ return
 
 +!i:: ; <-- Get Current Timecode of Sequence
   CoordMode, Mouse, Client
-  BlockInput, On
+  ;BlockInput, On
   Click, 1850, 605, 0
   Sleep, sleepShort
   Send, {Click}
   Sleep, sleepShort
-  Send, ^C
+  Send, {Control Down}
+  Sleep, sleepShort
+  Send, C
+  Sleep, sleepShort
+  Send, {Control Up}
   Sleep, sleepShort
   Send, {Esc}
-  BlockInput, Off
+  ;BlockInput, Off
   return
 
 ;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
