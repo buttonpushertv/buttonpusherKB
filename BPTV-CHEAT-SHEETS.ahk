@@ -56,6 +56,7 @@ global xposP
 global activeWin
 
 iniFile := "settings.ini"
+IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
 IniRead, pathToEditor, %iniFile%, Settings, pathToEditor
 IniRead, keyboardHasF13toF24, %iniFile%, Settings, keyboardHasF13toF24
 
@@ -82,10 +83,10 @@ SplashTextOff
 ; Using the AHK command: "Hotkey" we can define a hotkey and call a sub-routine instead of using the double colon method. This allows the hotkey to be updated or changed based on variables (like Location_currentSystemLocation as we use below). By Default, we'll use the CapsLock plus Function method we've used previously. When we have SCAF macro pads or keys defined on a keybaord, we can use alternate hot key definitions, as we do below when we're in location #1...we can even flop the order of the keys, so they are easy to locate without too much looking.
 
 If (keyboardHasF13toF24) { ; if the script is running on Location #1 then...
-	HotKey, ^!+F13, firstShower ; Set 2nd Hotkey for KBF1 (firstShower: a text file shower)
-	HotKey, ^!+F14, secondShower ; Set 2nd Hotkey for KBF2 (secondShower: a image file shower - App-Specific)
-	HotKey, ^!+F15, thirdShower ; Set 2nd Hotkey for KBF3 (thirdShower: a text file shower - App-Specific)
-	HotKey, ^!+F16, fourthShower ; Set 2nd Hotkey for KBF4 (fourthShower: a image file shower - Location Specific)
+	HotKey, ^!+F13, firstShower ; <-- Set 2nd Hotkey for KBF1 (firstShower: a text file shower)
+	HotKey, ^!+F14, secondShower ; <-- Set 2nd Hotkey for KBF2 (secondShower: a image file shower - App-Specific)
+	HotKey, ^!+F15, thirdShower ; <-- Set 2nd Hotkey for KBF3 (thirdShower: a text file shower - App-Specific)
+	HotKey, ^!+F16, fourthShower ; <-- Set 2nd Hotkey for KBF4 (fourthShower: a image file shower - Location Specific)
 	;The goal here is to be able to define the above Hotkeys based on the location or use the Hotkeys below by default if not specified above.
 } else {
 	HotKey, CapsLock & F1, firstShower ; <-- Hotkey for KBF1 (firstShower: a text file shower)
@@ -148,26 +149,6 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 				squashGUI(activeWin)
 			Return
 
-/*
-	ALL OF THIS COMMENTED CODE IS HANGING OUT. IT IS THE OLD VERSIONS KBF1 CODE. JUST NOT SURE I'M DONE WITH ALL OF IT YET
-    txt2show := "SUPPORTING-FILES\KBF1-LOC" . Location_currentSystemLocation . ".txt"
-    showText(txt2show)
-		If (keyboardHasF13toF24) { ; based on the keyboard you are using this will change how the release of the invoking Hotkey will close the GUI
-			ToolTip, Hold F13 to keep Cheat Sheet open. Release key to dismiss.
-			RemoveToolTip(3000)
-			keywait, F13 ; this will just keep GUI window open while hotkey is depressed
-		} else {
-			ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
-			RemoveToolTip(4000)
-			keywait, ESC, D ; you can release the invoking hotkey and this will wait for ESCAPE to be pressed down
-			Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
-		}
-
-		squashGUI(activeWin)
-		;Gui, Text:Destroy ; destroys the Text:GUI
-    ;WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
-		return
-*/
 secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     If WinActive("ahk_exe Explorer.EXE") {
@@ -253,28 +234,34 @@ secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcu
 return
 
 thirdShower:
-    WinGetActiveTitle, activeWin
+    WinGetActiveTitle, activeWin ; 
+		editingFile = 0
     If WinActive("ahk_exe Explorer.EXE")
-        showText("SUPPORTING-FILES\KBF3-WINDOWS-DEFAULT-KEYS.txt")
+        fileToShow := "SUPPORTING-FILES\KBF3-WINDOWS-DEFAULT-KEYS.txt"
     else
     If WinActive("ahk_exe Adobe Premiere Pro.exe")
-        showText("SUPPORTING-FILES\KBF3-PPRO.txt")
+        fileToShow := "SUPPORTING-FILES\KBF3-PPRO.txt"
     else
     If WinActive("ahk_exe stickies.exe")
-        showText("SUPPORTING-FILES\KBF3-STICKIES.txt")
+        fileToShow := "SUPPORTING-FILES\KBF3-STICKIES.txt"
     else
 		If WinActive("ahk_exe atom.exe")
-        showText("SUPPORTING-FILES\KBF3-ATOM.txt")
+        fileToShow := "SUPPORTING-FILES\KBF3-ATOM.txt"
     else
 		If WinActive("ahk_exe WindowsTerminal.exe")
-				showText("SUPPORTING-FILES\KBF3-WINTERMpvw.txt")
+				fileToShow := "SUPPORTING-FILES\KBF3-WINTERMpvw.txt"
 		else
 		If WinActive("ahk_exe SubtitleEdit.exe")
-				showText("SUPPORTING-FILES\KBF3-SUBTITLE-EDIT.txt")
+				fileToShow := "SUPPORTING-FILES\KBF3-SUBTITLE-EDIT.txt"
 		else
-        showText("SUPPORTING-FILES\NO-CHEATSHEET.txt")
+        fileToShow := "SUPPORTING-FILES\NO-CHEATSHEET.txt"
 
- 		If (Location_currentSystemLocation = 1 or Location_currentSystemLocation = 4) { ; based on the location this will change how the release of the invoking Hotkey will close the GUI
+		showText(fileToShow)
+
+		Gui, Text:Show
+		currentFullPathToFileToShow := Settings_rootFolder . "\" . fileToShow
+
+		If (Location_currentSystemLocation = 1 or Location_currentSystemLocation = 4) { ; based on the location this will change how the release of the invoking Hotkey will close the GUI
 					keywait, F15 ; this will just keep GUI window open while hotkey is depressed
 				} else {
 					ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
@@ -283,9 +270,20 @@ thirdShower:
 					Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
 				}
 
-		squashGUI(activeWin)
-		;Gui, Text:Destroy
-    ;WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
+		Goto CloseTextGui
+
+		TextButtonEditSheet:
+					Run %pathToEditor% %currentFullPathToFileToShow%
+					editingFile = 1
+
+		CloseTextGui:
+			If !(editingFile){
+				squashGUI(activeWin)
+			} else {
+				Gui, Text:Destroy
+				WinActivate, ahk_exe notepad++.exe
+			}
+
 return
 
 fourthShower:
@@ -319,50 +317,6 @@ return
 ;Listvars
 ;return
 
-/* CODE HANGING OUT HERE WHILE IT GETS IMPLEMENTED UP IN firstShower
-^!+F18:: ; <-- Testing a new idea for the KBF1 Cheat Sheet - a Tabbed GUI that can contain multiple pieces of content
-
-; first we define paths to the various files we want to have on this Cheat Sheet GUI
-	firstTabFile := "SUPPORTING-FILES\CHEAT-SHEETS\KB1-MAIN.txt"
-	secondTabFile := "SUPPORTING-FILES\CHEAT-SHEETS\KB1-OFFICE.txt"
-	thirdTabFile := "PRIVATE\QUICKTYPE-HOTSTRINGS.txt"
-; next we read them into variables
-	FileRead, firstTab, %firstTabFile%
-	FileRead, secondTab, %secondTabFile%
-	FileRead, thirdTab, %thirdTabFile%
-; a few commands here to format some time related text elements
-	FormatTime, now,, hh:mm tt
-	today = %A_YYYY%-%A_MMM%-%A_DD%
-; and now we define the GUI
-	Gui, TabText:+alwaysontop -sysmenu +owner -caption +toolwindow +0x02000000
-	Gui, TabText:Color, %backgroundColor%
-	Gui, TabText:Margin, 30, 30
-	Gui, TabText:font, s12 c%foregroundColor%, Consolas
-; the line below is where we define the number and names of tabs. If you wish to add tabs, you will need to add the new tabs here. Make sure the order you put them into matches the order of the tab content you define above.
-	Gui, TabText:add, Tab3,, Main|Office|Quicktype
-	Gui, TabText:Tab, 1
-	Gui, TabText:add, text, h-1 , %firstTab%
-	Gui, TabText:Tab, 2
-	Gui, TabText:add, text, h-1, %secondTab%
-	Gui, TabText:Tab, 3
-	Gui, TabText:add, text, h-1, %thirdTab%
-; below we unset working with any tab.
-	Gui, TabText:Tab
-; since tabs are unset (no longer being worked with) this button appears outside of the tabs area
-	Gui, TabText:Add, Button, w180, &Edit Sheets
-	Gui, TabText:Add, Text, , %now% - %today%      -      Current System Location: %currentSystemLocationName% ; displaying time and date text.
-	Gui, TabText:Show
-
-	keywait, F18
-	goto CloseTabTextGui
-
-	TabTextButtonEditSheets:
-		Run %pathToEditor% %firstTabFile% %secondTabFile% %thirdTabFile%
-
-	CloseTabTextGui:
-		Gui, TabText:Destroy
-	Return
-*/
 ;===== FUNCTIONS ===============================================================================
 
 RemoveSplashScreen:
@@ -389,7 +343,7 @@ showText(fileToShow){
   FileRead, textToShow, %fileToShow%
   FormatTime, now,, hh:mm tt
   today = %A_YYYY%-%A_MMM%-%A_DD%
-  Gui, Text:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
+  Gui, Text:+alwaysontop -sysmenu +owner -caption +toolwindow +0x02000000
   Gui, Text:Color, %backgroundColor%
   Gui, Text:Margin, 30, 30
   Gui, Text:font, s12 c%foregroundColor%, Consolas
@@ -397,8 +351,9 @@ showText(fileToShow){
   Gui, Text:add, text, , %textToShow%
   ;Gui, Text:add, text, , File: %A_ScriptDir%\%fileToShow%
 	;uncomment line above to display the path to the %fileToShow% at the bottom of this GUI window
-  Gui, Text:Show
-return
+	Gui, Text:Add, Button, w180, &Edit Sheet
+	;Gui, Text:Add, Text, , %pathToEditor% %currentFullPathToFileToShow%
+	Return
 }
 
 ; showPic is used to create and display a GUI for an image Cheat Sheet
