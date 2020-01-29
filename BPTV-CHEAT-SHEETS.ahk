@@ -45,9 +45,6 @@ If !(Location_currentSystemLocation) {
   Location_currentSystemLocation := 1
 }
 
-If InStr(currentSystemLocationName, "MONSTAsplit")
-	MONSTAsplit	= TRUE
-
 global backgroundColor := "2D2A2B"
 global foregroundColor := "FFFFFF"
 global showTaskBarPicture = 0
@@ -59,9 +56,32 @@ iniFile := "settings.ini"
 IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
 IniRead, pathToEditor, %iniFile%, Settings, pathToEditor
 IniRead, keyboardHasF13toF24, %iniFile%, Settings, keyboardHasF13toF24
+IniRead, keyboardHasHyperKey, %iniFile%, Settings, keyboardHasHyperKey
+
+yesHYPER := "FALSE"
+yesF13 := "FALSE"
+
+If (keyboardHasF13toF24) {
+	yesF13 := "TRUE"
+}
+
+If (keyboardHasHyperKey) {
+	yesHYPER := "TRUE"
+}
+
+
+firstPrimeBaseHK := "F13"
+secondPrimeBaseHK := "F14"
+thirdPrimeBaseHK := "F15"
+fourthPrimeBaseHK := "F16"
+
+firstAltBaseHK := "F1"
+secondAltBaseHK := "F2"
+thirdAltBaseHK := "F3"
+fourthAltBaseHK := "F4"
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading BPTV-CHEAT-SHEETS
+SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading BPTV-CHEAT-SHEETS`nKeyboard has F13 to F24? %yesF13%`nKeyboard has Hyper Key? %yesHYPER%`nPrimeBaseHKs: %firstPrimeBaseHK% %secondPrimeBaseHK% %thirdPrimeBaseHK% %fourthPrimeBaseHK%`nAltBaseHKs: %firstAltBaseHK% %secondAltBaseHK% %thirdAltBaseHK% %fourthAltBaseHK%
 WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
 SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 Sleep, sleepDeep
@@ -76,30 +96,91 @@ SplashTextOff
 ; <=use left mod key| >=use right mod key  | UP=fires on release
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
-; IMPORTANT CHANGE: I've changed the way that you get out of a Cheat Sheet. Previously the script waited until you released whichever hotkey you used to show a given sheet. That was getting annoying to hold down the key the whole time. Now I've changed it so that Escape will close the open cheat sheet. Beware that the cheatsheets are set to be 'alwaysontop'
+; This Cheat Sheet Displayer will show you a variety of cheat sheets that will help you learn/remember where & what comnmands are under which keys.
+
+; I've gone around a few times on the *best* way to implement these cheat sheets. I think I've nailed down (mostly) how the cheat sheets themselves should display. The options for how you invoke or show the cheat sheets, however, are varied. There are a couple of approaches that I'm still trying to work out.
+
+; I'm exploring ways to give you options based on your preference, your system location & what options your keyboard has.
+
+; First is to decide how you want to show and then hide a given cheat sheet. There are 3 main ways to go aboput this:
+; 1) You press a certain combination of keys to show the cheat sheet. Then you press Escape to hide the cheat sheet
+; 2) You press a certain combination of keys to show the cheat sheet. Then the cheat sheet remains shown until you release the last of the original key combo.
+; 3) You press a certain combination of keys to show the cheat sheet. Then you press a specific key from that combo a 2nd time to hide the sheet.
+
+; Thoughts on #1: It might annoying to hold down the key the whole time. Pressing Escape provides a commonsense way to get out of the shown cheat sheet. But, you have to move your hand.
+; Thoughts on #2: It's annoying to have to move your hand over to Escape to hide it. It is somewhat natural to hold one of the invoking keys down while you are viewing the sheet and then release that key to hide the sheet (put it away when you are down with it). In practice, it can be annoying to hold the key down the whole time you want it open.
+; Thoughts on #3: Your hand will likely be in or near the location of the closing key after you pressed it to show the sheet. If you open a cheat sheet and then move your hand, it could be tricky to get it back to the same location to close/hide the sheet. (Recent changes to this script have made this easier to do, so I'm going to try it for a time and see how it goes.)
+
+; Also beware that the cheatsheets are set to be 'alwaysontop.' That means, in all cases, the cheat sheet will remain on-screen until you either perform the close/hide task or quit/restart the cheat sheet AHK script.
 
 ; I've also added a Tooltip that reminds you that Escape is how you close the sheets. And how to switch tabs for the KBF2 cheaetsheet (the app-specific image one).
 
 ; Using the AHK command: "Hotkey" we can define a hotkey and call a sub-routine instead of using the double colon method. This allows the hotkey to be updated or changed based on variables (like Location_currentSystemLocation as we use below). By Default, we'll use the CapsLock plus Function method we've used previously. When we have SCAF macro pads or keys defined on a keybaord, we can use alternate hot key definitions, as we do below when we're in location #1...we can even flop the order of the keys, so they are easy to locate without too much looking.
 
-If (keyboardHasF13toF24) { ; if the script is running on Location #1 then...
-	HotKey, ^!+F13, firstShower ; <-- Set 2nd Hotkey for KBF1 (firstShower: a text file shower)
-	HotKey, ^!+F14, secondShower ; <-- Set 2nd Hotkey for KBF2 (secondShower: a image file shower - App-Specific)
-	HotKey, ^!+F15, thirdShower ; <-- Set 2nd Hotkey for KBF3 (thirdShower: a text file shower - App-Specific)
-	HotKey, ^!+F16, fourthShower ; <-- Set 2nd Hotkey for KBF4 (fourthShower: a image file shower - Location Specific)
-	;The goal here is to be able to define the above Hotkeys based on the location or use the Hotkeys below by default if not specified above.
-} else {
-	HotKey, CapsLock & F1, firstShower ; <-- Hotkey for KBF1 (firstShower: a text file shower)
-	HotKey, CapsLock & F2, secondShower ; <-- Hotkey for KBF2 (secondShower: a image file shower - App-Specific)
-	HotKey, CapsLock & F3, thirdShower ; <-- Hotkey for KBF3 (thirdShower: a text file shower - App-Specific)
-	HotKey, CapsLock & F4, fourthShower ; <-- Hotkey for KBF4 (fourthShower: a image file shower - Location Specific)
+
+If (!keyboardHasF13toF24 and !keyboardHasHyperKey) {
+		firstBaseHK := firstAltBaseHK
+		secondBaseHK := secondAltBaseHK
+		thirdBaseHK := thirdAltBaseHK
+		fourthBaseHK := fourthAltBaseHK
+		firstHK := "CapsLock & " . firstAltBaseHK
+		secondHK := "CapsLock & " . secondAltBaseHK
+		thirdHK := "CapsLock & " . thirdAltBaseHK
+		fourthHK := "CapsLock & " . fourthAltBaseHK
 }
+;The goal here is to be able to define the above Hotkeys as the default. And then use the settings.ini keys to change things below.
+
+If (keyboardHasHyperKey and !keyboardHasF13toF24) {
+	firstBaseHK := firstAltBaseHK
+	secondBaseHK := secondAltBaseHK
+	thirdBaseHK := thirdAltBaseHK
+	fourthBaseHK := fourthAltBaseHK
+	firstHK := "#!^+" . firstAltBaseHK
+	secondHK := "#!^+" . secondAltBaseHK
+	thirdHK := "#!^+" . thirdAltBaseHK
+	fourthHK := "#!^+" . fourthAltBaseHK
+}
+
+If (keyboardHasF13toF24 and !keyboardHasHyperKey) {
+	firstBaseHK := firstPrimeBaseHK
+	secondBaseHK := secondPrimeBaseHK
+	thirdBaseHK := thirdPrimeBaseHK
+	fourthBaseHK := fourthPrimeBaseHK
+	firstHK := "!^+" . firstPrimeBaseHK
+	secondHK := "!^+" . secondPrimeBaseHK
+	thirdHK := "!^+" . thirdPrimeBaseHK
+	fourthHK := "!^+" . fourthPrimeBaseHK
+	}
+
+If (keyboardHasF13toF24 and keyboardHasHyperKey) {
+	firstBaseHK := firstPrimeBaseHK
+	secondBaseHK := secondPrimeBaseHK
+	thirdBaseHK := thirdPrimeBaseHK
+	fourthBaseHK := fourthPrimeBaseHK
+	firstHK := "#!^+" . firstBaseHK
+	secondHK := "#!^+" . secondBaseHK
+	thirdHK := "#!^+" . thirdBaseHK
+	fourthHK := "#!^+" . fourthBaseHK
+	}
+; Close/Hide Gui method here
+; 1 - to use Escape Key to Close/Hide a given GUI
+; 2 - to hold BaseHK + modifiers Key to show & then release BaseHK (or AltBaseHK) to Close/Hide a given GUI
+; 3 - tap BaseHK (or AltBaseHK) a second time to close/hide a gvien GUI
+guiCloseMethod := 3
+
+;MSGBOX, , DEBUG, %firstHK%`n%secondHK%`n%thirdHK%`n%fourthHK%
+
+HotKey, %firstHK%, firstShower ; <-- Set 2nd Hotkey for KBF1 (firstShower: a text file shower)
+HotKey, %secondHK%, secondShower ; <-- Set 2nd Hotkey for KBF2 (secondShower: a image file shower - App-Specific)
+HotKey, %thirdHK%, thirdShower ; <-- Set 2nd Hotkey for KBF3 (thirdShower: a text file shower - App-Specific)
+HotKey, %fourthHK%, fourthShower ; <-- Set 2nd Hotkey for KBF4 (fourthShower: a image file shower - Location Specific)
 
 return ; this prevents the script from processing the labels below at script launch (at least the firstShower label...)
 
 firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys based on Location setting.
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
 		; first we define paths to the various files we want to have on this Cheat Sheet GUI
+			RegExMatch(A_ThisHotkey, "F.*", thisKeyToWaitFor) ; this RegExMatch sets a variable to the function key used to invoke this cheat sheet. Basically it scrapes off whatever modifiers have been used to invoke it.
 			firstTabFile := "SUPPORTING-FILES\CHEAT-SHEETS\KB1-MAIN.txt"
 			secondTabFile := "SUPPORTING-FILES\CHEAT-SHEETS\KB1-OFFICE.txt"
 			thirdTabFile := "PRIVATE\QUICKTYPE-HOTSTRINGS.txt"
@@ -127,17 +208,24 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 			Gui, TabText:Tab
 		; since tabs are unset (no longer being worked with) this button appears outside of the tabs area
 			Gui, TabText:Add, Button, w180, &Edit Sheets
-			Gui, TabText:Add, Text, , %now% - %today%      -      Current System Location: %currentSystemLocationName% ; displaying time and date text.
+			Gui, TabText:Add, Text, , %now% - %today%  -  Current System Location(%Location_currentSystemLocation%): %currentSystemLocationName%  -  Keyboard has F13 to F24? %yesF13% ; displaying time and date text.
 			Gui, TabText:Show
 
-			If (keyboardHasF13toF24) { ; based on the keyboard you are using this will change how the release of the invoking Hotkey will close the GUI
-				ToolTip, Hold F13 to keep Cheat Sheet open. Release key to dismiss.
-				RemoveToolTip(3000)
-				keywait, F13 ; this will just keep GUI window open while hotkey is depressed
-			} else {
+			If (guiCloseMethod = 1) {
 				ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
 				RemoveToolTip(4000)
 				keywait, ESC, D ; you can release the invoking hotkey and this will wait for ESCAPE to be pressed down
+				Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
+			} else if (guiCloseMethod = 2) {
+				ToolTip, Hold %firstBaseHK% to keep Cheat Sheet open. Release key to dismiss.`n`n(This window will remain on top until it closes)
+				RemoveToolTip(4000)
+				keywait, %firstBaseHK%
+				Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
+			} else if (guiCloseMethod = 3) {
+				ToolTip, Tap %firstBaseHK% a second time to dismiss cheat sheet.`n`n(This window will remain on top until it closes)
+				RemoveToolTip(4000)
+				Sleep, sleepMedium
+				keywait, %firstBaseHK%, D
 				Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
 			}
 			goto CloseTabTextGui
@@ -149,7 +237,7 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 				squashGUI(activeWin)
 			Return
 
-secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
+secondShower: ; Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     If WinActive("ahk_exe Explorer.EXE") {
         pic2show := "SUPPORTING-FILES\KBF2-WIN-PAGE"
@@ -221,23 +309,32 @@ secondShower: ; <-- Display an image CheatSheet of App Specific Keyboard Shortcu
       showTaskBarPic(taskBarPic) ; as an extra little helper, this will display an indicator above the Windows TaskBar to remind you which apps can be launched/activated by pressing Windows plus that number key.
     }
     WinActivate, Picture
-		If (Location_currentSystemLocation = 1 or Location_currentSystemLocation = 4) { ; based on the location this will change how the release of the invoking Hotkey will close the GUI
-			keywait, F14 ; this will just keep GUI window open while hotkey is depressed
-		} else {
+		If (guiCloseMethod = 1) {
 			ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
 			RemoveToolTip(4000)
 			keywait, ESC, D ; you can release the invoking hotkey and this will wait for ESCAPE to be pressed down
+			Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
+		} else if (guiCloseMethod = 2) {
+			ToolTip, Hold %secondBaseHK% to keep Cheat Sheet open. Release key to dismiss.`n`n(This window will remain on top until it closes)
+			RemoveToolTip(4000)
+			keywait, %secondBaseHK%
+			Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
+		} else if (guiCloseMethod = 3) {
+			ToolTip, Tap %secondBaseHK% a second time to dismiss cheat sheet.`n`n(This window will remain on top until it closes)
+			RemoveToolTip(4000)
+			Sleep, sleepMedium
+			keywait, %secondBaseHK%, D
 			Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
 		}
     numPages := 0
 		squashGUI(activeWin)
 return
 
-thirdShower:
-    WinGetActiveTitle, activeWin ; 
-		editingFile = 0
+thirdShower: ; Display an Text CheatSheet of App Specific Keyboard Shortcuts (mostly AHK but you can use this to highlight In-App commands as well)
+    WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
+		editingFile = 0 ; This variable is used to flag if we have clicked the 'Edit Sheet' button.
     If WinActive("ahk_exe Explorer.EXE")
-        fileToShow := "SUPPORTING-FILES\KBF3-WINDOWS-DEFAULT-KEYS.txt"
+        fileToShow := "SUPPORTING-FILES\KBF3-WINDOWS-DEFAULT-KEYS.txt" ; each one of these assigns the file that will be displayed when the Cheat Sheet is shown
     else
     If WinActive("ahk_exe Adobe Premiere Pro.exe")
         fileToShow := "SUPPORTING-FILES\KBF3-PPRO.txt"
@@ -256,20 +353,29 @@ thirdShower:
 		else
         fileToShow := "SUPPORTING-FILES\NO-CHEATSHEET.txt"
 
-		showText(fileToShow)
+		showText(fileToShow) ; this calls a function that will build the GUI using the fileToShow
 
-		Gui, Text:Show
-		currentFullPathToFileToShow := Settings_rootFolder . "\" . fileToShow
+		Gui, Text:Show ; the above function call DOES NOT show the Text: Gui becuase we need to access the Edit Sheet button and that needs to be done outside of the function for the variable defined below to be read properly
+		currentFullPathToFileToShow := Settings_rootFolder . "\" . fileToShow ; foe some reason, this variable would get defined properly (when within the showText() function) but would not pass its value on to the Run command below in TextButtonEditSheet - it was just blank. What's odd is that pathToEditor *would* hold its value & get passed along to the button Run command...just not currentFullPathToFileToShow.
+		; By relocating this all back here in this subroutine it seems to hav just worked. Very strange. Operator Error, to be sure - Ben
 
-		If (Location_currentSystemLocation = 1 or Location_currentSystemLocation = 4) { ; based on the location this will change how the release of the invoking Hotkey will close the GUI
-					keywait, F15 ; this will just keep GUI window open while hotkey is depressed
-				} else {
-					ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
-					RemoveToolTip(4000)
-					keywait, ESC, D ; you can release the invoking hotkey and this will wait for ESCAPE to be pressed down
-					Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
-				}
-
+		If (guiCloseMethod = 1) {
+			ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
+			RemoveToolTip(4000)
+			keywait, ESC, D ; you can release the invoking hotkey and this will wait for ESCAPE to be pressed down
+			Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
+		} else if (guiCloseMethod = 2) {
+			ToolTip, Hold %thirdBaseHK% to keep Cheat Sheet open. Release key to dismiss.`n`n(This window will remain on top until it closes)
+			RemoveToolTip(4000)
+			keywait, %thirdBaseHK%
+			Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
+		} else if (guiCloseMethod = 3) {
+			ToolTip, Tap %thirdBaseHK% a second time to dismiss cheat sheet.`n`n(This window will remain on top until it closes)
+			RemoveToolTip(4000)
+			Sleep, sleepMedium
+			keywait, %thirdBaseHK%, D
+			Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
+		}
 		Goto CloseTextGui
 
 		TextButtonEditSheet:
@@ -290,12 +396,21 @@ fourthShower:
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     locationPic := "SUPPORTING-FILES\KBF4-LOC" . Location_currentSystemLocation . ".png"
     showPic(locationPic, 0)
-		If (Location_currentSystemLocation = 1 or Location_currentSystemLocation = 4) { ; based on the location this will change how the release of the invoking Hotkey will close the GUI
-			keywait, F16 ; this will just keep GUI window open while hotkey is depressed
-		} else {
+		If (guiCloseMethod = 1) {
 			ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
 			RemoveToolTip(4000)
 			keywait, ESC, D ; you can release the invoking hotkey and this will wait for ESCAPE to be pressed down
+			Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
+		} else if (guiCloseMethod = 2) {
+			ToolTip, Hold %fourthBaseHK% to keep Cheat Sheet open. Release key to dismiss.`n`n(This window will remain on top until it closes)
+			RemoveToolTip(4000)
+			keywait, %fourthBaseHK%
+			Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
+		} else if (guiCloseMethod = 3) {
+			ToolTip, Tap %fourthBaseHK% a second time to dismiss cheat sheet.`n`n(This window will remain on top until it closes)
+			RemoveToolTip(4000)
+			Sleep, sleepMedium
+			keywait, %fourthBaseHK%, D
 			Tooltip ; kills the Tooltip if you close GUI before RemoveToolTip duration
 		}
     squashGUI(activeWin)
