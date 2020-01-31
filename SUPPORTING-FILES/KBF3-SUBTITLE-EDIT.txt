@@ -1,5 +1,26 @@
 SUBTITLE EDIT SHORTCUT KEYS
 
-SHIFT+UP      PLAY FASTER
-SHIFT+DOWN    PLAY SLOWER
-CTRL+NUMPAD0  RESET PLAY SPEED
+CTRL+SHIFT+,        <-- Go to Previous Title
+CTRL+SHIFT+.        <-- Go to Previous Title
+
+CTRL+ALT+`(Tilde)   <-- Go to Previous Title from Video Position
+(Logitech Ergo Up Button)
+
+CTRL+`(Tilde)       <-- Go to Previous Title from Video Position
+(Logitech Ergo Down Button)
+
+F13                 <-- Toggle between Sub-title Text Box & List View
+
+SHIFT+UP            <-- PLAY FASTER
+SHIFT+DOWN          <-- PLAY SLOWER
+CTRL+NUMPAD0        <-- RESET PLAY SPEED
+
+
+SCAF KEYS - 
+
+SCAF1   <-- Insert Music Symbol
+SCAF2   <-- 
+SCAF3   <-- 
+SCAF4   <-- 
+SCAF5   <-- Send, [Rod]{Space}
+SCAF6   <-- Send, [Minnie]{Space}
