@@ -1,0 +1,48 @@
+== KEYPIRINHA SHORTCUTS ===============================================================+
+                                                                                       |
+ALT+SPACE        <-- Toggle Keypirinha LaunchBox (the main window)                     |
+                                                                                       |
+== WITH LAUNCHBOX OPEN ================================================================+=====================================================
+    ESCAPE       <-- Reset Current Search                                              | F2    <--  Open Console
+    ESCAPE X 2   <-- Hide LaunchBox                                                    |
+                                                                                       | F3    <--  Open Diagnostic Window
+    TAB          <-- Next Step (add args, choose action)                               |
+    ALT+RIGHT                                                                          | F5    <--  Refresh Catalog
+                                                                                       |
+    ALT+LEFT     <-- Forcefully Go Back to Previous Search Step                        |
+                                                                                       | WITH CONSOLE OPEN
+    CTRL+SPACE   <-- Force Insert Space Character while at first step                  |
+    SHIFT+SPACE                                                                        | CTRL+TAB    <-- Switch Focus -> Command/Log Controls
+                                                                                       |
+    CTRL+1 to 0  <-- Directly Execute The Search Item at Specific Position             | ENTER       <-- Validate Commands
+    CTRL+NUM1 to NUM0                                                                  |
+                                                                                       | CTRL+BACKSP <-- Erase Previous Word
+    CTRL+ENTER   <-- Go to list of Actions associated with Selected Item               |
+                                                                                       | ESCAPE      <-- Close Console
+    SHIFT+ENTER  <-- Execute Selected Item without closing LaunchBox window and        | ALT+F4
+                     reset search state                                                |
+                                                                                       |
+    CTRL+SHIFT+  <-- Execute Selected Item without closing LaunchBox window and        | WITH DIAGNOSTIC WINDOW OPEN
+    ENTER            go back to initial step of current search                         |
+                                                                                       | F5   <-- Refresh (Full Content)
+    ALT+ENTER    <-- Show Selected Item's Properties                                   |
+                                                                                       | F6   <-- Refresh then Content Privacy-safe
+    ALT+SHIFT+   <-- Show Shell's "Properties" Dialog for the Selected Item            |          content to clipboard for pasting
+    ENTER                                                                              |          into report for an issue/bug report
+                                                                                       |
+    ALT+X        <-- Maximize LaunchBox Window                                         | ESCAPE      <-- Close Console
+    WIN+UP                                                                             | ALT+F4
+                                                                                       |
+    SHIFT+ESC    <-- Hide LaunchBox                                                    |
+    ALT+F4                                                                             |
+                                                                                       |
+    CTRL+DEL     <-- Erase a single item from History                                  |
+                                                                                       |
+    CTRL+BACKSP  <-- Erase previous word                                               |
+                                                                                       |
+    CTRL+DOWN    <-- Show History Items                                                |
+                                                                                       |
+    CTRL+HOME    <-- Scroll up to the First result                                     |
+                                                                                       |
+    CTRL+END     <-- Scroll down to the Last result                                    |
+                                                                                       |

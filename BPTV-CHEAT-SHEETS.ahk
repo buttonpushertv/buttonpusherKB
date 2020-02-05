@@ -240,65 +240,65 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 secondShower: ; Display an image CheatSheet of App Specific Keyboard Shortcuts (In-app and AHK)
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     If WinActive("ahk_exe Explorer.EXE") {
-        pic2show := "SUPPORTING-FILES\KBF2-WIN-PAGE"
+        pic2show := "SUPPORTING-FILES\CHEAT-SHEETS\KBF2-WIN-PAGE"
         PictureWidth := 2000
         numPages := 2
         PictureStartY := 0 ; determines where the cheatsheet is going to start drawing. Whenever we want to display the TaskBar Cheatsheet, we should make sure the CheatSheet image doesn't get drawn underneath the TaskBar CheatSheet.
-        taskBarPic := "SUPPORTING-FILES\WIN-TASKBAR\windows-taskbar-keyboard-cheaetsheet-DKYELLOW.png"
+        taskBarPic := "SUPPORTING-FILES\CHEAT-SHEETS\WIN-TASKBAR\windows-taskbar-keyboard-cheaetsheet-DKYELLOW.png"
         showTaskBarPicture = 1
     }
     else
     If WinActive("ahk_exe Adobe Premiere Pro.exe") {
-        pic2Show := "SUPPORTING-FILES\KBF2-PPRO-PAGE"
+        pic2Show := "SUPPORTING-FILES\CHEAT-SHEETS\KBF2-PPRO-PAGE"
         PictureWidth := 2000
         numPages := 3
         PictureStartY := 50 ; setting the starting coords to '-1' will make it center vertically on the screen
     }
     else
     If WinActive("ahk_exe AfterFX.exe") {
-        pic2Show := "SUPPORTING-FILES\KBF2-AE-PAGE"
+        pic2Show := "SUPPORTING-FILES\CHEAT-SHEETS\KBF2-AE-PAGE"
         PictureWidth := 2000
         numPages := 2
         PictureStartY := 50
     }
     else
     If WinActive("ahk_exe Photoshop.exe") {
-        pic2Show := "SUPPORTING-FILES\KBF2-PS.png"
+        pic2Show := "SUPPORTING-FILES\CHEAT-SHEETS\KBF2-PS.png"
         PictureWidth := 2000
         numPages := 1
         PictureStartY := 50
     }
     else
     If WinActive("ahk_exe SubtitleEdit.exe") {
-        pic2Show := "SUPPORTING-FILES\KBF2-CONTOUR-PRO-SUBTITLE-EDIT.jpg"
+        pic2Show := "SUPPORTING-FILES\CHEAT-SHEETS\KBF2-CONTOUR-PRO-SUBTITLE-EDIT.jpg"
         PictureWidth := 906
         numPages := 1
         PictureStartY := 50
     }
     else
     If WinActive("ahk_exe stickies.exe") {
-        pic2Show := "SUPPORTING-FILES\KBF2-STICKIES.png"
+        pic2Show := "SUPPORTING-FILES\CHEAT-SHEETS\KBF2-STICKIES.png"
         PictureWidth := 1920
         numPages := 1
         PictureStartY := 50
     }
 		else
 		If WinActive("ahk_exe atom.exe") {
-				pic2Show := "SUPPORTING-FILES\KBF2-ATOM-PAGE"
+				pic2Show := "SUPPORTING-FILES\CHEAT-SHEETS\KBF2-ATOM-PAGE"
 				PictureWidth := 2000
 				numPages := 2
 				PictureStartY := 50
 		}
     else
 		If WinActive("ahk_exe FreeCommander.exe") {
-				pic2Show := "SUPPORTING-FILES\KBF2-FCXE.png"
+				pic2Show := "SUPPORTING-FILES\CHEAT-SHEETS\KBF2-FCXE.png"
 				PictureWidth := 2000
 				numPages := 1
 				PictureStartY := 50
 		}
 		else
 		{
-        pic2Show := "SUPPORTING-FILES\NO-CHEATSHEET.png"
+        pic2Show := "SUPPORTING-FILES\CHEAT-SHEETS\NO-CHEATSHEET.png"
         PictureWidth := 579
         numPages := 1
     }
@@ -334,24 +334,27 @@ thirdShower: ; Display an Text CheatSheet of App Specific Keyboard Shortcuts (mo
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
 		editingFile = 0 ; This variable is used to flag if we have clicked the 'Edit Sheet' button.
     If WinActive("ahk_exe Explorer.EXE")
-        fileToShow := "SUPPORTING-FILES\KBF3-WINDOWS-DEFAULT-KEYS.txt" ; each one of these assigns the file that will be displayed when the Cheat Sheet is shown
+        fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-WINDOWS-DEFAULT-KEYS.txt" ; each one of these assigns the file that will be displayed when the Cheat Sheet is shown
     else
     If WinActive("ahk_exe Adobe Premiere Pro.exe")
-        fileToShow := "SUPPORTING-FILES\KBF3-PPRO.txt"
+        fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-PPRO.txt"
     else
     If WinActive("ahk_exe stickies.exe")
-        fileToShow := "SUPPORTING-FILES\KBF3-STICKIES.txt"
+        fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-STICKIES.txt"
     else
 		If WinActive("ahk_exe atom.exe")
-        fileToShow := "SUPPORTING-FILES\KBF3-ATOM.txt"
+        fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-ATOM.txt"
     else
 		If WinActive("ahk_exe WindowsTerminal.exe")
-				fileToShow := "SUPPORTING-FILES\KBF3-WINTERMpvw.txt"
+				fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-WINTERMpvw.txt"
 		else
 		If WinActive("ahk_exe SubtitleEdit.exe")
-				fileToShow := "SUPPORTING-FILES\KBF3-SUBTITLE-EDIT.txt"
+				fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-SUBTITLE-EDIT.txt"
 		else
-        fileToShow := "SUPPORTING-FILES\NO-CHEATSHEET.txt"
+		If WinActive("ahk_exe keypirinha-x64.exe")
+				fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KB-KEYPIRINHA.txt"
+		else
+        fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\NO-CHEATSHEET.txt"
 
 		showText(fileToShow) ; this calls a function that will build the GUI using the fileToShow
 
@@ -394,7 +397,7 @@ return
 
 fourthShower:
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
-    locationPic := "SUPPORTING-FILES\KBF4-LOC" . Location_currentSystemLocation . ".png"
+    locationPic := "SUPPORTING-FILES\CHEAT-SHEETS\KBF4-LOC" . Location_currentSystemLocation . ".png"
     showPic(locationPic, 0)
 		If (guiCloseMethod = 1) {
 			ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
@@ -420,7 +423,7 @@ return
 
 CapsLock & F5:: ;<-- Testing the TaskBar CheatSheet
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
-    taskBarPic := "SUPPORTING-FILES\WIN-TASKBAR\windows-taskbar-keyboard-cheaetsheet-DKYELLOW.png"
+    taskBarPic := "SUPPORTING-FILES\CHEAT-SHEETS\WIN-TASKBAR\windows-taskbar-keyboard-cheaetsheet-DKYELLOW.png"
     showTaskBarPic(taskBarPic)
     keywait, ESC, D ; wait for ESCAPE to be pressed down
 		squashGUI(activeWin)
@@ -454,7 +457,7 @@ ToolTipOff:
 ; showText is used to create and display a GUI for a text file as a Cheat Sheet
 showText(fileToShow){
   IfNotExist, %fileToShow%
-    fileToShow := "SUPPORTING-FILES\AHK-KEYS-NO-CHEATSHEET.txt"
+    fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\AHK-KEYS-NO-CHEATSHEET.txt"
   FileRead, textToShow, %fileToShow%
   FormatTime, now,, hh:mm tt
   today = %A_YYYY%-%A_MMM%-%A_DD%
@@ -478,7 +481,7 @@ showPic(picToShow, PictureWidth){
   If (Mon1Right < PictureWidth)
     PictureWidth -= 425
   if !FileExist(picToShow) {
-    picToShow := "SUPPORTING-FILES\NO-CHEAT-SHEET.png"
+    picToShow := "SUPPORTING-FILES\CHEAT-SHEETS\NO-CHEAT-SHEET.png"
     PictureWidth := 579
   }
   Gui, Picture:+alwaysontop +disabled -sysmenu +owner -caption +toolwindow +0x02000000
@@ -514,7 +517,7 @@ showImageTabs(picToshow, PictureWidth, numPages, PictureStartY){
     loop, %numPages% {
         fileToShow := picToShow . A_Index . ".png"
           if !FileExist(fileToShow) {
-            picToShow := "SUPPORTING-FILES\NO-CHEAT-SHEET.png"
+            picToShow := "SUPPORTING-FILES\CHEAT-SHEETS\NO-CHEAT-SHEET.png"
             PictureWidth := 579
             showPic(picToshow, PictureWidth)
             Return
