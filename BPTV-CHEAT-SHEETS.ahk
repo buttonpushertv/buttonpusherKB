@@ -421,7 +421,7 @@ fourthShower:
     ;WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 return
 
-CapsLock & F5:: ;<-- Testing the TaskBar CheatSheet
+^!+F24:: ;<-- Testing the TaskBar CheatSheet
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     taskBarPic := "SUPPORTING-FILES\CHEAT-SHEETS\WIN-TASKBAR\windows-taskbar-keyboard-cheaetsheet-DKYELLOW.png"
     showTaskBarPic(taskBarPic)
