@@ -41,31 +41,47 @@ INI_Load(inifile)
 
 ;Creating the Main GUI for the app - the bit that loads inititally when run
 ;setting width variables
-guiWidth := 660
-guiElementWidth := (guiWidth - 20)
+guiWidth := 980
+halfGuiWidth := (guiWidth / 2)
+quarterGuiWidth := (guiWidth / 4)
+guiElementWidth := (halfGuiWidth - 25)
+buttonElementWidth := (quarterGuiWidth - 25)
 ;figuring out how tall the whole GUI will be
 section1H := (section1_keys - 1)
 section2H := (section2_keys / 3)
 section3H := (section3_keys / 3)
+section4H := (section4_keys)
 keyRows := section1H
 keyRows += section2H
 keyRows += section3H
 
-guiHeight := (keyRows * 32)
-guiHeight += 200 ; this is to add the bit at the bottom for the buttons, text
-buttonStartingY := (guiHeight - 115)
+guiRowPadding := 25
+guiHeight := (keyRows * guiRowPadding)
+guiHeight += 450 ; this is to add the bit at the bottom for the buttons, text
+buttonStartingY := (guiHeight - 160)
+buttonStartingX := quarterGuiWidth
 global scriptSectionKeys := round(section2_keys / 3)
 global appSectionKeys := round(section3_keys / 3)
+global settingsSectionKeys := section4_keys
+
+; for Section 4 - figuring out the longest setting value
+longestSettingValue :=
+loop, %section4_keys%{
+  currentSettingName := % section4_key%A_Index%
+  currentSettingValue := %section4%_%currentSettingName%
+  CurrentLength := StrLen(currentSettingValue)
+  If (CurrentLength > longestSettingValue) {
+    longestSettingValue := CurrentLength
+  }
+}
+section4EditBoxW := (longestSettingValue * 7)
 
 ;Section 1 - System Location
-section1GroupH := (section1_keys - 1)
+section1GroupH := (section1H +1.25)
 currentAltCounter := 1
 Gui, mainWindow:Font, S12 CDefault, Franklin Gothic Medium
-Gui, mainWindow:Add, GroupBox, R%section1GroupH% x10 y10 w300 , System Location
-Gui, mainWindow:Font, S10 CDefault, Franklin Gothic Medium
-Gui, mainWindow:Add, Text, x330 y20 w280, Select a Location at the left. This can be used to provide location specific settings.`n`nRoot Folder: %Settings_rootFolder%`nVersion: %version%
-Gui, mainWindow:Font, S12 CDefault, Franklin Gothic Medium
-Gui, mainWindow:Add, Text, section x10 y10,
+Gui, mainWindow:Add, GroupBox, R%section1GroupH% x10 y10 w%guiElementWidth%, System Location
+Gui, mainWindow:Add, Text, hidden section yp,
 loop, %section1_keys%
   {
     if (A_Index = 1) {
@@ -76,17 +92,20 @@ loop, %section1_keys%
     currentKeyValue := % %section1%_%currentKey%
     currentKeyValueForRadio := "Location" . currentAltCounter . " > " . currentKeyValue
     if (currentAltCounter = Location_currentSystemLocation) {
-      Gui, mainWindow:Add, Radio, xs+20 vLocRadioGroup%currentAltCounter% Checked, %currentKeyValueForRadio%
+      Gui, mainWindow:Add, Radio, xs+20 yp+25 vLocRadioGroup%currentAltCounter% Checked, %currentKeyValueForRadio%
       global currentSelectedSystemLocation := currentKeyValue
     } else
-      Gui, mainWindow:Add, Radio, xs+20 vLocRadioGroup%currentAltCounter%, %currentKeyValueForRadio%
+      Gui, mainWindow:Add, Radio, xs+20 yp+25 vLocRadioGroup%currentAltCounter%, %currentKeyValueForRadio%
   }
+  Gui, mainWindow:Font, S10 CDefault, Franklin Gothic Medium
+  Gui, mainWindow:Add, Text, xp yp+30, Select a Location on the left.`nThis can be used to provide location specific settings.
+  Gui, mainWindow:Font, S12 CDefault, Franklin Gothic Medium
 
 ;Section 2 - Scripts To Run
-section2GroupH := scriptSectionKeys - 1
+section2GroupH := (section2H - 1)
 currentAltCounter := 1
-Gui, mainWindow:Add, GroupBox, R%section2GroupH% x10 yp+50 w630 , Scripts to Load (loaded via MASTER-SCRIPT.ahk)
-Gui, mainWindow:Add, Text, section xp yp+10,
+Gui, mainWindow:Add, GroupBox, R%section2GroupH% x10 yp+60 w%guiElementWidth%, Scripts to Load (loaded via MASTER-SCRIPT.ahk)
+Gui, mainWindow:Add, Text, hidden section xp yp,
 loop, %section2_keys%
   {
     scriptCheckboxEnable%A_Index% := 0
@@ -101,7 +120,7 @@ loop, %section2_keys%
     currentKeyLeft7 := SubStr(currentKey, 1, 7)
     If (currentKeyLeft7 = "loadScr"){
       scriptCheckboxEnable%A_Index% := currentKeyValue
-      Gui, mainWindow:Add, Checkbox, xs+20 yp+20 vscriptCheckboxEnable%currentAltCounter% Checked%currentKeyValue%, %currentNameValue%
+      Gui, mainWindow:Add, Checkbox, xs+20 yp+25 vscriptCheckboxEnable%currentAltCounter% Checked%currentKeyValue%, %currentNameValue%
       currentAltCounter += 1
       pathKey :=
 	  nameKey :=
@@ -114,10 +133,10 @@ loop, %section2_keys%
   }
 
 ;Section 3 - Apps To Load
-section3GroupH := appSectionKeys - 1
+section3GroupH := (section3H + 2)
 currentAltCounter := 1
-Gui, mainWindow:Add, GroupBox, R%section3GroupH% x10 yp+75 w630 , Apps to Load (loaded via BPTV-LAUNCHER.ahk*)
-Gui, mainWindow:Add, Text, section xp yp+10,
+Gui, mainWindow:Add, GroupBox, R%section3GroupH% x10 yp+50 w%guiElementWidth%, Apps to Load (loaded via BPTV-LAUNCHER.ahk*)
+Gui, mainWindow:Add, Text, hidden section xp yp,
 loop, %section3_keys%
     {
       appCheckboxEnable%A_Index% := 0
@@ -132,7 +151,7 @@ loop, %section3_keys%
       currentKeyLeft7 := SubStr(currentKey, 1, 7)
       If (currentKeyLeft7 = "loadApp"){
         appCheckboxEnable%A_Index% := currentKeyValue
-        Gui, mainWindow:Add, Checkbox, xs+20 yp+20 vappCheckboxEnable%currentAltCounter% Checked%currentKeyValue%, %currentNameValue%
+        Gui, mainWindow:Add, Checkbox, xs+20 yp+25 vappCheckboxEnable%currentAltCounter% Checked%currentKeyValue%, %currentNameValue%
         currentAltCounter += 1
         pathKey :=
   	  nameKey :=
@@ -143,19 +162,40 @@ loop, %section3_keys%
       else
         Continue
     }
-
+paddedGuiElementWidth := guiElementWidth - 50
 Gui, mainWindow:Font, S8 CDefault, Franklin Gothic Medium
-Gui, mainWindow:Add, Text, x30 yp+30 w650, *-App enabling/disabling will take effect when BPTV-LAUNCHER is relaunched. Changes made here will be saved.`nAll enabled and/or open apps should be closed before relaunching BPTV-LAUNCHER.
+Gui, mainWindow:Add, Text, x30 yp+30 w%paddedGuiElementWidth%, *-App enabling/disabling will take effect when BPTV-LAUNCHER is relaunched. Changes made here will be saved. All enabled and/or open apps should be closed before relaunching BPTV-LAUNCHER.
 
 Gui, mainWindow:Font, S12 CDefault, Franklin Gothic Medium
+spacing := 25
+buttonPadding := buttonElementWidth + spacing
 ;Gui, mainWindow:Add, Button, x520 yp w100 h30, Variables ; Uncomment if you wish to have a button to show Variables assigned by the script
-Gui, mainWindow:Add, Button, x30 y%buttonStartingY% w150 h30, &Manage Scripts
-Gui, mainWindow:Add, Button, x200 y%buttonStartingY% w150 h30, Manage &Apps
-Gui, mainWindow:Add, Button, x400 yp w100 h30, &Cancel
-Gui, mainWindow:Add, Button, x520 yp w100 h30, &SAVE
-Gui, mainWindow:Add, Button, x30 yp+33 w590 h30, SAVE AND &RELAUNCH MASTER-SCRIPT
+Gui, mainWindow:Add, Button, x%buttonStartingX% y%buttonStartingY% w%buttonElementWidth% h30, &Manage Scripts
+Gui, mainWindow:Add, Text, hidden xp+%buttonPadding%
+Gui, mainWindow:Add, Button, xp y%buttonStartingY% w%buttonElementWidth% h30, Manage &Apps
+Gui, mainWindow:Add, Button, x%buttonStartingX% yp+32 w%buttonElementWidth% h30, &Cancel
+Gui, mainWindow:Add, Text, hidden xp+%buttonPadding%
+Gui, mainWindow:Add, Button, xp yp w%buttonElementWidth% h30, &SAVE
+Gui, mainWindow:Add, Button, x%buttonStartingX% yp+32 w%guiElementWidth% h30, SAVE AND &RELAUNCH MASTER-SCRIPT
 Gui, mainWindow:Font, S10 CDefault, Franklin Gothic Medium
-Gui, mainWindow:Add, Text, x30 yp+30 w650, Clicking 'SAVE' will just save the settings above and reload this panel.`nClick 'SAVE AND RELAUNCH MASTER-SCRIPT' to save and relaunch all the checked scripts and exit this panel.
+Gui, mainWindow:Add, Text, x%buttonStartingX% yp+32 w%guiElementWidth%, Clicking 'SAVE' will just save the settings above and reload this panel.`nClick 'SAVE AND RELAUNCH MASTER-SCRIPT' to save and relaunch all the checked scripts and exit this panel.
+
+; Section 4 - Other Settings
+section4GroupH := (section4H *1.6)
+Gui, mainWindow:Font, S12 CDefault, Franklin Gothic Medium
+Gui, mainWindow:Add, GroupBox, R%section4GroupH% x%halfGuiWidth% y10 w%guiElementWidth%,Other Settings
+Gui, mainWindow:Font, S10 CDefault, Franklin Gothic Medium
+Gui, mainWindow:Add, Text, hidden section xp yp,
+loop, %section4_keys%
+    {
+      currentSettingName := % section4_key%A_Index%
+      currentSettingValue := %section4%_%currentSettingName%
+      Gui, mainWindow:Add, Text, xs+10 yp+25, %currentSettingName%
+      Gui, mainWindow:Add, Edit, xp+15 yp+20 h25 w%section4EditBoxW%, %currentSettingValue%
+      currentSettingName :=
+      currentSettingValue :=
+    }
+
 Gui, mainWindow:Show, w%guiWidth% h%guiHeight%
 Gui, mainWindow:Default
 return
