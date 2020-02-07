@@ -11,18 +11,21 @@ IF EXIST %1\PRIVATE\%computername%\last_daily_run.txt (
   )
 @echo lastDailyRun is set to: %lastDailyRun%
 
-if /i %lastDailyRun:~0,10% EQU %date:~4,10% exit /b
+@if /i %lastDailyRun:~0,10% EQU %date:~4,10% exit /b
 
-REM This backs up the BPTV-KB settings for this system. You want to back these up for each system (e.g.-location) because you likely have different settings for each.
+@echo This backs up the BPTV-KB settings for this system. You want to back these up for each system (e.g.-location) because you likely have different settings for each.
 copy %1\settings.ini %1\PRIVATE\%computername%\SETTINGS-BACKUPS\
 
-REM This backs up the settings for VNCHelper - again it's location specific but the settings file is stored in the same place where ever BPTV-KB is installed.
+@echo This backs up the settings for VNCHelper - again it's location specific but the settings file is stored in the same place where ever BPTV-KB is installed.
 copy %1\UTIL-APPS\vnchelper\vnchelper.ini %1\PRIVATE\%computername%\SETTINGS-BACKUPS\
 
+@echo This backs up the QuickAccessPopup's ini for this system
 copy %1\UTIL-APPS\QAP\QuickAccessPopup.ini %1\PRIVATE\%computername%\SETTINGS-BACKUPS\
 
+@echo This backs up the StreamDeck's Profile from this system
 call %1\BAT-FILES\Backup-StreamDeck-Profiles.cmd %1
 
+@echo This runs a backup that is specific to this system
 call %1\PRIVATE\%computername%-BACKUPS.cmd %1
 
 @echo %date% > %1\PRIVATE\%computername%\last_daily_run.txt

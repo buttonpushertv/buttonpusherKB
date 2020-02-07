@@ -3,3 +3,4 @@ settings.ini
 PRIVATE/
 UTIL-APPS/vnchelper/
 UTIL-APPS/QAP/
+BAT-FILES/LOGS/last_run_log.txt
