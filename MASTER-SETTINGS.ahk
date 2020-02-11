@@ -185,13 +185,13 @@ section4GroupH := (section4H *1.6)
 Gui, mainWindow:Font, S12 CDefault, Franklin Gothic Medium
 Gui, mainWindow:Add, GroupBox, R%section4GroupH% x%halfGuiWidth% y10 w%guiElementWidth%,Other Settings
 Gui, mainWindow:Font, S10 CDefault, Franklin Gothic Medium
-Gui, mainWindow:Add, Text, hidden section xp yp,
+Gui, mainWindow:Add, Text, hidden section xp yp Center,
 loop, %section4_keys%
     {
       currentSettingName := % section4_key%A_Index%
       currentSettingValue := %section4%_%currentSettingName%
-      Gui, mainWindow:Add, Text, xs+10 yp+25, %currentSettingName%
-      Gui, mainWindow:Add, Edit, xp+15 yp+20 h25 w%section4EditBoxW%, %currentSettingValue%
+      Gui, mainWindow:Add, Text, xs+50 yp+25, %currentSettingName%:
+      Gui, mainWindow:Add, Edit, yp+20 h25 w%section4EditBoxW% Right vnewSettingValue%A_Index%, %currentSettingValue%
       currentSettingName :=
       currentSettingValue :=
     }
@@ -479,7 +479,9 @@ manageAppsSaveSorted:
       return
 
 
-mainWindowButtonSAVE:
+mainWindowButtonSaveAndRelaunchMaster-Script: 
+saveAndRelaunchMaster := 1 ; this flag determines if we need to save and relaunch the MASTER-SCRIPT.ahk
+mainWindowButtonSAVE: ; otherwise we enter here and should save things and reload this MASTER-SETTINGS.ahk
   Gui, Submit
   ;Setting the location if it got changed
   loop, %section1_keys%
@@ -494,75 +496,65 @@ mainWindowButtonSAVE:
   ;Setting Scripts_loadScriptX to new values
   loop, %scriptSectionKeys%
     {
-    Scripts_loadScript%A_Index% = % scriptCheckboxEnable%A_Index%
+      Scripts_loadScript%A_Index% = % scriptCheckboxEnable%A_Index%
     }
-    ;Setting Apps_loadAppX to new values
-    loop, %appSectionKeys%
-      {
+  ;Setting Apps_loadAppX to new values
+  loop, %appSectionKeys%
+    {
       Apps_loadApp%A_Index% = % appCheckboxEnable%A_Index%
-      }
-  INI_Save(inifile)
-  Reload
-Return
-
-mainWindowButtonSaveAndRelaunchMaster-Script:
-Gui, Submit
-;Setting the location if it got changed
-loop, %section1_keys%
-  {
-    if (A_Index = 1)
-      Continue
-    currentAltCounter := (A_Index - 1)
-    currentRadioGroup := % LocRadioGroup%currentAltCounter%
-    if LocRadioGroup%currentAltCounter%
-      Location_currentSystemLocation = %currentAltCounter%
-  }
-;Setting Scripts_loadScriptX to new values
-loop, %scriptSectionKeys%
-  {
-  Scripts_loadScript%A_Index% = % scriptCheckboxEnable%A_Index%
-  }
-
-INI_Save(inifile)
-splashScreenSpacing := 75
-splashScreenStartY := 100
-splashScreenStartX := 100
-DetectHiddenWindows, On
-SetTitleMatchMode, 2
-loop, %section2_keys%
-{
-    currentKey := % section2_key%A_Index%
-    pathLookAhead := A_Index + 1
-    pathKey := % section2_key%pathLookAhead%
-    currentKeyValue := %section2%_%currentKey%
-    currentPathValue := %section2%_%pathKey%
-        currentPathSlashPos := InStr(currentPathValue, "\")
-        currentPathResolvedName := SubStr(String, currentPathSlashPos + 1)
-        currentKeyLeft7 := SubStr(currentKey, 1, 7)
-    If (currentKeyLeft7 = "loadScr") {
-        If (currentKeyValue) {
-            SplashTextOn, 600, 50, Quitting AHK scripts, Quitting %currentPathValue%
-            WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
-            WinClose, %currentPathValue%
-            splashScreenStartY += splashScreenSpacing
-        pathKey :=
-        currentKeyValue :=
-        currentPathValue :=
-            }
-        }
-    else {
-    Continue
     }
-}
+  ;Setting the Other Settings values to their new values
+  loop, %settingsSectionKeys%
+    {
+      currentSettingName := % section4_key%A_Index%
+      %section4%_%currentSettingName% := % newSettingValue%A_Index%
+    }
+
+  INI_Save(inifile)
+
+  If !saveAndRelaunchMaster { ; here is where we check the saveAndRelaunchMaster flag 
+    Reload
+  } else {
+    splashScreenSpacing := 75
+    splashScreenStartY := 100
+    splashScreenStartX := 100
+    DetectHiddenWindows, On
+    SetTitleMatchMode, 2
+    loop, %section2_keys%
+    {
+        currentKey := % section2_key%A_Index%
+        pathLookAhead := A_Index + 1
+        pathKey := % section2_key%pathLookAhead%
+        currentKeyValue := %section2%_%currentKey%
+        currentPathValue := %section2%_%pathKey%
+            currentPathSlashPos := InStr(currentPathValue, "\")
+            currentPathResolvedName := SubStr(String, currentPathSlashPos + 1)
+            currentKeyLeft7 := SubStr(currentKey, 1, 7)
+        If (currentKeyLeft7 = "loadScr") {
+            If (currentKeyValue) {
+                SplashTextOn, 600, 50, Quitting AHK scripts, Quitting %currentPathValue%
+                WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
+                WinClose, %currentPathValue%
+                splashScreenStartY += splashScreenSpacing
+            pathKey :=
+            currentKeyValue :=
+            currentPathValue :=
+                }
+            }
+        else {
+        Continue
+        }
+    }
     SplashTextOn, 600, 50, Quitting AHK scripts, All MASTER-SCRIPT.AHK shut down.`nGoodbye & thanks for all the fishes...
     WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
     Sleep, sleepMedium
     SplashTextOff
     WinClose, MASTER-SCRIPT.ahk
-	Run, "MASTER-SCRIPT.ahk" ; forcing the MASTER-SCRIPT.ahk to reload. Since '#SingleInstance force' is defined in MASTER-SCRIPT.ahk, by just running the script again will reload it.
-	Gui, Destroy
-	ExitApp
-	return
+    Run, "MASTER-SCRIPT.ahk" ; forcing the MASTER-SCRIPT.ahk to reload. Since '#SingleInstance force' is defined in MASTER-SCRIPT.ahk, by just running the script again will reload it.
+    Gui, Destroy
+    ExitApp
+  }
+Return
 
 mainWindowButtonCancel:
 GuiClose:
@@ -570,6 +562,7 @@ mainWindowGuiEscape:
 ExitApp
 
 ;===== FUNCTIONS ===============================================================================
+
 SortArray(Array, Order="A") {
     ;Order A: Ascending, D: Descending, R: Reverse
     MaxIndex := ObjMaxIndex(Array)
