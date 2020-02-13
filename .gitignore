@@ -4,4 +4,5 @@ PRIVATE/
 UTIL-APPS/vnchelper/
 UTIL-APPS/nircmd/
 UTIL-APPS/initool/
-BAT-FILES/LOGS/last_run_log.txt
+BAT-FILES/LOGS/
+
