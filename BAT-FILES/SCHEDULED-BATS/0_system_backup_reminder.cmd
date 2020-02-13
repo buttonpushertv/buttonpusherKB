@@ -12,7 +12,7 @@ for /f "delims=" %%a in (%1\PRIVATE\%computername%\days_since_system_backup.txt)
 for %%a in (%1\PRIVATE\%computername%\days_since_system_backup.txt) do set fileDate=%%~ta
 
 @REM The check below compares that to the current date. If they match, then we can exit this script (so we don't keep incrementing the daysSince counter.)
-if /i %fileDate:~0,10% EQU %date:~4,10% exit /b
+if /i %fileDate:~0,10% EQU %date:~4,10% (@echo Last backup: %backupDays% days ago & @echo Already Run Today - Exiting. & exit /b)
 
 @REM If for some reason 'daysSince' is set to 0 then we are just going to skip to increment that number and exit. I know there was a case where this could have occurred in a previous version of this script but I don't think that can happen any longer with the changes made above.
 if %daysSince% == 0 goto zerodayskip
@@ -20,13 +20,13 @@ if %daysSince% == 0 goto zerodayskip
 set /a checkWindow = 15
 
 @REM This is where we launch a script that will launch the backup program/script. I don't recall why I'm doing the thing where I launch a script that just launches yet another script here. It's working and I don't want to change it but it looks as though you could just run the \SCRIPTS-UTIL\System-Backup.ahk directly here.
-if /I %daysSince% GEQ %checkWindow% (call "%1\BAT-FILES\launch System-Backup.cmd >> %1\BAT-FILES\LOGS\last_run_log.txt" & EXIT)
+if /I %daysSince% GEQ %checkWindow% (call "%1\BAT-FILES\launch System-Backup.cmd" & EXIT /b)
 
 :zerodayskip
 @REM This is where the days_since_system_backup.txt gets updated with an incremented number of days. It is only adding to the existing number in the file but it is overwriting the file, so it shouldn't be appending another line with the new number each time - it should just overwrite the whole file.
 set /a backupDays=%daysSince%+1
-echo Last backup: %backupDays% days ago
-echo %backupDays% > %1\PRIVATE\%computername%\days_since_system_backup.txt
+@echo Last backup: %backupDays% days ago
+@echo %backupDays% > %1\PRIVATE\%computername%\days_since_system_backup.txt
 
 @echo ===================================
 @echo SYSTEM BACKUP REMINDER BAT COMPLETE
