@@ -93,7 +93,37 @@ sleep, sleepMicro
 Send, 3
 return
 
-^3:: ; <-- PPRO: Step Right 1 second
+^+3:: ; <-- PPRO: Step Left 5 seconds THEN Play
+Send, {2}
+sleep, sleepShort
+Send, ^+a
+sleep, sleepShort
+Send, {NumpadSub}
+sleep, sleepMicro
+Send, {Numpad5}
+sleep, sleepMicro
+Send, {NumpadDot}
+sleep, sleepMicro
+Send, {NumpadEnter}{NumpadEnter}
+sleep, sleepMicro
+Send, 3
+return
+
+^F1::
+^4:: ; <-- PPRO: Step Left 1 second
+Send, ^+a
+sleep, sleepShort
+Send, {NumpadSub}
+sleep, sleepMicro
+Send, {Numpad1}
+sleep, sleepMicro
+Send, {NumpadDot}
+sleep, sleepMicro
+Send, {NumpadEnter}{NumpadEnter}
+return
+
+^F2::
+^5:: ; <-- PPRO: Step Right 1 second
 Send, ^+a
 sleep, sleepShort
 Send, {NumpadAdd}
@@ -141,27 +171,28 @@ return
 
 ;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
 
-+^!f1:: ; <-- move ahead 3 secs, mark in, go to next xsit, back 1 frame, mark out, & extract
-sleep, sleepShort
-Send, {Control Down}{F9}{Control Up}
-sleep, sleepShort
+F13:: ; <-- move ahead 1 sec, mark in, go to next xsit, back 1 frame, mark out, & extract
 Send, {NumpadAdd}
 sleep, sleepShort
-Send, {Numpad3}
+Send, {Numpad1}
 sleep, sleepShort
 Send, {NumpadDot}
 sleep, sleepShort
 Send, {NumpadEnter}
 sleep, sleepShort
-Send, {f1}
+Send, {q}
 sleep, sleepShort
-Send, {w}
+Send, {Down}
 sleep, sleepShort
 Send, {LEFT}
 sleep, sleepShort
-Send, {f2}
+Send, {w}
 sleep, sleepShort
-Send, {Shift Down}{X}{Shift Up}
+Send, {Shift Down}
+sleep, sleepShort
+Send, X
+sleep, sleepShort
+Send,{Shift Up}
 return
 
 +^!f2:: ; <-- open a clip marker, select all, copy text to clipboard, close clip marker, create seq marker, edit seq marker, paste text
