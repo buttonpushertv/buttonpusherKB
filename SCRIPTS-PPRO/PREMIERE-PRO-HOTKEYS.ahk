@@ -171,7 +171,7 @@ return
 
 ;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
 
-F13:: ; <-- move ahead 1 sec, mark in, go to next xsit, back 1 frame, mark out, & extract
+#^!F1:: ; <-- move ahead 1 sec, mark in, go to next xsit, back 1 frame, mark out, & extract
 Send, {NumpadAdd}
 sleep, sleepShort
 Send, {Numpad1}
