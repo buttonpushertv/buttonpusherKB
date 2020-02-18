@@ -6,6 +6,6 @@ if f_class in #32770,ExploreWClass,CabinetWClass
     {
     InstantExplorer(projectSubfolder,1)
     }
-    else openFCXE(projectSubfolder,1)
+    else openProjectInFCXE(projectSubfolder,1)
 
 Exiting(projectSubfolder,1)

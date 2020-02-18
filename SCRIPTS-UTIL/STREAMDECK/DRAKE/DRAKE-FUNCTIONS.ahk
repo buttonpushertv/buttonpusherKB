@@ -335,7 +335,7 @@ getCurrentWorkingProject() {
 ;
 ; While there are lots of keyboard commands within FreeCommanderXE, I found that if you are just opening locations, it was quicker to send it via the commandline interface that already exists in the app.
 
-openFCXE(pathToOpen, pleasePrepend){
+openProjectInFCXE(pathToOpen, pleasePrepend){
 	global Settings_pathToFCXE
 	global Settings_FCXEParams
   global currentWorkingProject
@@ -343,7 +343,7 @@ openFCXE(pathToOpen, pleasePrepend){
       fullPathToOpen = %currentWorkingProject%\%pathToOpen%
     }
     quotedPathToOpen := """" . fullPathToOpen . """" ;THIS ADDS QUOTATION MARKS AROUND EVERYTHING SO THAT IT WORKS AS A STRING, NOT A VARIABLE.
-    ;MSGBOX,,DEBUG, from openFCXE()`nfullPathToOpen has a value: %fullPathToOpen%`nAnd quotedPathToOpen is:%quotedPathToOpen%
+    ;MSGBOX,,DEBUG, from openProjectInFCXE()`nfullPathToOpen has a value: %fullPathToOpen%`nAnd quotedPathToOpen is:%quotedPathToOpen%
     checkForPath:
     if !FileExist(fullPathToOpen)
     {
@@ -365,6 +365,15 @@ openFCXE(pathToOpen, pleasePrepend){
     }
     Return
 }
+
+openInFCXE(selectedPath){
+	global Settings_pathToFCXE
+	global Settings_FCXEParams
+	quotedPathToOpen := """" . selectedPath . """" ;THIS ADDS QUOTATION MARKS AROUND EVERYTHING SO THAT IT WORKS AS A STRING, NOT A VARIABLE.
+    Run, %Settings_pathToFCXE% %Settings_FCXEparams% %quotedPathToOpen%
+    ; There is a trick about the way FCXE recieves it's parameters: If you are sending the one where you tell it which panel to open in ('/L=' or '/R=') it must not have a space between the parameter and the path you want to open. However, if you just want to open the path in the active panel of the current instance you must send '/C' with a space. SO, if you want to force it to open in a specific panel, you will need to remove the space between the 2 %'s above (like this: "%Settings_FCXEparams%%quotedPathToOpen%")
+	return
+    }
 
 getFCXEPath(){
   f_class := whichWindowType()
