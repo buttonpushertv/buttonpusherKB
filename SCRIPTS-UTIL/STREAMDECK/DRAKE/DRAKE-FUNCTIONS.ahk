@@ -87,7 +87,7 @@ if (pleasePrepend = 1) {
 	}
   } else fullPathToOpen = %originalPath%
 
-MSGBOX, , DEBUG, %fullPathToOpen%
+;MSGBOX, , DEBUG, %fullPathToOpen%
 
 ;;;SUPER IMPORTANT: YOU NEED TO GO INTO WINDOWS' FOLDER OPTIONS > VIEW > AND CHECK "DISPLAY THE FULL PATH IN THE TITLE BAR" OR THIS WON'T WORK.
 ;;;UPDATE: THE INSTRUCTION ABOVE MIGHT BE OBSOLETE NOW, I'VE FIGURED OUT A BETTER WAY TO DO THIS SHIT
@@ -408,7 +408,7 @@ getFCXEPath(){
   {
 	    savedPath := parseFCXEPath()
 	    pathToSave = % savedPath
-      ;MSGBOX,,DEBUG, inside getFCXEPath:`nf_class:%f_class%`nsavedPath:%savedPath%`npathToSave:%pathToSave%
+        ;MSGBOX,,DEBUG, inside getFCXEPath:`nf_class:%f_class%`nsavedPath:%savedPath%`npathToSave:%pathToSave%
   } else {
 	   MsgBox,,,You don't appear to be in a FreeCommanderXE window.,2
    }
