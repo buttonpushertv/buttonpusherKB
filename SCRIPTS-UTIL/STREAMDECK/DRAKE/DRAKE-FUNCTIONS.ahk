@@ -244,11 +244,13 @@ tooltip,
 ;++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ;THIS FRIGGIN BEAUTIFUL CODE IS FROM THIS THREAD:
 ;HTTPS://AUTOHOTKEY.COM/BOARD/TOPIC/121208-WINDOWS-EXPLORER-GET-FOLDER-PATH/?P=687189
+;https://autohotkey.com/board/topic/121208-windows-explorer-get-folder-path/
 
 Explorer_GetSelection(hwnd="") {
-	WinGet, process, processName, % "ahk_id" hwnd := hwnd? hwnd:WinExist("A")
+	WinGet, process, ProcessName, % "ahk_id" hwnd := hwnd? hwnd:WinExist("A")
 	WinGetClass class, ahk_id %hwnd%
-	if (process = "explorer.exe")
+	MsgBox, GetSelection:process:%process%`nclass:%class%`nahk_id:%hwnd%
+	if (process = "explorer.exe") {
 		if (class ~= "Progman|WorkerW") {
 			;;if you're on the desktop
 			ControlGet, files, List, Selected Col1, SysListView321, ahk_class %class%
@@ -260,8 +262,12 @@ Explorer_GetSelection(hwnd="") {
 				sel := window.Document.SelectedItems
 		for item in sel
 			ToReturn .= item.path "`n"
-	}
-return Trim(ToReturn,"`n")
+		} 
+	} else if (class ~= "#32770") {
+		    ControlGetText, gotPath, ToolbarWindow323, ahk_class #32770
+			ToReturn :=SubStr(gotPath, 10)
+		}
+	return Trim(ToReturn,"`n")
 }
 ; ; ;HOW TO CALL THE ABOVE FUNCTION
 ; ; F12::
@@ -279,9 +285,9 @@ return Trim(ToReturn,"`n")
 ;; CODE WAS GOTTEN FROM HERE HTTPS://AUTOHOTKEY.COM/BOARD/TOPIC/121208-WINDOWS-EXPLORER-GET-FOLDER-PATH/?P=687189
 ;; AND HERE HTTPS://WWW.AUTOHOTKEY.COM/BOARDS/VIEWTOPIC.PHP?P=28751#P28751
 Explorer_GetPath(hwnd="") {
-	WinGet, process, processName, % "ahk_id" hwnd := hwnd? hwnd:WinExist("A")
+	WinGet, process, ProcessName, % "ahk_id" hwnd := hwnd? hwnd:WinExist("A")
 	WinGetClass class, ahk_id %hwnd%
-	if (process = "explorer.exe")
+	if (process = "explorer.exe") {
 		if (class ~= "Progman|WorkerW") {
 			;;IF YOU'RE ON THE DESKTOP
 			ControlGet, files, List, Selected Col1, SysListView321, ahk_class %class%
@@ -290,11 +296,14 @@ Explorer_GetPath(hwnd="") {
 	} else if (class ~= "(Cabinet|Explore)WClass") {
 		for window in ComObjCreate("Shell.Application").Windows
 			if (window.hwnd==hwnd)
-				lePath := window.Document.Folder.Self.Path
+				ToReturn := window.Document.Folder.Self.Path
+		}
+	} else if (class ~= "#32770") {
+		ControlGetText, gotPath, ToolbarWindow323, ahk_class #32770
+		ToReturn :=SubStr(gotPath, 10)
 	}
-return lePath
+return ToReturn
 }
-
 #IfWinActive
 
 ; tweaked the function below to keep it consistent with the FCXE functions futher down.
@@ -370,6 +379,7 @@ openInFCXE(selectedPath){
 	global Settings_pathToFCXE
 	global Settings_FCXEParams
 	quotedPathToOpen := """" . selectedPath . """" ;THIS ADDS QUOTATION MARKS AROUND EVERYTHING SO THAT IT WORKS AS A STRING, NOT A VARIABLE.
+	;MsgBox, %Settings_pathToFCXE% %Settings_FCXEparams% %quotedPathToOpen%
     Run, %Settings_pathToFCXE% %Settings_FCXEparams% %quotedPathToOpen%
     ; There is a trick about the way FCXE recieves it's parameters: If you are sending the one where you tell it which panel to open in ('/L=' or '/R=') it must not have a space between the parameter and the path you want to open. However, if you just want to open the path in the active panel of the current instance you must send '/C' with a space. SO, if you want to force it to open in a specific panel, you will need to remove the space between the 2 %'s above (like this: "%Settings_FCXEparams%%quotedPathToOpen%")
 	return

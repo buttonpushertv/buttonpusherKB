@@ -14,6 +14,8 @@ SCAF16 or CAPS+F4   <--Display an image CheatSheet for System Keyboard (Location
 CAPS+C              <--Delete Key
 CAPS+V              <--BackSpace
 
+CAPS+F              <--Open Path from an Explorer Window or Save/Open Dialog in FreeCommander
+
 CAPS+P              <-- Toggle CapsLockCheck On or Off
 
 (For these below you can use CAPS or SCRLK as the modifier)
