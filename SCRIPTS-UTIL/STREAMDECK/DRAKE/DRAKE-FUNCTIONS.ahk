@@ -69,29 +69,30 @@ InstantExplorer(originalPath,pleasePrepend)
 ;MSGBOX,,DEBUG, from InstantExplorer()`nf_path has a value: %f_path%
 if (pleasePrepend = 1) {
     fullPathToOpen = %currentWorkingProject%\%originalPath%
-  } else fullPathToOpen = %currentWorkingProject%
+	checkForProjectPath: ; this is going to be triggered if the path you are trying to access does not exist.
+	if !FileExist(fullPathToOpen)
+	{
+	MsgBox, 8244, PATH DOES NOT EXIST, %quotedPathToOpen% does not exist.`n`nWould you like to create & open it?`n`n`nSelect 'No' to open Root of Current Working Project:`n%currentWorkingProject%
+	IfMsgBox Yes
+		{
+		FileCreateDir, %fullPathToOpen%
+		goto checkForProjectPath
+		}
+	IfMsgBox No
+		{
+		fullPathToOpen = %currentWorkingProject%
+		quotedPathToOpen := """" . fullPathToOpen . """"
+		goto checkForProjectPath
+		}
+	}
+  } else fullPathToOpen = %originalPath%
+
+MSGBOX, , DEBUG, %fullPathToOpen%
 
 ;;;SUPER IMPORTANT: YOU NEED TO GO INTO WINDOWS' FOLDER OPTIONS > VIEW > AND CHECK "DISPLAY THE FULL PATH IN THE TITLE BAR" OR THIS WON'T WORK.
 ;;;UPDATE: THE INSTRUCTION ABOVE MIGHT BE OBSOLETE NOW, I'VE FIGURED OUT A BETTER WAY TO DO THIS SHIT
 
 quotedPathToOpen := """" . fullPathToOpen . """" ;THIS ADDS QUOTATION MARKS AROUND EVERYTHING SO THAT IT WORKS AS A STRING, NOT A VARIABLE.
-
-checkForExplorerPath: ; this is going to be triggered if the path you are trying to access does not exist.
-if !FileExist(fullPathToOpen)
-{
-  MsgBox, 8244, PATH DOES NOT EXIST, %quotedPathToOpen% does not exist.`n`nWould you like to create & open it?`n`n`nSelect 'No' to open Root of Current Working Project:`n%currentWorkingProject%
-  IfMsgBox Yes
-    {
-    FileCreateDir, %fullPathToOpen%
-    goto checkForExplorerPath
-    }
-  IfMsgBox No
-    {
-    fullPathToOpen = %currentWorkingProject%
-    quotedPathToOpen := """" . fullPathToOpen . """"
-    goto checkForExplorerPath
-    }
-  }
 
 f_path := quotedPathToOpen ; did this to maintain the code lifted from TaranVH below.
 
@@ -248,25 +249,32 @@ tooltip,
 
 Explorer_GetSelection(hwnd="") {
 	WinGet, process, ProcessName, % "ahk_id" hwnd := hwnd? hwnd:WinExist("A")
-	WinGetClass class, ahk_id %hwnd%
-	MsgBox, GetSelection:process:%process%`nclass:%class%`nahk_id:%hwnd%
+	WinGetClass activeClass, ahk_id %hwnd%
+	WinGetTitle activeTitle, ahk_id %hwnd%
+	;MsgBox, GetSelection:process:%process%`nclass:%class%`nahk_id:%hwnd%
 	if (process = "explorer.exe") {
-		if (class ~= "Progman|WorkerW") {
+		if (activeClass ~= "Progman|WorkerW") {
 			;;if you're on the desktop
-			ControlGet, files, List, Selected Col1, SysListView321, ahk_class %class%
+			ControlGet, files, List, Selected Col1, SysListView321, ahk_class %activeClass%
 			Loop, Parse, files, `n, `r
 			ToReturn .= A_Desktop "\" A_LoopField "`n"
-	} else if (class ~= "(Cabinet|Explore)WClass") {
+	} else if (activeClass ~= "(Cabinet|Explore)WClass") {
 		for window in ComObjCreate("Shell.Application").Windows
 			if (window.hwnd==hwnd)
 				sel := window.Document.SelectedItems
 		for item in sel
 			ToReturn .= item.path "`n"
 		} 
-	} else if (class ~= "#32770") {
-		    ControlGetText, gotPath, ToolbarWindow323, ahk_class #32770
+	} else if (activeClass ~= "#32770") {
+		If (activeTitle = "Save As") {
+			ControlGetText, gotPath, ToolbarWindow324, ahk_class #32770
 			ToReturn :=SubStr(gotPath, 10)
-		}
+		} else if (activeTitle = "Open File") {
+			ControlGetText, gotPath, ToolbarWindow323, ahk_class #32770
+		ToReturn :=SubStr(gotPath, 10)
+		}	
+	}
+	;MSGBOX, , DEBUG, gotPath:%gotPath%`nToReturn:%ToReturn%
 	return Trim(ToReturn,"`n")
 }
 ; ; ;HOW TO CALL THE ABOVE FUNCTION
@@ -286,23 +294,31 @@ Explorer_GetSelection(hwnd="") {
 ;; AND HERE HTTPS://WWW.AUTOHOTKEY.COM/BOARDS/VIEWTOPIC.PHP?P=28751#P28751
 Explorer_GetPath(hwnd="") {
 	WinGet, process, ProcessName, % "ahk_id" hwnd := hwnd? hwnd:WinExist("A")
-	WinGetClass class, ahk_id %hwnd%
+	WinGetClass activeClass, ahk_id %hwnd%
+	WinGetTitle activeTitle, ahk_id %hwnd%
+	;MsgBox, GetSelection:process:%process%`nclass:%class%`nahk_id:%hwnd%
 	if (process = "explorer.exe") {
-		if (class ~= "Progman|WorkerW") {
+		if (activeClass ~= "Progman|WorkerW") {
 			;;IF YOU'RE ON THE DESKTOP
-			ControlGet, files, List, Selected Col1, SysListView321, ahk_class %class%
+			ControlGet, files, List, Selected Col1, SysListView321, ahk_class %activeClass%
 			Loop, Parse, files, `n, `r
 			ToReturn .= A_Desktop "\" A_LoopField "`n"
-	} else if (class ~= "(Cabinet|Explore)WClass") {
+	} else if (activeClass ~= "(Cabinet|Explore)WClass") {
 		for window in ComObjCreate("Shell.Application").Windows
 			if (window.hwnd==hwnd)
 				ToReturn := window.Document.Folder.Self.Path
 		}
-	} else if (class ~= "#32770") {
-		ControlGetText, gotPath, ToolbarWindow323, ahk_class #32770
-		ToReturn :=SubStr(gotPath, 10)
+	} else if (activeClass ~= "#32770") {
+		If (activeTitle = "Save As") {
+			ControlGetText, gotPath, ToolbarWindow324, ahk_class #32770
+			ToReturn :=SubStr(gotPath, 10)
+		} else if (activeTitle = "Open File") {
+			ControlGetText, gotPath, ToolbarWindow323, ahk_class #32770
+			ToReturn :=SubStr(gotPath, 10)
+		}	
 	}
-return ToReturn
+	;MSGBOX, , DEBUG, gotPath:%gotPath%`nToReturn:%ToReturn%
+	return ToReturn
 }
 #IfWinActive
 
@@ -328,6 +344,7 @@ whichWindowType() {
 
 setCurrentWorkingProject(pathToSet) {
   global Settings_rootFolder
+  FileCopy, %Settings_rootFolder%\PRIVATE\%A_Computername%\CurrentWorkingProject.txt, %Settings_rootFolder%\PRIVATE\%A_Computername%\PrevWorkingProject.txt
   FileDelete, %Settings_rootFolder%\PRIVATE\%A_Computername%\CurrentWorkingProject.txt
   FileAppend, %pathToSet%, %Settings_rootFolder%\PRIVATE\%A_Computername%\CurrentWorkingProject.txt
   MsgBox, 262208, Set NEW Current Working Project, The Current Working Project is NOW SET TO:`n%pathToSet%, 4

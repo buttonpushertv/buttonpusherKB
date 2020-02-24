@@ -159,8 +159,20 @@ CapsLock & c:: ; <-- Delete Key
 	Send, {Delete} ; where you often are using one hand on mouse/trackball and one hand on keys the delete & backspace keys can be a long reach (or on right-half of split keyboard)
 return
 
-CapsLock & F:: ; This will open the selected OR active path from an Explorer Window or Save/Open Dialog in FreeCommander
-	Run, %A_ScriptDir%\SCRIPTS-UTIL\STREAMDECK\DRAKE\sendPATHtoFCXE.ahk
+CapsLock & F:: ; This will open the selected OR active path from an Explorer Window or Save/Open Dialog in FreeCommander OR VICE-VERSA
+	WinGetActiveTitle, activeTitle
+	If activeTitle contains FreeCommander ; checking to see if you might already be sitting in FreeCommander
+	{
+		Run, %A_ScriptDir%\SCRIPTS-UTIL\STREAMDECK\DRAKE\sendPATHtoEXPLORER.ahk ; this will open the Drake script that gets the current FCXE path and sends to Explorer
+	}
+	Else
+	{
+		Run, %A_ScriptDir%\SCRIPTS-UTIL\STREAMDECK\DRAKE\sendPATHtoFCXE.ahk ; this gets the active Explorer Window's path and sends to FCXE
+	}
+	Return
+
+CapsLock & G:: ; This will return the selected OR active path from an Explorer Window/Save/Open Dialog OR FCXE in a MsgBox
+	Run, %A_ScriptDir%\SCRIPTS-UTIL\STREAMDECK\DRAKE\getPATH.ahk
 	Return
 
 CapsLock & v:: ; <-- Backspace Key
