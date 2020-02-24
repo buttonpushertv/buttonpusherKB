@@ -62,7 +62,7 @@ SplashTextOff
 #Include C:\BPTV-KB\PRIVATE\QUICKTYPE-HOTSTRINGS.txt
 ; The file included above is accessible for quick editing via the MASTER-SCRIPT hotkey SHIFT+CTRL+ALT+Q when triggered when Desktop is Active.
 
-; Frustratingly this include is *currently* hard-coded so that SCRIPTS-UTIL\HOTKEY HELP.AHK can see the Included HotKey entries. For some reason when it is entered like this: 'A_ScriptDir\..\PRIVATE\QUICKTYPE-HOTSTRINGS.ahk' the help script doesn't see the includes. And since you can't #include things in AHK via a named variable, I just hard-coded it for now. Annoying.
+; Frustratingly this include is *currently* hard-coded so that SCRIPTS-UTIL\HOTKEY HELP.AHK can see the Included HotKey entries. For some reason when it is entered like this: 'A_ScriptDir\..\PRIVATE\QUICKTYPE-HOTSTRINGS.txt' the help script doesn't see the includes. And since you can't #include things in AHK via a named variable, I just hard-coded it for now. Annoying.
 
 ; The Hotstrings below can auto-replace text from their code, but require more than a single line/command to acheive their results.
 ::]ts:: ; <-- Send time & date as text
