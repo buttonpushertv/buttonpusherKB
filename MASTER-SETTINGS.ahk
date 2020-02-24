@@ -557,7 +557,7 @@ mainWindowButtonSAVE: ; otherwise we enter here and should save things and reloa
 Return
 
 mainWindowButtonCancel:
-GuiClose:
+mainWindowGuiClose:
 mainWindowGuiEscape:
 ExitApp
 
