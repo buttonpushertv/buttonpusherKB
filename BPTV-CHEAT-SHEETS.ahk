@@ -342,9 +342,6 @@ thirdShower: ; Display an Text CheatSheet of App Specific Keyboard Shortcuts (mo
     If WinActive("ahk_exe stickies.exe")
         fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-STICKIES.txt"
     else
-		If WinActive("ahk_exe atom.exe")
-        fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-ATOM.txt"
-    else
 		If WinActive("ahk_exe WindowsTerminal.exe")
 				fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-WINTERMpvw.txt"
 		else
