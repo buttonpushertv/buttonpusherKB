@@ -198,9 +198,23 @@ Gui, Excluded:Add, Edit, x20 y100 vGui_Excluded -E0x200, %Gui_Excluded%
 ;{-----------------------------------------------
 	OnExit, SaveSettings
 
-SplashTextOn, 600, 80, Launching %A_ScriptFullPath%, Win+F12 to generate list of Hotkeys`nin running AutoHotKey scripts.`n`nControl-F within HotKey Help to find text.
-Sleep, 3500
-SplashTextOff
+splashTextVar =
+(
+SHIFT+F19  <--  ~ Display Help ~ MAIN WINDOW
+SHIFT+F20  <-- Settings
+SHIFT+F21  <-- Excluded Files, Hotkeys, and Hotstrings
+SHIFT+F22  <-- Raw Hotkey List
+SHIFT+F23  <-- Reload HotKey Help
+SHIFT+F24  <-- Quit HotKey Help
+
+CTRL+F     <-- (Hotkey Help) : Find
+)
+
+Gui, splash:+AlwaysOnTop +Disabled -SysMenu 
+Gui, splash:Font, S12 Bold c8, Consolas
+Gui, splash:Add, text, x25, Launching %A_ScriptFullPath%
+Gui, splash:Add, text, x10, %splashTextVar%
+Gui, splash:Show, w600, Splash
 
 ;
 ;}-----------------------------------------------
@@ -210,7 +224,8 @@ SplashTextOff
 ;{-----------------------------------------------
 ;
 
-+f19::	;{ <--  ~ Display Help ~
++f19::	;{ <--  ~ Display Help ~ MAIN WINDOW
+	Gui, splash:Hide
 	Refresh:
 	Help := {}				; Main Array for Storing Help Information
 	Scripts_Scan := {}		; AHK Scripts to Scan
@@ -592,17 +607,20 @@ return
 ;}
 
 +F20::	;{ <-- Settings
+	Gui, splash:Hide
 	Gui, Set:Show,, Hotkey Help - Settings
 return
 ;}
 
 +F21::	;{ <-- Excluded Files, Hotkeys, and Hotstrings
+	Gui, splash:Hide
 	Gui, Excluded:Show, AutoSize, Hotkey Help - Excluded
 	Send ^{Home}
 return
 ;}
 
 +F22::	;{ <-- Raw Hotkey List
+	Gui, splash:Hide
 	Scripts_List := AHKScripts(Scripts)	; Get Path of all AHK Scripts
 	Raw_Hotkeys := {}
 	for index, Script in Scripts	; Loop Through All AHK Script Files
@@ -670,6 +688,21 @@ return
 return
 #if
 ;}
+
++F23:: ; <-- Reload HotKey Help
+	ToolTip, Reloading Hotkey Help Script
+	Sleep, 2500
+	ToolTip
+	Reload
+	Return
+
+
++F24:: ; <-- Quit HotKey Help
+	ToolTip, Quitting Hotkey Help Script
+	Sleep, 2500
+	ToolTip
+	ExitApp
+	Return
 
 ;}
 
