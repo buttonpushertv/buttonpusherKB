@@ -15,7 +15,7 @@ SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of
 
 FileEncoding, UTF-8 ; this is here to make sure any files that we need to work with get created/opened/read as UTF-8
 
-#include LIB\gdip.ahk
+#include %A_ScriptDir%\LIB\gdip.ahk
 ;Thanks to tic (Tariq Porter) for his GDI+ Library
 ;ahkscript.org/boards/viewtopic.php?t=6517
 
@@ -183,7 +183,7 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 			RegExMatch(A_ThisHotkey, "F.*", thisKeyToWaitFor) ; this RegExMatch sets a variable to the function key used to invoke this cheat sheet. Basically it scrapes off whatever modifiers have been used to invoke it.
 			firstTabFile := "SUPPORTING-FILES\CHEAT-SHEETS\KB1-MAIN.txt"
 			secondTabFile := "PRIVATE\MASTER-SCAF-KEYS.ahk"
-			thirdTabFile := "PRIVATE\QUICKTYPE-HOTSTRINGS.txt"
+			thirdTabFile := "PRIVATE\QUICKTYPE-HOTSTRINGS.ahk"
 			fourthTabFile := "SUPPORTING-FILES\CHEAT-SHEETS\KB1-OFFICE.txt"
 		; next we read them into variables
 			FileRead, firstTab, %firstTabFile%

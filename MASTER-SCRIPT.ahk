@@ -29,7 +29,17 @@ FileEncoding, UTF-8 ; this is here to make sure any files that we need to work w
 ;FileGetTime ScriptStartModTime, %A_ScriptFullPath%
 ;SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
 
-#Include MASTER-FUNCTIONS.ahk
+#Include %A_ScriptDir%\MASTER-FUNCTIONS.ahk
+
+; IMPORTANT NOTE ++ IMPORTANT NOTE ++ IMPORTANT NOTE ++ IMPORTANT NOTE ++ IMPORTANT NOTE ++ 
+; 
+; Here is a list of the locations where I have had to hard code the rootFolder path into the scripts:
+;
+; MASTER-SCRIPT.ahk - around line 277 (just prior to the ';===== FUNCTIONS' line)
+;
+; SCRIPTS-UTIL\QuickType.ahk - (around line 51)
+;
+; See those locations for comments as to why this has to be done (TL;DR - its so SCRIPTS-UTIL\Hotkey Help.ahk shows keys set via Includes properly). You will want to update those if you ever use a different rootFolder name.
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
@@ -159,7 +169,7 @@ CapsLock & c:: ; <-- Delete Key
 	Send, {Delete} ; where you often are using one hand on mouse/trackball and one hand on keys the delete & backspace keys can be a long reach (or on right-half of split keyboard)
 return
 
-CapsLock & F:: ; This will open the selected OR active path from an Explorer Window or Save/Open Dialog in FreeCommander OR VICE-VERSA
+CapsLock & F:: ;<--This will open the selected OR active path from an Explorer Window or Save/Open Dialog in FreeCommander OR VICE-VERSA
 	WinGetActiveTitle, activeTitle
 	If activeTitle contains FreeCommander ; checking to see if you might already be sitting in FreeCommander
 	{
@@ -171,7 +181,7 @@ CapsLock & F:: ; This will open the selected OR active path from an Explorer Win
 	}
 	Return
 
-CapsLock & G:: ; This will return the selected OR active path from an Explorer Window/Save/Open Dialog OR FCXE in a MsgBox
+CapsLock & G:: ;<--This will return the selected OR active path from an Explorer Window/Save/Open Dialog OR FCXE in a MsgBox
 	Run, %A_ScriptDir%\SCRIPTS-UTIL\STREAMDECK\DRAKE\getPATH.ahk
 	Return
 
@@ -264,11 +274,12 @@ return
 
 +^!S::Run "%Settings_pathToEditor%" "PRIVATE\MASTER-SCAF-KEYS.ahk" ;<-- Edit PRIVATE\MASTER-SCAF-KEYS.ahk
 ; Above edits master file of app-specific & one-off SCAF keys. Just keeping them in one place, so I don't need to create scripts for each and every app I want/need to make SCAF keys in. See comments in that file for more info
-+^!Q::Run "%Settings_pathToEditor%" "PRIVATE\QUICKTYPE-HOTSTRINGS.txt" ;<-- Edit PRIVATE\QUICKTYPE-HOTSTRINGS.txt
++^!Q::Run "%Settings_pathToEditor%" "PRIVATE\QUICKTYPE-HOTSTRINGS.ahk" ;<-- Edit PRIVATE\QUICKTYPE-HOTSTRINGS.ahk
 ; Above edits my Quicktype Hotstrings. These commands will do auto-replacment of commands as you type. See comments in SCRIPS-UTIL\QuickType.ahk & the above .txt file for more info
 #IfWinActive
 
-#Include PRIVATE\MASTER-SCAF-KEYS.ahk
+#Include %A_ScriptDir%\PRIVATE\MASTER-SCAF-KEYS.ahk
+; The file included above is accessible for quick editing via the MASTER-SCRIPT hotkey SHIFT+CTRL+ALT+S when triggered when Desktop is Active. Or it can be sent to an editor when viewing Cheat Sheet #1 (under HYPER+F13 - click 'Edit Sheets')
 
 ;===== FUNCTIONS ===============================================================================
 

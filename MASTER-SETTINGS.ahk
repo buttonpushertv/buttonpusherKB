@@ -21,7 +21,7 @@ sleepDeep := 3500
 
 FileEncoding, UTF-8 ; this is here to make sure any files that we need to work with get created/opened/read as UTF-8
 
-#Include MASTER-FUNCTIONS.ahk
+#Include %A_ScriptDir%\MASTER-FUNCTIONS.ahk
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================

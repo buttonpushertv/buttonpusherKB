@@ -30,7 +30,7 @@ sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
 
-#Include MASTER-FUNCTIONS.ahk
+#Include %A_ScriptDir%\MASTER-FUNCTIONS.ahk
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 

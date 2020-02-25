@@ -1,17 +1,6 @@
 ﻿; AutoHotKey - QuickType (a Text Expander type-dealy)
 ; by Ben Howard - ben@buttonpusher.tv
 
-; You can customize this template by editing "C:\Windows\ShellNew\Template.ahk"
-;===============================================================================================
-; This Template.ahk file contains several of the most common items that I find myself often
-; needing or adding to my scripts. It's not all essential. Here's a short list of what's here:
-; - Function (CheckScriptUpdate) that will auto-reload the script when it detects a change
-;	in the last modified timestamp on the script file itself
-; - Sleep duration shortcuts - so that sleep times can be modified in one place to affect all
-; - Modifier Memory Helper - just a comment section to remind you of what the codes are for things
-;
-; See comments througout the file to figure out what something is here for.
-
 ;===== START OF AUTO-EXECUTION SECTION =========================================================
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
@@ -59,10 +48,8 @@ SplashTextOff
 ; ::shortcut::Text to type in place of shortcut
 ; (This is documented in the AHK docs here - https://www.autohotkey.com/docs/Hotstrings.htm)
 
-#Include C:\BPTV-KB\PRIVATE\QUICKTYPE-HOTSTRINGS.txt
-; The file included above is accessible for quick editing via the MASTER-SCRIPT hotkey SHIFT+CTRL+ALT+Q when triggered when Desktop is Active.
-
-; Frustratingly this include is *currently* hard-coded so that SCRIPTS-UTIL\HOTKEY HELP.AHK can see the Included HotKey entries. For some reason when it is entered like this: 'A_ScriptDir\..\PRIVATE\QUICKTYPE-HOTSTRINGS.txt' the help script doesn't see the includes. And since you can't #include things in AHK via a named variable, I just hard-coded it for now. Annoying.
+#Include %A_ScriptDir%\..\PRIVATE\QUICKTYPE-HOTSTRINGS.ahk
+; The file included above is accessible for quick editing via the MASTER-SCRIPT hotkey SHIFT+CTRL+ALT+Q when triggered when Desktop is Active. Or it can be sent to an editor when viewing Cheat Sheet #1 (under HYPER+F13 - click 'Edit Sheets')
 
 ; The Hotstrings below can auto-replace text from their code, but require more than a single line/command to acheive their results.
 ::]ts:: ; <-- Send time & date as text

@@ -27,7 +27,7 @@ CAPS/SCRLK+Q        <--Exit MASTER-SCRIPT and child AHK Scripts
 {ON WINDOWS DESKTOP ONLY}
 WIN+CTRL+SHIFT+F    <--Nuke Firefox (click Desktop first)
 WIN+CTRL+SHIFT+P    <--Nuke Premiere (click Desktop first)
-WIN+CTRL+SHIFT+Q    <--Edit PRIVATE\QUICKTYPE-HOTSTRINGS.txt
+WIN+CTRL+SHIFT+Q    <--Edit PRIVATE\QUICKTYPE-HOTSTRINGS.ahk
 
 == STICKIES HOTKEYS ===================================================================
 WIN+ALT+S             <--New Sticky

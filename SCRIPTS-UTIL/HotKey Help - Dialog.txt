@@ -1,0 +1,84 @@
+
+============================ BPTV-CHEAT-SHEETS =============================
+<HK>  WIN+ALT+CTRL+SHIFT+F13<-- Set 2nd Hotkey for KBF1 (firstShower: a text file shower)
+<HK>  WIN+ALT+CTRL+SHIFT+F14<-- Set 2nd Hotkey for KBF2 (secondShower: a image file shower - App-Specific)
+<HK>  WIN+ALT+CTRL+SHIFT+F15<-- Set 2nd Hotkey for KBF3 (thirdShower: a text file shower - App-Specific)
+<HK>  WIN+ALT+CTRL+SHIFT+F16<-- Set 2nd Hotkey for KBF4 (fourthShower: a image file shower - Location Specific)
+CTRL+ALT+SHIFT+F24      <-- Testing the TaskBar CheatSheet
+
+=============================== HOTKEY HELP ================================
+CTRL+F                  <-- (Hotkey Help) : Find
+SHIFT+F19               <--  ~ Display Help ~
+SHIFT+F20               <-- Settings
+SHIFT+F21               <-- Excluded Files, Hotkeys, and Hotstrings
+SHIFT+F22               <-- Raw Hotkey List
+
+============================== MASTER-SCRIPT ===============================
+CAPSLOCK & BACKSPACE    <-- Reload MASTER-SCRIPT.ahk
+CAPSLOCK & C            <-- Delete Key
+CAPSLOCK & F            <--This will open the selected OR active path from an Explorer Window or Save/Open Dialog in FreeCommander OR VICE-VERSA
+CAPSLOCK & F11          <-- Open the Settings GUI for MASTER-SCRIPT.AHK
+CAPSLOCK & F12          <-- Open BPTV-LAUNCHER
+CAPSLOCK & G            <--This will return the selected OR active path from an Explorer Window/Save/Open Dialog OR FCXE in a MsgBox
+CAPSLOCK & P            <-- Toggle CapsLockCheck on or Off
+CAPSLOCK & Q            <-- Exit MASTER-SCRIPT and child AHK Scripts
+CAPSLOCK & V            <-- Backspace Key
+CAPSLOCK & WHEELDOWN    <-- Send Control+Page Down - for changing tabs in apps that support it (Chrome, Atom)
+CAPSLOCK & WHEELUP      <-- Send Control+Page Up - for changing tabs in apps that support it (Chrome, Atom)
+SCROLLLOCK & BACKSPACE  <-- Reload MASTER-SCRIPT.ahk
+SCROLLLOCK & F11        <-- Open the Settings GUI for MASTER-SCRIPT.AHK
+SCROLLLOCK & F12        <-- Open BPTV-LAUNCHER
+SHIFT+CTRL+ALT+Q        <-- Edit PRIVATE\QUICKTYPE-HOTSTRINGS.ahk
+SHIFT+CTRL+ALT+S        <-- Edit PRIVATE\MASTER-SCAF-KEYS.ahk
+WIN+CTRL+ALT+SHIFT+Q    <-- Launches Office Hub
+WIN+CTRL+SHIFT+F        <-- Nuke Firefox
+WIN+CTRL+SHIFT+P        <-- Nuke Premiere
+~LALT                   <-- Blocks Left Alt key from triggering the menus when pressed by itself. The Right Alt key will still work in the default fashion.
+~LALT UP                <-- Part of blocking Left Alt Key from triggering menus
+~LWIN                   <-- Blocks Left Window key from triggering the Start Menu when pressed by itself. The Right Window key will still work in the default fashion.
+
+================ PPRO_RIGHT_CLICK_TIMELINE_TO_MOVE_PLAYHEAD ================
+RBUTTON                 <-- PPRO: Right Click on Blank Timeline area to move playhead
+
+=========================== PREMIERE-PRO-HOTKEYS ===========================
+ALT+F                   <-- PPRO: closing the Menu that gets opened when this key combo is sent
+ALT+M                   <-- PPRO: closing the Menu that gets opened when this key combo is sent
+ALT+W                   <-- PPRO: closing the Menu that gets opened when this key combo is sent
+ALT+Z                   <-- PPRO: Select clip @ playhead & delete it
+CTRL+1                  <-- PPRO: Step Left 1 second
+CTRL+2                  <-- PPRO: Step Left 5 seconds THEN Play
+CTRL+4                  <-- PPRO: Step Left 1 second
+CTRL+5                  <-- PPRO: Step Right 1 second
+CTRL+F1                 
+CTRL+F2                 
+CTRL+SHIFT+2            <-- PPRO: Step Left 10 seconds THEN Play
+CTRL+SHIFT+3            <-- PPRO: Step Left 5 seconds THEN Play
+SHIFT+ALT+I             <-- Get Current Timecode of Sequence
+SHIFT+CTRL+ALT+F2       <-- open a clip marker, select all, copy text to clipboard, close clip marker, create seq marker, edit seq marker, paste text
+SHIFT+CTRL+ALT+F3       <-- Step Left 2 seconds
+SHIFT+CTRL+ALT+F4       <-- Step Right 2 Seconds
+SHIFT+CTRL+ALT+F7       <-- Step Left 5 seconds
+SHIFT+CTRL+ALT+F8       <-- Step Right 5 Seconds
+SHIFT+CTRL+ALT+F9       <-- Go to next edit then add edit to active tracks
+WIN+CTRL+ALT+F1         <-- move ahead 1 sec, mark in, go to next xsit, back 1 frame, mark out, & extract
+WIN+F1                  <-- Focus the Timeline Window
+
+================================ QUICKTYPE =================================
+<HS>  ]d                <-- Send date ONLY as text
+<HS>  ]t                <-- Send time ONLY as text
+<HS>  ]ts               <-- Send time & date as text
+
+==o====o====o====o====o== QUICKTYPE-HOTSTRINGS ==o====o====o====o====o====o=
+<HS>  bp                = buttonpusher ;<-- replace with 'buttonpusher'
+<HS>  bps               = buttonpusherstudios ;<-- replace with 'buttonpusherstudios'
+<HS>  embp              = ben@buttonpusher.tv ;<-- replace with 'ben@buttonpusher.tv'
+<HS>  embps             = ben@buttonpusherstudios.com ;<-- replace with 'ben@buttonpusherstudios.com'
+<HS>  embptv            = buttonpushertv@gmail.com ;<-- replace with 'buttonpushertv@gmail.com'
+<HS>  empmben           = ben@postopmedia.com ;<-- replace with 'ben@postopmedia.com'
+<HS>  empmbh            = bhoward@postopmedia.com ;<-- replace with 'bhoward@postopmedia.com'
+<HS>  mspt              = MONSTAsplit ;<-- replace with 'MONSTAsplit
+
+--o----o----o----o----o----o----o-- GDIP --o----o----o----o----o----o----o--
+--o----o----o----o----o-- MASTER-FUNCTIONS --o----o----o----o----o----o----o
+--o----o----o----o----o-- MASTER-SCAF-KEYS --o----o----o----o----o----o----o
+--o----o----o----o----o-- PREMIERE-PRO-FUNCTIONS --o----o----o----o----o----
