@@ -170,10 +170,10 @@ guiCloseMethod := 3
 
 ;MSGBOX, , DEBUG, %firstHK%`n%secondHK%`n%thirdHK%`n%fourthHK%
 
-HotKey, %firstHK%, firstShower ; <-- Set 2nd Hotkey for KBF1 (firstShower: a text file shower)
-HotKey, %secondHK%, secondShower ; <-- Set 2nd Hotkey for KBF2 (secondShower: a image file shower - App-Specific)
-HotKey, %thirdHK%, thirdShower ; <-- Set 2nd Hotkey for KBF3 (thirdShower: a text file shower - App-Specific)
-HotKey, %fourthHK%, fourthShower ; <-- Set 2nd Hotkey for KBF4 (fourthShower: a image file shower - Location Specific)
+HotKey, %firstHK%, firstShower ; <-- KBF1 (firstShower: a tabbed text file shower)
+HotKey, %secondHK%, secondShower ; <-- KBF2 (secondShower: a image file shower - App-Specific)
+HotKey, %thirdHK%, thirdShower ; <-- KBF3 (thirdShower: a text file shower - App-Specific)
+HotKey, %fourthHK%, fourthShower ; <-- KBF4 (fourthShower: a image file shower - Location Specific)
 
 return ; this prevents the script from processing the labels below at script launch (at least the firstShower label...)
 

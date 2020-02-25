@@ -169,7 +169,7 @@ CapsLock & c:: ; <-- Delete Key
 	Send, {Delete} ; where you often are using one hand on mouse/trackball and one hand on keys the delete & backspace keys can be a long reach (or on right-half of split keyboard)
 return
 
-CapsLock & F:: ;<--This will open the selected OR active path from an Explorer Window or Save/Open Dialog in FreeCommander OR VICE-VERSA
+CapsLock & F:: ; <-- This will open the selected OR active path from an Explorer Window or Save/Open Dialog in FreeCommander OR VICE-VERSA
 	WinGetActiveTitle, activeTitle
 	If activeTitle contains FreeCommander ; checking to see if you might already be sitting in FreeCommander
 	{
@@ -181,7 +181,7 @@ CapsLock & F:: ;<--This will open the selected OR active path from an Explorer W
 	}
 	Return
 
-CapsLock & G:: ;<--This will return the selected OR active path from an Explorer Window/Save/Open Dialog OR FCXE in a MsgBox
+CapsLock & G:: ; <-- This will return the selected OR active path from an Explorer Window/Save/Open Dialog OR FCXE in a MsgBox
 	Run, %A_ScriptDir%\SCRIPTS-UTIL\STREAMDECK\DRAKE\getPATH.ahk
 	Return
 
@@ -272,9 +272,9 @@ return
     RemoveToolTip(-2000)
 return
 
-+^!S::Run "%Settings_pathToEditor%" "PRIVATE\MASTER-SCAF-KEYS.ahk" ;<-- Edit PRIVATE\MASTER-SCAF-KEYS.ahk
++^!S::Run "%Settings_pathToEditor%" "PRIVATE\MASTER-SCAF-KEYS.ahk" ; <-- Edit PRIVATE\MASTER-SCAF-KEYS.ahk
 ; Above edits master file of app-specific & one-off SCAF keys. Just keeping them in one place, so I don't need to create scripts for each and every app I want/need to make SCAF keys in. See comments in that file for more info
-+^!Q::Run "%Settings_pathToEditor%" "PRIVATE\QUICKTYPE-HOTSTRINGS.ahk" ;<-- Edit PRIVATE\QUICKTYPE-HOTSTRINGS.ahk
++^!Q::Run "%Settings_pathToEditor%" "PRIVATE\QUICKTYPE-HOTSTRINGS.ahk" ; <-- Edit PRIVATE\QUICKTYPE-HOTSTRINGS.ahk
 ; Above edits my Quicktype Hotstrings. These commands will do auto-replacment of commands as you type. See comments in SCRIPS-UTIL\QuickType.ahk & the above .txt file for more info
 #IfWinActive
 

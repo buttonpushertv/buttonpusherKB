@@ -47,7 +47,7 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 
 #F1::prFocus("timeline") ; <-- Focus the Timeline Window
 
-^1:: ; <-- PPRO: Step Left 1 second
+^1:: ; <-- Step Left 1 second
 Send, ^+a
 sleep, sleepShort
 Send, {NumpadSub}
@@ -59,7 +59,7 @@ sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
 
-^2:: ; <-- PPRO: Step Left 5 seconds THEN Play
+^2:: ; <-- Step Left 5 seconds THEN Play
 Send, {2}
 sleep, sleepShort
 Send, ^+a
@@ -75,7 +75,7 @@ sleep, sleepMicro
 Send, 3
 return
 
-^+2:: ; <-- PPRO: Step Left 10 seconds THEN Play
+^+2:: ; <-- Step Left 10 seconds THEN Play
 Send, {2}
 sleep, sleepShort
 Send, ^+a
@@ -93,7 +93,7 @@ sleep, sleepMicro
 Send, 3
 return
 
-^+3:: ; <-- PPRO: Step Left 5 seconds THEN Play
+^+3:: ; <-- Step Left 5 seconds THEN Play
 Send, {2}
 sleep, sleepShort
 Send, ^+a
@@ -109,8 +109,8 @@ sleep, sleepMicro
 Send, 3
 return
 
-^F1::
-^4:: ; <-- PPRO: Step Left 1 second
+^F1:: ; <-- Step Left 1 second
+^4:: ; <-- Step Left 1 second
 Send, ^+a
 sleep, sleepShort
 Send, {NumpadSub}
@@ -122,8 +122,8 @@ sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
 
-^F2::
-^5:: ; <-- PPRO: Step Right 1 second
+^F2:: ; <-- Step Right 1 second
+^5:: ; <-- Step Right 1 second
 Send, ^+a
 sleep, sleepShort
 Send, {NumpadAdd}
@@ -135,19 +135,19 @@ sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
 
-!f:: ; <-- PPRO: closing the Menu that gets opened when this key combo is sent
+!f:: ; <-- closing the Menu that gets opened when this key combo is sent
 Send, !f{ESC}
 return
 
-!m:: ; <-- PPRO: closing the Menu that gets opened when this key combo is sent
+!m:: ; <-- closing the Menu that gets opened when this key combo is sent
 Send, !m{ESC}
 return
 
-!w:: ; <-- PPRO: closing the Menu that gets opened when this key combo is sent
+!w:: ; <-- closing the Menu that gets opened when this key combo is sent
 Send, !w{ESC}
 return
 
-!z:: ; <-- PPRO: Select clip @ playhead & delete it
+!z:: ; <-- Select clip @ playhead & delete it
 Send, d ; PPro Key for 'select clip at playhead'
 Send, {DEL} ; PPro Key for 'remove'
 return

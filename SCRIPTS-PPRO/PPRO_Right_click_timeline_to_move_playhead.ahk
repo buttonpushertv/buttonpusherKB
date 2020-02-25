@@ -45,7 +45,7 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe ;exact name was gotten from windowspy
 
-Rbutton:: ; <-- PPRO: Right Click on Blank Timeline area to move playhead
+Rbutton:: ; <-- Right Click on Blank Timeline area to move playhead
 MouseGetPos X, Y
 PixelGetColor colorr, %X%, %Y%, RGB
 ; I removed Taran's "deselect-all" step. I have no idea why you'd ever want to ever "deselect all" when moving the playhead - BEN
