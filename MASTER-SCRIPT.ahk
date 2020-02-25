@@ -185,6 +185,10 @@ CapsLock & G:: ; <-- This will return the selected OR active path from an Explor
 	Run, %A_ScriptDir%\SCRIPTS-UTIL\STREAMDECK\DRAKE\getPATH.ahk
 	Return
 
+CapsLock & L:: ; <-- This will launch BPTV-LAUNCHX
+    Run, %A_ScriptDir%\UTIL-APPS\BPTV-LAUNCHX\launcher.ahk
+    Return
+
 CapsLock & v:: ; <-- Backspace Key
 Send, {BackSpace} ; same as above comment
 return
