@@ -182,12 +182,14 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 		; first we define paths to the various files we want to have on this Cheat Sheet GUI
 			RegExMatch(A_ThisHotkey, "F.*", thisKeyToWaitFor) ; this RegExMatch sets a variable to the function key used to invoke this cheat sheet. Basically it scrapes off whatever modifiers have been used to invoke it.
 			firstTabFile := "SUPPORTING-FILES\CHEAT-SHEETS\KB1-MAIN.txt"
-			secondTabFile := "SUPPORTING-FILES\CHEAT-SHEETS\KB1-OFFICE.txt"
+			secondTabFile := "PRIVATE\MASTER-SCAF-KEYS.ahk"
 			thirdTabFile := "PRIVATE\QUICKTYPE-HOTSTRINGS.txt"
+			fourthTabFile := "SUPPORTING-FILES\CHEAT-SHEETS\KB1-OFFICE.txt"
 		; next we read them into variables
 			FileRead, firstTab, %firstTabFile%
 			FileRead, secondTab, %secondTabFile%
 			FileRead, thirdTab, %thirdTabFile%
+			FileRead, fourthTab, %fourthTabFile%
 		; a few commands here to format some time related text elements
 			FormatTime, now,, hh:mm tt
 			today = %A_YYYY%-%A_MMM%-%A_DD%
@@ -197,18 +199,20 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 			Gui, TabText:Margin, 30, 30
 			Gui, TabText:font, s12 c%foregroundColor%, Consolas
 		; the line below is where we define the number and names of tabs. If you wish to add tabs, you will need to add the new tabs here. Make sure the order you put them into matches the order of the tab content you define above.
-			Gui, TabText:add, Tab3,, Main|Office|Quicktype
+			Gui, TabText:add, Tab3,, Main|SCAF|Quicktype|Office
 			Gui, TabText:Tab, 1
 			Gui, TabText:add, text, h-1 , %firstTab%
 			Gui, TabText:Tab, 2
 			Gui, TabText:add, text, h-1, %secondTab%
 			Gui, TabText:Tab, 3
 			Gui, TabText:add, text, h-1, %thirdTab%
+			Gui, TabText:Tab, 4
+			Gui, TabText:add, text, h-1, %fourthTab%
 		; below we unset working with any tab.
 			Gui, TabText:Tab
 		; since tabs are unset (no longer being worked with) this button appears outside of the tabs area
 			Gui, TabText:Add, Button, w180, &Edit Sheets
-			Gui, TabText:Add, Text, , %now% - %today%  -  Current System Location(%Location_currentSystemLocation%): %currentSystemLocationName%  -  Keyboard has F13 to F24? %yesF13% ; displaying time and date text.
+			Gui, TabText:Add, Text, , %now% - %today%  -  Current System Location(%Location_currentSystemLocation%): %currentSystemLocationName%  -  Keyboard has F13 to F24? %yesF13%  -  Keyboard has Hyper: %yesHYPER% ; displaying time and date text.
 			Gui, TabText:Show
 
 			If (guiCloseMethod = 1) {
