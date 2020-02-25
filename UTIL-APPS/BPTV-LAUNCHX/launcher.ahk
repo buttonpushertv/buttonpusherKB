@@ -129,11 +129,11 @@ else
 }
 
 y_axis:=y_axis+(height+spacer*3)
-x_axis:=90
+x_axis:=10
 height:=30
-; change the above value to 10 if you enable the Delete All button below. Otherwise it should be 90.
-;Gui,Add,Button,x%x_axis% y%y_axis% w%width% h%height% CBlue,&Delete_All ;adding the DELETE ALL button
-;x_axis:=(x_axis+width+spacer)
+; change the above x_axis value to 10 if you enable the Delete All button below. Otherwise it should be 90.
+Gui,Add,Button,x%x_axis% y%y_axis% w%width% h%height% CBlue,&Delete_All ;adding the DELETE ALL button
+x_axis:=(x_axis+width+spacer)
 Gui,Add,Button,x%x_axis% y%y_axis% w%width% h%height% cWhite gDelete ,&Remove A Button ;ADDING THE Remove BUTTON
 x_axis:=(x_axis+width+spacer)
 Gui,Add,Button,x%x_axis% y%y_axis% w%width% h%height% cWhite ,&Add_New ;ADDING THE +ADD BUTTON
@@ -177,7 +177,7 @@ IfMsgBox No
 	return
 
 afterClick:
-	;gosub quit
+	gosub quit
 	return
 
 /*

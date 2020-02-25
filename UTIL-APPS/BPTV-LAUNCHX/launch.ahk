@@ -9,12 +9,13 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 FileGetTime ScriptStartModTime, %A_ScriptFullPath%
 SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
 
-FileCreateShortcut,%A_ScriptFullPath%,%A_Startup%/launch.lnk
-IfExist,%A_Startup%/launch.lnk
-{
-FileDelete,%A_Startup%/launch.lnk
-FileCreateShortcut,%A_ScriptFullPath%,%A_Startup%/launch.lnk
-}
+; Uncomment the lines below if you want to make sure this script gets launched at every boot
+;FileCreateShortcut,%A_ScriptFullPath%,%A_Startup%/launch.lnk
+;IfExist,%A_Startup%/launch.lnk
+;{
+;FileDelete,%A_Startup%/launch.lnk
+;FileCreateShortcut,%A_ScriptFullPath%,%A_Startup%/launch.lnk
+;}
 
 #NoEnv
 #SingleInstance, force
