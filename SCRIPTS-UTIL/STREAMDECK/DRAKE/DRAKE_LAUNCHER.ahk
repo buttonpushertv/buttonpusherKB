@@ -16,6 +16,7 @@ RunScript:
 RunScript2:
     GuiControlGet, Script
     Run, %A_AhkPath% "%Script%"
+    ExitApp
     Return
 
 GuiClose:

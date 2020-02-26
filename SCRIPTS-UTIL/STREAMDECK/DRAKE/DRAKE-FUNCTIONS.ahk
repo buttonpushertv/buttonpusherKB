@@ -66,13 +66,15 @@ InstantExplorer(originalPath,pleasePrepend)
   ; I just find it easier to refer to it this way & it provides a bit more flexibility
   ; Basically, if pleasePrepend is set to '1', then it will prepend the 'currentWorkingProject' path onto whatever is sent to the Function.
   ; If you want to visit a location outside of the currentWorkingProject, then you can set pleasePrepend to 0 and send the full path to your location.
-;MSGBOX,,DEBUG, from InstantExplorer()`nf_path has a value: %f_path%
+	;MSGBOX,,DEBUG, from InstantExplorer()`nf_path has a value: %f_path%
 if (pleasePrepend = 1) {
     fullPathToOpen = %currentWorkingProject%\%originalPath%
 	checkForProjectPath: ; this is going to be triggered if the path you are trying to access does not exist.
+	parentFolderStringLocation := InStr(fullPathToOpen, "\",,0,2)
+	parentFolder := SubStr(fullPathToOpen, 1, parentFolderStringLocation)
 	if !FileExist(fullPathToOpen)
 	{
-	MsgBox, 8244, PATH DOES NOT EXIST, %quotedPathToOpen% does not exist.`n`nWould you like to create & open it?`n`n`nSelect 'No' to open Root of Current Working Project:`n%currentWorkingProject%
+	MsgBox, 8244, PATH DOES NOT EXIST, %fullPathToOpen% does not exist.`n`nWould you like to create & open it?`n`n`nSelect 'No' to open Parent folder:`n%parentFolder%
 	IfMsgBox Yes
 		{
 		FileCreateDir, %fullPathToOpen%
@@ -80,8 +82,7 @@ if (pleasePrepend = 1) {
 		}
 	IfMsgBox No
 		{
-		fullPathToOpen = %currentWorkingProject%
-		quotedPathToOpen := """" . fullPathToOpen . """"
+		fullPathToOpen := parentFolder
 		goto checkForProjectPath
 		}
 	}
@@ -368,12 +369,13 @@ openProjectInFCXE(pathToOpen, pleasePrepend){
   if (pleasePrepend = 1) {
       fullPathToOpen = %currentWorkingProject%\%pathToOpen%
     }
+	checkForPath:
     quotedPathToOpen := """" . fullPathToOpen . """" ;THIS ADDS QUOTATION MARKS AROUND EVERYTHING SO THAT IT WORKS AS A STRING, NOT A VARIABLE.
     ;MSGBOX,,DEBUG, from openProjectInFCXE()`nfullPathToOpen has a value: %fullPathToOpen%`nAnd quotedPathToOpen is:%quotedPathToOpen%
-    checkForPath:
+    
     if !FileExist(fullPathToOpen)
     {
-      MsgBox, 8244, PATH DOES NOT EXIST, %quotedPathToOpen% does not exist.`n`nWould you like to create & open it?`n`n`nSelect 'No' to open Root of Current Working Project:`n%currentWorkingProject%
+      MsgBox, 8244, PATH DOES NOT EXIST, %quotedPathToOpen% does not exist.`n`nWould you like to create & open it?`n`n`nSelect 'No' to open Parent of:`n%currentWorkingProject%
       IfMsgBox Yes
         {
         FileCreateDir, %fullPathToOpen%
@@ -381,9 +383,9 @@ openProjectInFCXE(pathToOpen, pleasePrepend){
         }
       IfMsgBox No
         {
-        fullPathToOpen = %currentWorkingProject%
-        quotedPathToOpen := """" . fullPathToOpen . """"
-        goto checkForPath
+		parentFolderStringLocation := InStr(fullPathToOpen, "\",,0,2)
+		fullPathToOpen := SubStr(fullPathToOpen, 1, parentFolderStringLocation)
+		goto checkForPath
         }
     } else {
     Run, %Settings_pathToFCXE% %Settings_FCXEparams% %quotedPathToOpen%
@@ -398,7 +400,7 @@ openInFCXE(selectedPath){
 	quotedPathToOpen := """" . selectedPath . """" ;THIS ADDS QUOTATION MARKS AROUND EVERYTHING SO THAT IT WORKS AS A STRING, NOT A VARIABLE.
 	;MsgBox, %Settings_pathToFCXE% %Settings_FCXEparams% %quotedPathToOpen%
     Run, %Settings_pathToFCXE% %Settings_FCXEparams% %quotedPathToOpen%
-    ; There is a trick about the way FCXE recieves it's parameters: If you are sending the one where you tell it which panel to open in ('/L=' or '/R=') it must not have a space between the parameter and the path you want to open. However, if you just want to open the path in the active panel of the current instance you must send '/C' with a space. SO, if you want to force it to open in a specific panel, you will need to remove the space between the 2 %'s above (like this: "%Settings_FCXEparams%%quotedPathToOpen%")
+    ; There is a trick about the way FCXE recieves it's parameters: If you are sending the one where you tell it which panel to open in ('/ L=' or '/R=') it must not have a space between the parameter and the path you want to open. However, if you just want to open the path in the active panel of the current instance you must send '/C' with a space. SO, if you want to force it to open in a specific panel, you will need to remove the space between the 2 %'s above (like this: "%Settings_FCXEparams%%quotedPathToOpen%")
 	return
     }
 

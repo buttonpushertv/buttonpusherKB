@@ -2,7 +2,7 @@ SetWorkingDir %A_ScriptDir%
 #Include %A_ScriptDir%\DRAKE-FUNCTIONS.ahk
 projectSubfolder = CAPTIONING
 f_class := whichWindowType()
-if f_class in #32770,ExploreWClass,CabinetWClass
+if f_class contains #32770,ExploreWClass,CabinetWClass,AutoHotKeyGUI
     {
     InstantExplorer(projectSubfolder,1)
     }
