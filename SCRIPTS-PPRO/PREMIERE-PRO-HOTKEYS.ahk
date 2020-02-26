@@ -28,7 +28,7 @@ splashScreenTimeout = %3%
 #Include %A_ScriptDir%\PREMIERE-PRO-FUNCTIONS.ahk
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading PREMIERE PRO HOTKEYS Script.`n`nCAPS+F2 to show CheatSheet of Keyboard Layout (BEN-CC19.kys).
+SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading PREMIERE PRO HOTKEYS Script.`n`nUse Cheat Sheet Hotkeys to show hotkeys/shortcuts.`n(Sheets KB2 & KB3)
 WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
 SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 ;===== END OF AUTO-EXECUTE =====================================================================

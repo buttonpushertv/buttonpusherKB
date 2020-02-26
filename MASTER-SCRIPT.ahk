@@ -72,7 +72,7 @@ INI_Load(iniFile)
 FileRead, version, %versionFile% ; reading the version from versionFile
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading MASTER AHK Script - Version: %version%CAPS-F1 for CheatSheet of AHK Hotkeys.`nCAPS-Q to quit MASTER-SCRIPT & child scripts.`nCAPS-F11 to edit settings(MASTER-SETTINGS.ahk)
+SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading MASTER AHK Script - Version: %version%Use Cheat Sheet Hotkeys to show hotkeys/shortcuts.`nCAPS-Q to quit MASTER-SCRIPT and Child scripts.`nCAPS/SCRLK-F11 to edit settings(MASTER-SETTINGS.ahk)
 WinMove, Launching %A_ScriptFullPath%, , %splashScreenStartX%, %splashScreenStartY%
 
 splashScreenStartY += splashScreenSpacing ; adding a bit of space after this Splash Screen

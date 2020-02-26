@@ -28,11 +28,9 @@ splashScreenTimeout = %3%
 Location_currentSystemLocation = %4%
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Expand text shortcuts.`nEdit this file to add/change shortcuts.
+SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Expand text shortcuts.`nEdit this file to add/change shortcuts.See Cheat Sheet #1 to show hotkeys/shortcuts.
 WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
 SetTimer, RemoveSplashScreen, %splashScreenTimeout%
-Sleep, sleepDeep
-SplashTextOff
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================

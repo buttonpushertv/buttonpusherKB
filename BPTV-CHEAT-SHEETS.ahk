@@ -61,15 +61,6 @@ IniRead, keyboardHasHyperKey, %iniFile%, Settings, keyboardHasHyperKey
 yesHYPER := "FALSE"
 yesF13 := "FALSE"
 
-If (keyboardHasF13toF24) {
-	yesF13 := "TRUE"
-}
-
-If (keyboardHasHyperKey) {
-	yesHYPER := "TRUE"
-}
-
-
 firstPrimeBaseHK := "F13"
 secondPrimeBaseHK := "F14"
 thirdPrimeBaseHK := "F15"
@@ -80,13 +71,24 @@ secondAltBaseHK := "F2"
 thirdAltBaseHK := "F3"
 fourthAltBaseHK := "F4"
 
+keysForThisConfig := "#1)" . firstAltBaseHK . " #2) " . secondAltBaseHK . " #3) " . thirdAltBaseHK . " #4) " . fourthAltBaseHK
+
+modForThisConfig := "CAPSLOCK"
+
+If (keyboardHasF13toF24) {
+	yesF13 := "TRUE"
+	keysForThisConfig := "#1) " . firstPrimeBaseHK . " #2) " . secondPrimeBaseHK . " #3) " . thirdPrimeBaseHK . " #4) " . fourthPrimeBaseHK
+}
+
+If (keyboardHasHyperKey) {
+	yesHYPER := "TRUE"
+	modForThisConfig := "HYPER"
+}
+
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading BPTV-CHEAT-SHEETS`nKeyboard has F13 to F24? %yesF13%`nKeyboard has Hyper Key? %yesHYPER%`nPrimeBaseHKs: %firstPrimeBaseHK% %secondPrimeBaseHK% %thirdPrimeBaseHK% %fourthPrimeBaseHK%`nAltBaseHKs: %firstAltBaseHK% %secondAltBaseHK% %thirdAltBaseHK% %fourthAltBaseHK%
+SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading BPTV-CHEAT-SHEETS`nUse this modifier: %modForThisConfig%`nwith these keys: %keysForThisConfig%`nto show/hide Cheat Sheets
 WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
 SetTimer, RemoveSplashScreen, %splashScreenTimeout%
-Sleep, sleepDeep
-SplashTextOff
-
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -235,7 +237,7 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 			goto CloseTabTextGui
 
 			TabTextButtonEditSheets:
-				Run %pathToEditor% %firstTabFile% %secondTabFile% %thirdTabFile%
+				Run %pathToEditor% %firstTabFile% %secondTabFile% %thirdTabFile% %fourthTabFile%
 
 			CloseTabTextGui:
 				squashGUI(activeWin)
