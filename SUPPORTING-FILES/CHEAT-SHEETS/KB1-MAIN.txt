@@ -16,7 +16,14 @@ CAPS+V              <--BackSpace
 
 CAPS+F              <--Open Path from an Explorer Window or Save/Open Dialog in FreeCommander
 
+CAPS+L              <-- This will launch BPTV-LAUNCHX
+
 CAPS+P              <-- Toggle CapsLockCheck On or Off
+
+WIN+CTRL+ALT+SHIFT+Q  <-- Launches Office Hub
+
+CAPS+WHEELDOWN    <-- Send Control+Page Down - for changing tabs in apps that support it (Chrome, Atom)
+CAPS+WHEELUP      <-- Send Control+Page Up - for changing tabs in apps that support it (Chrome, Atom)
 
 (For these below you can use CAPS or SCRLK as the modifier)
 CAPS/SCRLK+F11      <--Open the Settings GUI for MASTER-SCRIPT.AHK
@@ -27,12 +34,13 @@ CAPS/SCRLK+Q        <--Exit MASTER-SCRIPT and child AHK Scripts
 {ON WINDOWS DESKTOP ONLY}
 WIN+CTRL+SHIFT+F    <--Nuke Firefox (click Desktop first)
 WIN+CTRL+SHIFT+P    <--Nuke Premiere (click Desktop first)
-WIN+CTRL+SHIFT+Q    <--Edit PRIVATE\QUICKTYPE-HOTSTRINGS.ahk
+SHIFT+CTRL+ALT+Q    <-- Edit PRIVATE\QUICKTYPE-HOTSTRINGS.ahk
+SHIFT+CTRL+ALT+S    <-- Edit PRIVATE\MASTER-SCAF-KEYS.ahk
 
 == STICKIES HOTKEYS ===================================================================
-WIN+ALT+S             <--New Sticky
-WIN+ALT+H             <--Show All/Show Hide
-WIN+SHIFT+ALT+S       <--New Sticky From Clipboard
-WIN+ALT+M             <--Open Manage Dialog
-WIN+ALT+SHIFT+W       <--Screen Grab An Area
-WIN+ALT+X             <--Reveal Secret Stickies
+WIN+ALT+S           <--New Sticky
+WIN+ALT+H           <--Show All/Show Hide
+WIN+SHIFT+ALT+S     <--New Sticky From Clipboard
+WIN+ALT+M           <--Open Manage Dialog
+WIN+ALT+SHIFT+W     <--Screen Grab An Area
+WIN+ALT+X           <--Reveal Secret Stickies
