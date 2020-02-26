@@ -135,17 +135,51 @@ sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
 
+; The section below addresses the issue of the Alt key opening the menu bar items. Even though there is a block in MASTER-SCRIPT that prevents the Left Alt key from opening menu items, if you press the Alt plus another key, it will still open the menu. The block just prevents the Left Alt from setting the focus on the menu bar until you hit Escape. If you want to use Alt with C,E,F,G,H,M,S,V, or W you need to immediatley send {ESC} so that it forces the menu to close. (For plain Alt+those keys, I have them all set here.)
+
+!c:: ; <-- closing the Menu that gets opened when this key combo is sent
+Send, !c{ESC}
+return
+
+!e:: ; <-- closing the Menu that gets opened when this key combo is sent
+Send, !e{ESC}
+return
+
 !f:: ; <-- closing the Menu that gets opened when this key combo is sent
 Send, !f{ESC}
+return
+
+!g:: ; <-- closing the Menu that gets opened when this key combo is sent
+Send, !g{ESC}
+return
+
+!h:: ; <-- closing the Menu that gets opened when this key combo is sent
+Send, !h{ESC}
 return
 
 !m:: ; <-- closing the Menu that gets opened when this key combo is sent
 Send, !m{ESC}
 return
 
+!s:: ; <-- closing the Menu that gets opened when this key combo is sent
+Send, !s{ESC}
+return
+
+!v:: ; <-- closing the Menu that gets opened when this key combo is sent
+Send, !v{ESC}
+return
+
 !w:: ; <-- closing the Menu that gets opened when this key combo is sent
 Send, !w{ESC}
 return
+
+; For some reason, Alt+Shift+S still opens the 'Sequence' menu. So this should stop that
+
++!s:: ; <-- closing the Menu that gets opened when this key combo is sent
+Send, +!s{ESC}
+return
+
+; It doesn't do it for Alt+Shift+E though....
 
 !z:: ; <-- Select clip @ playhead & delete it
 Send, d ; PPro Key for 'select clip at playhead'
