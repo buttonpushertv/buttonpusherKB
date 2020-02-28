@@ -91,11 +91,12 @@ If (keyboardHasHyperKey) {
 ; Getting some screen info and sizing the GUI window (currently only implemented on the 'firstShower')
 
 SysGet, monSize, Monitor
-;MsgBox, Left: %Mon2Left% -- Top: %Mon2Top% -- Right: %Mon2Right% -- Bottom %Mon2Bottom%.
+;MsgBox, Left: %monSizeLeft% -- Top: %monSizeTop% -- Right: %monSizeRight% -- Bottom %monSizeBottom%.
 gHeight := (monSizeBottom * .8)
-elementHeight := (gHeight -190)
+elementHeight := (gHeight * .85)
 gWidth := (monSizeRight * .6)
-elementWidth := (gWidth - 120)
+elementWidth := (gWidth * .9)
+gButtonStartY := (gHeight * .96)
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading BPTV-CHEAT-SHEETS`nUse this modifier: %modForThisConfig%`nwith these keys: %keysForThisConfig%`nto show/hide Cheat Sheets
@@ -225,7 +226,7 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 		; below we unset working with any tab.
 			Gui, TabText:Tab
 		; since tabs are unset (no longer being worked with) this button appears outside of the tabs area
-			Gui, TabText:Add, Button, x30 y1100 w180, &Edit Sheets
+			Gui, TabText:Add, Button, x30 y%gButtonStartY% w180, &Edit Sheets
 			;Gui, TabText:Add, Text, xp+200 yp, gWidth:%gWidth% - gHeight:%gHeight% - elementWidth:%elementWidth% - elementHeight:%elementHeight%
 			Gui, TabText:Add, Text, xp+200 yp+15 , %now% - %today%  -  Current System Location(%Location_currentSystemLocation%): %currentSystemLocationName%  -  Keyboard has F13 to F24? %yesF13%  -  Keyboard has Hyper: %yesHYPER% ; displaying time and date text.
 			
