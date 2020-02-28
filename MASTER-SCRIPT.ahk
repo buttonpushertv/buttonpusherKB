@@ -276,6 +276,21 @@ return
     RemoveToolTip(-2000)
 return
 
++^!p:: ; <-- Open selected file in Photoshop (only from Explorer Window)
+	ClipSaved := ClipboardAll   ; Save the entire clipboard to a variable of your choice.
+	; ... here make temporary use of the clipboard, such as for pasting Unicode text via Transform Unicode ...
+	Clipboard =
+	Send, ^c
+	ClipWait
+	Pfad = %Clipboard%
+	;SplitPath, Pfad, Filename
+	;msgbox, %Pfad%
+	Clipboard := ClipSaved   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
+	ClipSaved =   ; Free the memory in case the clipboard was very large.  
+	Run, "C:\Program Files\Adobe\Adobe Photoshop 2020\Photoshop.exe" "%Pfad%"
+	WinActivate, ahk_exe Photoshop.exe
+	Return
+
 +^!S::Run "%Settings_pathToEditor%" "PRIVATE\MASTER-SCAF-KEYS.ahk" ; <-- Edit PRIVATE\MASTER-SCAF-KEYS.ahk
 ; Above edits master file of app-specific & one-off SCAF keys. Just keeping them in one place, so I don't need to create scripts for each and every app I want/need to make SCAF keys in. See comments in that file for more info
 +^!Q::Run "%Settings_pathToEditor%" "PRIVATE\QUICKTYPE-HOTSTRINGS.ahk" ; <-- Edit PRIVATE\QUICKTYPE-HOTSTRINGS.ahk
