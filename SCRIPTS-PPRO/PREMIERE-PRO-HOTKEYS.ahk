@@ -141,9 +141,9 @@ return
 Send, !c{ESC}
 return
 
-!e:: ; <-- closing the Menu that gets opened when this key combo is sent
-Send, !e{ESC}
-return
+;!e:: ; <-- closing the Menu that gets opened when this key combo is sent
+;Send, !e{ESC}
+;return
 
 !f:: ; <-- closing the Menu that gets opened when this key combo is sent
 Send, !f{ESC}
