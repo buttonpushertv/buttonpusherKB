@@ -51,6 +51,9 @@ global showTaskBarPicture = 0
 global yposP
 global xposP
 global activeWin
+global gWidth
+global gHeight
+global elementHeight
 
 iniFile := "settings.ini"
 IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
@@ -84,6 +87,15 @@ If (keyboardHasHyperKey) {
 	yesHYPER := "TRUE"
 	modForThisConfig := "HYPER"
 }
+
+; Getting some screen info and sizing the GUI window (currently only implemented on the 'firstShower')
+
+SysGet, monSize, Monitor
+;MsgBox, Left: %Mon2Left% -- Top: %Mon2Top% -- Right: %Mon2Right% -- Bottom %Mon2Bottom%.
+gHeight := (monSizeBottom * .8)
+elementHeight := (gHeight -190)
+gWidth := (monSizeRight * .6)
+elementWidth := (gWidth - 120)
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading BPTV-CHEAT-SHEETS`nUse this modifier: %modForThisConfig%`nwith these keys: %keysForThisConfig%`nto show/hide Cheat Sheets
@@ -201,21 +213,23 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 			Gui, TabText:Margin, 30, 30
 			Gui, TabText:font, s12 c%foregroundColor%, Consolas
 		; the line below is where we define the number and names of tabs. If you wish to add tabs, you will need to add the new tabs here. Make sure the order you put them into matches the order of the tab content you define above.
-			Gui, TabText:add, Tab3,, Main|SCAF|Quicktype|Office
+			Gui, TabText:add, Tab3, x30 y30, Main|SCAF|Quicktype|Office
 			Gui, TabText:Tab, 1
-			Gui, TabText:add, text, h-1 , %firstTab%
+			Gui, TabText:add, text, w%elementWidth% h%elementHeight%, %firstTab%
 			Gui, TabText:Tab, 2
-			Gui, TabText:add, text, h-1, %secondTab%
+			Gui, TabText:add, edit, w%elementWidth% h%elementHeight% +ReadOnly -E0x200, %secondTab%
 			Gui, TabText:Tab, 3
-			Gui, TabText:add, text, h-1, %thirdTab%
+			Gui, TabText:add, text, w%elementWidth% h%elementHeight%, %thirdTab%
 			Gui, TabText:Tab, 4
-			Gui, TabText:add, text, h-1, %fourthTab%
+			Gui, TabText:add, text, w%elementWidth% h%elementHeight%, %fourthTab%
 		; below we unset working with any tab.
 			Gui, TabText:Tab
 		; since tabs are unset (no longer being worked with) this button appears outside of the tabs area
-			Gui, TabText:Add, Button, w180, &Edit Sheets
-			Gui, TabText:Add, Text, , %now% - %today%  -  Current System Location(%Location_currentSystemLocation%): %currentSystemLocationName%  -  Keyboard has F13 to F24? %yesF13%  -  Keyboard has Hyper: %yesHYPER% ; displaying time and date text.
-			Gui, TabText:Show
+			Gui, TabText:Add, Button, x30 y1100 w180, &Edit Sheets
+			;Gui, TabText:Add, Text, xp+200 yp, gWidth:%gWidth% - gHeight:%gHeight% - elementWidth:%elementWidth% - elementHeight:%elementHeight%
+			Gui, TabText:Add, Text, xp+200 yp+15 , %now% - %today%  -  Current System Location(%Location_currentSystemLocation%): %currentSystemLocationName%  -  Keyboard has F13 to F24? %yesF13%  -  Keyboard has Hyper: %yesHYPER% ; displaying time and date text.
+			
+			Gui, TabText:Show, h%gHeight% w%gWidth% Center
 
 			If (guiCloseMethod = 1) {
 				ToolTip, Press ESC to close Cheatsheet`n`n`n(This window will remain on top until it closes) ; this will display a ToolTip that gives you a bit of instruction
