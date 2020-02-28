@@ -141,6 +141,8 @@ return
 Send, !c{ESC}
 return
 
+;Alt+E can't be escaped immediatley becuase it closes the Export Media dialog.
+;(This problem probably exists on som eof the others too).
 ;!e:: ; <-- closing the Menu that gets opened when this key combo is sent
 ;Send, !e{ESC}
 ;return
