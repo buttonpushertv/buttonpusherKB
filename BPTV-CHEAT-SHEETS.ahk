@@ -92,12 +92,12 @@ If (keyboardHasHyperKey) {
 
 SysGet, monSize, Monitor
 gHeight := (monSizeBottom * .9)
-elementHeight := (gHeight - 200)
+elementHeight := (gHeight - 220)
 gWidth := (monSizeRight * .75)
 elementWidth := (gWidth - 120)
-gButtonStartY := (gHeight - 50)
+gButtonStartY := (gHeight - 60)
 
-screenFontSize := 12
+screenFontSize := 14
 
 If (monSizeRight < 1980) {
 	screenFontSize := 11
@@ -234,7 +234,7 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 		; since tabs are unset (no longer being worked with) this button appears outside of the tabs area
 			Gui, TabText:Add, Button, x30 y%gButtonStartY% w180, &Edit Sheets
 			Gui, TabText:Add, Text, xp+200 yp , %now% - %today% - gWidth:%gWidth% - gHeight:%gHeight% - elementWidth:%elementWidth% - elementHeight:%elementHeight% ; displaying time and date text.
-			Gui, TabText:Add, Text, xp yp+20 , Current System Location(%Location_currentSystemLocation%): %currentSystemLocationName% - Keyboard has F13 to F24? %yesF13% - Keyboard has Hyper: %yesHYPER% ; Displaying some keyboard settings
+			Gui, TabText:Add, Text, xp yp+25 , Current System Location(%Location_currentSystemLocation%): %currentSystemLocationName% - Keyboard has F13 to F24? %yesF13% - Keyboard has Hyper: %yesHYPER% ; Displaying some keyboard settings
 
 			Gui, TabText:Show, h%gHeight% w%gWidth% Center
 
