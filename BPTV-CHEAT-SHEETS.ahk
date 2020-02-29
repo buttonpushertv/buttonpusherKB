@@ -227,8 +227,8 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 			Gui, TabText:Tab
 		; since tabs are unset (no longer being worked with) this button appears outside of the tabs area
 			Gui, TabText:Add, Button, x30 y%gButtonStartY% w180, &Edit Sheets
-			;Gui, TabText:Add, Text, xp+200 yp, gWidth:%gWidth% - gHeight:%gHeight% - elementWidth:%elementWidth% - elementHeight:%elementHeight%
-			Gui, TabText:Add, Text, xp+200 yp+15 , %now% - %today%  -  Current System Location(%Location_currentSystemLocation%): %currentSystemLocationName%  -  Keyboard has F13 to F24? %yesF13%  -  Keyboard has Hyper: %yesHYPER% ; displaying time and date text.
+			Gui, TabText:Add, Text, xp+200 yp , %now% - %today% - gWidth:%gWidth% - gHeight:%gHeight% - elementWidth:%elementWidth% - elementHeight:%elementHeight% ; displaying time and date text.
+			Gui, TabText:Add, Text, xp yp+15 , Current System Location(%Location_currentSystemLocation%): %currentSystemLocationName% - Keyboard has F13 to F24? %yesF13% - Keyboard has Hyper: %yesHYPER% ; Displaying some keyboard settings
 			
 			Gui, TabText:Show, h%gHeight% w%gWidth% Center
 
