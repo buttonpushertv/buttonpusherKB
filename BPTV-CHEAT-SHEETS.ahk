@@ -92,11 +92,11 @@ If (keyboardHasHyperKey) {
 
 SysGet, monSize, Monitor
 ;MsgBox, Left: %monSizeLeft% -- Top: %monSizeTop% -- Right: %monSizeRight% -- Bottom %monSizeBottom%.
-gHeight := (monSizeBottom * .8)
-elementHeight := (gHeight * .85)
-gWidth := (monSizeRight * .6)
-elementWidth := (gWidth * .9)
-gButtonStartY := (gHeight * .96)
+gHeight := (monSizeBottom - 300)
+elementHeight := (gHeight - 200)
+gWidth := (monSizeRight - 700)
+elementWidth := (gWidth - 120)
+gButtonStartY := (gHeight - 50)
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading BPTV-CHEAT-SHEETS`nUse this modifier: %modForThisConfig%`nwith these keys: %keysForThisConfig%`nto show/hide Cheat Sheets
