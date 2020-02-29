@@ -91,17 +91,23 @@ If (keyboardHasHyperKey) {
 ; Getting some screen info and sizing the GUI window (currently only implemented on the 'firstShower')
 
 SysGet, monSize, Monitor
-;MsgBox, Left: %monSizeLeft% -- Top: %monSizeTop% -- Right: %monSizeRight% -- Bottom %monSizeBottom%.
-gHeight := (monSizeBottom - 300)
+gHeight := (monSizeBottom * .9)
 elementHeight := (gHeight - 200)
-gWidth := (monSizeRight - 700)
+gWidth := (monSizeRight * .75)
 elementWidth := (gWidth - 120)
 gButtonStartY := (gHeight - 50)
 
+screenFontSize := 12
+
+If (monSizeRight < 1980) {
+	screenFontSize := 10
+	}
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading BPTV-CHEAT-SHEETS`nUse this modifier: %modForThisConfig%`nwith these keys: %keysForThisConfig%`nto show/hide Cheat Sheets
 WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
 SetTimer, RemoveSplashScreen, %splashScreenTimeout%
+
+MsgBox, Left: %monSizeLeft% -- Top: %monSizeTop% -- Right: %monSizeRight% -- Bottom %monSizeBottom%.
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -212,7 +218,7 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 			Gui, TabText:+alwaysontop -sysmenu +owner -caption +toolwindow +0x02000000
 			Gui, TabText:Color, %backgroundColor%
 			Gui, TabText:Margin, 30, 30
-			Gui, TabText:font, s12 c%foregroundColor%, Consolas
+			Gui, TabText:font, s%screenFontSize% c%foregroundColor%, Consolas
 		; the line below is where we define the number and names of tabs. If you wish to add tabs, you will need to add the new tabs here. Make sure the order you put them into matches the order of the tab content you define above.
 			Gui, TabText:add, Tab3, x30 y30, Main|SCAF|Quicktype|Office
 			Gui, TabText:Tab, 1
@@ -228,7 +234,7 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 		; since tabs are unset (no longer being worked with) this button appears outside of the tabs area
 			Gui, TabText:Add, Button, x30 y%gButtonStartY% w180, &Edit Sheets
 			Gui, TabText:Add, Text, xp+200 yp , %now% - %today% - gWidth:%gWidth% - gHeight:%gHeight% - elementWidth:%elementWidth% - elementHeight:%elementHeight% ; displaying time and date text.
-			Gui, TabText:Add, Text, xp yp+15 , Current System Location(%Location_currentSystemLocation%): %currentSystemLocationName% - Keyboard has F13 to F24? %yesF13% - Keyboard has Hyper: %yesHYPER% ; Displaying some keyboard settings
+			Gui, TabText:Add, Text, xp yp+20 , Current System Location(%Location_currentSystemLocation%): %currentSystemLocationName% - Keyboard has F13 to F24? %yesF13% - Keyboard has Hyper: %yesHYPER% ; Displaying some keyboard settings
 			
 			Gui, TabText:Show, h%gHeight% w%gWidth% Center
 
