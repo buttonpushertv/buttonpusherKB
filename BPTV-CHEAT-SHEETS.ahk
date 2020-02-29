@@ -100,7 +100,7 @@ gButtonStartY := (gHeight - 60)
 screenFontSize := 14
 
 If (monSizeRight < 1980) {
-	screenFontSize := 11
+	screenFontSize := 10
 	}
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading BPTV-CHEAT-SHEETS`nUse this modifier: %modForThisConfig%`nwith these keys: %keysForThisConfig%`nto show/hide Cheat Sheets
