@@ -100,14 +100,14 @@ gButtonStartY := (gHeight - 50)
 screenFontSize := 12
 
 If (monSizeRight < 1980) {
-	screenFontSize := 10
+	screenFontSize := 11
 	}
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading BPTV-CHEAT-SHEETS`nUse this modifier: %modForThisConfig%`nwith these keys: %keysForThisConfig%`nto show/hide Cheat Sheets
 WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
 SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 
-MsgBox, Left: %monSizeLeft% -- Top: %monSizeTop% -- Right: %monSizeRight% -- Bottom %monSizeBottom%.
+;MsgBox, Left: %monSizeLeft% -- Top: %monSizeTop% -- Right: %monSizeRight% -- Bottom %monSizeBottom%.
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -235,7 +235,7 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 			Gui, TabText:Add, Button, x30 y%gButtonStartY% w180, &Edit Sheets
 			Gui, TabText:Add, Text, xp+200 yp , %now% - %today% - gWidth:%gWidth% - gHeight:%gHeight% - elementWidth:%elementWidth% - elementHeight:%elementHeight% ; displaying time and date text.
 			Gui, TabText:Add, Text, xp yp+20 , Current System Location(%Location_currentSystemLocation%): %currentSystemLocationName% - Keyboard has F13 to F24? %yesF13% - Keyboard has Hyper: %yesHYPER% ; Displaying some keyboard settings
-			
+
 			Gui, TabText:Show, h%gHeight% w%gWidth% Center
 
 			If (guiCloseMethod = 1) {
