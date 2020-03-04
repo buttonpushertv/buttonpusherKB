@@ -59,8 +59,17 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 
 #IfWinActive, ahk_exe Illustrator.exe
 
-+^!F6:: ; <-- Clicking on 'Vertical Distribute Center' - why can't this be assigned a key board shortcut in Illustrator?!?
-    clickRadar(1744, 56) ; 'clickRadar' is a function below. You give it the coordinates you want to click & it does the rest.
++^!F5:: ; <-- Clicking on 'Vertical Distribute Center' FOR TYPE ONLY
+    ;- why can't this be assigned a key board shortcut in Illustrator?!?
+    ; 'clickRadar' is a function below. You give it the coordinates you want to click & it does the rest.
+    clickRadar(1750, 65)
+    Return
+
+
++^!F6:: ; <-- Clicking on 'Vertical Distribute Center' FOR MIXED OBJECTS
+    ;- why can't this be assigned a key board shortcut in Illustrator?!?
+    ; 'clickRadar' is a function below. You give it the coordinates you want to click & it does the rest.
+    clickRadar(1056,66) 
     Return
 
 #IfWinActive
@@ -98,7 +107,7 @@ CheckScriptUpdate() {
 clickRadar(sx,sy){
     global sleepShort
     ; we are going to store the position of your cursor when you show this so that we can put the cursor back where it was
-	coordmode, mouse, Screen
+	;coordmode, mouse, Screen
 	MouseGetPos, xposP, yposP
     offsetSX := (sx - 25)
     offsetSY := (sy - 25)
