@@ -61,8 +61,8 @@ IniRead, pathToEditor, %iniFile%, Settings, pathToEditor
 IniRead, keyboardHasF13toF24, %iniFile%, Settings, keyboardHasF13toF24
 IniRead, keyboardHasHyperKey, %iniFile%, Settings, keyboardHasHyperKey
 
-yesHYPER := "FALSE"
-yesF13 := "FALSE"
+yesHYPER := 
+yesF13 := 
 
 firstPrimeBaseHK := "F13"
 secondPrimeBaseHK := "F14"
@@ -103,7 +103,7 @@ If (monSizeRight < 1980) {
 	screenFontSize := 10
 	}
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading BPTV-CHEAT-SHEETS`nUse this modifier: %modForThisConfig%`nwith these keys: %keysForThisConfig%`nto show/hide Cheat Sheets
+SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading BPTV-CHEAT-SHEETS`nUse this modifier: %modForThisConfig%`nwith these keys: %keysForThisConfig%`nto show/hide Cheat Sheets`nF13:%yesF13% HYPER:%yesHYPER%
 WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
 SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 
@@ -138,17 +138,15 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 
 ; Using the AHK command: "Hotkey" we can define a hotkey and call a sub-routine instead of using the double colon method. This allows the hotkey to be updated or changed based on variables (like Location_currentSystemLocation as we use below). By Default, we'll use the CapsLock plus Function method we've used previously. When we have SCAF macro pads or keys defined on a keybaord, we can use alternate hot key definitions, as we do below when we're in location #1...we can even flop the order of the keys, so they are easy to locate without too much looking.
 
+	firstBaseHK := firstAltBaseHK
+	secondBaseHK := secondAltBaseHK
+	thirdBaseHK := thirdAltBaseHK
+	fourthBaseHK := fourthAltBaseHK
+	firstHK := "CapsLock & " . firstAltBaseHK
+	secondHK := "CapsLock & " . secondAltBaseHK
+	thirdHK := "CapsLock & " . thirdAltBaseHK
+	fourthHK := "CapsLock & " . fourthAltBaseHK
 
-If (!yesF13 and !yesHYPER) {
-		firstBaseHK := firstAltBaseHK
-		secondBaseHK := secondAltBaseHK
-		thirdBaseHK := thirdAltBaseHK
-		fourthBaseHK := fourthAltBaseHK
-		firstHK := "CapsLock & " . firstAltBaseHK
-		secondHK := "CapsLock & " . secondAltBaseHK
-		thirdHK := "CapsLock & " . thirdAltBaseHK
-		fourthHK := "CapsLock & " . fourthAltBaseHK
-}
 ;The goal here is to be able to define the above Hotkeys as the default. And then use the settings.ini keys to change things below.
 
 If (yesHYPER and !yesF13) {
@@ -189,7 +187,7 @@ If (yesF13 and yesHYPER) {
 ; 3 - tap BaseHK (or AltBaseHK) a second time to close/hide a gvien GUI
 guiCloseMethod := 3
 
-;MSGBOX, , DEBUG, %firstHK%`n%secondHK%`n%thirdHK%`n%fourthHK%
+;MSGBOX, , DEBUG, F13:%yesF13% HYPER:%yesHYPER%`nHOTKEYS: %firstHK%`n%secondHK%`n%thirdHK%`n%fourthHK%
 
 HotKey, %firstHK%, firstShower ; <-- KBF1 (firstShower: a tabbed text file shower)
 HotKey, %secondHK%, secondShower ; <-- KBF2 (secondShower: a image file shower - App-Specific)
