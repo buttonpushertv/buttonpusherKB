@@ -139,7 +139,7 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 ; Using the AHK command: "Hotkey" we can define a hotkey and call a sub-routine instead of using the double colon method. This allows the hotkey to be updated or changed based on variables (like Location_currentSystemLocation as we use below). By Default, we'll use the CapsLock plus Function method we've used previously. When we have SCAF macro pads or keys defined on a keybaord, we can use alternate hot key definitions, as we do below when we're in location #1...we can even flop the order of the keys, so they are easy to locate without too much looking.
 
 
-If (!keyboardHasF13toF24 and !keyboardHasHyperKey) {
+If (!yesF13 and !yesHYPER) {
 		firstBaseHK := firstAltBaseHK
 		secondBaseHK := secondAltBaseHK
 		thirdBaseHK := thirdAltBaseHK
@@ -151,7 +151,7 @@ If (!keyboardHasF13toF24 and !keyboardHasHyperKey) {
 }
 ;The goal here is to be able to define the above Hotkeys as the default. And then use the settings.ini keys to change things below.
 
-If (keyboardHasHyperKey and !keyboardHasF13toF24) {
+If (yesHYPER and !yesF13) {
 	firstBaseHK := firstAltBaseHK
 	secondBaseHK := secondAltBaseHK
 	thirdBaseHK := thirdAltBaseHK
@@ -162,7 +162,7 @@ If (keyboardHasHyperKey and !keyboardHasF13toF24) {
 	fourthHK := "#!^+" . fourthAltBaseHK
 }
 
-If (keyboardHasF13toF24 and !keyboardHasHyperKey) {
+If (yesF13 and !yesHYPER) {
 	firstBaseHK := firstPrimeBaseHK
 	secondBaseHK := secondPrimeBaseHK
 	thirdBaseHK := thirdPrimeBaseHK
@@ -173,7 +173,7 @@ If (keyboardHasF13toF24 and !keyboardHasHyperKey) {
 	fourthHK := "!^+" . fourthPrimeBaseHK
 	}
 
-If (keyboardHasF13toF24 and keyboardHasHyperKey) {
+If (yesF13 and yesHYPER) {
 	firstBaseHK := firstPrimeBaseHK
 	secondBaseHK := secondPrimeBaseHK
 	thirdBaseHK := thirdPrimeBaseHK
