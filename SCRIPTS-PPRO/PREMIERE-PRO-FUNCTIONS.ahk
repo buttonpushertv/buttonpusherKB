@@ -216,8 +216,8 @@ preset(item)
     sleep sleepMicro
     Sendinput, {Backspace}{Enter}
     sleep sleepMicro
-
-    MouseClick, middle, , , 1 ;this returns focus to the panel the cursor is hovering above, WITHOUT selecting anything. great!
+    ;MouseClick, middle, , , 1 ;this returns focus to the panel the cursor is hovering above, WITHOUT selecting anything. great!
+    SendInput, {F6}
     Blockinput, MouseMoveOff ;returning mouse movement ability
     BlockInput, off ;do not comment out or delete this line -- or you won't regain control of the keyboard!! However, CTRL+ALT+DEL will still work if you get stuck!! Cool.
 
