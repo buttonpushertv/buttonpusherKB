@@ -19,9 +19,6 @@ copy %1\settings.ini %1\PRIVATE\%computername%\SETTINGS-BACKUPS\
 @echo This backs up the settings for VNCHelper - again it's location specific but the settings file is stored in the same place where ever BPTV-KB is installed.
 copy %1\UTIL-APPS\vnchelper\vnchelper.ini %1\PRIVATE\%computername%\SETTINGS-BACKUPS\
 
-@echo This backs up the QuickAccessPopup's ini for this system
-copy %1\UTIL-APPS\QAP\QuickAccessPopup.ini %1\PRIVATE\%computername%\SETTINGS-BACKUPS\
-
 @echo This backs up the StreamDeck's Profile from this system
 call %1\BAT-FILES\Backup-StreamDeck-Profiles.cmd %1
 
