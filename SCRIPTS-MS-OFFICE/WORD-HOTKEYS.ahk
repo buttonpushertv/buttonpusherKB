@@ -1,4 +1,4 @@
-﻿; AutoHotKey - QuickType (a Text Expander type-dealy)
+﻿; AutoHotKey - Hotkeys for Microsoft Word
 ; by Ben Howard - ben@buttonpusher.tv
 
 ;===== START OF AUTO-EXECUTION SECTION =========================================================
@@ -17,10 +17,11 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
-sleepShort = 333
-sleepMedium = 666
-sleepLong = 1500
-sleepDeep = 3500
+sleepMicro := 15
+sleepShort := 333
+sleepMedium := 666
+sleepLong := 1500
+sleepDeep := 3500
 
 splashScreenX = %1%
 splashScreenY = %2%
@@ -30,7 +31,7 @@ Location_currentSystemLocation = %4%
 Menu, Tray, Icon, imageres.dll, 243 ;tray icon is now something like '\\..'
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Expand text shortcuts.`nEdit this file to add/change shortcuts.See Cheat Sheet #1 to show hotkeys/shortcuts.
+SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Hotkey shortcuts for Microsft Word.
 WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
 SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 
@@ -43,50 +44,59 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
 
-; The text expanding 'Hotsrings' are simple to format.
-; Just type them in this format:
-; ::shortcut::Text to type in place of shortcut
-; (This is documented in the AHK docs here - https://www.autohotkey.com/docs/Hotstrings.htm)
+#IfWinActive, ahk_exe WINWORD.EXE
 
-#Include %A_ScriptDir%\..\PRIVATE\QUICKTYPE-HOTSTRINGS.ahk
-; The file included above is accessible for quick editing via the MASTER-SCRIPT hotkey SHIFT+CTRL+ALT+Q when triggered when Desktop is Active. Or it can be sent to an editor when viewing Cheat Sheet #1 (under HYPER+F13 - click 'Edit Sheets')
+F13::
+    WinActivate, Jill FaceTime Video Ad Guts.docx - Word
+    SendInput, ^c
+    Sleep, sleepShort
+    WinActivate, PHRMA-JILL-SKYPE-INTVW mf.doc  -  Compatibility Mode - Word
+    Sleep, sleepMedium
+    SendInput, ^f
+    Sleep, sleepShort
+    SendInput, ^a
+    Sleep, sleepShort
+    SendInput, ^v
+    Sleep, sleepShort
+    SendInput, {Enter}
+    Sleep, sleepShort
+    WinActivate, ahk_exe Adobe Premiere Pro.exe
+    Sleep, sleepShort
+    SendInput, ^{F8}
+    Return
+    
+F14::
+    WinActivate, Jill FaceTime Video Ad Guts.docx - Word
+    SendInput, ^c
+    Sleep, sleepShort
+    WinActivate, PHRMA-JILL-ZOOM-INTVW mf.doc  -  Compatibility Mode - Word
+    Sleep, sleepMedium
+    SendInput, ^f
+    Sleep, sleepShort
+    SendInput, ^a
+    Sleep, sleepShort
+    SendInput, ^v
+    Sleep, sleepShort
+    SendInput, {Enter}
+    Sleep, sleepShort
+    WinActivate, ahk_exe Adobe Premiere Pro.exe
+    Sleep, sleepShort
+    SendInput, ^{F8}
+    Return
+    
+#IfWinActive
 
-; The Hotstrings below can auto-replace text from their code, but require more than a single line/command to acheive their results.
-::]ts:: ; <-- Send time & date as text
-FormatTime, now,, hhmmtt
-today = %A_YYYY%%A_MMM%%A_DD%
-theTimeStamp = %today%-%now%
-StringUpper, theCAPSTimeStamp, theTimeStamp
-Send, %theCAPSTimeStamp%
-return
 
-::]t:: ; <-- Send time ONLY as text
-FormatTime, now,, hh:mm tt
-theTimeStamp = %now%
-Send, %theTimeStamp%
-return
-
-::]d:: ; <-- Send date ONLY as text
-today = %A_YYYY%-%A_MMM%-%A_DD%
-theTimeStamp = %today%
-Send, %theTimeStamp%
-return
 ;===== FUNCTIONS ===============================================================================
+
 RemoveSplashScreen:
     SplashTextOff
     SetTimer RemoveSplashScreen, Off
-return
-
-; use this function to Remove ToolTips - pretty self-explanatory
-RemoveToolTip(duration) {
-  SetTimer, ToolTipOff, %duration%
-  Return
-
-ToolTipOff:
-    ToolTip
     return
-}
 
+
+
+/* COMMENTED THE BELOW OUT SINCE I GENERALLY DON'T USE THIS FEATURE ANY MORE - but I thought I'd just keep it around...just in case...
 ; This function will auto-reload the script on save.
 CheckScriptUpdate() {
     global ScriptStartModTime
@@ -104,3 +114,4 @@ CheckScriptUpdate() {
         } ; loops reload on "Retry"
     }
 }
+*/
