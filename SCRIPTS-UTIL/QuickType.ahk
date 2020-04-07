@@ -53,10 +53,11 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 
 ; The Hotstrings below can auto-replace text from their code, but require more than a single line/command to acheive their results.
 ::]ts:: ; <-- Send time & date as text
-FormatTime, now,, hh:mm tt
-today = %A_YYYY%-%A_MMM%-%A_DD%
-theTimeStamp = %now% - %today%
-Send, %theTimeStamp%
+FormatTime, now,, hhmmtt
+today = %A_YYYY%%A_MMM%%A_DD%
+theTimeStamp = %today%-%now%
+StringUpper, theCAPSTimeStamp, theTimeStamp
+Send, %theCAPSTimeStamp%
 return
 
 ::]t:: ; <-- Send time ONLY as text
