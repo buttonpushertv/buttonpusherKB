@@ -188,10 +188,28 @@ Send, d ; PPro Key for 'select clip at playhead'
 Send, {DEL} ; PPro Key for 'remove'
 return
 
+^+!i:: ; <-- Find Coordinates of Sequence Timecode so 'Get Current Timecode of Sequence' below knows where to look.
+  CoordMode, Mouse, Window
+  MouseGetPos, xposP, yposP ;---storing cursor's current coordinates at X%xposP% Y%yposP%
+  Tooltip, X=%xposP% / Y=%yposP%`nGrabbing the X & Y coordinates of the mouse cursor`nMake sure it is over the Program Monitor's timecode display (lower left).
+  RemoveToolTip(3000)
+  Return
+
 +!i:: ; <-- Get Current Timecode of Sequence
-  CoordMode, Mouse, Client
+  If (!xposP and !yposP)
+    {
+      MsgBox,, Grab Timecode Display position, You need to grab the X & Y coordinates of the Program Monitor's Timecode Display (lower left).`nPosition cursor then press CTRL-SHIFT-ALT-I to capture,3
+      Return
+    }
+  prFocus(program) ; Activating the Program Monitor
+  Sleep, sleepShort
+  CoordMode, Mouse, Window
+  MouseGetPos, xposTEMP, yposTEMP ;---storing cursor's current coordinates at X%xposTEMP% Y%yposTEMP%
+  Tooltip, X=%xposP% / Y=%yposP%`nIf this misclicks`, position cursor then press CTRL-SHIFT-ALT-I to capture coordinates.
+  RemoveToolTip(3000) 
   ;BlockInput, On
-  Click, 1850, 605, 0
+  MouseMove, xposP, yposP
+  Click, xposP, yposP, 0
   Sleep, sleepShort
   Send, {Click}
   Sleep, sleepShort
@@ -203,6 +221,7 @@ return
   Sleep, sleepShort
   Send, {Esc}
   ;BlockInput, Off
+  MouseMove, xposTEMP, yposTEMP
   return
 
 ;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
@@ -332,3 +351,13 @@ RemoveSplashScreen:
     SplashTextOff
     SetTimer RemoveSplashScreen, Off
     return
+
+; use this function to Remove ToolTips - pretty self-explanatory
+RemoveToolTip(duration) {
+  SetTimer, ToolTipOff, %duration%
+  Return
+
+ToolTipOff:
+    ToolTip
+    return
+}

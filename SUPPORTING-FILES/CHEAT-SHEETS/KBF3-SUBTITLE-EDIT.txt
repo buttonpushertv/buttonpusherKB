@@ -19,8 +19,8 @@ CTRL+NUMPAD0        <-- RESET PLAY SPEED
 SCAF KEYS - 
 
 SCAF1   <-- Insert Music Symbol
-SCAF2   <-- 
+SCAF2   <-- Type "(guitart gently weeps)"
 SCAF3   <-- 
 SCAF4   <-- 
-SCAF5   <-- Send, [Rod]{Space}
-SCAF6   <-- Send, [Minnie]{Space}
+SCAF5   <-- Fetch 1st word from next subtitle
+SCAF6   <-- Move last word to next subtitle

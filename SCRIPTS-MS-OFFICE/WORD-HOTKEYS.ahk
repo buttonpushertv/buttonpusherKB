@@ -47,10 +47,10 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 #IfWinActive, ahk_exe WINWORD.EXE
 
 F13::
-    WinActivate, Jill FaceTime Video Ad Guts.docx - Word
+    WinActivate, PhRMA Price Setting- Scripted Narrative Drafts 4-22-2020 F4.doc  -  Compatibility Mode - Word
     SendInput, ^c
     Sleep, sleepShort
-    WinActivate, PHRMA-JILL-SKYPE-INTVW mf.doc  -  Compatibility Mode - Word
+    WinActivate, PHRMA-LEE-SKYPE-4-17-2020.doc  -  Compatibility Mode - Word
     Sleep, sleepMedium
     SendInput, ^f
     Sleep, sleepShort
@@ -64,25 +64,7 @@ F13::
     Sleep, sleepShort
     SendInput, ^{F8}
     Return
-    
-F14::
-    WinActivate, Jill FaceTime Video Ad Guts.docx - Word
-    SendInput, ^c
-    Sleep, sleepShort
-    WinActivate, PHRMA-JILL-ZOOM-INTVW mf.doc  -  Compatibility Mode - Word
-    Sleep, sleepMedium
-    SendInput, ^f
-    Sleep, sleepShort
-    SendInput, ^a
-    Sleep, sleepShort
-    SendInput, ^v
-    Sleep, sleepShort
-    SendInput, {Enter}
-    Sleep, sleepShort
-    WinActivate, ahk_exe Adobe Premiere Pro.exe
-    Sleep, sleepShort
-    SendInput, ^{F8}
-    Return
+
     
 #IfWinActive
 
