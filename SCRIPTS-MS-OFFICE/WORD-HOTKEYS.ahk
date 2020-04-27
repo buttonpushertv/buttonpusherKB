@@ -47,7 +47,7 @@ SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 #IfWinActive, ahk_exe WINWORD.EXE
 
 F13::
-    WinActivate, PhRMA Price Setting- Scripted Narrative Drafts 4-22-2020 F4.doc  -  Compatibility Mode - Word
+    ;WinActivate, PhRMA Price Setting- Scripted Narrative Drafts 4-22-2020 F4.doc  -  Compatibility Mode - Word
     SendInput, ^c
     Sleep, sleepShort
     WinActivate, PHRMA-LEE-SKYPE-4-17-2020.doc  -  Compatibility Mode - Word
