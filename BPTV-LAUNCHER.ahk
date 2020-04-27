@@ -154,7 +154,7 @@ loop, %section3_keys%
               continue
               }
             else {
-            Run, %currentPathValue%
+            Run, %currentPathValue% %A_ScriptDir%
             Sleep, sleepMedium
             Continue
             }

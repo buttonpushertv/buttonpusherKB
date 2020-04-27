@@ -1,13 +1,14 @@
 @echo off
 
 @REM This will use initool.exe to read the location of the rootFolder from settings.ini
-@FOR /F "tokens=* USEBACKQ" %%F IN (`..\..\UTIL-APPS\initool\initool.exe g ..\..\settings.ini Settings rootFolder --value-only`) DO (
-@SET rootFolder=%%F
+@FOR /F "tokens=* USEBACKQ" %%F IN (`%1\UTIL-APPS\initool\initool.exe g %1\settings.ini Settings rootFolder --value-only`) DO (
+SET rootFolder=%%F
 )
 @ECHO Root Folder is: %rootfolder%
 @REM the rootFolder variable gets passed off to subsequent scripts. This should allow the root folder name to be set to whatever the user wants.
 
-> %rootFolder%\BAT-FILES\LOGS\last_run_log.txt (
+> %rootFolder%\PRIVATE\%computername%\LOGS\last_run_log.txt (
+
 @echo ===========================
 @echo RUNNING SCHEDULED BAT FILES
 @echo ===========================
