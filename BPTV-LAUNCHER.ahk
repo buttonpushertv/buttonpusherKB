@@ -134,7 +134,7 @@ launcherTimeoutSleep := 1000
 loop, %timeoutSegments%
   {
   GuiControl, , timeoutTextProgress, %timeoutRemaining%
-  sleep, %launcherTimeoutSleep%
+  sleep, launcherTimeoutSleep
   GuiControl, , timeoutProgress, +1
   timeoutRemaining := (timeoutSegments - A_Index)
   }
