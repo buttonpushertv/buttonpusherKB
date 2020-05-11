@@ -33,7 +33,7 @@ iniFile := A_ScriptDir . "\settings.ini"
 
 ;===== FUNCTIONS ===============================================================================
 
-; use this function to Remove ToolTips - pretty self-explanatory
+; use this function to Remove ToolTips - pretty self-explanatory - 'duration' should be given in milliseconds (4000 = 4 seconds)
 RemoveToolTip(duration) {
   SetTimer, ToolTipOff, %duration%
   Return
