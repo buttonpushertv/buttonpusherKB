@@ -32,6 +32,8 @@ sleepDeep := 3500
 
 #Include %A_ScriptDir%\MASTER-FUNCTIONS.ahk
 
+
+
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
@@ -39,6 +41,8 @@ inifile = settings.ini
 
 INI_Init(inifile)
 INI_Load(inifile)
+
+global readSettings_TimeoutPeriod := Settings_timeoutPeriod
 
 ; this little section detects if the MASTER-SCRIPT.ahk is already running. That would be a sign that this launcher may have already been run. Since we don't usually want to run this launcher a second time (while the apps it launches are already running) we will set the timeout period to something very high so you have time to interact with the GUI and not have it quickly launch everything over again.
 SetTitleMatchMode, 2
@@ -130,7 +134,7 @@ launcherTimeoutSleep := 1000
 loop, %timeoutSegments%
   {
   GuiControl, , timeoutTextProgress, %timeoutRemaining%
-  sleep, %launcherTimeoutSleep%
+  sleep, launcherTimeoutSleep
   GuiControl, , timeoutProgress, +1
   timeoutRemaining := (timeoutSegments - A_Index)
   }
@@ -182,6 +186,11 @@ return
 ButtonSaveChanges:
 Gui, Submit
 ;Setting Scripts_loadScriptX to new values
+
+If (Settings_timeoutPeriod != readSettings_TimeoutPeriod) {
+  Settings_timeoutPeriod := readSettings_TimeoutPeriod
+}
+
 currentAltCounter := 1
 loop, %section3_keys%
   {
