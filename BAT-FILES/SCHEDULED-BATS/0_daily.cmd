@@ -13,10 +13,10 @@ IF EXIST %1\PRIVATE\%computername%\last_daily_run.txt (
 
 @if /i %lastDailyRun:~0,10% EQU %date:~4,10% exit /b
 
-@echo This backs up the BPTV-KB settings for this system. You want to back these up for each system (e.g.-location) because you likely have different settings for each.
+@echo This backs up the buttonpusherKB settings for this system. You want to back these up for each system (e.g.-location) because you likely have different settings for each.
 copy %1\settings.ini %1\PRIVATE\%computername%\SETTINGS-BACKUPS\
 
-@echo This backs up the settings for VNCHelper - again it's location specific but the settings file is stored in the same place where ever BPTV-KB is installed.
+@echo This backs up the settings for VNCHelper - again it's location specific but the settings file is stored in the same place where ever buttonpusherKB is installed.
 copy %1\UTIL-APPS\vnchelper\vnchelper.ini %1\PRIVATE\%computername%\SETTINGS-BACKUPS\
 
 @echo This backs up the StreamDeck's Profile from this system

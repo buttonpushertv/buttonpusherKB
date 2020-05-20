@@ -33,11 +33,6 @@ sleepMedium = 666
 sleepLong = 1500
 sleepDeep = 3500
 
-;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 80, Launching %A_ScriptFullPath%, Text here to id what this script does.
-Sleep, sleepDeep
-SplashTextOff
-
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
 ; combine below with key and '::' to define hotkey 

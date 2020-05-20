@@ -38,11 +38,6 @@ timeline7 := 0x1B1B1B ;the color of a SELECTED blank space on the timeline, IN t
 ; NOTE THAT YOU MUST ASSIGN \(backslash) to "Move playhead to cursor" in Premiere's keyboard shortcuts panel!
 ; +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loaded Premiere Pro Right-Click Timeline MOD.`n`nRight Click in timeline to move playhead.`n`nRight Clicking on clips should still work normally.
-WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
-SetTimer, RemoveSplashScreen, %splashScreenTimeout%
-
 #IfWinActive ahk_exe Adobe Premiere Pro.exe ;exact name was gotten from windowspy
 
 Rbutton:: ; <-- Right Click on Blank Timeline area to move playhead

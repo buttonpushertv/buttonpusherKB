@@ -52,14 +52,11 @@ sleepDeep := 3500
 halfScreenWidth := (A_ScreenWidth / 2) ; determine what half the screen's width is for splash screens
 quarterScreenHeight := (A_ScreenHeight / 4) ; determine what 1/4 the screen's height is for splash screens
 
-global iniFile := "settings.ini" ; the main settings file used by most of the BPTV-KB scripts
-global versionFile := "version.ini" ; the file which holds the current version of BPTV-KB
+global iniFile := "settings.ini" ; the main settings file used by most of the buttonpusherKB scripts
+global versionFile := "version.ini" ; the file which holds the current version of buttonpusherKB
 global version ; creating a global variable for the version info
 global Settings_rootFolder
-; The ScreenSpacing variables below place the splash screens across all scripts loaded after MASTER-SCRIPT.ahk
-global splashScreenSpacing := 150
-global splashScreenStartY := 10
-global splashScreenStartX := (halfScreenWidth - 300)
+
 global CapsLockCounter := 0 ; initial value for the CapsLock detection code below
 
 SetCapsLockState, off ; turn off CapsLock so that the checking function doesn't go off automatically
@@ -71,23 +68,37 @@ INI_Load(iniFile)
 
 FileRead, version, %versionFile% ; reading the version from versionFile
 
-;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading MASTER AHK Script - Version: %version%Use Cheat Sheet Hotkeys to show hotkeys/shortcuts.`nCAPS-Q to quit MASTER-SCRIPT and Child scripts.`nCAPS/SCRLK-F11 to edit settings(MASTER-SETTINGS.ahk)
-WinMove, Launching %A_ScriptFullPath%, , %splashScreenStartX%, %splashScreenStartY%
+launchAppKeyRows := (section2_keys / 3)
+launchAppGroupHeight := ((launchAppKeyRows * 20) + 20)
+launchAppGuiHeight := (launchAppGroupHeight + 120)
 
-splashScreenStartY += splashScreenSpacing ; adding a bit of space after this Splash Screen
-
+; ===== CREATE GUI FOR SPLASH SCREEN ITEMS HERE
+Gui, launchApp:Add, Text, section x0 y0,
+Gui, launchApp:Color, FFFFFF
+Gui, launchApp:Add, Picture, xs ys , SUPPORTING-FILES\BPS-Logo-PLUS-KB-240x275.png
+Gui, launchApp:Font, S8
+Gui, launchApp:Add, Text, xs+30 ys+270, %version%
+Gui, launchApp:Add, Text, x250 yp, Press CAPS+F11 for Settings  |  Press CAPS+Q to Quit Running Scripts 
+Gui, launchApp:Add, Text, x250 yp+20, Press CAPS+F12 for buttonpusherKB Launcher
+Gui, launchApp:Show, w800 h%launchAppGuiHeight%, Launching AHK Scripts
 ; ===== LAUNCH STANDALONE SCRIPTS HERE
-
+Gui, launchApp:Font, S12
+Gui, launchApp:Add, Text, x250 ys+10 w450, Scripts Being Launched
+Gui, launchApp:Font, S10
+Gui, launchApp:Add, Text, section xp+10 yp+10,
+Gui, launchApp:Font, S10
 ; section2_keys is read from settings.ini
 loop, %section2_keys% ; this loop will launch any scripts that are defined and enabled in settings.ini
 {
     currentKey := % section2_key%A_Index%
     pathLookAhead := A_Index + 1
+	nameLookAhead := A_Index + 2
     pathKey := % section2_key%pathLookAhead%
+	nameKey := % section2_key%nameLookAhead%
     currentKeyValue := %section2%_%currentKey%
-    currentPathValue := %section2%_%pathKey%
-		currentSystemLocationName := % Location_systemLocation%Location_currentSystemLocation%
+    currentPathValue := Settings_rootFolder . "\" . %section2%_%pathKey%
+	currentNameValue := %section2%_%nameKey%
+	currentSystemLocationName := % Location_systemLocation%Location_currentSystemLocation%
     currentKeyLeft7 := SubStr(currentKey, 1, 7)
     If (currentKeyLeft7 = "loadScr") {
         If (currentKeyValue) {
@@ -96,8 +107,19 @@ loop, %section2_keys% ; this loop will launch any scripts that are defined and e
               continue
               }
             else {
-            Run, %currentPathValue% %splashScreenStartX% %splashScreenStartY% %Settings_splashScreenTimeout% %Location_currentSystemLocation% %currentSystemLocationName%
-            splashScreenStartY += splashScreenSpacing
+			Gui, launchApp:Add, Text, xs+15 yp+25, %currentNameValue%
+            Run, %currentPathValue% %Location_currentSystemLocation% %currentSystemLocationName%,, UseErrorLevel, justLaunchedPID
+			If !ErrorLevel {
+				Gui, launchApp:Font, S14 CGreen
+				Gui, launchApp:Add, Text, xs yp-5, % Chr(0x2713)
+				Gui, launchApp:Font, S10 CBlack
+			} else {
+				Gui, launchApp:Font, S14 CRed
+				Gui, launchApp:Add, Text, xs yp, % Chr(0x2713)
+				Gui, launchApp:Font, S10 CBlack
+			}
+            Gui, launchApp:Show,, Launching AHK Scripts
+			DetectHiddenWindows, Off
             }
         }
         else {
@@ -110,7 +132,10 @@ loop, %section2_keys% ; this loop will launch any scripts that are defined and e
     else
     Continue
 }
-SetTimer, RemoveSplashScreen, %Settings_splashScreenTimeout%
+
+Sleep, Settings_splashScreenTimeout
+
+goto launchAppTimeout
 
 SetTimer, CapsLockCheck, %Settings_CapsLockCheckPeriod% ; the main timer to check for CapsLock. The variable 'Settings_CapsLockCheckPeriod' is defined in settings.ini. More info about this Function is in comments down in the Function Definition at the end of this script.
 
@@ -124,7 +149,7 @@ SetTimer, CapsLockCheck, %Settings_CapsLockCheckPeriod% ; the main timer to chec
 ; After each Hotkey Defintion, place a comment using this format:
 ; {hotkeyDef}:: ; <-- Define what HotKey does.
 ;
-;   This will be read by \BPTV-KB\UTIL-APPS\Hotkey Help.ahk to create a text cheat sheet of all HotKeys & Definitons. This text file can be used to create the Cheat Sheets shown with CAPS+F1, etc.
+;   This will be read by \buttonpusherKB\UTIL-APPS\Hotkey Help.ahk to create a text cheat sheet of all HotKeys & Definitons. This text file can be used to create the Cheat Sheets shown with CAPS+F1, etc.
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
 GroupAdd, altBlocked, ahk_exe Adobe Premiere Pro.exe ; items added to the group called 'altBlocked' will have the LAlt key blocked from triggering the menu selection
 
@@ -151,8 +176,8 @@ CapsLock & f11:: ; <-- Open the Settings GUI for MASTER-SCRIPT.AHK
 		Run, %A_ScriptDir%\MASTER-SETTINGS.AHK ; runs the settings configuration script for the whole suite.
     return
 
-ScrollLock & f12:: ; <-- Open BPTV-LAUNCHER
-CapsLock & f12:: ; <-- Open BPTV-LAUNCHER
+ScrollLock & f12:: ; <-- Open buttonpusherLAUNCHER
+CapsLock & f12:: ; <-- Open buttonpusherLAUNCHER
 		ScrollLockOff()
 		Run, %A_ScriptDir%\BPTV-LAUNCHER.ahk ; runs the launcher that runs at boot. Should only be used if you are making changes to what gets run at boot or if anything stops working properly
     return
@@ -347,6 +372,12 @@ CapsLockCheck:
 			CapsLockCounter := 0
 		}
     Return
+
+launchAppGuiEscape:
+launchAppGuiClose:
+launchAppTimeout:
+	Gui, launchApp:Destroy
+Return
 
 Quitting:
     splashScreenSpacing := 75

@@ -22,15 +22,6 @@ sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
 
-splashScreenX = %1%
-splashScreenY = %2%
-splashScreenTimeout = %3%
-
-
-;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading PHOTOSHOP HOTKEYS Script.
-WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
-SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 ;===== MODIFIER MEMORY HELPER ==================================================================

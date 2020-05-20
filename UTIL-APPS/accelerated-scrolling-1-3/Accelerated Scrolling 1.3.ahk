@@ -20,14 +20,6 @@ sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
 
-splashScreenX = %1%
-splashScreenY = %2%
-splashScreenTimeout = %3%
-
-
-SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading Accelerated Scrolling.`nTHIS VERSION WORKS ACROSS ALL APPS`nUSE ALT+SCROLL WHEEL TO ENGAGE`nWIN+WHEEL UP to SUSPEND - WIN+WHEEL DOWN to QUIT
-WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
-SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 
 #NoEnv
 #SingleInstance
