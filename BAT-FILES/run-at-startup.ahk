@@ -1,4 +1,4 @@
-﻿; AutoHotKey - BPTV-KB run-at-startup
+﻿; AutoHotKey - buttonpusherKB run-at-startup
 ; by Ben Howard - ben@buttonpusher.tv
 
 ;===== START OF AUTO-EXECUTION SECTION =========================================================

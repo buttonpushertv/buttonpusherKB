@@ -22,17 +22,9 @@ sleepMedium = 666
 sleepLong = 1500
 sleepDeep = 3500
 
-splashScreenX = %1%
-splashScreenY = %2%
-splashScreenTimeout = %3%
-Location_currentSystemLocation = %4%
+Location_currentSystemLocation = %1%
 
 Menu, Tray, Icon, imageres.dll, 243 ;tray icon is now something like '\\..'
-
-;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Expand text shortcuts.`nEdit this file to add/change shortcuts.See Cheat Sheet #1 to show hotkeys/shortcuts.
-WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
-SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================

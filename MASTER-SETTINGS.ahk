@@ -25,7 +25,7 @@ FileEncoding, UTF-8 ; this is here to make sure any files that we need to work w
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
-global versionFile := "version.ini" ; the file which holds the current version of BPTV-KB
+global versionFile := "version.ini" ; the file which holds the current version of buttonpusherKB
 global version ; creating a global variable for the version info
 FileRead, version, %versionFile% ; reading the version from versionFile
 global scriptRootFolder := A_ScriptDir ; sets the scriptRootFolder value to A_ScriptDir. This should then auto-set the rootFolder value in the settings.ini file. The idea here is that this should make it possible to change the name of the root folder where all of this gets installed and then it should propagate throughout the script.

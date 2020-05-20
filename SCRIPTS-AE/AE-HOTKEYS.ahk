@@ -26,10 +26,6 @@ sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
 
-splashScreenX = %1%
-splashScreenY = %2%
-splashScreenTimeout = %3%
-
 #include %A_ScriptDir%\..\LIB\gdip.ahk
 ;Thanks to tic (Tariq Porter) for his GDI+ Library
 ;ahkscript.org/boards/viewtopic.php?t=6517
@@ -41,10 +37,6 @@ If !pToken := Gdip_Startup() ; this is here just to test that the GDI+ library i
 }
 OnExit, GdiplusExit
 
-;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading AFTER EFFECTS HOTKEYS Script.
-WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
-SetTimer, RemoveSplashScreen, %splashScreenTimeout%
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 ;===== MODIFIER MEMORY HELPER ==================================================================

@@ -1,4 +1,4 @@
-﻿; AutoHotKey - BPTV-KB Cheat Sheets
+﻿; AutoHotKey - buttonpusherKB Cheat Sheets
 ; by Ben Howard - ben@buttonpusher.tv
 
 ;===== START OF AUTO-EXECUTION SECTION =========================================================
@@ -35,11 +35,8 @@ sleepMedium = 666
 sleepLong = 1500
 sleepDeep = 3500
 
-splashScreenX = %1%
-splashScreenY = %2%
-splashScreenTimeout = %3%
-Location_currentSystemLocation = %4%
-currentSystemLocationName = %5%
+Location_currentSystemLocation = %1%
+currentSystemLocationName = %2%
 
 If !(Location_currentSystemLocation) {
   Location_currentSystemLocation := 1
@@ -102,12 +99,6 @@ screenFontSize := 14
 If (monSizeRight < 1980) {
 	screenFontSize := 10
 	}
-;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
-SplashTextOn, 600, 100, Launching %A_ScriptFullPath%, Loading BPTV-CHEAT-SHEETS`nUse this modifier: %modForThisConfig%`nwith these keys: %keysForThisConfig%`nto show/hide Cheat Sheets`nF13:%yesF13% HYPER:%yesHYPER%
-WinMove, Launching %A_ScriptFullPath%, , %splashScreenX%, %splashScreenY%
-SetTimer, RemoveSplashScreen, %splashScreenTimeout%
-
-;MsgBox, Left: %monSizeLeft% -- Top: %monSizeTop% -- Right: %monSizeRight% -- Bottom %monSizeBottom%.
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -328,7 +319,7 @@ secondShower: ; Display an image CheatSheet of App Specific Keyboard Shortcuts (
         numPages := 1
     }
     showImageTabs(pic2Show, PictureWidth, numPages, PictureStartY)
-    ;If you want some help recalling which line is which in the BPTV-KB templates, you can uncomment the ToolTip below. It will appear near the mouse cursor when the Cheat Sheet is invoked & clear with everything else. Make sure to also uncomment the plain ToolTip line a few lines down.
+    ;If you want some help recalling which line is which in the buttonpusherKB templates, you can uncomment the ToolTip below. It will appear near the mouse cursor when the Cheat Sheet is invoked & clear with everything else. Make sure to also uncomment the plain ToolTip line a few lines down.
     ;ToolTip, PLAIN`nCONTROL`nALT`nSHIFT`nCTRL+ALT`nCTRL+SHIFT`nALT+SHIFT`nCTRL+ALT+SHIFT
     if showTaskBarPicture {
       showTaskBarPic(taskBarPic) ; as an extra little helper, this will display an indicator above the Windows TaskBar to remind you which apps can be launched/activated by pressing Windows plus that number key.
