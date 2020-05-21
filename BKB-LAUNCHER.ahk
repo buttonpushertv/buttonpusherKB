@@ -17,7 +17,7 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ; #Persistent ; Keeps script permanently running.
 #SingleInstance force ; Ensures that there is only a single instance of this script running.
-; SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of "exact"
+SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of "exact"
 
 FileEncoding, UTF-8 ; this is here to make sure any files that we need to work with get created/opened/read as UTF-8
 
@@ -32,8 +32,6 @@ sleepDeep := 3500
 
 #Include %A_ScriptDir%\MASTER-FUNCTIONS.ahk
 
-
-
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
@@ -44,6 +42,17 @@ INI_Load(inifile)
 
 global readSettings_TimeoutPeriod := Settings_timeoutPeriod
 
+; It seems that sometimes the BKB-Startup.ahk get stuck exiting or doesn't quit where it supposed to. This code block should see it and close it.
+DetectHiddenWindows, On
+BKBstartupPath := "BKB-startup"
+IfWinExist,,%BKBstartupPath%
+{
+	MsgBox, 262144,, Found %BKBstartupPath%
+	WinClose, %BKBstartupPath%
+}
+DetectHiddenWindows, Off
+
+
 ; this little section detects if the MASTER-SCRIPT.ahk is already running. That would be a sign that this launcher may have already been run. Since we don't usually want to run this launcher a second time (while the apps it launches are already running) we will set the timeout period to something very high so you have time to interact with the GUI and not have it quickly launch everything over again.
 SetTitleMatchMode, 2
 DetectHiddenWindows, On
@@ -53,6 +62,7 @@ if WinExist("MASTER-SCRIPT.ahk") {
   Tooltip, MASTER-SCRIPT.ahk IS ALREADY RUNNING.`nThe timeout is set to %timeoutSegments% seconds temporarily.`nQuit all checked apps `& scripts to reset timeout period.
   RemoveTooltip(4000)
 }
+
 
 ;Creating the Main GUI for the app - the bit that loads inititally when run
 ;setting width variables
@@ -117,10 +127,10 @@ timeoutSegments := Round(Settings_timeoutPeriod / 1000)
 timeoutText := "Launching Apps in " . timeoutSegments . " seconds.        Launching in:                 Press ESC to Cancel."
 timeoutRemaining := timeoutSegments
 Gui, Font, S8 CDefault, Franklin Gothic Medium
-Gui, Add, Text, x85 yp+55 vtimeoutText, %timeoutText%
-Gui, Add, Text, x330 yp w25 vtimeoutTextProgress
+Gui, Add, Text, x85 yp+55 vtimeoutText, %timeoutText% ; timer bar related
+Gui, Add, Text, x330 yp w25 vtimeoutTextProgress ; timer bar related
 Gui, Font, S12 CDefault, Franklin Gothic Medium
-Gui, Add, Progress, x10 yp+20 w%guiElementWidth% h20 cGreen BackgroundNavy Range0-%timeoutSegments% vtimeoutProgress
+Gui, Add, Progress, x10 yp+20 w%guiElementWidth% h20 cGreen BackgroundNavy Range0-%timeoutSegments% vtimeoutProgress ; this line draws the timer bar
 Gui, Add, Button, Default x10 yp+30 w%guiElementWidth% h30, Launch Apps &Now
 ;guiHeight += 75
 ;Gui, Add, Button, x10 yp+40 w430 h30, Variables
@@ -128,9 +138,9 @@ Gui, Show, w%guiWidth% h%guiHeight%
 
 ;timer code section here
 ;the timeout period is stored in settings.ini - under the [Settings] section as milliseconds - other values designated in above GUI code
-launcherTimeoutSleep := 1000
+launcherTimeoutSleep := 1000 ; this value sets the duration between bar segment advances to 1 second
 
-;this code creates and updates the timer text & progress bar
+;this code block creates and updates the timer text & progress bar
 loop, %timeoutSegments%
   {
   GuiControl, , timeoutTextProgress, %timeoutRemaining%

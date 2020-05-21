@@ -63,10 +63,9 @@ ECHO.
 	ECHO Checking for existence of X:
 	IF EXIST X:\ (
 		echo X: Drive already mounted.
-		echo.
-		echo Press CTRL-C to abort script.
+		echo Script will now exit WITHOUT running BKB-Launcher.
 		pause
-		goto unLocked
+		goto allDone
 	) else (
 		echo.
 		echo X: not mounted
@@ -94,16 +93,10 @@ ECHO.
 	if not %ERRORLEVEL% == 0 goto accessDisk
 
 	:unLocked
-REM	ECHO +==============================+
-REM	ECHO Starting Portable Apps on X:
-REM
-REM	x:\start.exe
-REM (moved the above to BKB-LAUNCHER)
 
-REM This will use initool.exe to read the location of the rootFolder from settings.ini
-@FOR /F "tokens=* USEBACKQ" %%F IN (`..\UTIL-APPS\initool\initool.exe g ..\settings.ini Settings rootFolder --value-only`) DO (
-SET rootFolder=%%F
-)
 	ECHO Launching BKB-LAUNCHER
-	cd %rootFolder%
+	cd %BKB_ROOT%
 	BKB-LAUNCHER.ahk
+
+	:allDone
+	exit

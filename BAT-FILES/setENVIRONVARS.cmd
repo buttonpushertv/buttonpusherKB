@@ -4,11 +4,29 @@
 @echo off
 CLS
 
+@If "%BKB_TEMP%" EQU "" setx BKB_TEMP LOWER
+@If "%BKB_TEMP%" EQU "ELEV" goto init
+
 ECHO.
 ECHO +==============================+
 ECHO Running Admin Shell
 ECHO +==============================+
+ECHO.
+ECHO This script is going to reload itself and Windows
+ECHO will ask for permission to allow the script to run 
+ECHO as an Admin on this system.
+ECHO.
+ECHO Please allow this to occur. This script will setup 
+ECHO an Environment Variable in your Windows Registry.
+ECHO.
+ECHO Once completed, it will be found in the Registry here:
+ECHO. 
+ECHO Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment\BKB_ROOT
+ECHO.
+pause
+
 :init
+@setx BKB_TEMP "ELEV"
 setlocal DisableDelayedExpansion
 set "batchPath=%~0"
 for %%k in (%0) do set batchName=%%~nk
@@ -44,4 +62,14 @@ if '%1'=='ELEV' (del "%vbsGetPrivileges%" 1>nul 2>nul  &  shift /1)
 ::::::::::::::::::::::::::::
 ::START
 ::::::::::::::::::::::::::::
-setx /m BKB_ROOT "C:\BKB"
+@setx BKB_TEMP ""
+@cd ..
+@SET rootFolder==%CD%
+@ECHO It appears that you are running buttonpusherKB from this directory: %rootFolder%
+@CHOICE /C YN /M "Is that correct?"
+@echo %ERRORLEVEL%
+@If %ERRORLEVEL% EQU 1 setx /m BKB_ROOT %CD%
+@If %ERRORLEVEL% EQU 1 @echo Environment Variable set.
+@If %ERRORLEVEL% EQU 2 @echo Re-run this script once you have your rootfolder set up the way you want it.
+@pause
+exit

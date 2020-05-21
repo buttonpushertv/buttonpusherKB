@@ -9,7 +9,7 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #Persistent ; Keeps script permanently running.
 #SingleInstance force ; Ensures that there is only a single instance of this script running.
-
+SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of "exact"
 #InstallKeybdHook        ;Recent Window 10 updates have started getting the Alt key stuck down,
 #UseHook On              ;but only in AutoHotKey. These 3 commands are an attempt to fix that.
 #HotkeyModifierTimeout 0 ;It's not clear if this completely fixes it.
@@ -72,7 +72,18 @@ launchAppKeyRows := (section2_keys / 3)
 launchAppGroupHeight := ((launchAppKeyRows * 20) + 20)
 launchAppGuiHeight := (launchAppGroupHeight + 120)
 
+; It seems that sometimes the BKB-Startup.ahk get stuck exiting or doesn't quit where it supposed to. This code block should see it and close it.
+DetectHiddenWindows, On
+BKBstartupPath := "BKB-startup"
+IfWinExist,,%BKBstartupPath%
+{
+	MsgBox, 262144,, Found %BKBstartupPath%
+	WinClose, %BKBstartupPath%
+}
+DetectHiddenWindows, Off
+
 ; ===== CREATE GUI FOR SPLASH SCREEN ITEMS HERE
+Gui, +AlwaysOnTop
 Gui, launchApp:Add, Text, section x0 y0,
 Gui, launchApp:Color, FFFFFF
 Gui, launchApp:Add, Picture, xs ys , SUPPORTING-FILES\BPS-Logo-PLUS-KB-240x275.png
