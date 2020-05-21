@@ -17,8 +17,10 @@ sleepMedium = 666
 sleepLong = 1500
 sleepDeep = 3500
 
-iniFile := "..\settings.ini"
-IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
+EnvGet, Settings_rootFolder, BKB_ROOT
+
+;iniFile := "C:\BKB\settings.ini"
+;IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -29,6 +31,7 @@ IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
 
+; The setting below might be a way to get the rootFolder setting available to everything else
 Run, %Settings_rootFolder%\BAT-FILES\setENVIRONVARS.cmd,,
 
 Run, %Settings_rootFolder%\BAT-FILES\user_files_VHDMount_to_X.cmd,,OutputVarPID
