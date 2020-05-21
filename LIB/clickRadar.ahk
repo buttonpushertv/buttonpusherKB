@@ -4,7 +4,7 @@
 
 
 
-#include C:\BPTV-KB\LIB\gdip.ahk
+#include C:\BKB\LIB\gdip.ahk
 ;Thanks to tic (Tariq Porter) for his GDI+ Library
 ;ahkscript.org/boards/viewtopic.php?t=6517
 

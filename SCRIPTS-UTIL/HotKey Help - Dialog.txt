@@ -1,5 +1,5 @@
 
-============================ BPTV-CHEAT-SHEETS =============================
+============================ BKB-CHEAT-SHEETS =============================
 <HK>  WIN+ALT+CTRL+SHIFT+F13<-- Set 2nd Hotkey for KBF1 (firstShower: a text file shower)
 <HK>  WIN+ALT+CTRL+SHIFT+F14<-- Set 2nd Hotkey for KBF2 (secondShower: a image file shower - App-Specific)
 <HK>  WIN+ALT+CTRL+SHIFT+F15<-- Set 2nd Hotkey for KBF3 (thirdShower: a text file shower - App-Specific)
@@ -18,7 +18,7 @@ CAPSLOCK & BACKSPACE    <-- Reload MASTER-SCRIPT.ahk
 CAPSLOCK & C            <-- Delete Key
 CAPSLOCK & F            <--This will open the selected OR active path from an Explorer Window or Save/Open Dialog in FreeCommander OR VICE-VERSA
 CAPSLOCK & F11          <-- Open the Settings GUI for MASTER-SCRIPT.AHK
-CAPSLOCK & F12          <-- Open BPTV-LAUNCHER
+CAPSLOCK & F12          <-- Open BKB-LAUNCHER
 CAPSLOCK & G            <--This will return the selected OR active path from an Explorer Window/Save/Open Dialog OR FCXE in a MsgBox
 CAPSLOCK & P            <-- Toggle CapsLockCheck on or Off
 CAPSLOCK & Q            <-- Exit MASTER-SCRIPT and child AHK Scripts
@@ -27,7 +27,7 @@ CAPSLOCK & WHEELDOWN    <-- Send Control+Page Down - for changing tabs in apps t
 CAPSLOCK & WHEELUP      <-- Send Control+Page Up - for changing tabs in apps that support it (Chrome, Atom)
 SCROLLLOCK & BACKSPACE  <-- Reload MASTER-SCRIPT.ahk
 SCROLLLOCK & F11        <-- Open the Settings GUI for MASTER-SCRIPT.AHK
-SCROLLLOCK & F12        <-- Open BPTV-LAUNCHER
+SCROLLLOCK & F12        <-- Open BKB-LAUNCHER
 SHIFT+CTRL+ALT+Q        <-- Edit PRIVATE\QUICKTYPE-HOTSTRINGS.ahk
 SHIFT+CTRL+ALT+S        <-- Edit PRIVATE\MASTER-SCAF-KEYS.ahk
 WIN+CTRL+ALT+SHIFT+Q    <-- Launches Office Hub

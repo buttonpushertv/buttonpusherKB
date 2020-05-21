@@ -8,7 +8,7 @@ Be careful with this though. It will not set the wokring directory (like you can
 
 TO USE THIS TEMPLATE:
 
-1 - change the Launchcode to be the path to your app. If you are using an App in the C:\BPTV-KB hierarchy you can use '..\'s to work your way back up and down the folder paths.
+1 - change the Launchcode to be the path to your app. If you are using an App in the C:\BKB hierarchy you can use '..\'s to work your way back up and down the folder paths.
 
 2 - Change the WindowTitle to match your app when open. Use AHK's WindowSpy to find this exact bit and copy the text from WindowSpy & paste below. If you want/need to snag something other than the window's displayed title (the top line in WindowSpy), you could use 'ahk_class' or 'ahk_exe' - you would need to copy the whole item, like this: 'ahk_exe vnchelper.exe'
 

@@ -29,6 +29,8 @@ IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
 
+Run, %Settings_rootFolder%\BAT-FILES\setENVIRONVARS.cmd,,
+
 Run, %Settings_rootFolder%\BAT-FILES\user_files_VHDMount_to_X.cmd,,OutputVarPID
 WinWait ahk_pid %OutputVarPID%
 Winset, AlwaysOnTop, On, ahk_exe cmd.exe ; all the commands that come after this are my attempt to force

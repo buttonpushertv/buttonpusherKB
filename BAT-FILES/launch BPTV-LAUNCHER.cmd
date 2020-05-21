@@ -1,5 +1,5 @@
 @echo off
-@REM IMPORTANT-This batch file requires an arguement be passed that is the root folder where your install of BPTV-KB is running from. It is probably best if you just leave it as 'C:\BPTV-KB".
+@REM IMPORTANT-This batch file requires an arguement be passed that is the root folder where your install of BKB is running from. It is probably best if you just leave it as 'C:\BKB".
 
 @echo The current directory is %CD%
 @echo and this is what got passed: %1
@@ -11,4 +11,4 @@ SET rootFolder=%%F
 @cd %rootFolder%
 @echo Now the current directory is %CD%
 
-BPTV-LAUNCHER.ahk
+BKB-LAUNCHER.ahk

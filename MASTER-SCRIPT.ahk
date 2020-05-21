@@ -179,7 +179,7 @@ CapsLock & f11:: ; <-- Open the Settings GUI for MASTER-SCRIPT.AHK
 ScrollLock & f12:: ; <-- Open buttonpusherLAUNCHER
 CapsLock & f12:: ; <-- Open buttonpusherLAUNCHER
 		ScrollLockOff()
-		Run, %A_ScriptDir%\BPTV-LAUNCHER.ahk ; runs the launcher that runs at boot. Should only be used if you are making changes to what gets run at boot or if anything stops working properly
+		Run, %A_ScriptDir%\BKB-LAUNCHER.ahk ; runs the launcher that runs at boot. Should only be used if you are making changes to what gets run at boot or if anything stops working properly
     return
 
 ScrollLock & Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
@@ -210,8 +210,8 @@ CapsLock & G:: ; <-- This will return the selected OR active path from an Explor
 	Run, %A_ScriptDir%\SCRIPTS-UTIL\STREAMDECK\DRAKE\getPATH.ahk
 	Return
 
-CapsLock & L:: ; <-- This will launch BPTV-LAUNCHX
-    Run, %A_ScriptDir%\UTIL-APPS\BPTV-LAUNCHX\launcher.ahk
+CapsLock & L:: ; <-- This will launch BKB-LAUNCHX
+    Run, %A_ScriptDir%\UTIL-APPS\BKB-LAUNCHX\launcher.ahk
     Return
 
 CapsLock & v:: ; <-- Backspace Key
@@ -275,7 +275,7 @@ HYPER+Space <-- Open Emoji Menu
 
 ; You can even still open the Office Hub as a AHK hotkey. You need to get the AUMID (Aoplication User Model ID - aka Microsoft Store Apps unique identifiers). These are a pain to get. There are a few methods. This page (https://jcutrer.com/windows/find-aumid) lists several. The easiest is to use the BAT file method.
 ;
-; In BPTV-KB\BAT-FILES, there is a BAT file called 'aumidsearch.bat' From a commandline, sitting in the BAT-FILES directory, type 'aumidsearch' + a space + your search term (in this case - 'aumidsearch office'). Copy the text that appears in the third column & paste after the 'Run' comnmand.
+; In BKB\BAT-FILES, there is a BAT file called 'aumidsearch.bat' From a commandline, sitting in the BAT-FILES directory, type 'aumidsearch' + a space + your search term (in this case - 'aumidsearch office'). Copy the text that appears in the third column & paste after the 'Run' comnmand.
 
 #^!+Q:: ; <-- Launches Office Hub
 	ToolTip, Standby. Launching Office Hub. Release HYPER key quickly to prevent Office Hub from hiding itself.

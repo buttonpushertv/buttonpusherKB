@@ -98,12 +98,12 @@ REM	ECHO +==============================+
 REM	ECHO Starting Portable Apps on X:
 REM
 REM	x:\start.exe
-REM (moved the above to BPTV-LAUNCHER)
+REM (moved the above to BKB-LAUNCHER)
 
 REM This will use initool.exe to read the location of the rootFolder from settings.ini
 @FOR /F "tokens=* USEBACKQ" %%F IN (`..\UTIL-APPS\initool\initool.exe g ..\settings.ini Settings rootFolder --value-only`) DO (
 SET rootFolder=%%F
 )
-	ECHO Launching BPTV-LAUNCHER
+	ECHO Launching BKB-LAUNCHER
 	cd %rootFolder%
-	BPTV-LAUNCHER.ahk
+	BKB-LAUNCHER.ahk

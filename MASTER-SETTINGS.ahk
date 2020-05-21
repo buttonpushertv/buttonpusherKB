@@ -135,7 +135,7 @@ loop, %section2_keys%
 ;Section 3 - Apps To Load
 section3GroupH := (section3H + 2)
 currentAltCounter := 1
-Gui, mainWindow:Add, GroupBox, R%section3GroupH% x10 yp+50 w%guiElementWidth%, Apps to Load (loaded via BPTV-LAUNCHER.ahk*)
+Gui, mainWindow:Add, GroupBox, R%section3GroupH% x10 yp+50 w%guiElementWidth%, Apps to Load (loaded via BKB-LAUNCHER.ahk*)
 Gui, mainWindow:Add, Text, hidden section xp yp,
 loop, %section3_keys%
     {
@@ -164,7 +164,7 @@ loop, %section3_keys%
     }
 paddedGuiElementWidth := guiElementWidth - 50
 Gui, mainWindow:Font, S8 CDefault, Franklin Gothic Medium
-Gui, mainWindow:Add, Text, x30 yp+30 w%paddedGuiElementWidth%, *-App enabling/disabling will take effect when BPTV-LAUNCHER is relaunched. Changes made here will be saved. All enabled and/or open apps should be closed before relaunching BPTV-LAUNCHER.
+Gui, mainWindow:Add, Text, x30 yp+30 w%paddedGuiElementWidth%, *-App enabling/disabling will take effect when BKB-LAUNCHER is relaunched. Changes made here will be saved. All enabled and/or open apps should be closed before relaunching BKB-LAUNCHER.
 
 Gui, mainWindow:Font, S12 CDefault, Franklin Gothic Medium
 spacing := 25

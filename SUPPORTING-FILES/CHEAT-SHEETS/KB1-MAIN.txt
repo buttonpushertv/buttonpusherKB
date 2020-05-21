@@ -16,7 +16,7 @@ CAPS+V              <--BackSpace
 
 CAPS+F              <--Open Path from an Explorer Window or Save/Open Dialog in FreeCommander
 
-CAPS+L              <-- This will launch BPTV-LAUNCHX
+CAPS+L              <-- This will launch BKB-LAUNCHX
 
 CAPS+P              <-- Toggle CapsLockCheck On or Off
 
@@ -27,7 +27,7 @@ CAPS+WHEELUP      <-- Send Control+Page Up - for changing tabs in apps that supp
 
 (For these below you can use CAPS or SCRLK as the modifier)
 CAPS/SCRLK+F11      <--Open the Settings GUI for MASTER-SCRIPT.AHK
-CAPS/SCRLK+F12      <--Open BPTV-LAUNCHER
+CAPS/SCRLK+F12      <--Open BKB-LAUNCHER
 CAPS/SCRLK+BACKSP   <--Reload MASTER-SCRIPT.ahk
 CAPS/SCRLK+Q        <--Exit MASTER-SCRIPT and child AHK Scripts
 
