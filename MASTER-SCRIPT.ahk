@@ -87,17 +87,16 @@ Gui, +AlwaysOnTop
 Gui, launchApp:Add, Text, section x0 y0,
 Gui, launchApp:Color, FFFFFF
 Gui, launchApp:Add, Picture, xs ys , SUPPORTING-FILES\BPS-Logo-PLUS-KB-240x275.png
-Gui, launchApp:Font, S8
-Gui, launchApp:Add, Text, xs+30 ys+270, %version%
+Gui, launchApp:Font, S10, %Settings_guiFont%
+Gui, launchApp:Add, Text, xs+75 ys+270, %version%
 Gui, launchApp:Add, Text, x250 yp, Press CAPS+F11 for Settings  |  Press CAPS+Q to Quit Running Scripts 
 Gui, launchApp:Add, Text, x250 yp+20, Press CAPS+F12 for buttonpusherKB Launcher
 Gui, launchApp:Show, w800 h%launchAppGuiHeight%, Launching AHK Scripts
-; ===== LAUNCH STANDALONE SCRIPTS HERE
-Gui, launchApp:Font, S12
+Gui, launchApp:Font, S18, %guiFont%
 Gui, launchApp:Add, Text, x250 ys+10 w450, Scripts Being Launched
-Gui, launchApp:Font, S10
+Gui, launchApp:Font, S12, %guiFont%
+; ===== LAUNCH STANDALONE SCRIPTS HERE
 Gui, launchApp:Add, Text, section xp+10 yp+10,
-Gui, launchApp:Font, S10
 ; section2_keys is read from settings.ini
 loop, %section2_keys% ; this loop will launch any scripts that are defined and enabled in settings.ini
 {
@@ -118,15 +117,16 @@ loop, %section2_keys% ; this loop will launch any scripts that are defined and e
               continue
               }
             else {
-			Gui, launchApp:Add, Text, xs+15 yp+25, %currentNameValue%
+			Gui, launchApp:Font, S12, %guiFont%
+			Gui, launchApp:Add, Text, xs+25 yp+35, %currentNameValue%
             Run, %currentPathValue% %Location_currentSystemLocation% %currentSystemLocationName%,, UseErrorLevel, justLaunchedPID
 			If !ErrorLevel {
 				Gui, launchApp:Font, S14 CGreen
-				Gui, launchApp:Add, Text, xs yp-5, % Chr(0x2713)
+				Gui, launchApp:Add, Text, xs yp-2, % Chr(0x2713)
 				Gui, launchApp:Font, S10 CBlack
 			} else {
 				Gui, launchApp:Font, S14 CRed
-				Gui, launchApp:Add, Text, xs yp, % Chr(0x2713)
+				Gui, launchApp:Add, Text, xs yp-2, % Chr(0x2713)
 				Gui, launchApp:Font, S10 CBlack
 			}
             Gui, launchApp:Show,, Launching AHK Scripts

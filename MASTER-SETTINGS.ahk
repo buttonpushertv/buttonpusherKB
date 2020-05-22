@@ -79,7 +79,7 @@ section4EditBoxW := (longestSettingValue * 7)
 ;Section 1 - System Location
 section1GroupH := (section1H +1.25)
 currentAltCounter := 1
-Gui, mainWindow:Font, S12 CDefault, Franklin Gothic Medium
+Gui, mainWindow:Font, S12 CDefault, %Settings_guiFont%
 Gui, mainWindow:Add, GroupBox, R%section1GroupH% x10 y10 w%guiElementWidth%, System Location
 Gui, mainWindow:Add, Text, hidden section yp,
 loop, %section1_keys%
@@ -97,9 +97,9 @@ loop, %section1_keys%
     } else
       Gui, mainWindow:Add, Radio, xs+20 yp+25 vLocRadioGroup%currentAltCounter%, %currentKeyValueForRadio%
   }
-  Gui, mainWindow:Font, S10 CDefault, Franklin Gothic Medium
+  Gui, mainWindow:Font, S10 CDefault, %Settings_guiFont%
   Gui, mainWindow:Add, Text, xp yp+30, Select a Location on the left.`nThis can be used to provide location specific settings.
-  Gui, mainWindow:Font, S12 CDefault, Franklin Gothic Medium
+  Gui, mainWindow:Font, S12 CDefault, %Settings_guiFont%
 
 ;Section 2 - Scripts To Run
 section2GroupH := (section2H - 1)
@@ -163,10 +163,10 @@ loop, %section3_keys%
         Continue
     }
 paddedGuiElementWidth := guiElementWidth - 50
-Gui, mainWindow:Font, S8 CDefault, Franklin Gothic Medium
+Gui, mainWindow:Font, S8 CDefault, %Settings_guiFont%
 Gui, mainWindow:Add, Text, x30 yp+30 w%paddedGuiElementWidth%, *-App enabling/disabling will take effect when BKB-LAUNCHER is relaunched. Changes made here will be saved. All enabled and/or open apps should be closed before relaunching BKB-LAUNCHER.
 
-Gui, mainWindow:Font, S12 CDefault, Franklin Gothic Medium
+Gui, mainWindow:Font, S12 CDefault, %Settings_guiFont%
 spacing := 25
 buttonPadding := buttonElementWidth + spacing
 ;Gui, mainWindow:Add, Button, x520 yp w100 h30, Variables ; Uncomment if you wish to have a button to show Variables assigned by the script
@@ -177,14 +177,14 @@ Gui, mainWindow:Add, Button, x%buttonStartingX% yp+32 w%buttonElementWidth% h30,
 Gui, mainWindow:Add, Text, hidden xp+%buttonPadding%
 Gui, mainWindow:Add, Button, xp yp w%buttonElementWidth% h30, &SAVE
 Gui, mainWindow:Add, Button, x%buttonStartingX% yp+32 w%guiElementWidth% h30, SAVE AND &RELAUNCH MASTER-SCRIPT
-Gui, mainWindow:Font, S10 CDefault, Franklin Gothic Medium
+Gui, mainWindow:Font, S10 CDefault, %Settings_guiFont%
 Gui, mainWindow:Add, Text, x%buttonStartingX% yp+32 w%guiElementWidth%, Clicking 'SAVE' will just save the settings above and reload this panel.`nClick 'SAVE AND RELAUNCH MASTER-SCRIPT' to save and relaunch all the checked scripts and exit this panel.
 
 ; Section 4 - Other Settings
 section4GroupH := (section4H *1.6)
-Gui, mainWindow:Font, S12 CDefault, Franklin Gothic Medium
+Gui, mainWindow:Font, S12 CDefault, %Settings_guiFont%
 Gui, mainWindow:Add, GroupBox, R%section4GroupH% x%halfGuiWidth% y10 w%guiElementWidth%,Other Settings
-Gui, mainWindow:Font, S10 CDefault, Franklin Gothic Medium
+Gui, mainWindow:Font, S10 CDefault, %Settings_guiFont%
 Gui, mainWindow:Add, Text, hidden section xp yp Center,
 loop, %section4_keys%
     {
@@ -211,13 +211,13 @@ mainWindowButtonManageScripts:
 	manageScriptsLVW := 850
 
 	Gui, manageScripts:New, , Manage Scripts
-	Gui, manageScripts:Font, S12 CDefault, Franklin Gothic Medium
+	Gui, manageScripts:Font, S12 CDefault, %Settings_guiFont%
 	Gui, manageScripts:Add, Text, , Current Script Order:
 	Gui, manageScripts:Add, ListView, x15 r%scriptSectionKeys% w%manageScriptsLVW% h%manageScriptsLVH% gmanageScriptsLVevent -ReadOnly, Script|Enabled?|Path
-	Gui, manageScripts:Font, S10 CDefault, Franklin Gothic Medium
+	Gui, manageScripts:Font, S10 CDefault, %Settings_guiFont%
 	Gui, manageScripts:Add, Text, yp+%manageScriptsLVH% , SORT: Click Column Headers (2nd click to reverse order)`nEDIT NAME: Select Script `& press F2.`nEDIT PATH: Right-Double-Click on Script
 	Gui, manageScripts:Add, Text, x440 yp , ADD SCRIPT: Use 'Add Script' button below.`nDELETE SCRIPT: Double-click individual Script name then confirm deletion.`nCANCEL: Press Escape.
-	Gui, manageScripts:Font, S12 CDefault, Franklin Gothic Medium
+	Gui, manageScripts:Font, S12 CDefault, %Settings_guiFont%
 	Gui, manageScripts:Add, Button, x15 yp+55 w100 h30 gmanageScriptsAddScript, &Add Script
 	Gui, manageScripts:Add, Button, x635 yp w100 h30, &Cancel
 	Gui, manageScripts:Add, Button, x765 yp w100 h30 gmanageScriptsSaveSorted, &Save Sorted
@@ -349,13 +349,13 @@ mainWindowButtonManageApps:
    	manageAppsLVW := 850
 
    	Gui, manageApps:New, ,Manage Apps
-   	Gui, manageApps:Font, S12 CDefault, Franklin Gothic Medium
+   	Gui, manageApps:Font, S12 CDefault, %Settings_guiFont%
    	Gui, manageApps:Add, Text, , Current App Order:
    	Gui, manageApps:Add, ListView, x15 r%appSectionKeys% w%manageAppsLVW% h%manageAppsLVH% gmanageAppsLVevent -ReadOnly, App|Enabled?|Path
-   	Gui, manageApps:Font, S10 CDefault, Franklin Gothic Medium
+   	Gui, manageApps:Font, S10 CDefault, %Settings_guiFont%
    	Gui, manageApps:Add, Text, yp+%manageAppsLVH% , SORT: Click Column Headers (2nd click to reverse order)`nEDIT NAME: Select App `& press F2.`nEDIT PATH: Right-Double-Click on App
    	Gui, manageApps:Add, Text, x440 yp , ADD App: Use 'Add App' button below.`nDELETE App: Double-click individual App name then confirm deletion.`nCANCEL: Press Escape.
-   	Gui, manageApps:Font, S12 CDefault, Franklin Gothic Medium
+   	Gui, manageApps:Font, S12 CDefault, %Settings_guiFont%
    	Gui, manageApps:Add, Button, x15 yp+55 w100 h30 gmanageAppsAddApp, &Add App
    	Gui, manageApps:Add, Button, x635 yp w100 h30, &Cancel
    	Gui, manageApps:Add, Button, x765 yp w100 h30 gmanageAppsSaveSorted, &Save Sorted
