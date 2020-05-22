@@ -69,8 +69,11 @@ INI_Load(iniFile)
 FileRead, version, %versionFile% ; reading the version from versionFile
 
 launchAppKeyRows := (section2_keys / 3)
-launchAppGroupHeight := ((launchAppKeyRows * 20) + 20)
-launchAppGuiHeight := (launchAppGroupHeight + 120)
+launchAppGuiHeight := ((launchAppKeyRows * 25) + 140)
+If (launchAppGuiHeight < 330) {
+	launchAppGuiHeight := 330
+}
+launchGuiBottomRowYpos := (launchAppGuiHeight - 55)
 
 ; It seems that sometimes the BKB-Startup.ahk get stuck exiting or doesn't quit where it supposed to. This code block should see it and close it.
 DetectHiddenWindows, On
@@ -88,9 +91,9 @@ Gui, launchApp:Add, Text, section x0 y0,
 Gui, launchApp:Color, FFFFFF
 Gui, launchApp:Add, Picture, xs ys , SUPPORTING-FILES\BPS-Logo-PLUS-KB-240x275.png
 Gui, launchApp:Font, S10, %Settings_guiFont%
-Gui, launchApp:Add, Text, xs+75 ys+270, %version%
-Gui, launchApp:Add, Text, x250 yp, Press CAPS+F11 for Settings  |  Press CAPS+Q to Quit Running Scripts 
-Gui, launchApp:Add, Text, x250 yp+20, Press CAPS+F12 for buttonpusherKB Launcher
+Gui, launchApp:Add, Text, xs+75 y%launchGuiBottomRowYpos%, %version%
+Gui, launchApp:Add, Text, x260 yp, Press CAPS+F11 for Settings  |  Press CAPS+Q to Quit Running Scripts 
+Gui, launchApp:Add, Text, x260 yp+20, Press CAPS+F12 for buttonpusherKB Launcher
 Gui, launchApp:Show, w800 h%launchAppGuiHeight%, Launching AHK Scripts
 Gui, launchApp:Font, S18, %guiFont%
 Gui, launchApp:Add, Text, x250 ys+10 w450, Scripts Being Launched
