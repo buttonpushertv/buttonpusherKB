@@ -1,4 +1,4 @@
-![buttonpusherKB Logo](SUPPORTING-FILES/BPS-Logo-PLUS-KB-200x230.png)
+![buttonpusherKB Logo](SUPPORTING-FILES/BPS-Logo-PLUS-KB-200x230.png){:style="float: right;margin-right: 7px;margin-top: 7px;"}
 
 A set of files used to create an efficient Post-Production Keyboard Interface that works for me.
 
