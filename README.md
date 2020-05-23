@@ -1,4 +1,5 @@
-![buttonpusherKB Logo](SUPPORTING-FILES\BPS-Logo-PLUS-KB-200x230.png){:style="float: right;margin-right: 7px;margin-top: 7px;"}
+![buttonpusherKB Logo](SUPPORTING-FILES/BPS-Logo-PLUS-KB-200x230.png)
+
 A set of files used to create an efficient Post-Production Keyboard Interface that works for me.
 
 Based on the [2nd keyboard](https://github.com/TaranVH/2nd-keyboard) project by TaranVH, this suite of [AutoHotKey](https://www.autohotkey.com/) scripts (and a few other files) provide a framework for making efficient use of a keyboard and some other input devices for the work I do in post-production.
