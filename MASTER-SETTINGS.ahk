@@ -77,11 +77,15 @@ loop, %section4_keys%{
 section4EditBoxW := (longestSettingValue * 7)
 
 ;Section 1 - System Location
-section1GroupH := (section1H +1.25)
+section1GroupH := (section1H + 1.5)
 currentAltCounter := 1
+Gui, mainWindow:Color, FFFFFF
+Gui, mainWindow:Add, Picture, x0 y10, SUPPORTING-FILES\BPS-Logo-PLUS-KB-100x115.png
+guiSection1Width := (guiElementWidth - 100)
+Gui, mainWindow:Add, Text, x110 y10 section,
 Gui, mainWindow:Font, S12 CDefault Bold, %Settings_guiFont%
-Gui, mainWindow:Add, GroupBox, R%section1GroupH% x10 y10 w%guiElementWidth%, System Location
-Gui, mainWindow:Add, Text, hidden section yp,
+Gui, mainWindow:Add, GroupBox, R%section1GroupH% xs ys w%guiSection1Width%, System Location
+Gui, mainWindow:Add, Text, xp yp hidden section,
 Gui, mainWindow:Font, S12 norm, %Settings_guiFont%
 loop, %section1_keys%
   {
@@ -103,7 +107,7 @@ loop, %section1_keys%
   Gui, mainWindow:Font, S12 CDefault, %Settings_guiFont%
 
 ;Section 2 - Scripts To Run
-section2GroupH := (section2H - 1)
+section2GroupH := (section2H - 0.25)
 currentAltCounter := 1
 Gui, mainWindow:Font, S12 CDefault Bold, %Settings_guiFont%
 Gui, mainWindow:Add, GroupBox, R%section2GroupH% x10 yp+60 w%guiElementWidth%, Scripts to Load (loaded via MASTER-SCRIPT.ahk)
@@ -182,14 +186,14 @@ Gui, mainWindow:Add, Button, x%buttonStartingX% yp+32 w%buttonElementWidth% h30,
 Gui, mainWindow:Add, Text, hidden xp+%buttonPadding%
 Gui, mainWindow:Add, Button, xp yp w%buttonElementWidth% h30, &SAVE
 Gui, mainWindow:Font, S12 CDefault Bold, %Settings_guiFont%
-Gui, mainWindow:Add, Button, x%buttonStartingX% yp+32 w%guiElementWidth% h30, SAVE AND &RELAUNCH MASTER-SCRIPT
+Gui, mainWindow:Add, Button, x%buttonStartingX% yp+32 w%guiElementWidth% h30 Default, SAVE AND &RELAUNCH MASTER-SCRIPT
 Gui, mainWindow:Font, S10 CDefault norm, %Settings_guiFont%
 Gui, mainWindow:Add, Text, x%buttonStartingX% yp+32 w%guiElementWidth%, Clicking 'SAVE' will just save the settings above and reload this panel.`nClick 'SAVE AND RELAUNCH MASTER-SCRIPT' to save and relaunch all the checked scripts and exit this panel.
 
 ; Section 4 - Other Settings
-section4GroupH := (section4H *1.6)
+section4GroupH := (section4H * 49)
 Gui, mainWindow:Font, S12 CDefault Bold, %Settings_guiFont%
-Gui, mainWindow:Add, GroupBox, R%section4GroupH% x%halfGuiWidth% y10 w%guiElementWidth%,Other Settings
+Gui, mainWindow:Add, GroupBox, x%halfGuiWidth% y10 w%guiElementWidth% H%section4GroupH%,Other Settings
 Gui, mainWindow:Font, S10 norm
 Gui, mainWindow:Add, Text, hidden section xp yp Center,
 loop, %section4_keys%
