@@ -79,9 +79,10 @@ section4EditBoxW := (longestSettingValue * 7)
 ;Section 1 - System Location
 section1GroupH := (section1H +1.25)
 currentAltCounter := 1
-Gui, mainWindow:Font, S12 CDefault, %Settings_guiFont%
+Gui, mainWindow:Font, S12 CDefault Bold, %Settings_guiFont%
 Gui, mainWindow:Add, GroupBox, R%section1GroupH% x10 y10 w%guiElementWidth%, System Location
 Gui, mainWindow:Add, Text, hidden section yp,
+Gui, mainWindow:Font, S12 norm, %Settings_guiFont%
 loop, %section1_keys%
   {
     if (A_Index = 1) {
@@ -104,8 +105,10 @@ loop, %section1_keys%
 ;Section 2 - Scripts To Run
 section2GroupH := (section2H - 1)
 currentAltCounter := 1
+Gui, mainWindow:Font, S12 CDefault Bold, %Settings_guiFont%
 Gui, mainWindow:Add, GroupBox, R%section2GroupH% x10 yp+60 w%guiElementWidth%, Scripts to Load (loaded via MASTER-SCRIPT.ahk)
 Gui, mainWindow:Add, Text, hidden section xp yp,
+Gui, mainWindow:Font, S12 norm, %Settings_guiFont%
 loop, %section2_keys%
   {
     scriptCheckboxEnable%A_Index% := 0
@@ -135,8 +138,10 @@ loop, %section2_keys%
 ;Section 3 - Apps To Load
 section3GroupH := (section3H + 2)
 currentAltCounter := 1
+Gui, mainWindow:Font, S12 CDefault Bold, %Settings_guiFont%
 Gui, mainWindow:Add, GroupBox, R%section3GroupH% x10 yp+50 w%guiElementWidth%, Apps to Load (loaded via BKB-LAUNCHER.ahk*)
 Gui, mainWindow:Add, Text, hidden section xp yp,
+Gui, mainWindow:Font, S12 norm, %Settings_guiFont%
 loop, %section3_keys%
     {
       appCheckboxEnable%A_Index% := 0
@@ -176,15 +181,16 @@ Gui, mainWindow:Add, Button, xp y%buttonStartingY% w%buttonElementWidth% h30, Ma
 Gui, mainWindow:Add, Button, x%buttonStartingX% yp+32 w%buttonElementWidth% h30, &Cancel
 Gui, mainWindow:Add, Text, hidden xp+%buttonPadding%
 Gui, mainWindow:Add, Button, xp yp w%buttonElementWidth% h30, &SAVE
+Gui, mainWindow:Font, S12 CDefault Bold, %Settings_guiFont%
 Gui, mainWindow:Add, Button, x%buttonStartingX% yp+32 w%guiElementWidth% h30, SAVE AND &RELAUNCH MASTER-SCRIPT
-Gui, mainWindow:Font, S10 CDefault, %Settings_guiFont%
+Gui, mainWindow:Font, S10 CDefault norm, %Settings_guiFont%
 Gui, mainWindow:Add, Text, x%buttonStartingX% yp+32 w%guiElementWidth%, Clicking 'SAVE' will just save the settings above and reload this panel.`nClick 'SAVE AND RELAUNCH MASTER-SCRIPT' to save and relaunch all the checked scripts and exit this panel.
 
 ; Section 4 - Other Settings
 section4GroupH := (section4H *1.6)
-Gui, mainWindow:Font, S12 CDefault, %Settings_guiFont%
+Gui, mainWindow:Font, S12 CDefault Bold, %Settings_guiFont%
 Gui, mainWindow:Add, GroupBox, R%section4GroupH% x%halfGuiWidth% y10 w%guiElementWidth%,Other Settings
-Gui, mainWindow:Font, S10 CDefault, %Settings_guiFont%
+Gui, mainWindow:Font, S10 norm
 Gui, mainWindow:Add, Text, hidden section xp yp Center,
 loop, %section4_keys%
     {

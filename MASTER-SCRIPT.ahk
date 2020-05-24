@@ -68,12 +68,14 @@ INI_Load(iniFile)
 
 FileRead, version, %versionFile% ; reading the version from versionFile
 
+launchAppGuiWidth := 850
 launchAppKeyRows := (section2_keys / 3)
 launchAppGuiHeight := ((launchAppKeyRows * 25) + 140)
 If (launchAppGuiHeight < 330) {
 	launchAppGuiHeight := 330
 }
-launchGuiBottomRowYpos := (launchAppGuiHeight - 55)
+launchGuiBottomRowYpos := (launchAppGuiHeight - 57)
+launchAppGuiColTwoStartingXpos := 270
 
 ; It seems that sometimes the BKB-Startup.ahk get stuck exiting or doesn't quit where it supposed to. This code block should see it and close it.
 DetectHiddenWindows, On
@@ -90,14 +92,15 @@ Gui, +AlwaysOnTop
 Gui, launchApp:Add, Text, section x0 y0,
 Gui, launchApp:Color, FFFFFF
 Gui, launchApp:Add, Picture, xs ys , SUPPORTING-FILES\BPS-Logo-PLUS-KB-240x275.png
-Gui, launchApp:Font, S10, %Settings_guiFont%
-Gui, launchApp:Add, Text, xs+75 y%launchGuiBottomRowYpos%, %version%
-Gui, launchApp:Add, Text, x260 yp, Press CAPS+F11 for Settings  |  Press CAPS+Q to Quit Running Scripts 
-Gui, launchApp:Add, Text, x260 yp+20, Press CAPS+F12 for buttonpusherKB Launcher
-Gui, launchApp:Show, w800 h%launchAppGuiHeight%, Launching AHK Scripts
-Gui, launchApp:Font, S18, %guiFont%
-Gui, launchApp:Add, Text, x250 ys+10 w450, Scripts Being Launched
-Gui, launchApp:Font, S12, %guiFont%
+Gui, launchApp:Font, S10 italic, %Settings_guiFont%
+Gui, launchApp:Add, Text, xs+80 y%launchGuiBottomRowYpos%, %version%
+Gui, launchApp:Font, norm
+Gui, launchApp:Add, Text, x%launchAppGuiColTwoStartingXpos% yp, Press CAPS+F11 for Settings  |  Press CAPS+Q to Quit Running Scripts 
+Gui, launchApp:Add, Text, x%launchAppGuiColTwoStartingXpos% yp+20, Press CAPS+F12 for buttonpusherKB Launcher
+Gui, launchApp:Show, w%launchAppGuiWidth% h%launchAppGuiHeight%, Launching AHK Scripts
+Gui, launchApp:Font, S18 norm bold
+Gui, launchApp:Add, Text, x%launchAppGuiColTwoStartingXpos% ys+10 w450, Scripts Being Launched
+Gui, launchApp:Font, S12 norm
 ; ===== LAUNCH STANDALONE SCRIPTS HERE
 Gui, launchApp:Add, Text, section xp+10 yp+10,
 ; section2_keys is read from settings.ini
@@ -120,7 +123,7 @@ loop, %section2_keys% ; this loop will launch any scripts that are defined and e
               continue
               }
             else {
-			Gui, launchApp:Font, S12, %guiFont%
+			Gui, launchApp:Font, S12
 			Gui, launchApp:Add, Text, xs+25 yp+35, %currentNameValue%
             Run, %currentPathValue% %Location_currentSystemLocation% %currentSystemLocationName%,, UseErrorLevel, justLaunchedPID
 			If !ErrorLevel {
@@ -132,7 +135,7 @@ loop, %section2_keys% ; this loop will launch any scripts that are defined and e
 				Gui, launchApp:Add, Text, xs yp-2, % Chr(0x2713)
 				Gui, launchApp:Font, S10 CBlack
 			}
-            Gui, launchApp:Show,, Launching AHK Scripts
+            Gui, launchApp:Show,, Launching %currentNameValue%
 			DetectHiddenWindows, Off
             }
         }
@@ -146,7 +149,7 @@ loop, %section2_keys% ; this loop will launch any scripts that are defined and e
     else
     Continue
 }
-
+Gui, launchApp:Show,, All Scripts Have Been Launched...Enjoy!
 Sleep, Settings_splashScreenTimeout
 
 goto launchAppTimeout
