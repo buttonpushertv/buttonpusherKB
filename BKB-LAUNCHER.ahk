@@ -41,6 +41,8 @@ INI_Init(inifile)
 INI_Load(inifile)
 
 global readSettings_TimeoutPeriod := Settings_timeoutPeriod
+global versionFile := "version.ini" ; the file which holds the current version of buttonpusherKB
+FileRead, version, %versionFile% ; reading the version from versionFile
 
 ; It seems that sometimes the BKB-Startup.ahk get stuck exiting or doesn't quit where it supposed to. This code block should see it and close it.
 DetectHiddenWindows, On
@@ -82,7 +84,9 @@ buttonStartingY := (guiHeight - 150)
 ;Section 1 - System Location
 currentSystemLocation = % Location_systemLocation%Location_currentSystemLocation%
 Gui, Color, FFFFFF
-Gui, Add, Picture, x0 y15, SUPPORTING-FILES\BPS-Logo-PLUS-KB-100x115.png
+Gui, Add, Picture, x5 y15, SUPPORTING-FILES\BPS-Logo-PLUS-KB-100x115.png
+Gui, Font, S8 italic, %Settings_guiFont%
+Gui, Add, Text, xp+12 yp+115, %version%
 Gui, Add, Text, x110 y10 hidden section
 Gui, Font, S10 CDefault, %Settings_guiFont%
 Gui, Add, Text, xs ys , Current Selected System Location: %currentSystemLocation%

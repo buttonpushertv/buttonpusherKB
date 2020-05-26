@@ -80,7 +80,9 @@ section4EditBoxW := (longestSettingValue * 7)
 section1GroupH := (section1H + 1.5)
 currentAltCounter := 1
 Gui, mainWindow:Color, FFFFFF
-Gui, mainWindow:Add, Picture, x0 y10, SUPPORTING-FILES\BPS-Logo-PLUS-KB-100x115.png
+Gui, mainWindow:Add, Picture, x5 y15, SUPPORTING-FILES\BPS-Logo-PLUS-KB-100x115.png
+Gui, mainWindow:Font, S8 italic, %Settings_guiFont%
+Gui, mainWindow:Add, Text, xp+10 yp+115, %version%
 guiSection1Width := (guiElementWidth - 100)
 Gui, mainWindow:Add, Text, x110 y10 section,
 Gui, mainWindow:Font, S12 CDefault Bold, %Settings_guiFont%
