@@ -67,6 +67,18 @@ sleep, sleepMicro
 Send, 3
 return
 
+^3:: ; <-- Step Right 1 second
+Send, ^+a
+sleep, sleepShort
+Send, {NumpadAdd}
+sleep, sleepMicro
+Send, {Numpad1}
+sleep, sleepMicro
+Send, {NumpadDot}
+sleep, sleepMicro
+Send, {NumpadEnter}{NumpadEnter}
+return
+
 ^+2:: ; <-- Step Left 10 seconds THEN Play
 Send, {2}
 sleep, sleepShort
@@ -83,48 +95,6 @@ sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 sleep, sleepMicro
 Send, 3
-return
-
-^+3:: ; <-- Step Left 5 seconds THEN Play
-Send, {2}
-sleep, sleepShort
-Send, ^+a
-sleep, sleepShort
-Send, {NumpadSub}
-sleep, sleepMicro
-Send, {Numpad5}
-sleep, sleepMicro
-Send, {NumpadDot}
-sleep, sleepMicro
-Send, {NumpadEnter}{NumpadEnter}
-sleep, sleepMicro
-Send, 3
-return
-
-^F1:: ; <-- Step Left 1 second
-^4:: ; <-- Step Left 1 second
-Send, ^+a
-sleep, sleepShort
-Send, {NumpadSub}
-sleep, sleepMicro
-Send, {Numpad1}
-sleep, sleepMicro
-Send, {NumpadDot}
-sleep, sleepMicro
-Send, {NumpadEnter}{NumpadEnter}
-return
-
-^F2:: ; <-- Step Right 1 second
-^5:: ; <-- Step Right 1 second
-Send, ^+a
-sleep, sleepShort
-Send, {NumpadAdd}
-sleep, sleepMicro
-Send, {Numpad1}
-sleep, sleepMicro
-Send, {NumpadDot}
-sleep, sleepMicro
-Send, {NumpadEnter}{NumpadEnter}
 return
 
 ; The section below addresses the issue of the Alt key opening the menu bar items. Even though there is a block in MASTER-SCRIPT that prevents the Left Alt key from opening menu items, if you press the Alt plus another key, it will still open the menu. The block just prevents the Left Alt from setting the focus on the menu bar until you hit Escape. If you want to use Alt with C,E,F,G,H,M,S,V, or W you need to immediatley send {ESC} so that it forces the menu to close. (For plain Alt+those keys, I have them all set here.)
