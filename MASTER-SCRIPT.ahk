@@ -390,8 +390,6 @@ CapsLockCheck:
 		}
     Return
 
-launchAppGuiEscape:
-launchAppGuiClose:
 launchAppTimeout:
 	Gui, launchApp:Destroy
 Return

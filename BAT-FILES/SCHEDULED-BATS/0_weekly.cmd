@@ -2,6 +2,8 @@
 @echo RUNNING WEEKLY BATS
 @echo ===================
 
+@SET rootFolder=%BKB_ROOT%
+
 REM Gets the name of the day of the week
 for /f %%i in ('powershell ^(get-date^).DayOfWeek') do set dow=%%i
 

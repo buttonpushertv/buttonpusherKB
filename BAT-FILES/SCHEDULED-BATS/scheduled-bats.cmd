@@ -1,13 +1,8 @@
 @echo off
 
-@echo The current directory is %CD%
-@echo and this is what got passed: %1
+@SET rootFolder=%BKB_ROOT%
 
-@REM This will use initool.exe to read the location of the rootFolder from settings.ini
-@FOR /F "tokens=* USEBACKQ" %%F IN (`%1\UTIL-APPS\initool\initool.exe g %1\settings.ini Settings rootFolder --value-only`) DO (
-SET rootFolder=%%F
-)
-@ECHO Root Folder is: %rootfolder%
+@ECHO Root Folder is: %rootFolder%
 @REM the rootFolder variable gets passed off to subsequent scripts. This should allow the root folder name to be set to whatever the user wants.
 
 > %rootFolder%\PRIVATE\%computername%\LOGS\last_run_log.txt (
