@@ -18,9 +18,6 @@ IF EXIST %rootFolder%\PRIVATE\%computername%\last_daily_run.txt (
 @echo This backs up the buttonpusherKB settings.ini for this system. You want to back these up for each system (e.g.-location) because you likely have different settings for each.
 copy %rootFolder%\settings.ini %rootFolder%\PRIVATE\%computername%\SETTINGS-BACKUPS\
 
-@echo This backs up the settings for VNCHelper - again it's location specific but the settings file is stored in the same place where ever buttonpusherKB is installed.
-copy %rootFolder%\UTIL-APPS\vnchelper\vnchelper.ini %rootFolder%\PRIVATE\%computername%\SETTINGS-BACKUPS\
-
 @echo This backs up the StreamDeck's Profile from this system
 call %rootFolder%\BAT-FILES\Backup-StreamDeck-Profiles.cmd %rootFolder%
 
