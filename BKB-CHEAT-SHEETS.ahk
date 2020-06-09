@@ -355,6 +355,9 @@ thirdShower: ; Display an Text CheatSheet of App Specific Keyboard Shortcuts (mo
     If WinActive("ahk_exe Adobe Premiere Pro.exe")
         fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-PPRO.txt"
     else
+	If WinActive("ahk_exe Illustrator.exe")
+        fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-ILLUSTRATOR.txt"
+    else
     If WinActive("ahk_exe stickies.exe")
         fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-STICKIES.txt"
     else

@@ -1,0 +1,10 @@
+=========================== PREMIERE-PRO-HOTKEYS ===========================
+
+SHIFT+1                 <-- Set Opacity to 10%
+SHIFT+2                 <-- Set Opacity to 100%
+
+
+SCAF-----
+SHIFT+CTRL+ALT+F5       <-- TEXT ONLY: Click on 'Vertical Distribute Center' (with clickRadar)
+SHIFT+CTRL+ALT+F6       <-- MIXED OBJECTS: Click on 'Vertical Distribute Center' (with clickRadar)
+
