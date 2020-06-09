@@ -23,6 +23,8 @@ Settings_pathToFCXE = "%Settings_pathToFCXE%"
 ;MSGBOX,,DEBUG, From DRAKE-FUNCTIONS(INITIALIZATION):`n%iniFile%`n%Settings_rootFolder%`n%Settings_pathToFCXE%`n%Settings_FCXEParams%
 
 global currentWorkingProject
+global lookupProjectNumber
+
 projectPath := Settings_rootFolder . "\PRIVATE\%A_Computername%\CurrentWorkingProject.txt"
 FileReadLine, currentWorkingProject, %Settings_rootFolder%\PRIVATE\%A_Computername%\CurrentWorkingProject.txt, 1
 ;MsgBox,,DEBUG FROM DRAKE, %currentWorkingProject%
@@ -351,10 +353,29 @@ setCurrentWorkingProject(pathToSet) {
   MsgBox, 262208, Set NEW Current Working Project, The Current Working Project is NOW SET TO:`n%pathToSet%, 4
 }
 
+setProjectNumber(pathToSet, projectNumber) {
+  global Settings_rootFolder
+  FileDelete, %Settings_rootFolder%\PRIVATE\%A_Computername%\Project-%projectNumber%.txt
+  FileAppend, %pathToSet%, %Settings_rootFolder%\PRIVATE\%A_Computername%\Project-%projectNumber%.txt
+  MsgBox, 262208, Set Project %projectNumber% as %pathToSet%, Project #%projectNumber% is NOW SET TO:`n%pathToSet%, 4
+}
+
 getCurrentWorkingProject() {
-  projectPath := Settings_rootFolder . "\PRIVATE\%A_Computername%\CurrentWorkingProject.txt"
-  FileReadLine, currentWorkingProject, %Settings_rootFolder%\PRIVATE\%A_Computername%\CurrentWorkingProject.txt, 1
-  return currentWorkingProject
+	global Settings_rootFolder
+	projectPath := Settings_rootFolder . "\PRIVATE\%A_Computername%\CurrentWorkingProject.txt"
+	FileReadLine, currentWorkingProject, %Settings_rootFolder%\PRIVATE\%A_Computername%\CurrentWorkingProject.txt, 1
+	return currentWorkingProject
+}
+
+projectLookupByNumber(projectNumber) {
+	global lookupProjectNumberPath
+	global Settings_rootFolder
+	FileReadLine, lookupProjectNumberPath, %Settings_rootFolder%\PRIVATE\%A_Computername%\Project-%projectNumber%.txt, 1
+}
+
+getProjectByNumber() {
+  global lookupProjectNumberPath
+  return (lookupProjectNumberPath) 
 }
 ;===== FreeCommanderXE FUNCTIONS ==================================================================
 
