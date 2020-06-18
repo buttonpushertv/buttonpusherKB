@@ -5,16 +5,14 @@
 @echo.
 @echo.
 
-REM This will use initool.exe to read the location of the rootFolder from settings.ini
-@FOR /F "tokens=* USEBACKQ" %%F IN (`..\UTIL-APPS\initool\initool.exe g ..\settings.ini Settings rootFolder --value-only`) DO (
-SET var=%%F
+SET rootFolder=%BKB_ROOT%
 )
 
 REM Set working directory to the location of the SCHEDULED-BATS
-CD %var%\BAT-FILES\SCHEDULED-BATS
+CD %rootFolder%\BAT-FILES\SCHEDULED-BATS
 
 REM run DAILY CMD
-call 0_system_backup_reminder.cmd %var%
+call 0_system_backup_reminder.cmd %rootFolder%
 
 CD ..
 
