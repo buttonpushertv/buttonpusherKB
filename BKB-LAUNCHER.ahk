@@ -49,7 +49,7 @@ DetectHiddenWindows, On
 BKBstartupPath := "BKB-startup"
 IfWinExist,,%BKBstartupPath%
 {
-	MsgBox, 262144,, Found %BKBstartupPath%
+	MsgBox, 262144,, Found %BKBstartupPath%.`nClosing it for you.
 	WinClose, %BKBstartupPath%
 }
 DetectHiddenWindows, Off
