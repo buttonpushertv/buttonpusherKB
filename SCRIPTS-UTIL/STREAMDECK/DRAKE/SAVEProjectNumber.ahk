@@ -1,5 +1,7 @@
 SetWorkingDir %A_ScriptDir%
 #Include %A_ScriptDir%\DRAKE-FUNCTIONS.ahk
+
+wantedProjectNumber := A_Args[1]
 dontSetCurrProj :=
 f_class := whichWindowType()
 
@@ -31,7 +33,7 @@ else
 }
 
 If !dontSetCurrProj {
-  setProjectNumber(pathGot, 1)
+  setProjectNumber(pathGot, wantedProjectNumber)
 }
 
 exitapp

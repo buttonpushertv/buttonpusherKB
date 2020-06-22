@@ -14,21 +14,17 @@
 ; I know...I'm *hilarious* - Ben
 
 ;===== START OF AUTO-EXECUTION SECTION =========================================================
-; This is my attempt to avoid hard-coding the paths of where everything lies into the scripts. Since this script *should* always live in its current folder, the double-double-dots-with-backslashes should always lead to where the settings.ini file lives. And that's where the rootFolder info is stored.
-iniFile := "..\..\..\settings.ini"
-IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
+EnvGet, Settings_rootFolder, BKB_ROOT ; reading the location of the root folder from the BKB_ROOT Environment Variable
+iniFile := Settings_rootFolder . "\settings.ini"
 IniRead, Settings_pathToFCXE, %iniFile%, Settings, pathToFCXE
 IniRead, Settings_FCXEParams, %iniFile%, Settings, FCXEParams
 Settings_pathToFCXE = "%Settings_pathToFCXE%"
-;MSGBOX,,DEBUG, From DRAKE-FUNCTIONS(INITIALIZATION):`n%iniFile%`n%Settings_rootFolder%`n%Settings_pathToFCXE%`n%Settings_FCXEParams%
-
 global currentWorkingProject
 global lookupProjectNumber
-
 projectPath := Settings_rootFolder . "\PRIVATE\%A_Computername%\CurrentWorkingProject.txt"
 FileReadLine, currentWorkingProject, %Settings_rootFolder%\PRIVATE\%A_Computername%\CurrentWorkingProject.txt, 1
-;MsgBox,,DEBUG FROM DRAKE, %currentWorkingProject%
 ;===== END OF AUTO-EXECUTE =====================================================================
+
 ;===== MODIFIER MEMORY HELPER ==================================================================
 ; combine below with key and '::' to define hotkey
 ; e.g.- ^f1::Msgbox You pressed Control and F1
@@ -43,7 +39,6 @@ Exiting(tipContent,pleasePrepend)
   if (pleasePrepend=1) {
     tipContent := currentWorkingProject . "\" . tipContent
   }
-  ;MSGBOX, ,DEBUG, from Exiting()`ntipContent:%tipContent%`ncurrentWorkingProject:%currentWorkingProject%`npleasePrepend:%pleasePrepend%
   ToolTip, Opening %tipContent%
   Sleep, 3000
   ExitApp
@@ -68,7 +63,7 @@ InstantExplorer(originalPath,pleasePrepend)
   ; I just find it easier to refer to it this way & it provides a bit more flexibility
   ; Basically, if pleasePrepend is set to '1', then it will prepend the 'currentWorkingProject' path onto whatever is sent to the Function.
   ; If you want to visit a location outside of the currentWorkingProject, then you can set pleasePrepend to 0 and send the full path to your location.
-	;MSGBOX,,DEBUG, from InstantExplorer()`nf_path has a value: %f_path%
+
 if (pleasePrepend = 1) {
     fullPathToOpen = %currentWorkingProject%\%originalPath%
 	checkForProjectPath: ; this is going to be triggered if the path you are trying to access does not exist.
@@ -90,7 +85,6 @@ if (pleasePrepend = 1) {
 	}
   } else fullPathToOpen = %originalPath%
 
-;MSGBOX, , DEBUG, %fullPathToOpen%
 
 ;;;SUPER IMPORTANT: YOU NEED TO GO INTO WINDOWS' FOLDER OPTIONS > VIEW > AND CHECK "DISPLAY THE FULL PATH IN THE TITLE BAR" OR THIS WON'T WORK.
 ;;;UPDATE: THE INSTRUCTION ABOVE MIGHT BE OBSOLETE NOW, I'VE FIGURED OUT A BETTER WAY TO DO THIS SHIT
@@ -101,7 +95,6 @@ f_path := quotedPathToOpen ; did this to maintain the code lifted from TaranVH b
 
 ;f_path = %f_path%\ ;;THIS ADDS A \ AT THE VERY END OF THE FILE PATH, FOR THE SAKE OF OLD-STYLE SAVE AS DIALOUGE BOXES WHICH REQUIRE THEM IN ORDER TO UPDATE THE FOLDER PATH WHEN IT IS INSERTED INTO Edit1.
 
-;MSGBOX,,DEBUG, from InstantExplorer()`nf_path has a value: %f_path%
 ; THESE FIRST FEW VARIABLES ARE SET HERE AND USED BY F_OPENFAVORITE:
 WinGet, f_window_id, ID, A
 WinGetClass, f_class, ahk_id %f_window_id%
