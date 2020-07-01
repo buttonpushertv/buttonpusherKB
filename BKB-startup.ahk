@@ -101,6 +101,11 @@ Gui, Destroy
 If (currentSystemLocation = 1) {
   Run, %Settings_rootFolder%\BAT-FILES\user_files_VHDMount_to_X.cmd ; this batch file will mount a Bitlocker Encrypted VHD and then launch BKB-Launcher
   goto Quitting
+} else If (currentSystemLocation = 2) {
+  Run, %Settings_rootFolder%\BAT-FILES\PortableApps_VHDMount_to_X.cmd ; this batch file will mount an unencrypted VHD and then launch BKB-Launcher
+  sleep, sleepMedium
+  WinClose,, X: ; closing the File Explorer window that opens from the unencrypted VHD...but not on the Bitlocker one...hmmmm
+  goto Quitting
 } else {
   Run, %Settings_rootFolder%\BKB-LAUNCHER.ahk ; on these systems there isn't a Encrypted VHD to mount, so we jump to BKB-Launcher directly
   goto Quitting
