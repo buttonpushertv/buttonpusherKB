@@ -65,7 +65,7 @@ ECHO.
 		echo X: Drive already mounted.
 		echo Script will now exit WITHOUT running BKB-Launcher.
 		pause
-		goto allDone
+		goto unLocked
 	) else (
 		echo.
 		echo X: not mounted
@@ -93,7 +93,6 @@ ECHO.
 	if not %ERRORLEVEL% == 0 goto accessDisk
 
 	:unLocked
-
 	ECHO Launching BKB-LAUNCHER
 	cd %BKB_ROOT%
 	BKB-LAUNCHER.ahk

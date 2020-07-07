@@ -63,9 +63,9 @@ ECHO.
 	ECHO Checking for existence of X:
 	IF EXIST X:\ (
 		echo X: Drive already mounted.
-		echo Script will now exit WITHOUT running BKB-Launcher.
+		echo Press any key to run BKB-Launcher (CTRL-C to abort)...
 		pause
-		goto allDone
+		goto unLocked
 	) else (
 		echo.
 		echo X: not mounted
