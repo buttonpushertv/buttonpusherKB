@@ -1,8 +1,12 @@
 SetWorkingDir %A_ScriptDir%
 #Include %A_ScriptDir%\DRAKE-FUNCTIONS.ahk
 dontSetCurrProj :=
+projectNumber := A_Args[1]
+if (!projectNumber) {
+    projectNumber =1
+}
+InputBox, projectSlug, Project Short Name, What's a short name for this project?
 f_class := whichWindowType()
-
 If f_class contains FreeCommander
 {
   gotPath := getFCXEPath()
@@ -31,7 +35,7 @@ else
 }
 
 If !dontSetCurrProj {
-  setProjectNumber(pathGot, 1)
+  setProjectNumber(pathGot, projectNumber, projectSlug)
 }
 
 exitapp

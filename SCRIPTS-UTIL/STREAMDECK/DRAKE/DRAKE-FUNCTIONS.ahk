@@ -14,20 +14,21 @@
 ; I know...I'm *hilarious* - Ben
 
 ;===== START OF AUTO-EXECUTION SECTION =========================================================
-; This is my attempt to avoid hard-coding the paths of where everything lies into the scripts. Since this script *should* always live in its current folder, the double-double-dots-with-backslashes should always lead to where the settings.ini file lives. And that's where the rootFolder info is stored.
-iniFile := "..\..\..\settings.ini"
-IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
+; Getting the rootFolder for BKB from the Environment Variable
+EnvGet, Settings_rootFolder, BKB_ROOT
+iniFile := Settings_rootFolder . "\settings.ini"
+; and picking up a few other things
 IniRead, Settings_pathToFCXE, %iniFile%, Settings, pathToFCXE
 IniRead, Settings_FCXEParams, %iniFile%, Settings, FCXEParams
 Settings_pathToFCXE = "%Settings_pathToFCXE%"
-;MSGBOX,,DEBUG, From DRAKE-FUNCTIONS(INITIALIZATION):`n%iniFile%`n%Settings_rootFolder%`n%Settings_pathToFCXE%`n%Settings_FCXEParams%
+;MSGBOX,,DEBUG, From DRAKE-FUNCTIONS(INITIALIZATION)`n%iniFile%`n%Settings_rootFolder%`n%Settings_pathToFCXE%`n%Settings_FCXEParams%
 
 global currentWorkingProject
 global lookupProjectNumber
 
-projectPath := Settings_rootFolder . "\PRIVATE\%A_Computername%\CurrentWorkingProject.txt"
-FileReadLine, currentWorkingProject, %Settings_rootFolder%\PRIVATE\%A_Computername%\CurrentWorkingProject.txt, 1
-;MsgBox,,DEBUG FROM DRAKE, %currentWorkingProject%
+;projectPath := Settings_rootFolder . "\PRIVATE\%A_Computername%\CurrentWorkingProject.txt"
+;FileReadLine, currentWorkingProject, %Settings_rootFolder%\PRIVATE\%A_Computername%\CurrentWorkingProject.txt, 1
+
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
 ; combine below with key and '::' to define hotkey
@@ -37,19 +38,6 @@ FileReadLine, currentWorkingProject, %Settings_rootFolder%\PRIVATE\%A_Computerna
 
 ;===== FUNCTIONS ===============================================================================
 ;
-Exiting(tipContent,pleasePrepend)
-{
-  global currentWorkingProject
-  if (pleasePrepend=1) {
-    tipContent := currentWorkingProject . "\" . tipContent
-  }
-  ;MSGBOX, ,DEBUG, from Exiting()`ntipContent:%tipContent%`ncurrentWorkingProject:%currentWorkingProject%`npleasePrepend:%pleasePrepend%
-  ToolTip, Opening %tipContent%
-  Sleep, 3000
-  ExitApp
-  Return
-  }
-
 ;===== START of TaranVH FUNCTIONS ================================================================
 ; The function below is used to navigate to folders in Windows Explorer windows, Save Dialogs, and Console Windows (cmd.exe)
 ;
@@ -58,19 +46,21 @@ Exiting(tipContent,pleasePrepend)
 ;   I GOT MOST OF THIS CODE FROM HTTPS://AUTOHOTKEY.COM/DOCS/SCRIPTS/FAVORITEFOLDERS.HTM
 ;   AND MODIFIED IT TO WORK WITH ANY GIVEN KEYPRESS, RATHER THAN MIDDLE MOUSE CLICK AS IT HAD BEFORE.
 ;
-InstantExplorer(originalPath,pleasePrepend)
+InstantExplorer(pathToOpen,projectNumber)
 {
-  global Settings_rootFolder
+  	global Settings_rootFolder
+	global currentWorkingProject
+  	send {SC0E8} ;SCAN CODE OF AN UNASSIGNED KEY. THIS IS NEEDED TO PREVENT THE ITEM FROM MERELY FLASHING ON THE TASK BAR, RATHER THAN OPENING THE FOLDER. DON'T ASK ME WHY, BUT THIS WORKS.
 
-  send {SC0E8} ;SCAN CODE OF AN UNASSIGNED KEY. THIS IS NEEDED TO PREVENT THE ITEM FROM MERELY FLASHING ON THE TASK BAR, RATHER THAN OPENING THE FOLDER. DON'T ASK ME WHY, BUT THIS WORKS.
-
-  ; I tweaked this bit below a little bit to work with my idea of 'currentWorkingProject'
-  ; I just find it easier to refer to it this way & it provides a bit more flexibility
-  ; Basically, if pleasePrepend is set to '1', then it will prepend the 'currentWorkingProject' path onto whatever is sent to the Function.
-  ; If you want to visit a location outside of the currentWorkingProject, then you can set pleasePrepend to 0 and send the full path to your location.
-	;MSGBOX,,DEBUG, from InstantExplorer()`nf_path has a value: %f_path%
-if (pleasePrepend = 1) {
-    fullPathToOpen = %currentWorkingProject%\%originalPath%
+	; I tweaked this bit below a little bit to work with my idea of 'currentWorkingProject'
+	; I often work on multiple projects & bounce between them throughout the day/week/month
+	; By using a Project Numbering scheme, I can save multiple project root folders and then bounce between them easily
+if (!projectNumber) { ; if no projectNumber is provided, then this will just open the path as provided
+	fullPathToOpen = %pathToOpen%
+	} else {
+	projectLookupByNumber(projectNumber) ; this returns the path to the project stored 
+	currentWorkingProject := getProjectByNumber()
+	fullPathToOpen = %currentWorkingProject%\%pathToOpen%
 	checkForProjectPath: ; this is going to be triggered if the path you are trying to access does not exist.
 	parentFolderStringLocation := InStr(fullPathToOpen, "\",,0,2)
 	parentFolder := SubStr(fullPathToOpen, 1, parentFolderStringLocation)
@@ -88,9 +78,7 @@ if (pleasePrepend = 1) {
 		goto checkForProjectPath
 		}
 	}
-  } else fullPathToOpen = %originalPath%
-
-;MSGBOX, , DEBUG, %fullPathToOpen%
+  }
 
 ;;;SUPER IMPORTANT: YOU NEED TO GO INTO WINDOWS' FOLDER OPTIONS > VIEW > AND CHECK "DISPLAY THE FULL PATH IN THE TITLE BAR" OR THIS WON'T WORK.
 ;;;UPDATE: THE INSTRUCTION ABOVE MIGHT BE OBSOLETE NOW, I'VE FIGURED OUT A BETTER WAY TO DO THIS SHIT
@@ -353,11 +341,15 @@ setCurrentWorkingProject(pathToSet) {
   MsgBox, 262208, Set NEW Current Working Project, The Current Working Project is NOW SET TO:`n%pathToSet%, 4
 }
 
-setProjectNumber(pathToSet, projectNumber) {
+setProjectNumber(pathToSet, projectNumber, projectSlug) {
   global Settings_rootFolder
   FileDelete, %Settings_rootFolder%\PRIVATE\%A_Computername%\Project-%projectNumber%.txt
-  FileAppend, %pathToSet%, %Settings_rootFolder%\PRIVATE\%A_Computername%\Project-%projectNumber%.txt
-  MsgBox, 262208, Set Project %projectNumber% as %pathToSet%, Project #%projectNumber% is NOW SET TO:`n%pathToSet%, 4
+  FileAppend, 
+  (
+%pathToSet%
+ 0%projectSlug%
+), %Settings_rootFolder%\PRIVATE\%A_Computername%\Project-%projectNumber%.txt
+  MsgBox, 262208, Set Project %projectNumber% as %pathToSet%, Project #%projectNumber% is NOW SET TO:`n%pathToSet%`nAnd the Porject Short Name is:%projectSlug%, 4
 }
 
 getCurrentWorkingProject() {
@@ -383,12 +375,16 @@ getProjectByNumber() {
 ;
 ; While there are lots of keyboard commands within FreeCommanderXE, I found that if you are just opening locations, it was quicker to send it via the commandline interface that already exists in the app.
 
-openProjectInFCXE(pathToOpen, pleasePrepend){
+openProjectInFCXE(pathToOpen,projectNumber){
 	global Settings_pathToFCXE
 	global Settings_FCXEParams
   global currentWorkingProject
-  if (pleasePrepend = 1) {
-      fullPathToOpen = %currentWorkingProject%\%pathToOpen%
+  if (!projectNumber) {
+      fullPathToOpen = %pathToOpen%
+  } else {	  
+	projectLookupByNumber(projectNumber) ; this returns the path to the project stored 
+	currentWorkingProject := getProjectByNumber()
+	fullPathToOpen = %currentWorkingProject%\%pathToOpen%
     }
 	checkForPath:
     quotedPathToOpen := """" . fullPathToOpen . """" ;THIS ADDS QUOTATION MARKS AROUND EVERYTHING SO THAT IT WORKS AS A STRING, NOT A VARIABLE.
@@ -459,3 +455,14 @@ getWorkingProject() {
   global currentWorkingProject
   return currentWorkingProject
 }
+
+Exiting(tipContent,projectNumber)
+{
+	projectLookupByNumber(projectNumber) ; this returns the path to the project stored 
+	currentWorkingProject := getProjectByNumber()
+	tipContent := currentWorkingProject . "\" . tipContent
+	ToolTip, Opening %tipContent%
+	Sleep, 3000
+	ExitApp
+	Return
+  }
