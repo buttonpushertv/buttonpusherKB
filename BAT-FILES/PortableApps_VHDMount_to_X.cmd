@@ -59,19 +59,18 @@ ECHO.
 	type %temp%\StartupLog.txt
 	ECHO.
 	ECHO +==============================+
-
 	ECHO Checking for existence of X:
+
 	IF EXIST X:\ (
 		echo X: Drive already mounted.
-		echo Press any key to run BKB-Launcher (CTRL-C to abort)...
-		pause
+		echo Press any key to run BKB-Launcher [CTRL-C to abort]...
+		CHOICE /c yn /t 7 /d y
 		goto unLocked
 	) else (
 		echo.
 		echo X: not mounted
 		echo.
 	)
-
 	SET DiskPartScript="%TEMP%\DiskpartScript.txt"
 
 	ECHO SELECT VDISK FILE="D:\PortableApps.vhdx" > %DiskPartScript%
