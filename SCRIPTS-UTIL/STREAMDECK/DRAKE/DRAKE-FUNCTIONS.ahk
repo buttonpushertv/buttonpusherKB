@@ -346,7 +346,7 @@ setProjectNumber(pathToSet, projectNumber, projectSlug) {
   FileDelete, %Settings_rootFolder%\PRIVATE\%A_Computername%\Project-%projectNumber%.txt
   FileAppend, 
   (
-%pathToSet%
+ %pathToSet%
 %projectSlug%
 ), %Settings_rootFolder%\PRIVATE\%A_Computername%\Project-%projectNumber%.txt
   MsgBox, 262208, Set Project %projectNumber% as %pathToSet%, Project #%projectNumber% is NOW SET TO:`n%pathToSet%`nAnd the Porject Short Name is:%projectSlug%, 4
