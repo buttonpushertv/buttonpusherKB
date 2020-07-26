@@ -1,6 +1,6 @@
 /*
 **************************************************************************************************
-buttonpushertv LaunchX
+buttonpusherKB LaunchX
 -a modified version of the following script:
 LAUNCH-X-by, KAMAL AWASTHI
 https://github.com/KamalAwasthi/Launchx
@@ -139,7 +139,7 @@ x_axis:=(x_axis+width+spacer)
 Gui,Add,Button,x%x_axis% y%y_axis% w%width% h%height% cWhite ,&Add_New ;ADDING THE +ADD BUTTON
 x_axis:=(x_axis+width+spacer)
 Gui,Add,Button,x%x_axis% y%y_axis% w%width% h%height% CBlue, &Exit_App ;ADDING THE CLOSE BUTTON
-Gui,Show,w650,buttonpusherTV Launch-X ;PUTS ALL GUI ON WINDOW
+Gui,Show,w650,buttonpusherKB Launch-X ;PUTS ALL GUI ON WINDOW
 return
 
 Esc::
