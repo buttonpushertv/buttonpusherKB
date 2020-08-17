@@ -90,13 +90,15 @@ If (keyboardHasHyperKey) {
 SysGet, monSize, Monitor
 gHeight := (monSizeBottom * .9)
 elementHeight := (gHeight - 220)
-gWidth := (monSizeRight * .75)
+gWidth := (monSizeRight * .85)
 elementWidth := (gWidth - 120)
 gButtonStartY := (gHeight - 60)
 
+MSGBOX, , DEBUG, %monSizeRight%`n%gwidth%
+
 screenFontSize := 14
 
-If (monSizeRight < 1980) {
+If (monSizeRight < 1920) {
 	screenFontSize := 10
 	}
 
@@ -257,7 +259,7 @@ secondShower: ; Display an image CheatSheet of App Specific Keyboard Shortcuts (
     WinGetActiveTitle, activeWin ; We need to capture whatever was the Window that had focus when this was launched, otherwise it will give focus to whichever Window had focus before that (or some random Window).
     If WinActive("ahk_exe Explorer.EXE") {
         pic2show := "SUPPORTING-FILES\CHEAT-SHEETS\KBF2-WIN-PAGE"
-        PictureWidth := 2000
+        PictureWidth := gWidth
         numPages := 2
         PictureStartY := 0 ; determines where the cheatsheet is going to start drawing. Whenever we want to display the TaskBar Cheatsheet, we should make sure the CheatSheet image doesn't get drawn underneath the TaskBar CheatSheet.
         taskBarPic := "SUPPORTING-FILES\CHEAT-SHEETS\WIN-TASKBAR\windows-taskbar-keyboard-cheaetsheet-DKYELLOW.png"
@@ -266,7 +268,7 @@ secondShower: ; Display an image CheatSheet of App Specific Keyboard Shortcuts (
     else
     If WinActive("ahk_exe Adobe Premiere Pro.exe") {
         pic2Show := "SUPPORTING-FILES\CHEAT-SHEETS\KBF2-PPRO-PAGE"
-        PictureWidth := 2000
+        PictureWidth := gWidth
         numPages := 3
         PictureStartY := 50 ; setting the starting coords to '-1' will make it center vertically on the screen
     }
