@@ -108,6 +108,30 @@ sleep, sleepShort
 Send, {Shift Down}x{Shift Up}
 Return
 
+F23:: ; <-- Send '-30'
+sleep, sleepShort
+Send, {NumpadSub}
+sleep, sleepMicro
+Send, {Numpad3}
+sleep, sleepMicro
+Send, {Numpad0}
+sleep, sleepMicro
+Send, {NumpadEnter}
+Return
+
+
+F24:: ; <-- Send '+30'
+sleep, sleepShort
+Send, {NumpadAdd}
+sleep, sleepMicro
+Send, {Numpad3}
+sleep, sleepMicro
+Send, {Numpad0}
+sleep, sleepMicro
+Send, {NumpadEnter}
+Return
+
+
 ; The section below addresses the issue of the Alt key opening the menu bar items. Even though there is a block in MASTER-SCRIPT that prevents the Left Alt key from opening menu items, if you press the Alt plus another key, it will still open the menu. The block just prevents the Left Alt from setting the focus on the menu bar until you hit Escape. If you want to use Alt with C,E,F,G,H,M,S,V, or W you need to immediatley send {ESC} so that it forces the menu to close. (For plain Alt+those keys, I have them all set here.)
 
 !c:: ; <-- closing the Menu that gets opened when this key combo is sent
