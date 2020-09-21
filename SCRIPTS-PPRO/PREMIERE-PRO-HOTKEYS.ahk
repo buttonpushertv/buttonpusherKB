@@ -97,7 +97,19 @@ sleep, sleepMicro
 Send, 3
 return
 
-^!F4:: ; <-- Add edit, mark previous clip and delete
+^+F4:: ; <-- Add edit, mark previous clip and delete (this will pull up the rest of the timeline)
+sleep, sleepShort
+Send, {F4}
+sleep, sleepShort
+Send, {Up}
+sleep, sleepShort
+Send, {Control Down}{F3}{Control Up}
+sleep, sleepShort
+Send, {Delete}
+Return
+
+
+^!F4:: ; <-- Add edit, mark previous clip and delete (this will pull up the rest of the timeline)
 sleep, sleepShort
 Send, {F4}
 sleep, sleepShort
