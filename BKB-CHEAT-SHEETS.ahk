@@ -368,8 +368,11 @@ thirdShower: ; Display an Text CheatSheet of App Specific Keyboard Shortcuts (mo
 				fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-SUBTITLE-EDIT.txt"
 		else
 		If WinActive("ahk_exe keypirinha-x64.exe")
-				fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KB-KEYPIRINHA.txt"
+				fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-KEYPIRINHA.txt"
 		else
+		If WinActive("ahk_exe chrome.exe")
+				fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-CHROME.txt"
+		else		
         fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\NO-CHEATSHEET.txt"
 
 		showText(fileToShow) ; this calls a function that will build the GUI using the fileToShow

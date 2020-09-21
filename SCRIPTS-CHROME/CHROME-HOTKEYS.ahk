@@ -41,26 +41,6 @@ sleepDeep := 3500
 
 #IfWinActive, ahk_exe chrome.exe
 
-F13::
-loop
-{
-PixelSearch, Px, Py, 277, 18, 281, 23, 0xEE3625, 10, Fast RGB
-if errorlevel
-continue
-else
-break
-}
-msgbox, found
-Return
-
-F14::
-PixelSearch, Px, Py, 277, 18, 281, 23, 0xEE3625, 10, Fast RGB
-if ErrorLevel
-    MsgBox, That color was not found in the specified region.
-else
-    MsgBox, A color within 3 shades of variation was found at X%Px% Y%Py%.
-Return
-
 F19:: ; <-- Downloading Comps from a ShutterStock Board
     ; This will auto-magically download comp versions of video clips from iStockPhoto.com
     ; It will do this by doing the following: 
