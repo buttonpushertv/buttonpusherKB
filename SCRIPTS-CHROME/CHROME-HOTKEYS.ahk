@@ -40,6 +40,7 @@ sleepDeep := 3500
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
 
 #IfWinActive, ahk_exe chrome.exe
+CoordMode, Mouse, Client
 
 F19:: ; <-- Downloading Comps from a ShutterStock Board
     ; This will auto-magically download comp versions of video clips from iStockPhoto.com
@@ -119,7 +120,7 @@ F23:: ; <-- Downloading Comps from an iStockPhoto Single Video Page
     MouseGetPos, xposP, yposP ;---storing cursor's current coordinates at X%xposP% Y%yposP%
     Click, right, 390, 590
     Sleep, sleepMedium
-    Click, 460, 680
+    Click, 440, 630
     WinWaitActive, Save As,, 3
     SendInput, {Enter}
     WinWaitNotActive, Save As,, 3
@@ -174,7 +175,7 @@ F24:: ; <-- Downloading Comps from an iStockPhoto Board
 
 shutterStockClickAndClose() {
     global sleepLong
-    Click, 605, 795
+    Click, 889, 717
     Sleep, sleepLong
     Send, {Control Down}w
     Send, {Blind}{Control Up}
