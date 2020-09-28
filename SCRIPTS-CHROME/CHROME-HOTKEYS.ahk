@@ -42,7 +42,7 @@ sleepDeep := 3500
 #IfWinActive, ahk_exe chrome.exe
 CoordMode, Mouse, Client
 
-F19:: ; <-- Downloading Comps from a ShutterStock Board
+F19:: ; <-- Downloading Comps from a ShutterStock Single Image page
     ; This will auto-magically download comp versions of video clips from iStockPhoto.com
     ; It will do this by doing the following: 
     ;   -Store the current position of the cursor when hotkey is pressed.
@@ -175,7 +175,7 @@ F24:: ; <-- Downloading Comps from an iStockPhoto Board
 
 shutterStockClickAndClose() {
     global sleepLong
-    Click, 889, 717
+    Click, 600, 715
     Sleep, sleepLong
     Send, {Control Down}w
     Send, {Blind}{Control Up}
