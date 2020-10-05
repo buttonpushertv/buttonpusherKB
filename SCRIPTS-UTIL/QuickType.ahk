@@ -44,25 +44,10 @@ Menu, Tray, Icon, imageres.dll, 243 ;tray icon is now something like '\\..'
 ; The file included above is accessible for quick editing via the MASTER-SCRIPT hotkey SHIFT+CTRL+ALT+Q when triggered when Desktop is Active. Or it can be sent to an editor when viewing Cheat Sheet #1 (under HYPER+F13 - click 'Edit Sheets')
 
 ; The Hotstrings below can auto-replace text from their code, but require more than a single line/command to acheive their results.
-::]ts:: ; <-- Send time & date as text
-FormatTime, now,, hhmmtt
-today = %A_YYYY%%A_MMM%%A_DD%
-theTimeStamp = %today%-%now%
-StringUpper, theCAPSTimeStamp, theTimeStamp
-Send, %theCAPSTimeStamp%
-return
 
-::]t:: ; <-- Send time ONLY as text
-FormatTime, now,, hh:mm tt
-theTimeStamp = %now%
-Send, %theTimeStamp%
-return
+; Timestamping hotstrings moved to Lintalist
 
-::]d:: ; <-- Send date ONLY as text
-today = %A_YYYY%-%A_MMM%-%A_DD%
-theTimeStamp = %today%
-Send, %theTimeStamp%
-return
+
 ;===== FUNCTIONS ===============================================================================
 RemoveSplashScreen:
     SplashTextOff
