@@ -23,6 +23,23 @@ sleepDeep := 3500
 
 #Include %A_ScriptDir%\PREMIERE-PRO-FUNCTIONS.ahk
 
+; This section pre-defines the (most likely) location of the Program Monitor's Timecode display based on which edit system you happen to be working on. It also is tied to the most commonly used window layout that I use in each location.
+
+global xposP
+global yposP
+
+EnvGet, Settings_rootFolder, BKB_ROOT
+iniFile := Settings_rootFolder . "\settings.ini" ; the main settings file used by most of the buttonpusherKB scripts
+IniRead, currSystemLocation, %inifile%, Location, currentSystemLocation
+
+If (currSystemLocation = 1) {
+  xposP = 1712
+  yposP = 662
+}
+
+;MSGBOX, , DEBUG, Detected Program Monitor Timecode Display:`nxposP:%xposP%, yposP:%yposP%
+
+
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -37,7 +54,8 @@ sleepDeep := 3500
 
 #IfWinActive, ahk_exe Adobe Premiere Pro.exe
 
-#F1::prFocus("timeline") ; <-- Focus the Timeline Window
+#F13::prFocus("timeline") ; <-- Focus the Timeline Window
+#F14::prFocus("program") ; <-- Focus the Program Monitor Window
 
 ^1:: ; <-- Step Left 1 second
 Send, ^+a
@@ -97,19 +115,18 @@ sleep, sleepMicro
 Send, 3
 return
 
-^+F4:: ; <-- Add edit, mark previous clip and delete (this will pull up the rest of the timeline)
+^+F3:: ; <-- Mark current clip & Ripple Delete
 sleep, sleepShort
-Send, {F4}
+Send, {Control Down}
 sleep, sleepShort
-Send, {Up}
+Send, {F3}
 sleep, sleepShort
-Send, {Control Down}{F3}{Control Up}
+Send, {Control Up}
 sleep, sleepShort
-Send, {Delete}
+Send, {Shift Down}x{Shift Up}
 Return
 
-
-^!F4:: ; <-- Add edit, mark previous clip and delete (this will pull up the rest of the timeline)
+^+F4:: ; <-- Add edit, mark previous clip and delete (this WILL pull up the rest of the timeline)
 sleep, sleepShort
 Send, {F4}
 sleep, sleepShort
@@ -119,6 +136,90 @@ Send, {Control Down}{F3}{Control Up}
 sleep, sleepShort
 Send, {Shift Down}x{Shift Up}
 Return
+
+
+^!F4:: ; <-- Add edit, mark previous clip and remove (this WILL NOT pull up the rest of the timeline)
+sleep, sleepShort
+Send, {F4}
+sleep, sleepShort
+Send, {Up}
+sleep, sleepShort
+Send, {Control Down}{F3}{Control Up}
+sleep, sleepShort
+Send, {Shift Down}z{Shift Up}
+; AND THIS WILL RETURN THE PLAYHEAD TO THE POINT OF THE EDIT
+Send, {Down}
+Return
+
+F18:: ; <-- Push current timecode value to Word
+CoordMode, Mouse, Client
+prFocus("timeline") ; set timeline as the focused window in PPRO
+sleep, sleepShort
+Click, 120, 740 ; This will going to directly click on the location of the timecode display in the Timeline.
+; The above line is currently set for the layout for Edit 2. Eventually, I'd like to code a way to get this based on
+; finding the timecode display based on any window config.
+sleep, sleepShort
+Send, {Control Down}c{Control Up} ; copy to the clipboard
+sleep, sleepShort
+WinActivate, ahk_exe WINWORD.EXE ;switch to Word
+sleep, sleepShort
+Send, {Down}{Down} ;move cursor down two rows
+Send, {Control Down}v{Control Up} ;paste the clipboard where the cursor is sitting
+WinActivate, ahk_exe Adobe Premiere Pro.exe ;switch back to PPRO
+prFocus("timeline") ; set timeline as the focused window in PPRO
+Return
+
+F19:: ; <-- Step Left 5 seconds
+sleep, sleepMicro
+Send, ^+a
+sleep, sleepShort
+Send, {NumpadSub}
+sleep, sleepMicro
+Send, {Numpad5}
+sleep, sleepMicro
+Send, {NumpadDot}
+sleep, sleepMicro
+Send, {NumpadEnter}{NumpadEnter}
+return
+
+F20:: ; <-- Step Left 2 seconds
+sleep, sleepMicro
+Send, ^+a
+sleep, sleepShort
+Send, {NumpadSub}
+sleep, sleepMicro
+Send, {Numpad2}
+sleep, sleepMicro
+Send, {NumpadDot}
+sleep, sleepMicro
+Send, {NumpadEnter}{NumpadEnter}
+return
+
+F21:: ; <-- Step Right 2 Seconds
+sleep, sleepMicro
+Send, ^+a
+sleep, sleepShort
+Send, {NumpadAdd}
+sleep, sleepMicro
+Send, {Numpad2}
+sleep, sleepMicro
+Send, {NumpadDot}
+sleep, sleepMicro
+Send, {NumpadEnter}{NumpadEnter}
+return
+
+F22:: ; <-- Step Right 5 Seconds
+sleep, sleepMicro
+Send, ^+a
+sleep, sleepShort
+Send, {NumpadAdd}
+sleep, sleepMicro
+Send, {Numpad5}
+sleep, sleepMicro
+Send, {NumpadDot}
+sleep, sleepMicro
+Send, {NumpadEnter}{NumpadEnter}
+return
 
 F23:: ; <-- Send '-30'
 sleep, sleepShort
@@ -207,7 +308,7 @@ return
 +!i:: ; <-- Get Current Timecode of Sequence
   If (!xposP and !yposP)
     {
-      MsgBox,, Grab Timecode Display position, You need to grab the X & Y coordinates of the Program Monitor's Timecode Display (lower left).`nPosition cursor then press CTRL-SHIFT-ALT-I to capture,3
+      MsgBox,, Grab Timecode Display position, You need to grab the X & Y coordinates of the Program Monitor's Timecode Display (lower left).`nPosition cursor then press CTRL-SHIFT-ALT-I to capture
       Return
     }
   prFocus(program) ; Activating the Program Monitor
@@ -231,6 +332,7 @@ return
   Send, {Esc}
   ;BlockInput, Off
   MouseMove, xposTEMP, yposTEMP
+  MSGBOX, , DEBUG, %clipboard%
   return
 
 ;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
@@ -280,61 +382,12 @@ sleep, sleepShort
 Send, {Enter}
 return
 
-+^!f3:: ; <-- Step Left 2 seconds
-sleep, sleepMicro
-Send, ^+a
-sleep, sleepShort
-Send, {NumpadSub}
-sleep, sleepMicro
-Send, {Numpad2}
-sleep, sleepMicro
-Send, {NumpadDot}
-sleep, sleepMicro
-Send, {NumpadEnter}{NumpadEnter}
-return
-
-+^!f4:: ; <-- Step Right 2 Seconds
-sleep, sleepMicro
-Send, ^+a
-sleep, sleepShort
-Send, {NumpadAdd}
-sleep, sleepMicro
-Send, {Numpad2}
-sleep, sleepMicro
-Send, {NumpadDot}
-sleep, sleepMicro
-Send, {NumpadEnter}{NumpadEnter}
-return
-
+;+^!f3::
+;+^!f4::
 ;+^!f5::
 ;+^!f6::
-
-+^!f7:: ; <-- Step Left 5 seconds
-sleep, sleepMicro
-Send, ^+a
-sleep, sleepShort
-Send, {NumpadSub}
-sleep, sleepMicro
-Send, {Numpad5}
-sleep, sleepMicro
-Send, {NumpadDot}
-sleep, sleepMicro
-Send, {NumpadEnter}{NumpadEnter}
-return
-
-
-+^!f8:: ; <-- Step Right 5 Seconds
-sleep, sleepMicro
-Send, ^+a
-sleep, sleepShort
-Send, {NumpadAdd}
-sleep, sleepMicro
-Send, {Numpad5}
-sleep, sleepMicro
-Send, {NumpadDot}
-sleep, sleepMicro
-Send, {NumpadEnter}{NumpadEnter}
-return
+;+^!f7::
+;+^!f8::
 
 +^!f9:: ; <-- Go to next edit then add edit to active tracks
 Send, {down}
@@ -355,11 +408,6 @@ return
 ;===== END Program 1 DEFINITIONS ===============================================================
 
 ;===== FUNCTIONS ===============================================================================
-
-RemoveSplashScreen:
-    SplashTextOff
-    SetTimer RemoveSplashScreen, Off
-    return
 
 ; use this function to Remove ToolTips - pretty self-explanatory - 'duration' should be given in milliseconds (4000 = 4 seconds)
 RemoveToolTip(duration) {
