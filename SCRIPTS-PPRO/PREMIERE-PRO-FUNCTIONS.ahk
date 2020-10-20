@@ -21,6 +21,9 @@ sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
 
+EnvGet, Settings_rootFolder, BKB_ROOT
+iniFile := Settings_rootFolder . "\settings.ini" ; the main settings file used by most of the buttonpusherKB scripts
+
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
 ; combine below with key and '::' to define hotkey
@@ -60,6 +63,64 @@ FocusEnd:
 }
 ;end of prFocus()
 
+
+; These Functions are for copying the timecode from the currently active sequence in the Program Monitor to the clipboard as text.
+
+getTCDisplayCoords(ByRef xposP, ByRef yposP) ; this will revise the stored values of the X & Y coords of where the Program Monitor's TC Display is located on your screen.
+{
+    global inifile
+    CoordMode, Mouse, Window
+    xposPOld := xposP ; storing the previous X position
+    yposPOld := yposP ; storing the previous Y position
+    MouseGetPos, xposPNew, yposPNew ;---storing cursor's current coordinates at X%xposPNew% Y%yposPNew%
+    ;Tooltip, X=%xposPNew% / Y=%yposPNew%`nGrabbing the X & Y coordinates of the mouse cursor`nMake sure it is over the Program Monitor's timecode display (lower left).`n`n(Previous values: X=%xposPOld% / Y=%yposPOld%)
+    ;RemoveToolTip(4000)
+    MsgBox, 35, Update TC Display Coords?, Make sure cursor is over the Program Monitor's Timecode Display (lower left).`n`nX=%xposPNew% / Y=%yposPNew%`nThese are the coordinates that were grabbed.`nWould you like to save these in settings.ini?`n`nYes will save.`nNo will just update them until script is reloaded.`nCancel will reset them to settings.ini values.
+    xposP := xposPNew ; storing new values in xposP - this should cover the 'No' selection case
+    yposP := yposPNew ; storing new values in yposP - this should cover the 'No' selection case
+    IfMsgBox Yes
+        IniWrite, %xposP%, %inifile%, Settings, TCDisplayXpos ; writes the new X value to settings.ini
+        IniWrite, %yposP%, %inifile%, Settings, TCDisplayYpos ; writes the new Y value to settings.ini
+    IfMsgBox Cancel
+        xposP := xposPOld ; puts the old X value back into xposP on Cancel
+        yposP := yposPOld ; puts the old Y value back into yposP on Cancel
+    ; selecting No should just save the new values for X & Y for the current instance of the script. Reloading will re-read the values from settings.ini
+    Return
+}
+
+grabTCAsText(ByRef grabbedTC, ByRef xposP, ByRef yposP)
+{
+    If (!xposP and !yposP)
+    {
+        MsgBox,, Grab Timecode Display position, You need to grab the X & Y coordinates of the Program Monitor's Timecode Display (lower left).`nPosition cursor then press CTRL-SHIFT-ALT-I to capture
+        Return
+    }
+    prFocus(program) ; Activating the Program Monitor
+    Sleep, sleepShort
+    CoordMode, Mouse, Window
+    MouseGetPos, xposTEMP, yposTEMP ;---storing cursor's current coordinates at X%xposTEMP% Y%yposTEMP%
+    Tooltip, Attempting a click at: X=%xposP% / Y=%yposP%`nIf this misclicks`, position cursor over TC display in Program Monitor then press CTRL-SHIFT-ALT-I to capture coordinates.
+    RemoveToolTip(5000) 
+    ;BlockInput, On
+    MouseMove, xposP, yposP
+    Click, xposP, yposP, 0
+    Sleep, sleepShort
+    Send, {Click}
+    Sleep, sleepShort
+    Send, {Control Down}
+    Sleep, sleepShort
+    Send, C
+    Sleep, sleepShort
+    Send, {Control Up}
+    Sleep, sleepShort
+    Send, {Esc}
+    ;BlockInput, Off
+    MouseMove, xposTEMP, yposTEMP
+    grabbedTC = %clipboard%
+    Return grabbedTC
+}
+
+; End of timecode reading functions
 
 ;BH-This preset() function was taken from Taran's 2nd Keyboard Project...modified to work on my system.
 

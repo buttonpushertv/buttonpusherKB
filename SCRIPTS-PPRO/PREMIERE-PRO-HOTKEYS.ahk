@@ -25,20 +25,10 @@ sleepDeep := 3500
 
 ; This section pre-defines the (most likely) location of the Program Monitor's Timecode display based on which edit system you happen to be working on. It also is tied to the most commonly used window layout that I use in each location.
 
-global xposP
-global yposP
-
 EnvGet, Settings_rootFolder, BKB_ROOT
 iniFile := Settings_rootFolder . "\settings.ini" ; the main settings file used by most of the buttonpusherKB scripts
-IniRead, currSystemLocation, %inifile%, Location, currentSystemLocation
-
-If (currSystemLocation = 1) {
-  xposP = 1712
-  yposP = 662
-}
-
-;MSGBOX, , DEBUG, Detected Program Monitor Timecode Display:`nxposP:%xposP%, yposP:%yposP%
-
+IniRead, xposP, %inifile%, Settings, TCDisplayXpos
+IniRead, yposP, %inifile%, Settings, TCDisplayYpos
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 
@@ -137,7 +127,6 @@ sleep, sleepShort
 Send, {Shift Down}x{Shift Up}
 Return
 
-
 ^!F4:: ; <-- Add edit, mark previous clip and remove (this WILL NOT pull up the rest of the timeline)
 sleep, sleepShort
 Send, {F4}
@@ -150,6 +139,23 @@ Send, {Shift Down}z{Shift Up}
 ; AND THIS WILL RETURN THE PLAYHEAD TO THE POINT OF THE EDIT
 Send, {Down}
 Return
+
+!z:: ; <-- Select clip @ playhead & delete it
+Send, d ; PPro Key for 'select clip at playhead'
+Send, {DEL} ; PPro Key for 'remove'
+return
+
+; these are usage examples for the functions to grab the timecode of the current Program Monitor sequence.
+
+^+!i:: ; <-- Find Coordinates of Sequence Timecode so 'Get Current Timecode of Sequence' below knows where to look.
+  getTCDisplayCoords(xposP, yposP)
+  ;MSGBOX, , DEBUG, This is what came back from the function: X=%xposP% / Y=%yposP%
+  Return
+
++!i:: ; <-- Get Current Timecode of Sequence
+  grabTCAsText(grabbedTC, xposP, yposP)
+  MSGBOX, , Timecode value read..., This is the value of grabbedTC: %grabbedTC% `nThis is the value stored on the clipboard: %clipboard%`n`nYou can send this to other apps by editing %A_ScriptName% and using the function 'grabTCAsText' (see PREMIERE-PRO-FUNCTIONS.ahk for more info).
+  Return
 
 F18:: ; <-- Push current timecode value to Word
 CoordMode, Mouse, Client
@@ -232,7 +238,6 @@ sleep, sleepMicro
 Send, {NumpadEnter}
 Return
 
-
 F24:: ; <-- Send '+30'
 sleep, sleepShort
 Send, {NumpadAdd}
@@ -244,7 +249,6 @@ sleep, sleepMicro
 Send, {NumpadEnter}
 Return
 
-
 ; The section below addresses the issue of the Alt key opening the menu bar items. Even though there is a block in MASTER-SCRIPT that prevents the Left Alt key from opening menu items, if you press the Alt plus another key, it will still open the menu. The block just prevents the Left Alt from setting the focus on the menu bar until you hit Escape. If you want to use Alt with C,E,F,G,H,M,S,V, or W you need to immediatley send {ESC} so that it forces the menu to close. (For plain Alt+those keys, I have them all set here.)
 
 !c:: ; <-- closing the Menu that gets opened when this key combo is sent
@@ -252,7 +256,7 @@ Send, !c{ESC}
 return
 
 ;Alt+E can't be escaped immediatley becuase it closes the Export Media dialog.
-;(This problem probably exists on som eof the others too).
+;(This problem probably exists on some of the others too).
 ;!e:: ; <-- closing the Menu that gets opened when this key combo is sent
 ;Send, !e{ESC}
 ;return
@@ -293,47 +297,6 @@ return
 
 ; It doesn't do it for Alt+Shift+E though....
 
-!z:: ; <-- Select clip @ playhead & delete it
-Send, d ; PPro Key for 'select clip at playhead'
-Send, {DEL} ; PPro Key for 'remove'
-return
-
-^+!i:: ; <-- Find Coordinates of Sequence Timecode so 'Get Current Timecode of Sequence' below knows where to look.
-  CoordMode, Mouse, Window
-  MouseGetPos, xposP, yposP ;---storing cursor's current coordinates at X%xposP% Y%yposP%
-  Tooltip, X=%xposP% / Y=%yposP%`nGrabbing the X & Y coordinates of the mouse cursor`nMake sure it is over the Program Monitor's timecode display (lower left).
-  RemoveToolTip(3000)
-  Return
-
-+!i:: ; <-- Get Current Timecode of Sequence
-  If (!xposP and !yposP)
-    {
-      MsgBox,, Grab Timecode Display position, You need to grab the X & Y coordinates of the Program Monitor's Timecode Display (lower left).`nPosition cursor then press CTRL-SHIFT-ALT-I to capture
-      Return
-    }
-  prFocus(program) ; Activating the Program Monitor
-  Sleep, sleepShort
-  CoordMode, Mouse, Window
-  MouseGetPos, xposTEMP, yposTEMP ;---storing cursor's current coordinates at X%xposTEMP% Y%yposTEMP%
-  Tooltip, X=%xposP% / Y=%yposP%`nIf this misclicks`, position cursor then press CTRL-SHIFT-ALT-I to capture coordinates.
-  RemoveToolTip(3000) 
-  ;BlockInput, On
-  MouseMove, xposP, yposP
-  Click, xposP, yposP, 0
-  Sleep, sleepShort
-  Send, {Click}
-  Sleep, sleepShort
-  Send, {Control Down}
-  Sleep, sleepShort
-  Send, C
-  Sleep, sleepShort
-  Send, {Control Up}
-  Sleep, sleepShort
-  Send, {Esc}
-  ;BlockInput, Off
-  MouseMove, xposTEMP, yposTEMP
-  MSGBOX, , DEBUG, %clipboard%
-  return
 
 ;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
 
