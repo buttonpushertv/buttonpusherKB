@@ -109,7 +109,7 @@ grabTCAsText(ByRef grabbedTC, ByRef xposP, ByRef yposP)
     Sleep, sleepShort
     Send, {Control Down}
     Sleep, sleepShort
-    Send, C
+    Send, c
     Sleep, sleepShort
     Send, {Control Up}
     Sleep, sleepShort

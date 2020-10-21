@@ -158,20 +158,17 @@ return
   Return
 
 F18:: ; <-- Push current timecode value to Word
-CoordMode, Mouse, Client
-prFocus("timeline") ; set timeline as the focused window in PPRO
-sleep, sleepShort
-Click, 120, 740 ; This will going to directly click on the location of the timecode display in the Timeline.
-; The above line is currently set for the layout for Edit 2. Eventually, I'd like to code a way to get this based on
-; finding the timecode display based on any window config.
-sleep, sleepShort
-Send, {Control Down}c{Control Up} ; copy to the clipboard
+grabTCAsText(grabbedTC, xposP, yposP)
 sleep, sleepShort
 WinActivate, ahk_exe WINWORD.EXE ;switch to Word
 sleep, sleepShort
 Send, {Down}{Down} ;move cursor down two rows
-Send, {Control Down}v{Control Up} ;paste the clipboard where the cursor is sitting
+sleep, sleepShort
+;MSGBOX, , DEBUG, %grabbedTC%
+Send, %clipboard% ;paste the clipboard where the cursor is sitting
+sleep, sleepShort
 WinActivate, ahk_exe Adobe Premiere Pro.exe ;switch back to PPRO
+sleep, sleepShort
 prFocus("timeline") ; set timeline as the focused window in PPRO
 Return
 
