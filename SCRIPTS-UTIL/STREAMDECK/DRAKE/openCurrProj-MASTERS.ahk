@@ -1,6 +1,6 @@
 SetWorkingDir %A_ScriptDir%
 #Include %A_ScriptDir%\DRAKE-FUNCTIONS.ahk
-projectSubfolder = EXPORTS\MASTERS
+projectSubfolder = EXPORTS\_MASTERS_
 f_class := whichWindowType()
 if f_class contains #32770,ExploreWClass,CabinetWClass,AutoHotKeyGUI
     {
