@@ -157,21 +157,6 @@ return
   MSGBOX, , Timecode value read..., This is the value of grabbedTC: %grabbedTC% `nThis is the value stored on the clipboard: %clipboard%`n`nYou can send this to other apps by editing %A_ScriptName% and using the function 'grabTCAsText' (see PREMIERE-PRO-FUNCTIONS.ahk for more info).
   Return
 
-F18:: ; <-- Push current timecode value to Word
-grabTCAsText(grabbedTC, xposP, yposP)
-sleep, sleepShort
-WinActivate, ahk_exe WINWORD.EXE ;switch to Word
-sleep, sleepShort
-Send, {Down}{Down} ;move cursor down two rows
-sleep, sleepShort
-;MSGBOX, , DEBUG, %grabbedTC%
-Send, %clipboard% ;paste the clipboard where the cursor is sitting
-sleep, sleepShort
-WinActivate, ahk_exe Adobe Premiere Pro.exe ;switch back to PPRO
-sleep, sleepShort
-prFocus("timeline") ; set timeline as the focused window in PPRO
-Return
-
 F19:: ; <-- Step Left 5 seconds
 sleep, sleepMicro
 Send, ^+a
@@ -294,67 +279,31 @@ return
 
 ; It doesn't do it for Alt+Shift+E though....
 
-
 ;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
 
-#^!F1:: ; <-- move ahead 1 sec, mark in, go to next xsit, back 1 frame, mark out, & extract
-Send, {NumpadAdd}
-sleep, sleepShort
-Send, {Numpad1}
-sleep, sleepShort
-Send, {NumpadDot}
-sleep, sleepShort
-Send, {NumpadEnter}
-sleep, sleepShort
-Send, {q}
-sleep, sleepShort
-Send, {Down}
-sleep, sleepShort
-Send, {LEFT}
-sleep, sleepShort
-Send, {w}
-sleep, sleepShort
-Send, {Shift Down}
-sleep, sleepShort
-Send, X
-sleep, sleepShort
-Send,{Shift Up}
-return
++^!F1:: ; <-- Push current timecode value to Word
+  grabTCAsText(grabbedTC, xposP, yposP)
+  sleep, sleepShort
+  WinActivate, ahk_exe WINWORD.EXE ;switch to Word
+  sleep, sleepShort
+  Send, {Down}{Down} ;move cursor down two rows
+  sleep, sleepShort
+  ;MSGBOX, , DEBUG, %grabbedTC%
+  Send, %clipboard% ;paste the clipboard where the cursor is sitting
+  sleep, sleepShort
+  WinActivate, ahk_exe Adobe Premiere Pro.exe ;switch back to PPRO
+  sleep, sleepShort
+  prFocus("timeline") ; set timeline as the focused window in PPRO
+Return
 
-+^!f2:: ; <-- open a clip marker, select all, copy text to clipboard, close clip marker, create seq marker, edit seq marker, paste text
-sleep, sleepShort
-Send, m
-sleep, sleepShort
-Send, ^a
-sleep, sleepShort
-Send, ^c
-sleep, sleepShort
-Send, {ESC}
-sleep, sleepShort
-Send, ^+a
-sleep, sleepShort
-Send, m
-sleep, sleepLong
-Send, m
-sleep, sleepShort
-Send, ^v
-sleep, sleepShort
-Send, {Enter}
-return
-
+;+^!f2:: 
 ;+^!f3::
 ;+^!f4::
 ;+^!f5::
 ;+^!f6::
 ;+^!f7::
 ;+^!f8::
-
-+^!f9:: ; <-- Go to next edit then add edit to active tracks
-Send, {down}
-Sleep, sleepShort
-Send, {F4}
-return
-
+;+^!f9:: 
 ;+^!f10::
 ;+^!f11::
 ;+^!f12::
@@ -366,6 +315,135 @@ return
 #IfWinActive
 
 ;===== END Program 1 DEFINITIONS ===============================================================
+
+/* COMMAND HOLDING TANK
+(This comment block is a place where you can store previously used hotkeys that you may want to keep around in case you need to reuse them. Make sure to comment on what they did and/or were for.)
+
+; <-- Go to next edit then add edit to active tracks
+  Send, {down}
+  Sleep, sleepShort
+  Send, {F4}
+return
+
+; <-- open a clip marker, select all, copy text to clipboard, close clip marker, create seq marker, edit seq marker, paste text
+  sleep, sleepShort
+  Send, m
+  sleep, sleepShort
+  Send, ^a
+  sleep, sleepShort
+  Send, ^c
+  sleep, sleepShort
+  Send, {ESC}
+  sleep, sleepShort
+  Send, ^+a
+  sleep, sleepShort
+  Send, m
+  sleep, sleepLong
+  Send, m
+  sleep, sleepShort
+  Send, ^v
+  sleep, sleepShort
+  Send, {Enter}
+return
+
+ ; <-- move ahead 1 sec, mark in, go to next xsit, back 1 frame, mark out, & extract
+  Send, {NumpadAdd}
+  sleep, sleepShort
+  Send, {Numpad1}
+  sleep, sleepShort
+  Send, {NumpadDot}
+  sleep, sleepShort
+  Send, {NumpadEnter}
+  sleep, sleepShort
+  Send, {q}
+  sleep, sleepShort
+  Send, {Down}
+  sleep, sleepShort
+  Send, {LEFT}
+  sleep, sleepShort
+  Send, {w}
+  sleep, sleepShort
+  Send, {Shift Down}
+  sleep, sleepShort
+  Send, X
+  sleep, sleepShort
+  Send,{Shift Up}
+return
+
+ ; <--Removing a pattern from a string
+  searchText := "LivingRoom"
+  replaceText := "TreatmentRoom"
+  Send, {Enter}
+  sleep, sleepShort
+  Send, ^c
+  ClipWait
+  workingText = %clipboard%
+  ;replaceText := ""
+  editedText := RegExReplace(workingText, searchText, Replacement := replaceText)
+  ;MsgBox, %workingText%n%searchText%n%replaceText%`n%editedText%
+  Clipboard := editedText
+  sleep, sleepShort
+  Send, ^v
+  sleep, sleepShort
+  Send, {Enter}
+  sleep, sleepMedium
+  Send, {Escape}
+Return
+
+F18:: ; <-- for PPRO - PHARMA Project - copy marker to comment when there is already stuff in the comment window
+  CoordMode, Mouse, Client
+  Send, 5
+  Sleep, sleepShort
+  Send, ^a
+  Sleep, sleepShort
+  Send, ^c
+  Sleep, sleepShort
+  Send, {Tab}
+  Sleep, sleepShort
+  Send, {ctrl Down}{home}{Ctrl Up}
+  Sleep, sleepShort
+  Send, ^v
+  Sleep, sleepShort
+  Send, {Shift Down}{Enter}{Shift Up}
+  Sleep, sleepShort
+  Click, 260, 53
+  Sleep, sleepShort
+  Send, 0
+  Sleep, sleepShort
+  Send, {NumpadEnter}
+Return
+
+F19:: ; <-- for PPRO - PHARMA Project - copy marker text to comment
+  CoordMode, Mouse, Client
+  Send, 5
+  Sleep, sleepShort
+  Send, ^a
+  Sleep, sleepShort
+  Send, ^c
+  Sleep, sleepShort
+  Send, {Tab}
+  Sleep, sleepShort
+  Send, ^v
+  Sleep, sleepShort
+  Send, {NumpadEnter}
+  Sleep, sleepShort
+  Send, {down}
+return
+
+F20:: ; <-- For PPRO - PHARMA Project - to ID client selected takes with a marker
+  Send, 5
+  Sleep, sleepShort
+  Send, 5
+  Sleep, sleepShort
+  Send, client selected
+  Send, {Tab}
+  Sleep, sleepShort
+  Send, client selected
+  Sleep, sleepShort
+  Send, {NumpadEnter}
+return
+
+*/
 
 ;===== FUNCTIONS ===============================================================================
 
