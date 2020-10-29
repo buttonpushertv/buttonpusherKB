@@ -42,18 +42,18 @@ prFocus(panel) ;this function allows you to have ONE spot where you define your 
 
 if (panel = "effects")
     {
-    Send {F7} ;bring focus to the effects panel, in order to "clear" the current focus on the MAIN monitor
+    Send {F16} ;bring focus to the effects panel, in order to "clear" the current focus on the MAIN monitor
     sleep sleepMini
-    Send {F7} ;do it AGAIN, just in case a panel was full-screened... it would only have exited full screen, and not switched to the effects panel as it should have.
+    Send {F16} ;do it AGAIN, just in case a panel was full-screened... it would only have exited full screen, and not switched to the effects panel as it should have.
     sleep sleepMini
     goto FocusEnd ;should be in the correct panel, so end function
     }
 else if (panel = "timeline")
-    Send {Control Down}{f9}{Control Up} ;if focus had already been on the timeline, this would have switched to the next sequence in some arbitrary order.
+    Send {F15} ;if focus had already been on the timeline, this would have switched to the next sequence in some arbitrary order.
 else if (panel = "program") ;program monitor
-        Send {F8}
+        Send {F14}
 else if (panel = "source") ;source monitor
-        Send {Control Down}{F8}{Control Up}
+        Send {F13}
 else if (panel = "project") ;AKA a "bin" or "folder"
         Send {F9}
 else if (panel = "effect controls")
@@ -285,3 +285,13 @@ preset(item)
 theEnding:
 }
 ;END of preset()
+
+; use this function to Remove ToolTips - pretty self-explanatory - 'duration' should be given in milliseconds (4000 = 4 seconds)
+RemoveToolTip(duration) {
+  SetTimer, ToolTipOff, %duration%
+  Return
+
+ToolTipOff:
+    ToolTip
+    return
+}

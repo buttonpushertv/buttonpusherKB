@@ -22,11 +22,11 @@ sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
 
-
+EnvGet, Settings_rootFolder, BKB_ROOT
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
-
+; This is going to auto-run then quit. That means it's not creating a hotkey - it's just a single-run/use script.
     coordmode, mouse, Window
     Click
     Sleep, sleepShort
@@ -64,7 +64,7 @@ sleepDeep := 3500
 preset("%fileToCreate%")
 exitapp
 
-#Include %A_LineFile%\..\..\PREMIERE-PRO-FUNCTIONS.ahk
+#Include %Settings_rootFolder%\SCRIPTS-PPRO\PREMIERE-PRO-FUNCTIONS.ahk
             ), preset-scripts\%fileToCreate%.ahk
         MsgBox Preset saved to preset-scripts\%fileToCreate%.ahk
         }
