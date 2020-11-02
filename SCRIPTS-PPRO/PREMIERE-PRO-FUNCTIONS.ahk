@@ -73,8 +73,8 @@ getTCDisplayCoords(ByRef xposP, ByRef yposP) ; this will revise the stored value
     xposPOld := xposP ; storing the previous X position
     yposPOld := yposP ; storing the previous Y position
     MouseGetPos, xposPNew, yposPNew ;---storing cursor's current coordinates at X%xposPNew% Y%yposPNew%
-    ;Tooltip, X=%xposPNew% / Y=%yposPNew%`nGrabbing the X & Y coordinates of the mouse cursor`nMake sure it is over the Program Monitor's timecode display (lower left).`n`n(Previous values: X=%xposPOld% / Y=%yposPOld%)
-    ;RemoveToolTip(4000)
+    Tooltip, X=%xposPNew% / Y=%yposPNew%`nGrabbing the X & Y coordinates of the mouse cursor`nMake sure it is over the Program Monitor's timecode display (lower left).`n`n(Previous values: X=%xposPOld% / Y=%yposPOld%)
+    RemoveToolTip(4000)
     MsgBox, 35, Update TC Display Coords?, Make sure cursor is over the Program Monitor's Timecode Display (lower left).`n`nX=%xposPNew% / Y=%yposPNew%`nThese are the coordinates that were grabbed.`nWould you like to save these in settings.ini?`n`nYes will save.`nNo will just update them until script is reloaded.`nCancel will reset them to settings.ini values.
     xposP := xposPNew ; storing new values in xposP - this should cover the 'No' selection case
     yposP := yposPNew ; storing new values in yposP - this should cover the 'No' selection case
