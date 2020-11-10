@@ -149,6 +149,7 @@ return
 
 ^+!i:: ; <-- Find Coordinates of Sequence Timecode so 'Get Current Timecode of Sequence' below knows where to look.
   getTCDisplayCoords(xposP, yposP)
+  Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Window"
   ;MSGBOX, , DEBUG, This is what came back from the function: X=%xposP% / Y=%yposP%
   Return
 

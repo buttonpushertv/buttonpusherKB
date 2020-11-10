@@ -227,6 +227,10 @@ CapsLock & G:: ; <-- This will return the selected OR active path from an Explor
 	Run, %A_ScriptDir%\SCRIPTS-UTIL\STREAMDECK\DRAKE\getPATH.ahk
 	Return
 
+CapsLock & H:: ; <-- Run HotKeyHelp.ahk
+	Run, "%A_ScriptDir%\SCRIPTS-UTIL\Hotkey Help.ahk"
+	Return
+	
 CapsLock & L:: ; <-- This will launch BKB-LAUNCHX
     Run, %A_ScriptDir%\UTIL-APPS\BKB-LAUNCHX\launcher.ahk
     Return
@@ -254,6 +258,12 @@ CapsLock & p:: ; <-- Toggle CapsLockCheck on or Off
 CapsLock & q:: ; <-- Exit MASTER-SCRIPT and child AHK Scripts
 	goto Quitting ; this subroutine will ID any of the scripts that have been launched (via enabled in settings.ini) and then quit them all
 return
+
+CapsLock & Z:: ;<--pingPos - just to show what it does
+	tWidth := % Round(halfScreenWidth)
+	tHeight := % Round(quarterScreenHeight)
+	Run, %A_ScriptDir%\SCRIPTS-UTIL\pingPos.ahk %tWidth% %tHeight% "Screen"
+	Return
 
 ; USING THE HYPER KEY
 ; In Windows 10, Microsoft has hard-coded the HYPER Key (Control+Shift+Alt+Windows) to open the Office Hub. There some ways to remove that coding. They involve editing the Registry, so it's not something you should do lightly.

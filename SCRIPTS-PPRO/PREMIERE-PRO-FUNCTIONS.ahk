@@ -24,6 +24,7 @@ sleepDeep := 3500
 EnvGet, Settings_rootFolder, BKB_ROOT
 iniFile := Settings_rootFolder . "\settings.ini" ; the main settings file used by most of the buttonpusherKB scripts
 
+
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
 ; combine below with key and '::' to define hotkey
@@ -69,6 +70,7 @@ FocusEnd:
 getTCDisplayCoords(ByRef xposP, ByRef yposP) ; this will revise the stored values of the X & Y coords of where the Program Monitor's TC Display is located on your screen.
 {
     global inifile
+    global Settings_rootFolder
     CoordMode, Mouse, Window
     xposPOld := xposP ; storing the previous X position
     yposPOld := yposP ; storing the previous Y position
@@ -90,6 +92,7 @@ getTCDisplayCoords(ByRef xposP, ByRef yposP) ; this will revise the stored value
 
 grabTCAsText(ByRef grabbedTC, ByRef xposP, ByRef yposP)
 {
+    global Settings_rootFolder
     If (!xposP and !yposP)
     {
         MsgBox,, Grab Timecode Display position, You need to grab the X & Y coordinates of the Program Monitor's Timecode Display (lower left).`nPosition cursor then press CTRL-SHIFT-ALT-I to capture
@@ -100,7 +103,8 @@ grabTCAsText(ByRef grabbedTC, ByRef xposP, ByRef yposP)
     CoordMode, Mouse, Window
     MouseGetPos, xposTEMP, yposTEMP ;---storing cursor's current coordinates at X%xposTEMP% Y%yposTEMP%
     Tooltip, Attempting a click at: X=%xposP% / Y=%yposP%`nIf this misclicks`, position cursor over TC display in Program Monitor then press CTRL-SHIFT-ALT-I to capture coordinates.
-    RemoveToolTip(5000) 
+    RemoveToolTip(5000)
+    Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Window"
     ;BlockInput, On
     MouseMove, xposP, yposP
     Click, xposP, yposP, 0
