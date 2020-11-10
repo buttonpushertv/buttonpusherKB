@@ -216,3 +216,4 @@ VNCRunOrActivate(VNCLaunchCode, VNCWintitle)
    else
       Run, %VNCLaunchCode%
 }
+

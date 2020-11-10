@@ -165,7 +165,7 @@ F24:: ; <-- Downloading Comps from an iStockPhoto Board
     MouseMove, xposP, yposP
     Return
 
-^F24::
+^F24:: ; <-- Reload CHROME-HOTKEYS.ahk
     MSGBOX, , DEBUG,Reloading Chrome-Hotkeys
     Reload
     Return

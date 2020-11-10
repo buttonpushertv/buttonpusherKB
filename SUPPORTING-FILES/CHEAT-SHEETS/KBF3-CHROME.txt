@@ -23,8 +23,10 @@ Ctrl+O, select file Open a file from your computer in Google Chrome
 
 =========================== GOOGLE-CHROME-AUTOHOTKEYS ===========================
 
+F19      <-- Downloading Comps from a ShutterStock Single Image page
+F20      <-- Downloading Comps from a ShutterStock Board
 F23      <-- Downloading Comps from an iStockPhoto Single Video Page
-F24      <-- Downloading Comps from a ShutterStock Board
+F24      <-- Downloading Comps from an iStockPhoto Board
 
 Ctrl+F24 <-- Reload CHROME-HOTKEYS.ahk
 
