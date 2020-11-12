@@ -8,6 +8,25 @@ I'm guessing you are here because you are involved in the front lines of post-pr
 
 OK, so if you're into all that...you might actually be me...no, but seriously, those are the reasons I created and use all this. If you're at all interested in this stuff then you'll dig this.
 
+# OK, but what does this thing do?!?
+
+The single biggest question I get asked is: ***What can I do with this set of scripts?***
+
+I'm super glad you asked, random Internet Visitor! In a nutshell, _it depends_. I know, I know - that's a cop out answer. But, it's not - let me explain by giving you some of the highlights of what _buttonpusherKB_ has to offer:
+
+- Sets up an environment that makes it easy to launch and control several aspects of your system
+- Reduces repetitive tasks
+- Is built as a modular system. You can use as much or as little as you want.
+- Is based on AutoHotKey (for hot key shortcuts) and other simple, powerful apps.
+- Creates an eco-system that allows flexible adjustment of your setup - just having a foundation in place, makes it easier to make small tweaks without needing to invent some new piece.
+
+Here are some of the specific features I've incorporated:
+- **MASTER-SCRIPT.ahk** - this is where you can setup hot keys that will work across your entire system.
+- **Hotkey Scripts** - Hotkeys for specific apps, like: Premiere Pro, Illustrator, etc (there's a bunch of things in there - details below)
+- **DRAKE** - a simple project management system that allows you to specify 4 Projects and then have quick access via Stream Deck shortcuts
+- **CHEAT SHEETS** - quickly reveal a cheat sheet of all the commands you’ve setup in a specific app and get a reminder of where the command you are looking for is set.
+- **BATCH FILES TO ASSIST WITH BACKUPS** - run daily, weekly, and/or monthly backups of things like settings files and configuration files. It's a simple file copy, so it can go to cloud services easily.
+
 A little about me: I’m an editor with over 30 years experience in post-production. I got my start in linear, tape-based suites and quickly transitioned to non-linear systems as the field evolved. I’m a nut for tweaking the interface of my systems. In recent years, I’ve begun integrating custom and programmable keypads and other devices into my workflow.
 
 The scripts here represent a destination, of sorts, of this journey I’ve been on for years. The combination of: apps like AutoHotKey, flexible programmable devices like Elgato’s StreamDeck, and fully-programmable keyboards (and keypads) have allowed me to raise the level of customization very high. This is way, way, beyond changing some keys in Premiere Pro.
