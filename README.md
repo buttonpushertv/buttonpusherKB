@@ -27,6 +27,8 @@ Here are some of the specific features I've incorporated:
 - **CHEAT SHEETS** - quickly reveal a cheat sheet of all the commands you’ve setup in a specific app and get a reminder of where the command you are looking for is set.
 - **BATCH FILES TO ASSIST WITH BACKUPS** - run daily, weekly, and/or monthly backups of things like settings files and configuration files. It's a simple file copy, so it can go to cloud services easily.
 
+There's a lot you can do, so it really does depend on how much or how little you want to integrate into your setup.
+
 A little about me: I’m an editor with over 30 years experience in post-production. I got my start in linear, tape-based suites and quickly transitioned to non-linear systems as the field evolved. I’m a nut for tweaking the interface of my systems. In recent years, I’ve begun integrating custom and programmable keypads and other devices into my workflow.
 
 The scripts here represent a destination, of sorts, of this journey I’ve been on for years. The combination of: apps like AutoHotKey, flexible programmable devices like Elgato’s StreamDeck, and fully-programmable keyboards (and keypads) have allowed me to raise the level of customization very high. This is way, way, beyond changing some keys in Premiere Pro.
