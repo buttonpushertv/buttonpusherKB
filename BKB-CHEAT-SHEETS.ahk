@@ -271,6 +271,13 @@ secondShower: ; Display an image CheatSheet of App Specific Keyboard Shortcuts (
         PictureStartY := 50 ; setting the starting coords to '-1' will make it center vertically on the screen
     }
     else
+	    If WinActive("ahk_exe Resolve.exe") {
+        pic2Show := "SUPPORTING-FILES\CHEAT-SHEETS\KBF2-RESOLVE-PAGE"
+        PictureWidth := 2000
+        numPages := 3
+        PictureStartY := 50 ; setting the starting coords to '-1' will make it center vertically on the screen
+    }
+    else
     If WinActive("ahk_exe AfterFX.exe") {
         pic2Show := "SUPPORTING-FILES\CHEAT-SHEETS\KBF2-AE-PAGE"
         PictureWidth := 2000
