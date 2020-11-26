@@ -19,10 +19,9 @@ sleepLong := 1500
 sleepDeep := 3500
 
 FileEncoding, UTF-8 ; this is here to make sure any files that we need to work with get created/opened/read as UTF-8
+EnvGet, scriptRootFolder, BKB_ROOT
 
-global scriptRootFolder := A_ScriptDir ; sets the scriptRootFolder value to A_ScriptDir. This should then auto-set the rootFolder value in the settings.ini file. The idea here is that this should make it possible to change the name of the root folder where all of this gets installed and then it should propagate throughout the script.
-
-iniFile := A_ScriptDir . "\settings.ini"
+iniFile := scriptRootFolder . "\settings.ini"
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================

@@ -25,10 +25,11 @@ FileEncoding, UTF-8 ; this is here to make sure any files that we need to work w
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
+EnvGet, Settings_rootFolder, BKB_ROOT
+
 global versionFile := "version.ini" ; the file which holds the current version of buttonpusherKB
 global version ; creating a global variable for the version info
 FileRead, version, %versionFile% ; reading the version from versionFile
-global scriptRootFolder := A_ScriptDir ; sets the scriptRootFolder value to A_ScriptDir. This should then auto-set the rootFolder value in the settings.ini file. The idea here is that this should make it possible to change the name of the root folder where all of this gets installed and then it should propagate throughout the script.
 
 global currentSelectedSystemLocation :=
 global Location_currentSystemLocation :=
@@ -38,6 +39,13 @@ inifile = settings.ini
 
 INI_Init(inifile)
 INI_Load(inifile)
+
+currentSystemLocationName := % Location_systemLocation%Location_currentSystemLocation%
+global daysSinceLastBackupFile := "PRIVATE\" . currentSystemLocationName . "\days_since_system_backup.txt"
+global daysSinceLastBackup
+FileRead, daysSinceLastBackup, %daysSinceLastBackupFile%
+daysSinceLastBackupText := "Days since last`nbackup: " . daysSinceLastBackup
+;MSGBOX, , DEBUG,section1_key1: %section1_key1%`ncurrentSelectedSystemLocation: %currentSelectedSystemLocation%`nLocation_currentSystemLocation: %Location_currentSystemLocation%`ncurrentSystemLocationName: %currentSystemLocationName%`ndaysSinceLastBackupFile: %daysSinceLastBackupFile%`ndaysSinceLastBackup: %daysSinceLastBackup%
 
 ;Creating the Main GUI for the app - the bit that loads inititally when run
 ;setting width variables
@@ -83,6 +91,8 @@ Gui, mainWindow:Color, FFFFFF
 Gui, mainWindow:Add, Picture, x5 y15, SUPPORTING-FILES\BPS-Logo-PLUS-KB-100x115.png
 Gui, mainWindow:Font, S8 italic, %Settings_guiFont%
 Gui, mainWindow:Add, Text, xp+10 yp+115, %version%
+Gui, mainWindow:Add, Text, xp yp+20, %daysSinceLastBackupText%
+Gui, mainWindow:Add, Button, xp yp+30 w90, Run`n&Backup
 guiSection1Width := (guiElementWidth - 100)
 Gui, mainWindow:Add, Text, x110 y10 section,
 Gui, mainWindow:Font, S12 CDefault Bold, %Settings_guiFont%
@@ -210,6 +220,13 @@ loop, %section4_keys%
 
 Gui, mainWindow:Show, w%guiWidth% h%guiHeight%
 Gui, mainWindow:Default
+return
+
+mainWindowButtonRunBackup:
+BATPath := Settings_rootFolder . "\BAT-FILES" 
+manualBackupBAT := BATPath . "\MANUAL SCHEDULED BACKUP.cmd"
+Run, %manualBackupBAT%, %BATPath%
+ExitApp
 return
 
 mainWindowButtonVariables:
