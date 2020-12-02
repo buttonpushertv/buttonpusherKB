@@ -1,4 +1,5 @@
 sleepTime := 5000
+#SingleInstance force
 
 EnvGet, Settings_rootFolder, BKB_ROOT
 pingFile := Settings_rootFolder . "\SUPPORTING-FILES\yellow-cross.png"
@@ -24,18 +25,19 @@ ExitApp
 ; clickRadar is used to show a yellow-circle.png centered on the coords you send the function. The idea is that they should be centered on the coords you will be clicking on.
 ; to get the transparency working, we need to use the GDI+ library
 ; Based on the tutorial here: https://github.com/tariqporter/Gdip/blob/master/Gdip.Tutorial.3-Create.Gui.From.Image.ahk
-pingPos(sx,sy, mode){
+pingPos(sx,sy,mode){
     global sleepTime
     global pingFile
-    offsetSX := (sx - 25)
-    offsetSY := (sy - 25)
     CoordMode, Mouse, %mode%
-    ;MSgBox, Sent: %sx%, %sy%`nOffset: %offsetSX%, %offsetSY%`npingFile: %pingFile%
-	; this is all blackmagic provided by GDI+
+    ; this is all blackmagic provided by GDI+
     Gui, ShowPicture: -Caption +E0x80000 +LastFound +OwnDialogs +Owner +hwndhwnd +alwaysontop
     Gui, ShowPicture: Show, NA ,dialog
     pBitmap:=Gdip_CreateBitmapFromFile(pingFile)
     Gdip_GetImageDimensions(pBitmap,w,h)
+    halfWidth := (w/2)
+    halfHeight := (h/2)
+    offsetSX := (sx-halfWidth)
+    offsetSY := (sy-halfHeight)
     hbm := CreateDIBSection(w,h)
     hdc := CreateCompatibleDC()
     obm := SelectObject(hdc, hbm)
@@ -43,6 +45,7 @@ pingPos(sx,sy, mode){
     Gdip_DrawImage(pGraphics, pBitmap, 0,0,w,h)
     UpdateLayeredWindow(hwnd, hdc,offsetSX,offsetSY,w,h)
     Gdip_DisposeImage(pBitmap)
+    ;MSgBox,4096,,Sent: x:%sx% y:%sy%`nOffset: x:%offsetSX% y:%offsetSY%`npingFile: %pingFile%`nmode: %mode%`nbitmap h: %h% width:%w%, 10
     sleep, sleepTime
     destroyGDIplusGUI()
 return

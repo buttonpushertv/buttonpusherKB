@@ -155,7 +155,7 @@ return
 
 +!i:: ; <-- Get Current Timecode of Sequence
   grabTCAsText(grabbedTC, xposP, yposP)
-  MSGBOX, , Timecode value read..., This is the value of grabbedTC: %grabbedTC% `nThis is the value stored on the clipboard: %clipboard%`n`nYou can send this to other apps by editing %A_ScriptName% and using the function 'grabTCAsText' (see PREMIERE-PRO-FUNCTIONS.ahk for more info).
+  MSGBOX,,Timecode value read..., This is the value of grabbedTC: %grabbedTC% `nThis is the value stored on the clipboard: %clipboard%`n`nYou can send this to other apps by editing %A_ScriptName% and using the function 'grabTCAsText' (see PREMIERE-PRO-FUNCTIONS.ahk for more info)., 4
   Return
 
 F19:: ; <-- Step Left 5 seconds

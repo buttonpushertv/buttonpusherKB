@@ -71,7 +71,7 @@ getTCDisplayCoords(ByRef xposP, ByRef yposP) ; this will revise the stored value
 {
     global inifile
     global Settings_rootFolder
-    CoordMode, Mouse, Window
+    CoordMode, Mouse, Screen
     xposPOld := xposP ; storing the previous X position
     yposPOld := yposP ; storing the previous Y position
     MouseGetPos, xposPNew, yposPNew ;---storing cursor's current coordinates at X%xposPNew% Y%yposPNew%
@@ -80,6 +80,7 @@ getTCDisplayCoords(ByRef xposP, ByRef yposP) ; this will revise the stored value
     MsgBox, 35, Update TC Display Coords?, Make sure cursor is over the Program Monitor's Timecode Display (lower left).`n`nX=%xposPNew% / Y=%yposPNew%`nThese are the coordinates that were grabbed.`nWould you like to save these in settings.ini?`n`nYes will save.`nNo will just update them until script is reloaded.`nCancel will reset them to settings.ini values.
     xposP := xposPNew ; storing new values in xposP - this should cover the 'No' selection case
     yposP := yposPNew ; storing new values in yposP - this should cover the 'No' selection case
+    Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Screen"
     IfMsgBox Yes
         IniWrite, %xposP%, %inifile%, Settings, TCDisplayXpos ; writes the new X value to settings.ini
         IniWrite, %yposP%, %inifile%, Settings, TCDisplayYpos ; writes the new Y value to settings.ini
@@ -100,11 +101,10 @@ grabTCAsText(ByRef grabbedTC, ByRef xposP, ByRef yposP)
     }
     prFocus(program) ; Activating the Program Monitor
     Sleep, sleepShort
-    CoordMode, Mouse, Window
+    CoordMode, Mouse, Screen
     MouseGetPos, xposTEMP, yposTEMP ;---storing cursor's current coordinates at X%xposTEMP% Y%yposTEMP%
     Tooltip, Attempting a click at: X=%xposP% / Y=%yposP%`nIf this misclicks`, position cursor over TC display in Program Monitor then press CTRL-SHIFT-ALT-I to capture coordinates.
     RemoveToolTip(5000)
-    Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Window"
     ;BlockInput, On
     MouseMove, xposP, yposP
     Click, xposP, yposP, 0
@@ -119,7 +119,8 @@ grabTCAsText(ByRef grabbedTC, ByRef xposP, ByRef yposP)
     Sleep, sleepShort
     Send, {Esc}
     ;BlockInput, Off
-    MouseMove, xposTEMP, yposTEMP
+    MouseMove, xposTEMP, yposTEMP ; putting cursor back where it was before hotkey was invoked
+    Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Screen"
     grabbedTC = %clipboard%
     Return grabbedTC
 }
