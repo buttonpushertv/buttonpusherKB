@@ -68,6 +68,13 @@ INI_Load(iniFile)
 
 FileRead, version, %versionFile% ; reading the version from versionFile
 
+currentSystemLocationName := % Location_systemLocation%Location_currentSystemLocation%
+global daysSinceLastBackupFile := "PRIVATE\" . currentSystemLocationName . "\days_since_system_backup.txt"
+global daysSinceLastBackup
+FileRead, daysSinceLastBackup, %daysSinceLastBackupFile%
+daysSinceLastBackupText := "Days since last backup: " . daysSinceLastBackup
+;MSGBOX, , DEBUG,section1_key1: %section1_key1%`ncurrentSelectedSystemLocation: %currentSelectedSystemLocation%`nLocation_currentSystemLocation: %Location_currentSystemLocation%`ncurrentSystemLocationName: %currentSystemLocationName%`ndaysSinceLastBackupFile: %daysSinceLastBackupFile%`ndaysSinceLastBackup: %daysSinceLastBackup%
+
 launchAppGuiWidth := 850
 launchAppKeyRows := (section2_keys / 3)
 launchAppGuiHeight := ((launchAppKeyRows * 25) + 140)
@@ -93,9 +100,10 @@ Gui, launchApp:Add, Text, section x0 y0,
 Gui, launchApp:Color, FFFFFF
 Gui, launchApp:Add, Picture, xs ys , SUPPORTING-FILES\BPS-Logo-PLUS-KB-240x275.png
 Gui, launchApp:Font, S10 italic, %Settings_guiFont%
-Gui, launchApp:Add, Text, xs+80 y%launchGuiBottomRowYpos%, %version%
+Gui, launchApp:Add, Text, xs+60 y%launchGuiBottomRowYpos%, %version%
+Gui, launchApp:Add, Text, xp yp+20, %daysSinceLastBackupText%
 Gui, launchApp:Font, norm
-Gui, launchApp:Add, Text, x%launchAppGuiColTwoStartingXpos% yp, Press CAPS+F11 for Settings  |  Press CAPS+Q to Quit Running Scripts 
+Gui, launchApp:Add, Text, x%launchAppGuiColTwoStartingXpos% yp-20, Press CAPS+F11 for Settings  |  Press CAPS+Q to Quit Running Scripts 
 Gui, launchApp:Add, Text, x%launchAppGuiColTwoStartingXpos% yp+20, Press CAPS+F12 for buttonpusherKB Launcher
 Gui, launchApp:Show, w%launchAppGuiWidth% h%launchAppGuiHeight%, Launching AHK Scripts
 Gui, launchApp:Font, S18 norm bold
