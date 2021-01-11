@@ -71,7 +71,7 @@ getTCDisplayCoords(ByRef xposP, ByRef yposP) ; this will revise the stored value
 {
     global inifile
     global Settings_rootFolder
-    CoordMode, Mouse, Screen
+    CoordMode, Mouse, Window
     xposPOld := xposP ; storing the previous X position
     yposPOld := yposP ; storing the previous Y position
     MouseGetPos, xposPNew, yposPNew ;---storing cursor's current coordinates at X%xposPNew% Y%yposPNew%
@@ -101,7 +101,7 @@ grabTCAsText(ByRef grabbedTC, ByRef xposP, ByRef yposP)
     }
     prFocus(program) ; Activating the Program Monitor
     Sleep, sleepShort
-    CoordMode, Mouse, Screen
+    CoordMode, Mouse, Window
     MouseGetPos, xposTEMP, yposTEMP ;---storing cursor's current coordinates at X%xposTEMP% Y%yposTEMP%
     Tooltip, Attempting a click at: X=%xposP% / Y=%yposP%`nIf this misclicks`, position cursor over TC display in Program Monitor then press CTRL-SHIFT-ALT-I to capture coordinates.
     RemoveToolTip(5000)
