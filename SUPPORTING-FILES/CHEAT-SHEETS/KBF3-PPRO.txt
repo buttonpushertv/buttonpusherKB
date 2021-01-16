@@ -1,18 +1,29 @@
 =========================== PREMIERE-PRO-HOTKEYS ===========================
 
+CTRL+1                  <-- Step Left 1 second
+CTRL+2                  <-- Step Left 5 seconds THEN Play
+CTRL+SHIFT+2            <-- Step Left 10 seconds THEN Play
+CTRL+3                  <-- Step Right 1 second
+
+F19                     <-- Step Left 5 seconds
+F20                     <-- Step Left 2 seconds
+F21                     <-- Step Right 2 Seconds
+F22                     <-- Step Right 5 Seconds
+F23                     <-- Send '-30'
+F24                     <-- Send '+30'
+
 ALT+Z                   <-- PPRO: Select clip @ playhead and delete it
-CTRL+SHIFT+3            <-- PPRO: Step Left 10 seconds THEN Play
-CTRL+3                  <-- PPRO: Step Left 5 seconds THEN Play
-CTRL+4                  <-- PPRO: Step Left 1 second
-CTRL+5                  <-- PPRO: Step Right 1 second
+
+CTRL+SHIFT+F3           <-- Mark current clip & Ripple Delete
+CTRL+SHIFT+F4           <-- Add edit, mark previous clip and delete (this WILL pull up the rest of the timeline)
+CTRL+ALT+F4             <-- Add edit, mark previous clip and remove (this WILL NOT pull up the rest of the timeline)
 
 ALT+SHIFT+I             <-- Get Current Timecode of Sequence
+CTRL+SHIFT+ALT+I        <-- Find Coordinates of Sequence Timecode so 'Get Current Timecode of Sequence' below knows where to look.
 
 SCAF-----
-SHIFT+CTRL+ALT+F3       <-- Step Left 2 seconds
-SHIFT+CTRL+ALT+F4       <-- Step Left 5 seconds
-SHIFT+CTRL+ALT+F9       <-- Step Right 2 Seconds
-SHIFT+CTRL+ALT+F10      <-- Step Right 5 Seconds
+SHIFT+CTRL+ALT+F1       <-- Push current timecode value to Word
+
 
 ALT+F                   <-- PPRO: closing the Menu that gets opened when this key combo is sent
 ALT+M                   <-- PPRO: closing the Menu that gets opened when this key combo is sent
