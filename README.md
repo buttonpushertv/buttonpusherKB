@@ -50,7 +50,7 @@ To make use of this suite, there are just a few things you’ll need to do.
 2.  Download this whole repository and unzip it into a folder in the root of your system drive. Mine is located in C:\BKB. I have it installed on 3 systems and the only thing that I have to tweak on each system is the settings.ini file (more on that later)
 3.  When you first launch the suite (by launching the file: `BKB-startup.ahk`) the script will set up some things for you that it needs. It will ask for Admin access - please grant it so that it can set the Environment Variable needed (found at `BKB_ROOT`). And then it will launch the rest of the suite (`BKB-LAUNCHER.ahk` & `MASTER-SCRIPT.ahk` etc.)
 4.  That’s pretty much all you need to get going...well, there’s the whole *getting-inside-Ben’s-brain-thing* but other than that, you’re all set. 😜
-5.  Visit the [Wiki of this Repository](https://github.com/buttonpushertv/buttonpushertv-Post-Production-Keyboard-Interface/wiki) - this is where I will go through what the scripts do & my thinking behind them.
+5.  Visit the [Wiki of this Repository](https://github.com/buttonpushertv/buttonpusherKB/wiki) - this is where I will go through what the scripts do & my thinking behind them.
 
 
 ## Authors
