@@ -25,6 +25,7 @@ Here are some of the specific features I've incorporated:
 - **Hotkey Scripts** - Hotkeys for specific apps, like: Premiere Pro, Illustrator, etc (there's a bunch of things in there - details below)
 - **DRAKE** - a simple project management system that allows you to specify 4 Projects and then have quick access via Stream Deck shortcuts
 - **CHEAT SHEETS** - quickly reveal a cheat sheet of all the commands you’ve setup in a specific app and get a reminder of where the command you are looking for is set.
+- **STREAMDECK** - there are several items that you coukd use to incorporate these scripts into a StreamDeck setup. More info will be posted soon - for now you can look in the SCRIPTS-UTIL/STREAMDECK folder.
 - **BATCH FILES TO ASSIST WITH BACKUPS** - run daily, weekly, and/or monthly backups of things like settings files and configuration files. It's a simple file copy, so it can go to cloud services easily.
 
 There's a lot you can do, so it really does depend on how much or how little you want to integrate into your setup.
