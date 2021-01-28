@@ -300,8 +300,8 @@ Return
 ;+^!f2:: 
 ;+^!f3::
 ;+^!f4::
-;+^!f5::
-;+^!f6::
+;+^!f5:: ; [USED by PPRO to Toggle Transmit(Video Playback)]
+;+^!f6:: ; [USED by PPRO to Set Starting Timecode on Sequence]
 ;+^!f7::
 ;+^!f8::
 ;+^!f9:: 
