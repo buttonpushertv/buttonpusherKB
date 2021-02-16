@@ -157,6 +157,8 @@ return
   grabTCAsText(grabbedTC, xposP, yposP)
   MSGBOX,,Timecode value read..., This is the value of grabbedTC: %grabbedTC% `nThis is the value stored on the clipboard: %clipboard%`n`nYou can send this to other apps by editing %A_ScriptName% and using the function 'grabTCAsText' (see PREMIERE-PRO-FUNCTIONS.ahk for more info)., 4
   Return
+/*
+TEMPORARILY DISABLING THESE COMMANDS
 
 F19:: ; <-- Step Left 5 seconds
 sleep, sleepMicro
@@ -231,6 +233,30 @@ Send, {Numpad0}
 sleep, sleepMicro
 Send, {NumpadEnter}
 Return
+*/
+
+;these hotkeys are used by InstantVFX()
+
+F24::
+	global VFXkey = "F24"
+	instantVFX("scale")
+return
+
+F23::
+	global VFXkey = "F23"
+	instantVFX("rotation")
+return
+
+F21::
+	global VFXkey = "F21"
+	instantVFX("anchor_point_vertical")
+return
+
+F22::
+	global VFXkey = "F22"
+	instantVFX("anchor_point")
+return
+
 
 ; The section below addresses the issue of the Alt key opening the menu bar items. Even though there is a block in MASTER-SCRIPT that prevents the Left Alt key from opening menu items, if you press the Alt plus another key, it will still open the menu. The block just prevents the Left Alt from setting the focus on the menu bar until you hit Escape. If you want to use Alt with C,E,F,G,H,M,S,V, or W you need to immediatley send {ESC} so that it forces the menu to close. (For plain Alt+those keys, I have them all set here.)
 
