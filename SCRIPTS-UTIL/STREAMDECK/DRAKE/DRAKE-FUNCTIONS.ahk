@@ -122,12 +122,12 @@ if f_class = #32770    ; IT'S A DIALOG.
 			ControlFocus, Edit2, ahk_id %f_window_id%
 
 			tooltip, you are inside the link media thingy
-			sleep 1
+			Sleep, 5
 
 			WinActivate ahk_id %f_window_id%
-			sleep 1
+			Sleep, 5
 			ControlGetText, f_text, Edit2, ahk_id %f_window_id%
-			sleep 1
+			Sleep, 5
 			ControlSetText, Edit2, %f_path%, ahk_id %f_window_id%
 			ControlSend, Edit2, +{Enter}, ahk_id %f_window_id%
 			Sleep, 100  ; IT NEEDS EXTRA TIME ON SOME DIALOGS OR IN SOME CASES.
@@ -140,14 +140,14 @@ if f_class = #32770    ; IT'S A DIALOG.
 			{
 			ControlFocus, Edit1, ahk_id %f_window_id%
 			tooltip, you are here
-			sleep 1
+			Sleep, 5
 			; ACTIVATE THE WINDOW SO THAT IF THE USER IS MIDDLE-CLICKING
 			; OUTSIDE THE DIALOG, SUBSEQUENT CLICKS WILL ALSO WORK:
 			WinActivate ahk_id %f_window_id%
 			; RETRIEVE ANY FILENAME THAT MIGHT ALREADY BE IN THE FIELD SO
 			; THAT IT CAN BE RESTORED AFTER THE SWITCH TO THE NEW FOLDER:
 			ControlGetText, f_text, Edit1, ahk_id %f_window_id%
-			sleep 1
+			Sleep, 5
 			ControlSetText, Edit1, %f_path%, ahk_id %f_window_id%
 			ControlSend, Edit1, +{Enter}, ahk_id %f_window_id%
 			Sleep, 100  ; IT NEEDS EXTRA TIME ON SOME DIALOGS OR IN SOME CASES.
@@ -164,14 +164,14 @@ if f_class = #32770    ; IT'S A DIALOG.
         {
         ControlFocus, Edit1, ahk_id %f_window_id%
         ;tooltip, you are here
-        sleep 1
+        Sleep, 5
         ; ACTIVATE THE WINDOW SO THAT IF THE USER IS MIDDLE-CLICKING
         ; OUTSIDE THE DIALOG, SUBSEQUENT CLICKS WILL ALSO WORK:
         WinActivate ahk_id %f_window_id%
         ; RETRIEVE ANY FILENAME THAT MIGHT ALREADY BE IN THE FIELD SO
         ; THAT IT CAN BE RESTORED AFTER THE SWITCH TO THE NEW FOLDER:
         ControlGetText, f_text, Edit1, ahk_id %f_window_id%
-        sleep 1
+        Sleep, 5
         ControlSetText, Edit1, %f_path%, ahk_id %f_window_id%
         ControlSend, Edit1, +{Enter}, ahk_id %f_window_id%
         Sleep, 100  ; IT NEEDS EXTRA TIME ON SOME DIALOGS OR IN SOME CASES.

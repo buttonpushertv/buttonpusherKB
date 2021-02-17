@@ -1,16 +1,5 @@
-﻿; AutoHotKey - Blank Template
+﻿; AutoHotKey - CHROME-HOTKEYS.ahk
 ; by Ben Howard - ben@buttonpusher.tv
-
-; You can customize this template by editing "C:\Windows\ShellNew\Template.ahk"
-;===============================================================================================
-; This Template.ahk file contains several of the most common items that I find myself often
-; needing or adding to my scripts. It's not all essential. Here's a short list of what's here:
-; - Function (CheckScriptUpdate) that will auto-reload the script when it detects a change
-;	in the last modified timestamp on the script file itself
-; - Sleep duration shortcuts - so that sleep times can be modified in one place to affect all
-; - Modifier Memory Helper - just a comment section to remind you of what the codes are for things
-;
-; See comments througout the file to figure out what something is here for.
 
 ;===== START OF AUTO-EXECUTION SECTION =========================================================
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
@@ -174,9 +163,8 @@ F24:: ; <-- Downloading Comps from an iStockPhoto Board
 ;===== FUNCTIONS ===============================================================================
 
 shutterStockClickAndClose() {
-    global sleepLong
     Click, 600, 715
-    Sleep, sleepLong
+    Sleep, 1500
     Send, {Control Down}w
     Send, {Blind}{Control Up}
     Return

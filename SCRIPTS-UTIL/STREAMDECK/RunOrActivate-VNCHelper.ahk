@@ -15,12 +15,6 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ; SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of "exact"
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
-; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
-sleepMicro := 15
-sleepShort := 333
-sleepMedium := 666
-sleepLong := 1500
-sleepDeep := 3500
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 DetectHiddenWindows, On
@@ -44,7 +38,7 @@ RunOrActivate(LaunchCode, Windowtitle)
    else {
       ;MsgBox Running
       Run, %LaunchCode%
-      ;Sleep, sleepDeep
+      ;Sleep, 3500
       ;WinActivate, C:\Windows\system32\cmd.exe
       ;WinClose, C:\Windows\system32\cmd.exe
    }

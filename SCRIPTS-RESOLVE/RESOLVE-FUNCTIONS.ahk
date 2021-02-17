@@ -13,13 +13,6 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 #WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
-; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
-sleepMicro := 5
-sleepMini := 15
-sleepShort := 333
-sleepMedium := 666
-sleepLong := 1500
-sleepDeep := 3500
 
 EnvGet, Settings_rootFolder, BKB_ROOT
 iniFile := Settings_rootFolder . "\settings.ini" ; the main settings file used by most of the buttonpusherKB scripts

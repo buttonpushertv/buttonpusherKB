@@ -80,7 +80,7 @@ CheckScriptUpdate() {
         Loop
         {
             reload
-            Sleep 300 ; ms
+            Sleep 333 ; ms
             MsgBox 0x2, %A_ScriptName%, Reload failed. ; 0x2 = Abort/Retry/Ignore
             IfMsgBox Abort
                 ExitApp

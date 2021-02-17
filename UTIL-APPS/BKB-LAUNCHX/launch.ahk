@@ -39,7 +39,7 @@ IniRead,current3,settings.ini,filelog,extra
 
 ;===== SPLASH SCREEN TO ANNOUNCE WHAT SCRIPT DOES ==============================================
 SplashTextOn, 600, 80, Launching %A_ScriptFullPath%, Loading ButtonpusherTV-LAUNCH-X.`nWindows-T to open the launcher.
-Sleep, sleepDeep
+Sleep, 3500
 SplashTextOff
 
 Hotkey,%current%,ShowGui,On
@@ -63,7 +63,7 @@ CheckScriptUpdate() {
         Loop
         {
             reload
-            Sleep 300 ; ms
+            Sleep 333 ; ms
             MsgBox 0x2, %A_ScriptName%, Reload failed. ; 0x2 = Abort/Retry/Ignore
             IfMsgBox Abort
                 ExitApp

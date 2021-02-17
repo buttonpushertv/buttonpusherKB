@@ -160,7 +160,7 @@ launcherTimeoutSleep := 1000 ; this value sets the duration between bar segment 
 loop, %timeoutSegments%
   {
   GuiControl, , timeoutTextProgress, %timeoutRemaining%
-  sleep, launcherTimeoutSleep
+  Sleep, launcherTimeoutSleep
   GuiControl, , timeoutProgress, +1
   timeoutRemaining := (timeoutSegments - A_Index)
   }
@@ -238,7 +238,7 @@ ExitApp
 return
 
 ButtonAddApp:
-launcherTimeoutSleep := 10000
+launcherTimeoutSleep := 10000 ; This will boost the Launcher Timeout to several minutes, so you have time to interact
 InputBox, newAppNameValue, Name or Description, Enter a Name or Description for the new app.
 InputBox, newAppPathValue, File Path, Enter the full path to the new app.`n(include path relative to %A_ScriptName%`nwhich is located in %A_ScriptDir%)
 if (!newAppPathValue) {
@@ -262,7 +262,7 @@ reload
 return
 
 ButtonDeleteApp:
-launcherTimeoutSleep := 10000
+launcherTimeoutSleep := 10000 ; This will boost the Launcher Timeout to several minutes, so you have time to interact
 delTimeoutRemain := (timeoutRemaining * 10)
 delAppGUIH := 40
 appSectionKeys := round(section3_keys / 3)

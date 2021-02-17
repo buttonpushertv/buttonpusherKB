@@ -13,13 +13,7 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 #WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
-; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
-sleepMicro := 5
-sleepMini := 15
-sleepShort := 333
-sleepMedium := 666
-sleepLong := 1500
-sleepDeep := 3500
+
 global Settings_rootFolder
 EnvGet, Settings_rootFolder, BKB_ROOT
 iniFile := Settings_rootFolder . "\settings.ini" ; the main settings file used by most of the buttonpusherKB scripts
@@ -44,9 +38,9 @@ prFocus(panel) ;this function allows you to have ONE spot where you define your 
 if (panel = "effects")
     {
     Send {F22} ;bring focus to the effects panel, in order to "clear" the current focus on the MAIN monitor
-    sleep sleepMini
+    Sleep, 15
     Send {F22} ;do it AGAIN, just in case a panel was full-screened... it would only have exited full screen, and not switched to the effects panel as it should have.
-    sleep sleepMini
+    Sleep, 15
     goto FocusEnd ;should be in the correct panel, so end function
     }
 else if (panel = "timeline")
@@ -75,12 +69,12 @@ instantVFX(efxControl)
 	blockinput, MouseMove
 	;blockinput, on
 	prFocus("effect controls") ;essentially just hits CTRL ALT SHIFT 5 to highlight the effect controls panel.
-	sleep 10
+	Sleep, 15
 	MouseGetPos Xbeginlol, Ybeginlol
 	global Settings_rootFolder
     global Xbegin = Xbeginlol
 	global Ybegin = Ybeginlol
-	ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class87, ahk_class Premiere Pro ;This is HOPEFULLY the ClassNN of the effect controls panel. Use Window Spy to figure it out.
+	ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class91, ahk_class Premiere Pro ;This is HOPEFULLY the ClassNN of the effect controls panel. Use Window Spy to figure it out.
 	;I might need a far more robust way of ensuring the effect controls panel has been located, in the future.
 
 	;move mouse to expected triangle location. this is a VERY SPECIFIC PIXEL which will be right on the EDGE of the triangle when it is OPEN.
@@ -92,7 +86,7 @@ instantVFX(efxControl)
 	XX := Xcorner+13 ;ui 100%
 	MouseMove, XX, YY, 0
 	;MSGBOX, , DEBUG, stopping here - where's the cursor?`nYY=%YY% / XX=%XX%`nXcorner=%Xcorner% / Ycorner=%Ycorner%
-	sleep 10
+	Sleep, 15
 	PixelGetColor, colorr, XX, YY
 	;MSGBOX, , DEBUG, Here are color values read: colorr: %colorr%`nYY=%YY% / XX=%XX%
 	; if (colorr = "0x353535") ;for 150% ui
@@ -101,7 +95,7 @@ instantVFX(efxControl)
 		tooltip, color %colorr% means closed triangle. Will click and then SCALE SEARCH
 		blockinput, Mouse
 		Click XX, YY
-		sleep 5
+		Sleep, 5
 		clickTransformIcon()
 		findVFX(efxControl)
 		Return
@@ -111,7 +105,7 @@ instantVFX(efxControl)
 	{
 		;tooltip, %colorr% means OPENED triangle. SEARCHING FOR SCALE
 		blockinput, Mouse
-		sleep 5
+		Sleep, 5
 		clickTransformIcon()
 		findVFX(efxControl)
 		;untwirled = 1
@@ -120,7 +114,7 @@ instantVFX(efxControl)
 	else if (colorr = "0x1D1D1D" || colorr = "0x232323")
 		{
 		Send ^p ;--- i have CTRL P set up to toggle "selection follows playhead," which I never use otherwise. ;this makes it so that only the TOP clip is selected.
-		sleep 10
+		Sleep, 15
 		Send ^p ;this disables "selection follows playhead." I don't know if there is a way to CHECK if it is on or not. 
 		resetFromAutoVFX()
 		;now you need to do all that again, since the motion menu is now open. But only do it ONCE more! 
@@ -151,7 +145,7 @@ clickTransformIcon()
     Ycorner := Ycorner+66 ;100% ui
 
     MouseMove, Xcorner, Ycorner, 0 ;these numbers should move the cursor to the location of the transform icon. Use the message box below to debug this.
-    sleep 10 ; just to make sure it gets there, this is done twice.
+    Sleep, 15 ; just to make sure it gets there, this is done twice.
     MouseMove, Xcorner, Ycorner, 0 ;these numbers should move the cursor to the location of the transform icon. Use the message box below to debug this.
     ;msgbox, the cursor should now be positioned directly over the transform icon. `n Xcorner = %Xcorner% `n Ycorner = %Ycorner%
     MouseClick, left
@@ -160,7 +154,7 @@ clickTransformIcon()
 findVFX(efxControl) ; searches for text inside of the Motion effect. requires an actual image.
 {
     global Settings_rootFolder
-    sleep 5
+    Sleep, 5
     MouseGetPos xPos, yPos
     ImageSearch, FoundX, FoundY, xPos-90, yPos, xPos+800, yPos+900, %Settings_rootFolder%\SUPPORTING-FILES\instantVFX\%efxControl%_D2020_ui100.png
     ;within 0 shades of variation (this is much faster)
@@ -187,7 +181,7 @@ findVFX(efxControl) ; searches for text inside of the Motion effect. requires an
     else
         {
         MouseMove, FoundX, FoundY, 0
-        sleep 5
+        Sleep, 5
         findHotText(efxControl)
         Return
         }
@@ -202,7 +196,7 @@ findHotText(efxControl)
     if (efxControl = "position")
         {
             prFocus("program")
-            ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class92, ahk_class Premiere Pro ;you will need to set this value to the window class of your own Effect Controls panel! Use window spy and hover over it to find that info.
+            ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class96, ahk_class Premiere Pro ;you will need to set this value to the window class of your own Effect Controls panel! Use window spy and hover over it to find that info.
             Xcorner += (Width / 2)
             Ycorner += (Height / 2)
             MouseMove, Xcorner, Ycorner
@@ -225,7 +219,7 @@ findHotText(efxControl)
 
     if ErrorLevel
         {
-        sleep 100
+        Sleep, 111
         resetFromAutoVFX()
         return ;i am not sure if this is needed.
         }
@@ -246,7 +240,7 @@ findHotText(efxControl)
         if stateFirstCheck = U
             {
                 Click up left ; releases the left mouse button
-                Sleep 10
+                Sleep, 15
                 resetFromAutoVFX(0) ;zero means, DO NOT click on the timeline to put the focus there.
                 return ;this return has to be here, or the function will continue on to the next loop! Agh, I didn't realize that for a long time, dumb!
             }
@@ -256,7 +250,7 @@ findHotText(efxControl)
             blockinput, off
             blockinput, MouseMoveOff
             tooltip, ;removes any tooltips that might exist.
-            sleep 15
+            Sleep, 15
             GetKeyState, state, %VFXkey%, P ;since this relies on the PHYSICAL state of the key on the attached keyboard, this and other functions do NOT work if you're using Parsec, Teamviewer, or other remote access software.
             
             ;NOW is when the user moves their mouse around to change the value of the hot text. You can also use SHIFT or CTRL to make it change faster or slower. Then release the VFX key to return to normal.
@@ -264,7 +258,7 @@ findHotText(efxControl)
             if state = U
                 {
                 Click up left
-                sleep 15
+                Sleep, 15
                 resetFromAutoVFX(1) ;1 means, DO send a middle click to put focus onto the timeline (or wherever the cursor was.)
                 Return
                 }
@@ -330,7 +324,7 @@ grabTCAsText(ByRef grabbedTC, ByRef xposP, ByRef yposP)
         Return
     }
     prFocus(program) ; Activating the Program Monitor
-    Sleep, sleepShort
+    Sleep, 333
     CoordMode, Mouse, Window
     MouseGetPos, xposTEMP, yposTEMP ;---storing cursor's current coordinates at X%xposTEMP% Y%yposTEMP%
     Tooltip, Attempting a click at: X=%xposP% / Y=%yposP%`nIf this misclicks`, position cursor over TC display in Program Monitor then press CTRL-SHIFT-ALT-I to capture coordinates.
@@ -338,15 +332,15 @@ grabTCAsText(ByRef grabbedTC, ByRef xposP, ByRef yposP)
     ;BlockInput, On
     MouseMove, xposP, yposP
     Click, xposP, yposP, 0
-    Sleep, sleepShort
+    Sleep, 333
     Send, {Click}
-    Sleep, sleepShort
+    Sleep, 333
     Send, {Control Down}
-    Sleep, sleepShort
+    Sleep, 333
     Send, c
-    Sleep, sleepShort
+    Sleep, 333
     Send, {Control Up}
-    Sleep, sleepShort
+    Sleep, 333
     Send, {Esc}
     ;BlockInput, Off
     MouseMove, xposTEMP, yposTEMP ; putting cursor back where it was before hotkey was invoked
@@ -385,18 +379,18 @@ preset(item)
     SetKeyDelay, 1
 
     Sendinput, 2 ;shuttle STOP
-    sleep, sleepMicro
+    Sleep, 5
     Sendinput, 2 ;shuttle STOP
     ;so if the video is playing, this will stop it. Othewise, it can mess up the script.
-    sleep, sleepMicro
+    Sleep, 5
 
     MouseGetPos, xposP, yposP ;---storing cursor's current coordinates at X%xposP% Y%yposP%
     sendinput, {mButton} ;this will MIDDLE CLICK to bring focus to the panel underneath the cursor (the timeline). I forget exactly why, but if you create a nest, and immediately try to apply a preset to it, it doesn't work, because the timeline wasn't in focus...?
-    sleep sleepMicro
+    Sleep, 5
     prFocus("effects") ;brings focus to the effects panel
-    sleep sleepMicro
+    Sleep, 5
     Sendinput, +f ; set in premiere to "select find box"
-    sleep sleepMicro
+    Sleep, 5
     ;Any text in the Effects panel's find box has now been highlighted. There is also a blinking "text insertion point" at the end of that text. This is the vertical blinking line, or "caret."
     if (A_CaretX = "")
     {
@@ -407,7 +401,7 @@ preset(item)
     loop
         {
         waiting2 ++
-        sleep sleepShort
+        Sleep, 333
         tooltip, counter = (%waiting2% * 33)`nCaret = %A_CaretX%
         if (A_CaretX <> "")
             {
@@ -419,13 +413,13 @@ preset(item)
             BlockInput, Off
             MsgBox, FAIL - no caret found. `nIf your cursor will not move`, hit the button to call the preset() function again.`nTo remove this tooltip`, refresh the script using its icon in the taskbar.
             ;Note to self, need much better way to debug this than screwing the user
-            sleep SleepMedium
+            Sleep, 666
             ;tooltip,
             GOTO theEnding
             ;lol, are you triggered by this GOTO? lolol lololol
             }
         }
-    sleep 1
+    Sleep, 5
     tooltip,
     }
     ;yeah, I've seen this go all the way up to "8," which is 264 milliseconds
@@ -436,7 +430,7 @@ preset(item)
     coordmode, Caret, Window
 
     MouseMove, %A_CaretX%, %A_CaretY%, 0
-    sleep sleepMicro
+    Sleep, 5
 
     ;BH- uncomment 2 lines below to figure out what's getting stored
     ;BlockInput off
@@ -461,27 +455,27 @@ preset(item)
     ;MouseMove, XX-25, YY+10, 0 ;--------------------for 150% UI scaling, this moves the cursor onto the magnifying glass
     MouseMove, XX-15, YY+10, 0 ;--------------------for 100% UI scaling, this moves the cursor onto the magnifying glass
     ;msgbox, should be in the center of the magnifying glass now.
-    sleep sleepMicro ;was sleep 50
+    Sleep, 5 ;was sleep 50
     ;This types in the text you wanted to search for. Like "pop in." We can do this because the entire find box text was already selected by Premiere. Otherwise, we could click the magnifying glass if we wanted to , in order to select that find box.
     Send %item%
-    sleep sleepMicro
+    Sleep, 5
     ;MouseMove, 62, 95, 0, R ;----------------------(for 150% UI) relative to the position of the magnifying glass (established earlier,) this moves the cursor down and directly onto the preset's icon. In my case, it is inside the "presets" folder, then inside of another folder, and the written name should be completely unique so that it is the first and only item.
     MouseMove, 41, 63, 0, R ;----------------------(for 100% UI)
-    sleep sleepMicro
+    Sleep, 5
     MouseGetPos, iconX, iconY, Window, classNN ;---now we have to figure out the ahk_class of the current panel we are on. It used to be DroverLord - Window Class14, but the number changes anytime you move panels around... so i must always obtain the information anew.
-    sleep sleepMicro
+    Sleep, 5
     WinGetClass, class, ahk_id %Window% ;----------"ahk_id %Window%" is important for SOME REASON. if you delete it, this doesn't work.
     ;tooltip, ahk_class =   %class% `nClassNN =     %classNN% `nTitle= %Window%
     ;sleep 50
     ControlGetPos, xxx, yyy, www, hhh, %classNN%, ahk_class %class%, SubWindow, SubWindow ;-I tried to exclude subwindows but I don't think it works...?
     MouseMove, www/4, hhh/2, 0, R ;-----------------moves to roughly the CENTER of the Effects panel. This clears the displayed presets from any duplication errors. VERY important. without this, the script fails 20% of the time. This is also where the script can go wrong, by trying to do this on the timeline, meaning it didn't get the Effects panel window information as it should have... IDK how to fix yet.
-    sleep sleepMicro
+    Sleep, 5
     MouseClick, left, , , 1 ;-----------------------the actual click
-    sleep sleepMicro
+    Sleep, 5
     MouseMove, iconX, iconY, 0 ;--------------------moves cursor BACK onto the effect's icon
     ;tooltip, should be back on the effect's icon
     ;sleep 50
-    sleep sleepMicro
+    Sleep, 5
 
     ;BH-Here is where we flip coormode back to Screen so that we can reuse the original coords we first grabbed. Uncomment line below to see if your cursor is starting exactly over the preset's icon.
     ;msgbox, The cursor should be directly on top of the preset's icon. `n If not, the script needs modification.
@@ -500,15 +494,15 @@ preset(item)
     ;BlockInput, Off
     ;MsgBox,,BREAKPOINT, About to try to clear the Effects Panel Find Box...,3
 
-    sleep sleepMedium
+    Sleep, 666
 
     ;BH-and we should clear the Effects Panel Find text so things are cleared for the next visit
     prFocus("effects") ;brings focus to the effects panel
-    sleep sleepMicro
+    Sleep, 5
     Sendinput, +f ; selecting the Find text box and it should select any existing text
-    sleep sleepMicro
+    Sleep, 5
     Sendinput, {Backspace}{Enter}
-    sleep sleepMicro
+    Sleep, 5
     ;MouseClick, middle, , , 1 ;this returns focus to the panel the cursor is hovering above, WITHOUT selecting anything. great!
     SendInput, {F6}
     Blockinput, MouseMoveOff ;returning mouse movement ability

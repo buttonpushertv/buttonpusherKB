@@ -16,11 +16,14 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ; They are required for it to work.
 ;FileGetTime ScriptStartModTime, %A_ScriptFullPath%
 ;SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
+; AUTO-RELOAD ON SAVE DISABLED - UNCOMMENT 2 LINES ABOVE TO RE-ENABLE
+
 
 Menu, Tray, Icon, imageres.dll, 251 ; this changes the tray icon to a filmstrip!
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
-sleepMicro := 15
+sleepMicro := 5
+sleepMini := 15
 sleepShort := 333
 sleepMedium := 666
 sleepLong := 1500
@@ -114,7 +117,7 @@ CheckScriptUpdate() {
         Loop
         {
             reload
-            Sleep 300 ; ms
+            Sleep 333 ; ms
             MsgBox 0x2, %A_ScriptName%, Reload failed. ; 0x2 = Abort/Retry/Ignore
             IfMsgBox Abort
                 ExitApp
@@ -128,7 +131,6 @@ CheckScriptUpdate() {
 ; to get the transparency working, we need to use the GDI+ library
 ; Based on the tutorial here: https://github.com/tariqporter/Gdip/blob/master/Gdip.Tutorial.3-Create.Gui.From.Image.ahk
 clickRadar(sx,sy){
-    global sleepShort
     ; we are going to store the position of your cursor when you show this so that we can put the cursor back where it was
 	;coordmode, mouse, Screen
 	MouseGetPos, xposP, yposP
@@ -150,7 +152,7 @@ clickRadar(sx,sy){
     Gdip_DrawImage(pGraphics, pBitmap, 0,0,w,h)
     UpdateLayeredWindow(hwnd, hdc,offsetSX,offsetSY,w,h)
     Gdip_DisposeImage(pBitmap)
-    sleep, sleepShort
+    Sleep, 333
     destroyGDIplusGUI()
     Click, %sx%, %sy%
     MouseMove, xposP, yposP, 0 ; returning cursor where it was

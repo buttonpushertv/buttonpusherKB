@@ -21,10 +21,13 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ;#UseHook On
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
-sleepShort = 333
-sleepMedium = 666
-sleepLong = 1500
-sleepDeep = 3500
+sleepMicro := 5
+sleepMini := 15
+sleepTiny := 111
+sleepShort := 333
+sleepMedium := 666
+sleepLong := 1500
+sleepDeep := 3500
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================

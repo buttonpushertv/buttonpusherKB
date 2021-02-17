@@ -15,7 +15,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 Menu, Tray, Icon, shell32.dll, 116 ; this changes the tray icon to a filmstrip!
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
-sleepMicro := 15
+sleepMicro := 5
+sleepMini := 15
 sleepShort := 333
 sleepMedium := 666
 sleepLong := 1500
@@ -46,118 +47,118 @@ IniRead, yposP, %inifile%, Settings, TCDisplayYpos
 
 ^1:: ; <-- Step Left 1 second
 Send, ^+a
-sleep, sleepShort
+Sleep, sleepShort
 Send, {NumpadSub}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {Numpad1}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {NumpadDot}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
 
 ^2:: ; <-- Step Left 5 seconds THEN Play
 Send, {2}
-sleep, sleepShort
+Sleep, sleepShort
 Send, ^+a
-sleep, sleepShort
+Sleep, sleepShort
 Send, {NumpadSub}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {Numpad5}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {NumpadDot}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, 3
 return
 
 ^3:: ; <-- Step Right 1 second
 Send, ^+a
-sleep, sleepShort
+Sleep, sleepShort
 Send, {NumpadAdd}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {Numpad1}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {NumpadDot}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
 
 ^+1:: ; <-- Step Left 5 seconds
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, ^+a
-sleep, sleepShort
+Sleep, sleepShort
 Send, {NumpadSub}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {Numpad5}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {NumpadDot}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
 
 ^+2:: ; <-- Step Left 10 seconds THEN Play
 Send, {2}
-sleep, sleepShort
+Sleep, sleepShort
 Send, ^+a
-sleep, sleepShort
+Sleep, sleepShort
 Send, {NumpadSub}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {Numpad1}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {Numpad0}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {NumpadDot}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, 3
 return
 
 ^+3:: ; <-- Step Right 5 Seconds
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, ^+a
-sleep, sleepShort
+Sleep, sleepShort
 Send, {NumpadAdd}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {Numpad5}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {NumpadDot}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
 
 ^+F3:: ; <-- Mark current clip & Ripple Delete
-sleep, sleepShort
+Sleep, sleepShort
 Send, {Control Down}
-sleep, sleepShort
+Sleep, sleepShort
 Send, {F3}
-sleep, sleepShort
+Sleep, sleepShort
 Send, {Control Up}
-sleep, sleepShort
+Sleep, sleepShort
 Send, {Shift Down}x{Shift Up}
 Return
 
 ^+F4:: ; <-- Add edit, mark previous clip and delete (this WILL pull up the rest of the timeline)
-sleep, sleepShort
+Sleep, sleepShort
 Send, {F4}
-sleep, sleepShort
+Sleep, sleepShort
 Send, {Up}
-sleep, sleepShort
+Sleep, sleepShort
 Send, {Control Down}{F3}{Control Up}
-sleep, sleepShort
+Sleep, sleepShort
 Send, {Shift Down}x{Shift Up}
 Return
 
 ^!F4:: ; <-- Add edit, mark previous clip and remove (this WILL NOT pull up the rest of the timeline)
-sleep, sleepShort
+Sleep, sleepShort
 Send, {F4}
-sleep, sleepShort
+Sleep, sleepShort
 Send, {Up}
-sleep, sleepShort
+Sleep, sleepShort
 Send, {Control Down}{F3}{Control Up}
-sleep, sleepShort
+Sleep, sleepShort
 Send, {Shift Down}z{Shift Up}
 ; AND THIS WILL RETURN THE PLAYHEAD TO THE POINT OF THE EDIT
 Send, {Down}
@@ -184,52 +185,52 @@ return
 TEMPORARILY DISABLING THESE COMMANDS
 
 F20:: ; <-- Step Left 2 seconds
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, ^+a
-sleep, sleepShort
+Sleep, sleepShort
 Send, {NumpadSub}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {Numpad2}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {NumpadDot}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
 
 F21:: ; <-- Step Right 2 Seconds
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, ^+a
-sleep, sleepShort
+Sleep, sleepShort
 Send, {NumpadAdd}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {Numpad2}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {NumpadDot}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
 
 
 
 F23:: ; <-- Send '-30'
-sleep, sleepShort
+Sleep, sleepShort
 Send, {NumpadSub}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {Numpad3}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {Numpad0}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {NumpadEnter}
 Return
 
 F24:: ; <-- Send '+30'
-sleep, sleepShort
+Sleep, sleepShort
 Send, {NumpadAdd}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {Numpad3}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {Numpad0}
-sleep, sleepMicro
+Sleep, sleepMicro
 Send, {NumpadEnter}
 Return
 */
@@ -313,16 +314,16 @@ return
 
 +^!F1:: ; <-- Push current timecode value to Word
   grabTCAsText(grabbedTC, xposP, yposP)
-  sleep, sleepShort
+  Sleep, sleepShort
   WinActivate, ahk_exe WINWORD.EXE ;switch to Word
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, {Down}{Down} ;move cursor down two rows
-  sleep, sleepShort
+  Sleep, sleepShort
   ;MSGBOX, , DEBUG, %grabbedTC%
   Send, %clipboard% ;paste the clipboard where the cursor is sitting
-  sleep, sleepShort
+  Sleep, sleepShort
   WinActivate, ahk_exe Adobe Premiere Pro.exe ;switch back to PPRO
-  sleep, sleepShort
+  Sleep, sleepShort
   prFocus("timeline") ; set timeline as the focused window in PPRO
 Return
 
@@ -356,47 +357,47 @@ Return
 return
 
 ; <-- open a clip marker, select all, copy text to clipboard, close clip marker, create seq marker, edit seq marker, paste text
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, m
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, ^a
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, ^c
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, {ESC}
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, ^+a
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, m
-  sleep, sleepLong
+  Sleep, sleepLong
   Send, m
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, ^v
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, {Enter}
 return
 
  ; <-- move ahead 1 sec, mark in, go to next xsit, back 1 frame, mark out, & extract
   Send, {NumpadAdd}
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, {Numpad1}
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, {NumpadDot}
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, {NumpadEnter}
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, {q}
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, {Down}
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, {LEFT}
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, {w}
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, {Shift Down}
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, X
-  sleep, sleepShort
+  Sleep, sleepShort
   Send,{Shift Up}
 return
 
@@ -404,7 +405,7 @@ return
   searchText := "LivingRoom"
   replaceText := "TreatmentRoom"
   Send, {Enter}
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, ^c
   ClipWait
   workingText = %clipboard%
@@ -412,11 +413,11 @@ return
   editedText := RegExReplace(workingText, searchText, Replacement := replaceText)
   ;MsgBox, %workingText%n%searchText%n%replaceText%`n%editedText%
   Clipboard := editedText
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, ^v
-  sleep, sleepShort
+  Sleep, sleepShort
   Send, {Enter}
-  sleep, sleepMedium
+  Sleep, sleepMedium
   Send, {Escape}
 Return
 

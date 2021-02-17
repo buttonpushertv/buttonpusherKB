@@ -1,4 +1,3 @@
-sleepTime := 5000
 #SingleInstance force
 
 EnvGet, Settings_rootFolder, BKB_ROOT
@@ -26,7 +25,6 @@ ExitApp
 ; to get the transparency working, we need to use the GDI+ library
 ; Based on the tutorial here: https://github.com/tariqporter/Gdip/blob/master/Gdip.Tutorial.3-Create.Gui.From.Image.ahk
 pingPos(sx,sy,mode){
-    global sleepTime
     global pingFile
     CoordMode, Mouse, %mode%
     ; this is all blackmagic provided by GDI+
@@ -46,7 +44,7 @@ pingPos(sx,sy,mode){
     UpdateLayeredWindow(hwnd, hdc,offsetSX,offsetSY,w,h)
     Gdip_DisposeImage(pBitmap)
     ;MSgBox,4096,,Sent: x:%sx% y:%sy%`nOffset: x:%offsetSX% y:%offsetSY%`npingFile: %pingFile%`nmode: %mode%`nbitmap h: %h% width:%w%, 10
-    sleep, sleepTime
+    Sleep, 5000
     destroyGDIplusGUI()
 return
 }

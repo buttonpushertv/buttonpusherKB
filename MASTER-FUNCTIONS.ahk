@@ -11,12 +11,6 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance force ; Ensures that there is only a single instance of this script running.
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
-; Sleep shortcuts - use these to standardize sleep times
-sleepMicro := 15
-sleepShort := 333
-sleepMedium := 666
-sleepLong := 1500
-sleepDeep := 3500
 
 FileEncoding, UTF-8 ; this is here to make sure any files that we need to work with get created/opened/read as UTF-8
 EnvGet, scriptRootFolder, BKB_ROOT

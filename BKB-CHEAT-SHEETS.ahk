@@ -30,10 +30,12 @@ Menu, Tray, Icon, shell32.dll, 214 ;tray icon is now a little keyboard, or piece
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
-sleepShort = 333
-sleepMedium = 666
-sleepLong = 1500
-sleepDeep = 3500
+sleepMicro := 5
+sleepMini := 15
+sleepShort := 333
+sleepMedium := 666
+sleepLong := 1500
+sleepDeep := 3500
 
 Location_currentSystemLocation = %1%
 currentSystemLocationName = %2%
@@ -494,10 +496,10 @@ showText(fileToShow){
   Gui, Text:Add, Text, , %now% - %today%
   Gui, Text:add, text, , %textToShow%
   ;Gui, Text:add, text, , File: %A_ScriptDir%\%fileToShow%
-	;uncomment line above to display the path to the %fileToShow% at the bottom of this GUI window
-	Gui, Text:Add, Button, w180, &Edit Sheet
-	;Gui, Text:Add, Text, , %pathToEditor% %currentFullPathToFileToShow%
-	Return
+  ;uncomment line above to display the path to the %fileToShow% at the bottom of this GUI window
+  Gui, Text:Add, Button, w180, &Edit Sheet
+  ;Gui, Text:Add, Text, , %pathToEditor% %currentFullPathToFileToShow%
+Return
 }
 
 ; showPic is used to create and display a GUI for an image Cheat Sheet
@@ -568,27 +570,28 @@ showImageTabs(picToshow, PictureWidth, numPages, PictureStartY){
 ; showTaskBarPic is used to create and display a GUI for an image  that shows the taskbar shortcuts
 ; to get the transparency working, we need to use the GDI+ library
 ; Based on the tutorial here: https://github.com/tariqporter/Gdip/blob/master/Gdip.Tutorial.3-Create.Gui.From.Image.ahk
+
 showTaskBarPic(sFile){
 	global xposP, yposP        ; we are going to store the position of your cursor when you show
 	coordmode, mouse, Screen   ; this cheatsheet so that we can put the cursor back where it was
 	MouseGetPos, xposP, yposP  ; when we are done showing this because...
-  DllCall("SetCursorPos", "int", (a_screenwidth/2+300), "int", a_screenheight) ; this will force the cursor to move to the bottom-middle of the screen so that the taskbar will unhide itself. The '/2+300' bit after a_screenwidth above will move the cursor over to the right 300 pixels - this is to prevent any running app icons from showing a preview window if the cursor lands on them. If you have that many running apps at one time then you have other problems. Also, if you don't run with the Taskbar auto-hiding (you monster!) you can probably comment this line out
+	DllCall("SetCursorPos", "int", (a_screenwidth/2+300), "int", a_screenheight) ; this will force the cursor to move to the bottom-middle of the screen so that the taskbar will unhide itself. The '/2+300' bit after a_screenwidth above will move the cursor over to the right 300 pixels - this is to prevent any running app icons from showing a preview window if the cursor lands on them. If you have that many running apps at one time then you have other problems. Also, if you don't run with the Taskbar auto-hiding (you monster!) you can probably comment this line out
 
 	; this is all blackmagic provided by GDI+
-  Gui, TaskBarPicture:  -Caption +E0x80000 +LastFound +OwnDialogs +Owner +hwndhwnd +alwaysontop
-  Gui, TaskBarPicture: Show, NA ,dialog
+  	Gui, TaskBarPicture:  -Caption +E0x80000 +LastFound +OwnDialogs +Owner +hwndhwnd +alwaysontop
+  	Gui, TaskBarPicture: Show, NA ,dialog
 
-  pBitmap:=Gdip_CreateBitmapFromFile(sFile)
-  Gdip_GetImageDimensions(pBitmap,w,h)
+	pBitmap:=Gdip_CreateBitmapFromFile(sFile)
+	Gdip_GetImageDimensions(pBitmap,w,h)
 
-  hbm := CreateDIBSection(w,h)
-  hdc := CreateCompatibleDC()
-  obm := SelectObject(hdc, hbm)
-  pGraphics:=Gdip_GraphicsFromHDC(hdc)
+	hbm := CreateDIBSection(w,h)
+	hdc := CreateCompatibleDC()
+	obm := SelectObject(hdc, hbm)
+	pGraphics:=Gdip_GraphicsFromHDC(hdc)
 
-  Gdip_DrawImage(pGraphics, pBitmap, 0,0,w,h)
-  UpdateLayeredWindow(hwnd, hdc,0,(a_screenheight-h),w,h)
-  Gdip_DisposeImage(pBitmap)
+	Gdip_DrawImage(pGraphics, pBitmap, 0,0,w,h)
+	UpdateLayeredWindow(hwnd, hdc,0,(a_screenheight-h),w,h)
+	Gdip_DisposeImage(pBitmap)
 return
 }
 
@@ -614,9 +617,10 @@ destroyGDIplusGUI(){ ; this should not only kill the TaskBarPicture but free up 
 }
 
 GdiplusExit:
-; gdi+ may now be shutdown on exiting the program
-Gdip_Shutdown(pToken)
-ExitApp
+	; gdi+ may now be shutdown on exiting the program
+	Gdip_Shutdown(pToken)
+	ExitApp
+	Return
 
 squashGUI(activeWin){
 	;this function should destroy the GUI - no matter which kind it is
@@ -624,12 +628,12 @@ squashGUI(activeWin){
 	Gui, TabText:Destroy ; destroys any TabText GUI
 	Gui, Picture:Destroy ; this kills the main cheatsheet GUI window
 	destroyGDIplusGUI() ; this kills the TaskBar CheatSheet
-
 	WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
+	Return
 }
 
 GuiEscape:
 	Gui, Text:Destroy ; destroys the Text:GUI window
-  Gui, Picture:Destroy ; this kills the Picture:GUI window
+	Gui, Picture:Destroy ; this kills the Picture:GUI window
 	WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 	Return

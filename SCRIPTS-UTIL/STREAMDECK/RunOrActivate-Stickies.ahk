@@ -27,12 +27,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ; SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of "exact"
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
-; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
-sleepMicro := 15
-sleepShort := 333
-sleepMedium := 666
-sleepLong := 1500
-sleepDeep := 3500
+
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 
@@ -55,29 +50,29 @@ RunOrActivate(Windowtitle)
       MsgBox Activiating
       WinActivate, %WindowTitle%
       Send, {LWin Down}
-      Sleep, sleepMedium
+      Sleep, 666
       Send, {LCtrl Down}
-      Sleep, sleepMedium
+      Sleep, 666
       Send, {LShift Down}
-      Sleep, sleepMedium
+      Sleep, 666
       Send, s
-      Sleep, sleepMedium
+      Sleep, 666
       Send, {LCtrl Up}
-      Sleep, sleepMedium
+      Sleep, 666
       Send, {LShift Up}
-      Sleep, sleepMedium
+      Sleep, 666
       Send, {LWin Up}
       }
    else {
       MsgBox Running
       Send, {LWin Down}
-      Sleep, sleepMedium
+      Sleep, 666
       Send, {LAlt Down}
-      Sleep, sleepMedium
+      Sleep, 666
       Send, s
-      Sleep, sleepMedium
+      Sleep, 666
       Send, {LAlt Up}
-      Sleep, sleepMedium
+      Sleep, 666
       Send, {LWin Up}
    }
 }

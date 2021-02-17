@@ -14,7 +14,9 @@ Menu, Tray, Icon, imageres.dll, 226 ;tray icon is 2 blue arrows facing each othe
 #MaxHotkeysPerInterval 120
 
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
-sleepMicro := 15
+sleepMicro := 5
+sleepMini := 15
+sleepTiny := 111
 sleepShort := 333
 sleepMedium := 666
 sleepLong := 1500

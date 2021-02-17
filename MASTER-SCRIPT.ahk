@@ -43,7 +43,8 @@ FileEncoding, UTF-8 ; this is here to make sure any files that we need to work w
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
-sleepMicro := 15
+sleepMicro := 5
+sleepMini := 15
 sleepShort := 333
 sleepMedium := 666
 sleepLong := 1500
@@ -435,11 +436,11 @@ Quitting:
 		            WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
 		            WinClose, %currentPathValue%
 		            splashScreenStartY += splashScreenSpacing
-								Sleep, sleepShort
-		        pathKey :=
-		        currentKeyValue :=
-		        currentPathValue :=
-		            }
+					Sleep, sleepShort
+		        	pathKey :=
+		        	currentKeyValue :=
+		        	currentPathValue :=
+		        	}
 		        }
 		    else {
 		    Continue
@@ -461,7 +462,7 @@ CheckScriptUpdate() {
         Loop
         {
             reload
-            Sleep 300 ; ms
+            Sleep 333 ; ms
             MsgBox 0x2, %A_ScriptName%, Reload failed. ; 0x2 = Abort/Retry/Ignore
             IfMsgBox Abort
                 ExitApp

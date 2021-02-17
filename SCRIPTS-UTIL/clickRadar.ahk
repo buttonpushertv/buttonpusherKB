@@ -1,4 +1,7 @@
-sleepMicro := 15
+; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
+sleepMicro := 5
+sleepMini := 15
+sleepTiny := 111
 sleepShort := 333
 sleepMedium := 666
 sleepLong := 1500
@@ -20,17 +23,16 @@ ypos = %2%
 
 MSGBOX, , DEBUG, xpos: %xpos% / ypos: %ypos%
 clickRadar(xpos, ypos)
-Sleep, 10000
+Sleep, 10000 ; I'm sure there's a reason this needs to be so long...can't recall why-BH
 ExitApp
 
 ; clickRadar is used to show a yellow-circle.png centered on the coords you send the function. The idea is that they should be centered on the coords you will be clicking on.
 ; to get the transparency working, we need to use the GDI+ library
 ; Based on the tutorial here: https://github.com/tariqporter/Gdip/blob/master/Gdip.Tutorial.3-Create.Gui.From.Image.ahk
 clickRadar(sx,sy){
-    global sleepShort
     ; we are going to store the position of your cursor when you show this so that we can put the cursor back where it was
-	;coordmode, mouse, Screen
-	MouseGetPos, xposP, yposP
+    ;coordmode, mouse, Screen
+    MouseGetPos, xposP, yposP
     offsetSX := (sx - 25)
     offsetSY := (sy - 25)
     MSgBox, Sent: %sx%, %sy%`nOffset: %offsetSX%, %offsetSY%`nGrabbed: %xposP%, %yposP%
@@ -49,7 +51,7 @@ clickRadar(sx,sy){
     Gdip_DrawImage(pGraphics, pBitmap, 0,0,w,h)
     UpdateLayeredWindow(hwnd, hdc,offsetSX,offsetSY,w,h)
     Gdip_DisposeImage(pBitmap)
-    sleep, sleepShort
+    Sleep, 333
     destroyGDIplusGUI()
     Click, %sx%, %sy%
     MouseMove, xposP, yposP, 0 ; returning cursor where it was

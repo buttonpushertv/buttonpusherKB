@@ -1,14 +1,6 @@
-﻿; AutoHotKey - Blank Template by Ben Howard - ben@buttonpusher.tv
-; You can customize this template by editing "C:\Windows\ShellNew\Template.ahk"
-;===============================================================================================
-; This Template.ahk file contains several of the most common items that I find myself often
-; needing or adding to my scripts. It's not all essential. Here's a short list of what's here:
-; - Function (CheckScriptUpdate) that will auto-reload the script when it detects a change
-;	in the last modified timestamp on the script file itself
-; - Sleep duration shortcuts - so that sleep times can be modified in one place to affect all
-; - Modifier Memory Helper - just a comment section to remind you of what the codes are for things
-;
-; See comments througout the file to figure out what something is here for.
+﻿; AutoHotKey - Stuck Keys Finder
+by Ben Howard - ben@buttonpusher.tv
+
 ;===== START OF AUTO-EXECUTION SECTION =========================================================
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
@@ -27,7 +19,9 @@ SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
-sleepMicro := 15
+sleepMicro := 5
+sleepMini := 15
+sleepTiny := 111
 sleepShort := 333
 sleepMedium := 666
 sleepLong := 1500
@@ -127,7 +121,7 @@ CheckScriptUpdate() {
         Loop
         {
             reload
-            Sleep 300 ; ms
+            Sleep 333 ; ms
             MsgBox 0x2, %A_ScriptName%, Reload failed. ; 0x2 = Abort/Retry/Ignore
             IfMsgBox Abort
                 ExitApp

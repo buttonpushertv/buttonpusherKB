@@ -17,10 +17,13 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
-sleepShort = 333
-sleepMedium = 666
-sleepLong = 1500
-sleepDeep = 3500
+sleepMicro := 5
+sleepMini := 15
+sleepTiny := 111
+sleepShort := 333
+sleepMedium := 666
+sleepLong := 1500
+sleepDeep := 3500
 
 Location_currentSystemLocation = %1%
 
@@ -41,6 +44,7 @@ Menu, Tray, Icon, imageres.dll, 243 ;tray icon is now something like '\\..'
 ; (This is documented in the AHK docs here - https://www.autohotkey.com/docs/Hotstrings.htm)
 
 #Include %A_ScriptDir%\..\PRIVATE\QUICKTYPE-HOTSTRINGS.ahk
+
 ; The file included above is accessible for quick editing via the MASTER-SCRIPT hotkey SHIFT+CTRL+ALT+Q when triggered when Desktop is Active. Or it can be sent to an editor when viewing Cheat Sheet #1 (under HYPER+F13 - click 'Edit Sheets')
 
 ; The Hotstrings below can auto-replace text from their code, but require more than a single line/command to acheive their results.
@@ -72,7 +76,7 @@ CheckScriptUpdate() {
         Loop
         {
             reload
-            Sleep 300 ; ms
+            Sleep 333 ; ms
             MsgBox 0x2, %A_ScriptName%, Reload failed. ; 0x2 = Abort/Retry/Ignore
             IfMsgBox Abort
                 ExitApp

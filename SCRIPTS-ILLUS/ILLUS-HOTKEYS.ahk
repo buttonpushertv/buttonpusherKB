@@ -83,7 +83,7 @@ CheckScriptUpdate() {
         Loop
         {
             reload
-            Sleep 300 ; ms
+            Sleep 333 ; ms
             MsgBox 0x2, %A_ScriptName%, Reload failed. ; 0x2 = Abort/Retry/Ignore
             IfMsgBox Abort
                 ExitApp
@@ -97,7 +97,6 @@ CheckScriptUpdate() {
 ; to get the transparency working, we need to use the GDI+ library
 ; Based on the tutorial here: https://github.com/tariqporter/Gdip/blob/master/Gdip.Tutorial.3-Create.Gui.From.Image.ahk
 clickRadar(sx,sy){
-    global sleepShort
     ; we are going to store the position of your cursor when you show this so that we can put the cursor back where it was
 	;coordmode, mouse, Screen
 	MouseGetPos, xposP, yposP
@@ -119,7 +118,7 @@ clickRadar(sx,sy){
     Gdip_DrawImage(pGraphics, pBitmap, 0,0,w,h)
     UpdateLayeredWindow(hwnd, hdc,offsetSX,offsetSY,w,h)
     Gdip_DisposeImage(pBitmap)
-    sleep, sleepShort
+    Sleep, 333
     destroyGDIplusGUI()
     Click, %sx%, %sy%
     MouseMove, xposP, yposP, 0 ; returning cursor where it was

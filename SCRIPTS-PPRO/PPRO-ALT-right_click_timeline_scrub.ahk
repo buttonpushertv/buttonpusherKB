@@ -1,17 +1,6 @@
 ﻿; AutoHotKey - PPRO - ALTERNATE Right Click to Scrub TIMELINE
 ; by Ben Howard - ben@buttonpusher.tv
 
-; You can customize this template by editing "C:\Windows\ShellNew\Template.ahk"
-;===============================================================================================
-; This Template.ahk file contains several of the most common items that I find myself often
-; needing or adding to my scripts. It's not all essential. Here's a short list of what's here:
-; - Function (CheckScriptUpdate) that will auto-reload the script when it detects a change
-;	in the last modified timestamp on the script file itself
-; - Sleep duration shortcuts - so that sleep times can be modified in one place to affect all
-; - Modifier Memory Helper - just a comment section to remind you of what the codes are for things
-;
-; See comments througout the file to figure out what something is here for.
-
 ;===== START OF AUTO-EXECUTION SECTION =========================================================
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
@@ -28,10 +17,12 @@ SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
-sleepShort = 333
-sleepMedium = 666
-sleepLong = 1500
-sleepDeep = 3500
+sleepMicro := 5
+sleepMini := 15
+sleepShort := 333
+sleepMedium := 666
+sleepLong := 1500
+sleepDeep := 3500
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -49,7 +40,7 @@ Rbutton:
     Mousemove, YellowX, YellowY-20, 0
     SendInput {Lbutton down}
     MouseGetPos, newmousexpos, newmouseypos
-    sleep 10
+    Sleep, 10
     Mousemove, newmousexpos, mouseypos, 0
     KeyWait, Rbutton, u
     SendInput {Lbutton up}
@@ -64,7 +55,7 @@ CheckScriptUpdate() {
         Loop
         {
             reload
-            Sleep 300 ; ms
+            Sleep, 333 ; ms
             MsgBox 0x2, %A_ScriptName%, Reload failed. ; 0x2 = Abort/Retry/Ignore
             IfMsgBox Abort
                 ExitApp
