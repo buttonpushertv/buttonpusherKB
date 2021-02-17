@@ -14,6 +14,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ; They are required for it to work.
 ;FileGetTime ScriptStartModTime, %A_ScriptFullPath%
 ;SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
+; AUTO-RELOAD ON SAVE DISABLED - UNCOMMENT 2 LINES ABOVE TO RE-ENABLE
+; SEE THE FUNCTION BELOW FOR MORE INFO
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
@@ -69,9 +71,10 @@ RemoveSplashScreen:
     SetTimer RemoveSplashScreen, Off
     return
 
-
-
-/* COMMENTED THE BELOW OUT SINCE I GENERALLY DON'T USE THIS FEATURE ANY MORE - but I thought I'd just keep it around...just in case...
+/*
+; THIS FUNCTION WHILE USEFUL, MAY NOT BE NEEDED IN MOST SCRIPTS.
+; IT IS HERE TO BE USED ON AN AS NEEDED BASIS - DURING DEVELOPMENT, FOR INSTANCE.
+: REMOVE THE COMMENT BLOCK LINES AND UNCOMMENT THE LINES AT THE HEAD OF THIS SCRIPT TO RE-ENABLE IT.
 ; This function will auto-reload the script on save.
 CheckScriptUpdate() {
     global ScriptStartModTime

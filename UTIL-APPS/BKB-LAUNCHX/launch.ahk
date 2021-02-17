@@ -4,11 +4,6 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance,force
 
-; The 2 lines below pertain to the 'reload on save' function below (CheckScriptUpdate). 
-; They are required for it to work.
-FileGetTime ScriptStartModTime, %A_ScriptFullPath%
-SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
-
 ; Uncomment the lines below if you want to make sure this script gets launched at every boot
 ;FileCreateShortcut,%A_ScriptFullPath%,%A_Startup%/launch.lnk
 ;IfExist,%A_Startup%/launch.lnk
@@ -54,22 +49,3 @@ ExitApp
 
 
 ;===== FUNCTIONS ===============================================================================
-
-; This function will auto-reload the script on save.
-CheckScriptUpdate() {
-    global ScriptStartModTime
-    FileGetTime curModTime, %A_ScriptFullPath%
-    If (curModTime <> ScriptStartModTime) {
-        Loop
-        {
-            reload
-            Sleep 333 ; ms
-            MsgBox 0x2, %A_ScriptName%, Reload failed. ; 0x2 = Abort/Retry/Ignore
-            IfMsgBox Abort
-                ExitApp
-            IfMsgBox Ignore
-                break
-        } ; loops reload on "Retry"
-    }
-}
-

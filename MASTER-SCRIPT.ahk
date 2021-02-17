@@ -23,11 +23,12 @@ if not A_IsAdmin
 
 FileEncoding, UTF-8 ; this is here to make sure any files that we need to work with get created/opened/read as UTF-8
 
-; THE FUNCTION TO CHECK IF THE SCRIPT HAS BEEN CHANGED IS TEMPORARILY DISABLED. I'M TRYING TO FIGURE OUT WHAT'S UP WITH MY SYSTEM - IT'S BEEN DROPPING FRAMES LATELY.
 ; The 2 lines below pertain to the 'reload on save' function below (CheckScriptUpdate).
 ; They are required for it to work.
 ;FileGetTime ScriptStartModTime, %A_ScriptFullPath%
 ;SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
+; AUTO-RELOAD ON SAVE DISABLED - UNCOMMENT 2 LINES ABOVE TO RE-ENABLE
+; SEE THE FUNCTION BELOW FOR MORE INFO
 
 #Include %A_ScriptDir%\MASTER-FUNCTIONS.ahk
 
@@ -454,6 +455,10 @@ Quitting:
 		    return
 
 
+/*
+; THIS FUNCTION WHILE USEFUL, MAY NOT BE NEEDED IN MOST SCRIPTS.
+; IT IS HERE TO BE USED ON AN AS NEEDED BASIS - DURING DEVELOPMENT, FOR INSTANCE.
+: REMOVE THE COMMENT BLOCK LINES AND UNCOMMENT THE LINES AT THE HEAD OF THIS SCRIPT TO RE-ENABLE IT.
 ; This function will auto-reload the script on save.
 CheckScriptUpdate() {
     global ScriptStartModTime
@@ -471,3 +476,4 @@ CheckScriptUpdate() {
         } ; loops reload on "Retry"
     }
 }
+*/

@@ -12,6 +12,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #InstallKeybdHook
 #UseHook On
 #HotkeyModifierTimeout 0
+
 ; The 2 lines below pertain to the 'reload on save' function below (CheckScriptUpdate).
 ; They are required for it to work.
 FileGetTime ScriptStartModTime, %A_ScriptFullPath%

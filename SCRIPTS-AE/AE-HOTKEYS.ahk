@@ -17,7 +17,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ;FileGetTime ScriptStartModTime, %A_ScriptFullPath%
 ;SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
 ; AUTO-RELOAD ON SAVE DISABLED - UNCOMMENT 2 LINES ABOVE TO RE-ENABLE
-
+; SEE THE FUNCTION BELOW FOR MORE INFO
 
 Menu, Tray, Icon, imageres.dll, 251 ; this changes the tray icon to a filmstrip!
 ;===== INITIALIZATION - VARIABLES ==============================================================
@@ -109,24 +109,6 @@ ToolTipOff:
     return
 }
 
-; This function will auto-reload the script on save.
-CheckScriptUpdate() {
-    global ScriptStartModTime
-    FileGetTime curModTime, %A_ScriptFullPath%
-    If (curModTime <> ScriptStartModTime) {
-        Loop
-        {
-            reload
-            Sleep 333 ; ms
-            MsgBox 0x2, %A_ScriptName%, Reload failed. ; 0x2 = Abort/Retry/Ignore
-            IfMsgBox Abort
-                ExitApp
-            IfMsgBox Ignore
-                break
-        } ; loops reload on "Retry"
-    }
-}
-
 ; clickRadar is used to show a yellow-circle.png centered on the coords you send the function. The idea is that they should be centered on the coords you will be clicking on.
 ; to get the transparency working, we need to use the GDI+ library
 ; Based on the tutorial here: https://github.com/tariqporter/Gdip/blob/master/Gdip.Tutorial.3-Create.Gui.From.Image.ahk
@@ -180,3 +162,26 @@ GdiplusExit:
 ; gdi+ may now be shutdown on exiting the program
 Gdip_Shutdown(pToken)
 ExitApp
+
+/*
+; THIS FUNCTION WHILE USEFUL, MAY NOT BE NEEDED IN MOST SCRIPTS.
+; IT IS HERE TO BE USED ON AN AS NEEDED BASIS - DURING DEVELOPMENT, FOR INSTANCE.
+: REMOVE THE COMMENT BLOCK LINES AND UNCOMMENT THE LINES AT THE HEAD OF THIS SCRIPT TO RE-ENABLE IT.
+; This function will auto-reload the script on save.
+CheckScriptUpdate() {
+    global ScriptStartModTime
+    FileGetTime curModTime, %A_ScriptFullPath%
+    If (curModTime <> ScriptStartModTime) {
+        Loop
+        {
+            reload
+            Sleep 333 ; ms
+            MsgBox 0x2, %A_ScriptName%, Reload failed. ; 0x2 = Abort/Retry/Ignore
+            IfMsgBox Abort
+                ExitApp
+            IfMsgBox Ignore
+                break
+        } ; loops reload on "Retry"
+    }
+}
+*/

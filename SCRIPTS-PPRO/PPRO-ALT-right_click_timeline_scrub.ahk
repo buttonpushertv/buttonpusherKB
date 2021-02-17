@@ -10,10 +10,12 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance force ; Ensures that there is only a single instance of this script running.
 ; SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of "exact"
 
-; The 2 lines below pertain to the 'reload on save' function below (CheckScriptUpdate). 
+; The 2 lines below pertain to the 'reload on save' function below (CheckScriptUpdate).
 ; They are required for it to work.
-FileGetTime ScriptStartModTime, %A_ScriptFullPath%
-SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
+;FileGetTime ScriptStartModTime, %A_ScriptFullPath%
+;SetTimer CheckScriptUpdate, 100, 0x7FFFFFFF ; 100 ms, highest priority
+; AUTO-RELOAD ON SAVE DISABLED - UNCOMMENT 2 LINES ABOVE TO RE-ENABLE
+; SEE THE FUNCTION BELOW FOR MORE INFO
 
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
@@ -46,7 +48,10 @@ Rbutton:
     SendInput {Lbutton up}
 return
 
-​
+/*
+; THIS FUNCTION WHILE USEFUL, MAY NOT BE NEEDED IN MOST SCRIPTS.
+; IT IS HERE TO BE USED ON AN AS NEEDED BASIS - DURING DEVELOPMENT, FOR INSTANCE.
+: REMOVE THE COMMENT BLOCK LINES AND UNCOMMENT THE LINES AT THE HEAD OF THIS SCRIPT TO RE-ENABLE IT.
 ; This function will auto-reload the script on save.
 CheckScriptUpdate() {
     global ScriptStartModTime
@@ -55,7 +60,7 @@ CheckScriptUpdate() {
         Loop
         {
             reload
-            Sleep, 333 ; ms
+            Sleep 333 ; ms
             MsgBox 0x2, %A_ScriptName%, Reload failed. ; 0x2 = Abort/Retry/Ignore
             IfMsgBox Abort
                 ExitApp
@@ -64,3 +69,4 @@ CheckScriptUpdate() {
         } ; loops reload on "Retry"
     }
 }
+*/
