@@ -44,9 +44,6 @@ IniRead, yposP, %inifile%, Settings, TCDisplayYpos
 
 #IfWinActive, ahk_exe Adobe Premiere Pro.exe
 
-#F13::prFocus("timeline") ; <-- Focus the Timeline Window
-#F14::prFocus("program") ; <-- Focus the Program Monitor Window
-
 ^1:: ; <-- Step Left 1 second
 Send, ^+a
 sleep, sleepShort
@@ -87,6 +84,19 @@ sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
 
+^+1:: ; <-- Step Left 5 seconds
+sleep, sleepMicro
+Send, ^+a
+sleep, sleepShort
+Send, {NumpadSub}
+sleep, sleepMicro
+Send, {Numpad5}
+sleep, sleepMicro
+Send, {NumpadDot}
+sleep, sleepMicro
+Send, {NumpadEnter}{NumpadEnter}
+return
+
 ^+2:: ; <-- Step Left 10 seconds THEN Play
 Send, {2}
 sleep, sleepShort
@@ -103,6 +113,19 @@ sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 sleep, sleepMicro
 Send, 3
+return
+
+^+3:: ; <-- Step Right 5 Seconds
+sleep, sleepMicro
+Send, ^+a
+sleep, sleepShort
+Send, {NumpadAdd}
+sleep, sleepMicro
+Send, {Numpad5}
+sleep, sleepMicro
+Send, {NumpadDot}
+sleep, sleepMicro
+Send, {NumpadEnter}{NumpadEnter}
 return
 
 ^+F3:: ; <-- Mark current clip & Ripple Delete
@@ -160,19 +183,6 @@ return
 /*
 TEMPORARILY DISABLING THESE COMMANDS
 
-F19:: ; <-- Step Left 5 seconds
-sleep, sleepMicro
-Send, ^+a
-sleep, sleepShort
-Send, {NumpadSub}
-sleep, sleepMicro
-Send, {Numpad5}
-sleep, sleepMicro
-Send, {NumpadDot}
-sleep, sleepMicro
-Send, {NumpadEnter}{NumpadEnter}
-return
-
 F20:: ; <-- Step Left 2 seconds
 sleep, sleepMicro
 Send, ^+a
@@ -199,18 +209,7 @@ sleep, sleepMicro
 Send, {NumpadEnter}{NumpadEnter}
 return
 
-F22:: ; <-- Step Right 5 Seconds
-sleep, sleepMicro
-Send, ^+a
-sleep, sleepShort
-Send, {NumpadAdd}
-sleep, sleepMicro
-Send, {Numpad5}
-sleep, sleepMicro
-Send, {NumpadDot}
-sleep, sleepMicro
-Send, {NumpadEnter}{NumpadEnter}
-return
+
 
 F23:: ; <-- Send '-30'
 sleep, sleepShort
@@ -235,25 +234,29 @@ Send, {NumpadEnter}
 Return
 */
 
-;these hotkeys are used by InstantVFX()
+;these hotkeys are used by instantVFX()
+F13::
+  global VFXKey = "F13"
+  instantVFX("position")
+return
 
-F24::
-	global VFXkey = "F24"
+F14::
+	global VFXkey = "F14"
 	instantVFX("scale")
 return
 
-F23::
-	global VFXkey = "F23"
+F15::
+	global VFXkey = "F15"
 	instantVFX("rotation")
 return
 
-F21::
-	global VFXkey = "F21"
+F16::
+	global VFXkey = "F16"
 	instantVFX("anchor_point_vertical")
 return
 
-F22::
-	global VFXkey = "F22"
+F17::
+	global VFXkey = "F17"
 	instantVFX("anchor_point")
 return
 

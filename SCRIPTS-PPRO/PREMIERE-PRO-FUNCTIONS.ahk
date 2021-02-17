@@ -43,18 +43,18 @@ prFocus(panel) ;this function allows you to have ONE spot where you define your 
 
 if (panel = "effects")
     {
-    Send {F16} ;bring focus to the effects panel, in order to "clear" the current focus on the MAIN monitor
+    Send {F22} ;bring focus to the effects panel, in order to "clear" the current focus on the MAIN monitor
     sleep sleepMini
-    Send {F16} ;do it AGAIN, just in case a panel was full-screened... it would only have exited full screen, and not switched to the effects panel as it should have.
+    Send {F22} ;do it AGAIN, just in case a panel was full-screened... it would only have exited full screen, and not switched to the effects panel as it should have.
     sleep sleepMini
     goto FocusEnd ;should be in the correct panel, so end function
     }
 else if (panel = "timeline")
-    Send {F15} ;if focus had already been on the timeline, this would have switched to the next sequence in some arbitrary order.
+    Send {F21} ;if focus had already been on the timeline, this would have switched to the next sequence in some arbitrary order.
 else if (panel = "program") ;program monitor
-        Send {F14}
+        Send {F20}
 else if (panel = "source") ;source monitor
-        Send {F13}
+        Send {F19}
 else if (panel = "project") ;AKA a "bin" or "folder"
         Send {F9}
 else if (panel = "effect controls")
@@ -67,13 +67,13 @@ FocusEnd:
 ;BH-Here is the instantVFX() function from TaranVH's 2nd-keyboard project (https://github.com/TaranVH/2nd-keyboard)
 ;I have modified it for my scripts & removed the code Taran has commented out (unless its useful)
 
-instantVFX(foobar)
+instantVFX(efxControl)
 {
 	dontrestart = 0
 	restartPoint:
 	blockinput, sendandMouse
 	blockinput, MouseMove
-	blockinput, on
+	;blockinput, on
 	prFocus("effect controls") ;essentially just hits CTRL ALT SHIFT 5 to highlight the effect controls panel.
 	sleep 10
 	MouseGetPos Xbeginlol, Ybeginlol
@@ -103,7 +103,7 @@ instantVFX(foobar)
 		Click XX, YY
 		sleep 5
 		clickTransformIcon()
-		findVFX(foobar)
+		findVFX(efxControl)
 		Return
 	}
 	;else if (colorr = "0x757575") ;for 150% ui. again, this values could be different for everyone. check with window spy. This color simply needs to be different from the color when the triangle is closed. it also cannot be the same as a normal panel color (1d1d1d or 232323)
@@ -113,7 +113,7 @@ instantVFX(foobar)
 		blockinput, Mouse
 		sleep 5
 		clickTransformIcon()
-		findVFX(foobar)
+		findVFX(efxControl)
 		;untwirled = 1
 		Return, untwirled
 	}
@@ -143,161 +143,137 @@ instantVFX(foobar)
 
 clickTransformIcon()
 {
-ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class87, ahk_class Premiere Pro ;you will need to set this value to the window class of your own Effect Controls panel! Use window spy and hover over it to find that info.
+    ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class87, ahk_class Premiere Pro ;you will need to set this value to the window class of your own Effect Controls panel! Use window spy and hover over it to find that info.
 
-; Xcorner := Xcorner+83 ;150% ui
-; Ycorner := Ycorner+98 ;150% ui
-Xcorner := Xcorner+56 ;100% ui
-Ycorner := Ycorner+66 ;100% ui
+    ; Xcorner := Xcorner+83 ;150% ui
+    ; Ycorner := Ycorner+98 ;150% ui
+    Xcorner := Xcorner+56 ;100% ui
+    Ycorner := Ycorner+66 ;100% ui
 
-MouseMove, Xcorner, Ycorner, 0 ;these numbers should move the cursor to the location of the transform icon. Use the message box below to debug this.
-sleep 10 ; just to make sure it gets there, this is done twice.
-MouseMove, Xcorner, Ycorner, 0 ;these numbers should move the cursor to the location of the transform icon. Use the message box below to debug this.
-;msgbox, the cursor should now be positioned directly over the transform icon. `n Xcorner = %Xcorner% `n Ycorner = %Ycorner%
-MouseClick, left
+    MouseMove, Xcorner, Ycorner, 0 ;these numbers should move the cursor to the location of the transform icon. Use the message box below to debug this.
+    sleep 10 ; just to make sure it gets there, this is done twice.
+    MouseMove, Xcorner, Ycorner, 0 ;these numbers should move the cursor to the location of the transform icon. Use the message box below to debug this.
+    ;msgbox, the cursor should now be positioned directly over the transform icon. `n Xcorner = %Xcorner% `n Ycorner = %Ycorner%
+    MouseClick, left
 }
 
-findVFX(foobar) ; searches for text inside of the Motion effect. requires an actual image.
+findVFX(efxControl) ; searches for text inside of the Motion effect. requires an actual image.
 {
-global Settings_rootFolder
-sleep 5
-MouseGetPos xPos, yPos
-ImageSearch, FoundX, FoundY, xPos-90, yPos, xPos+800, yPos+900, %Settings_rootFolder%\SUPPORTING-FILES\instantVFX\%foobar%_D2019_ui100.png
-;within 0 shades of variation (this is much faster)
-;obviously, you need to take your own screenshot (look at mine to see what is needed) save as .png, and link to it from the line above.
-;Again, your UI brightness might be different from mine! I now use the DEFAULT brightness.
-if ErrorLevel = 1
-	{
-	;ImageSearch, FoundX, FoundY, xPos-30, yPos, xPos+1200, yPos+1200, *10 %Settings_rootFolder%\%foobar%_D2019.png ;within 10 shades of variation (in case SCALE is fully extended with bezier handles, in which case, the other images are real hard to find because the horizontal seperating lines look a BIT different. But if you crop in really closely, you don't have to worry about this. so this part of the code is not really necessary execpt to expand the range to look.
-	;msgbox, whwhwuhuat
-	ImageSearch, FoundX, FoundY, xPos-30, yPos, xPos+1200, yPos+1200, *10 %Settings_rootFolder%\SUPPORTING-FILES\instantVFX\%foobar%_D2019_ui100.png
-	}
-if ErrorLevel = 2
-	{
-    msgbox,,, ERROR LEVEL 2`nCould not conduct the search,3
-	resetFromAutoVFX()
-	Return
-	}
-if ErrorLevel = 1
-	{
-	;msgbox, , , error level 1, .7
-    msgbox,,, ERROR LEVEL 1`n%foobar% could not be found on the screeen,1
-	resetFromAutoVFX()
-	Return
-	}
-else
-	{
-	MouseMove, FoundX, FoundY, 0
-	sleep 5
-	findHotText(foobar)
-	Return
-	}
+    global Settings_rootFolder
+    sleep 5
+    MouseGetPos xPos, yPos
+    ImageSearch, FoundX, FoundY, xPos-90, yPos, xPos+800, yPos+900, %Settings_rootFolder%\SUPPORTING-FILES\instantVFX\%efxControl%_D2020_ui100.png
+    ;within 0 shades of variation (this is much faster)
+    ;obviously, you need to take your own screenshot (look at mine to see what is needed) save as .png, and link to it from the line above.
+    ;Again, your UI brightness might be different from mine! I now use the DEFAULT brightness.
+    if ErrorLevel = 1
+        {
+        ;ImageSearch, FoundX, FoundY, xPos-30, yPos, xPos+1200, yPos+1200, *10 %Settings_rootFolder%\%efxControl%_D2020.png ;within 10 shades of variation (in case SCALE is fully extended with bezier handles, in which case, the other images are real hard to find because the horizontal seperating lines look a BIT different. But if you crop in really closely, you don't have to worry about this. so this part of the code is not really necessary execpt to expand the range to look.
+        ImageSearch, FoundX, FoundY, xPos-30, yPos, xPos+1200, yPos+1200, *10 %Settings_rootFolder%\SUPPORTING-FILES\instantVFX\%efxControl%_D2020_ui100.png
+        }
+    if ErrorLevel = 2
+        {
+        msgbox,,, ERROR LEVEL 2`nCould not conduct the search`nI probably just can't find the image to search for.`nThis is the Effect Control I am looking for: %efxControl%.,2
+        resetFromAutoVFX()
+        Return
+        }
+    if ErrorLevel = 1
+        {
+        
+        msgbox,,, ERROR LEVEL 1`n%efxControl% could not be found on the screeen,1
+        resetFromAutoVFX()
+        Return
+        }
+    else
+        {
+        MouseMove, FoundX, FoundY, 0
+        sleep 5
+        findHotText(efxControl)
+        Return
+        }
 }
 
-findHotText(foobar)
+findHotText(efxControl)
 {
-global Settings_rootFolder
-tooltip, ; removes any tooltips that might be in the way of the searcher.
-; https://www.autohotkey.com/docs/commands/PixelSearch.htm
-MouseGetPos, xxx, yyy
-if (foobar = "scale" ||  foobar = "anchor_point" || foobar = "rotation")
-{
+    global Settings_rootFolder
+    tooltip, ; removes any tooltips that might be in the way of the searcher.
+    ; https://www.autohotkey.com/docs/commands/PixelSearch.htm
+    MouseGetPos, xxx, yyy
+    if (efxControl = "position")
+        {
+            prFocus("program")
+            ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class92, ahk_class Premiere Pro ;you will need to set this value to the window class of your own Effect Controls panel! Use window spy and hover over it to find that info.
+            Xcorner += (Width / 2)
+            Ycorner += (Height / 2)
+            MouseMove, Xcorner, Ycorner
+            ToolTip, Ready for you to adjust position.`nJust click and drag the image.
+            RemoveToolTip(2000)
+            Goto, endiVFX
+        }
+    else if (efxControl = "scale" ||  efxControl = "anchor_point" || efxControl = "rotation")
+        {
+            PixelSearch, Px, Py, xxx+50, yyy, xxx+450, yyy+11, 0x2d8ceb, 30, Fast RGB ;this is searching to the RIGHT, looking the blueness of the scrubbable hot text. Unfortunately, it sees to start looking from right to left, so if your window is sized too small, it'll possibly latch onto the blue of the playhead/CTI. TEchnically, I could check to see the size of the Effect controls panel FIRST, and then allow the number that is currently 250 to be less than half that, but I haven't run into too much trouble so far...
+        }
+    else if (efxControl = "anchor_point_vertical")
+    {
+        tooltip, seeking 0.00? ;(looking for that now)
+        ImageSearch, Px, Py, xxx+50, yyy, xxx+800, yyy+100, *3 %Settings_rootFolder%\SUPPORTING-FILES\instantVFX\anti-flicker-filter_000_D2020_ui100.png ;for a user interface at 100%...
+        ;the *3 allows some minor variation in the searched image.
+        if ErrorLevel = 1
+            ImageSearch, Px, Py, xxx+50, yyy, xxx+800, yyy+100, *3 %Settings_rootFolder%\SUPPORTING-FILES\instantVFX\anti-flicker-filter_000_D2020_2.png
+    }
 
-	;PixelSearch, Px, Py, xxx+50, yyy, xxx+350, yyy+11, 0x3398EE, 30, Fast RGB ;this is searching to the RIGHT, looking the blueness of the scrubbable hot text. Unfortunately, it sees to start looking from right to left, so if your window is sized too small, it'll possibly latch onto the blue of the playhead/CTI.
-	PixelSearch, Px, Py, xxx+50, yyy, xxx+450, yyy+11, 0x2d8ceb, 30, Fast RGB ;this is searching to the RIGHT, looking the blueness of the scrubbable hot text. Unfortunately, it sees to start looking from right to left, so if your window is sized too small, it'll possibly latch onto the blue of the playhead/CTI. TEchnically, I could check to see the size of the Effect controls panel FIRST, and then allow the number that is currently 250 to be less than half that, but I haven't run into too much trouble so far...
-}
-else if (foobar = "anchor_point_vertical")
-{
-	tooltip, seeking 0.00? ;(looking for that now)
-	ImageSearch, Px, Py, xxx+50, yyy, xxx+800, yyy+100, *3 %Settings_rootFolder%\SUPPORTING-FILES\instantVFX\anti-flicker-filter_000_D2019_ui100.png ;for a user interface at 100%...
-	;the *3 allows some minor variation in the searched image.
-	if ErrorLevel = 1
-		ImageSearch, Px, Py, xxx+50, yyy, xxx+800, yyy+100, *3 %Settings_rootFolder%\SUPPORTING-FILES\instantVFX\anti-flicker-filter_000_D2019_2.png
-}
-
-if ErrorLevel
-	{
-    ;tooltip, blue not Found
-	sleep 100
-	resetFromAutoVFX()
-	return ;i am not sure if this is needed.
-	}
-else
-	{
-	;tooltip, A color within 30 shades of variation was found at X%Px% Y%Py%
-	;sleep 1000
-    ;MsgBox, A color within 30 shades of variation was found at X%Px% Y%Py%.
-	if (foobar <> "anchor_point_vertical")
-	{
-		
-		MouseMove, Px+10, Py+5, 0 ;moves the cursor onto the scrubbable hot text
-		;msgbox, anything but anchor point vertical
-		;sleep 1000
-	}
-	else if (foobar = "anchor_point_vertical")
-	{
-		;msgbox,,,, about to move,0.5
-		MouseMove, Px+80, Py-20, 0 ;relative to the unrelated 0.00 text (which I've never changed,) this moves the cursor onto the SECOND variable for the anchor point... the VERTICAL number, rather than horizontal.
-		;tooltip, where am I?
-		;sleep 2000
-	}
-	Click down left
-	
-	GetKeyState, stateFirstCheck, %VFXkey%, P
-		
-	if stateFirstCheck = U
-		{
-			;tooltip, you have already released the key.
-			;a bit of time has passed by now, so if the user is no longer holding the key down at this point, that means that they pressed it an immediately released it.
-			;I am going to take this an an indicaiton that the user just wants to RESET the value, rather than changing it.
-			Click up left
-			Sleep 10
-			;I am removing the clode below, which acts to set specific values automatically, which can be used to "reset" those values. Instead of that, I'm able to type in my own custom value.
-			
-			; if (foobar = "scale")
-			; {
-				; Send, 100
-				; sleep 50
-				; Send, {enter} ;"enter" can be a volatile and dangerous key, since it has so many other potential functions that might interfere somehow... in fact, I crashed the whole program once by using this and the anchor point script in rapid sucesssion.... but "ctrl enter" doesn't work... maybe numpad enter is a safer bet?
-				; sleep 20
-			; }
-			; if (foobar = "rotation")
-			; {
-				; Send, 0
-				; sleep 50
-				; Send, {enter} ;"enter" can be a volatile and dangerous key, since it has so many other potential functions that might interfere somehow... in fact, I crashed the whole program once by using this and the anchor point script in rapid sucesssion.... but "ctrl enter" doesn't work... maybe numpad enter is a safer bet?
-				; sleep 20
-			; }
-			resetFromAutoVFX(0) ;zero means, DO NOT click on the timeline to put the focus there.
-			return ;this return has to be here, or the function will continue on to the next loop! Agh, I didn't realize that for a long time, dumb!
-		}
-	;Now we start the official loop, which will continue as long as the user holds down the VFXkey. They can now simply move the mouse to change the value of the hot text which has been automatically selected for them.
-	Loop
-		{
-		blockinput, off
-		blockinput, MouseMoveOff
-		;tooltip, %VFXkey% Instant %foobar% mod
-		tooltip, ;removes any tooltips that might exist.
-		sleep 15
-		GetKeyState, state, %VFXkey%, P ;since this relies on the PHYSICAL state of the key on the attached keyboard, this and other functions do NOT work if you're using Parsec, Teamviewer, or other remote access software.
-		
-		;NOW is when the user moves their mouse around to change the value of the hot text. You can also use SHIFT or CTRL to make it change faster or slower. Then release the VFX key to return to normal.
-		
-		if state = U
-			{
-			Click up left
-			;tooltip, "%VFXkey% is now physically UP so we are exiting now"
-			sleep 15
-			resetFromAutoVFX(1) ;1 means, DO send a middle click to put focus onto the timeline (or wherever the cursor was.)
-			; MouseMove, Xbegin, Ybegin, 0
-			; tooltip,
-			; ToolTip, , , , 2
-			; blockinput, off
-			; blockinput, MouseMoveOff
-			Return
-			}
-		}
-	}
+    if ErrorLevel
+        {
+        sleep 100
+        resetFromAutoVFX()
+        return ;i am not sure if this is needed.
+        }
+    else
+        {
+        if (efxControl <> "anchor_point_vertical")
+        {
+            MouseMove, Px+10, Py+5, 0 ;moves the cursor onto the scrubbable hot text for adjustment
+        }
+        else if (efxControl = "anchor_point_vertical")
+        {
+            MouseMove, Px+80, Py-20, 0 ;relative to the unrelated 0.00 text (which I've never changed,) this moves the cursor onto the SECOND variable for the anchor point...the VERTICAL number, rather than horizontal.
+        }
+        Click down left ; this click the left mouse button and holds it down
+        
+        GetKeyState, stateFirstCheck, %VFXkey%, P ; this will check the state of the passed VFXKey and keep adjusting while it is held down OR click in the field so you can enter a value directly.
+            
+        if stateFirstCheck = U
+            {
+                Click up left ; releases the left mouse button
+                Sleep 10
+                resetFromAutoVFX(0) ;zero means, DO NOT click on the timeline to put the focus there.
+                return ;this return has to be here, or the function will continue on to the next loop! Agh, I didn't realize that for a long time, dumb!
+            }
+        ;Now we start the official loop, which will continue as long as the user holds down the VFXkey. They can now simply move the mouse to change the value of the hot text which has been automatically selected for them.
+        Loop
+            {
+            blockinput, off
+            blockinput, MouseMoveOff
+            tooltip, ;removes any tooltips that might exist.
+            sleep 15
+            GetKeyState, state, %VFXkey%, P ;since this relies on the PHYSICAL state of the key on the attached keyboard, this and other functions do NOT work if you're using Parsec, Teamviewer, or other remote access software.
+            
+            ;NOW is when the user moves their mouse around to change the value of the hot text. You can also use SHIFT or CTRL to make it change faster or slower. Then release the VFX key to return to normal.
+            
+            if state = U
+                {
+                Click up left
+                sleep 15
+                resetFromAutoVFX(1) ;1 means, DO send a middle click to put focus onto the timeline (or wherever the cursor was.)
+                Return
+                }
+            }
+        }
+        endiVFX:
+        blockinput, off
+        blockinput, MouseMoveOff
+        Return
 }
 
 resetFromAutoVFX(clicky := 0)
@@ -313,7 +289,8 @@ resetFromAutoVFX(clicky := 0)
 		}
 	blockinput, off
 	blockinput, MouseMoveOff
-	ToolTip	
+	ToolTip
+    Return	
 }
 
 ; BH-End of functions added for InstantVFX() to work
