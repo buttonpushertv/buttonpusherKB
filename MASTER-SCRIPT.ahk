@@ -34,14 +34,9 @@ FileEncoding, UTF-8 ; this is here to make sure any files that we need to work w
 
 ; IMPORTANT NOTE ++ IMPORTANT NOTE ++ IMPORTANT NOTE ++ IMPORTANT NOTE ++ IMPORTANT NOTE ++ 
 ; 
-; Here is a list of the locations where I have had to hard code the rootFolder path into the scripts:
+; All references to the root folder of this suite require an OS-level Environment Variable.
+; When you first launch the BKB-startup.ahk script, it will help you create that Environment Variable in a permanent fashion on your system.
 ;
-; MASTER-SCRIPT.ahk - around line 277 (just prior to the ';===== FUNCTIONS' line)
-;
-; SCRIPTS-UTIL\QuickType.ahk - (around line 51)
-;
-; See those locations for comments as to why this has to be done (TL;DR - its so SCRIPTS-UTIL\Hotkey Help.ahk shows keys set via Includes properly). You will want to update those if you ever use a different rootFolder name.
-
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
 sleepMicro := 5
