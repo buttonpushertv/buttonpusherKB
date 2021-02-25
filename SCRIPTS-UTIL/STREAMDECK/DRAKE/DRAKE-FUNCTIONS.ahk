@@ -349,7 +349,7 @@ setProjectNumber(pathToSet, projectNumber, projectSlug) {
 %pathToSet%
  %projectSlug%
 ), %Settings_rootFolder%\PRIVATE\%A_Computername%\Project-%projectNumber%.txt
-  MsgBox, 262208, Set Project %projectNumber% as %pathToSet%, Project #%projectNumber% is NOW SET TO:`n%pathToSet%`nAnd the Porject Short Name is:%projectSlug%, 4
+  MsgBox, 262208, Set Project %projectNumber% as %pathToSet%, Project #%projectNumber% is NOW SET TO:`n%pathToSet%`nAnd the Project Short Name is:%projectSlug%, 4
 }
 
 getCurrentWorkingProject() {
