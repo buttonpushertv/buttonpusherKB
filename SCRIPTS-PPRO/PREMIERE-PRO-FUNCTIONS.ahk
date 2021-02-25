@@ -67,7 +67,7 @@ instantVFX(efxControl)
 	restartPoint:
 	blockinput, sendandMouse
 	blockinput, MouseMove
-	;blockinput, on
+	blockinput, on
 	prFocus("effect controls") ;essentially just hits CTRL ALT SHIFT 5 to highlight the effect controls panel.
 	Sleep, 15
 	MouseGetPos Xbeginlol, Ybeginlol
@@ -299,12 +299,12 @@ getTCDisplayCoords(ByRef xposP, ByRef yposP) ; this will revise the stored value
     xposPOld := xposP ; storing the previous X position
     yposPOld := yposP ; storing the previous Y position
     MouseGetPos, xposPNew, yposPNew ;---storing cursor's current coordinates at X%xposPNew% Y%yposPNew%
-    Tooltip, X=%xposPNew% / Y=%yposPNew%`nGrabbing the X & Y coordinates of the mouse cursor`nMake sure it is over the Program Monitor's timecode display (lower left).`n`n(Previous values: X=%xposPOld% / Y=%yposPOld%)
-    RemoveToolTip(4000)
-    MsgBox, 35, Update TC Display Coords?, Make sure cursor is over the Program Monitor's Timecode Display (lower left).`n`nX=%xposPNew% / Y=%yposPNew%`nThese are the coordinates that were grabbed.`nWould you like to save these in settings.ini?`n`nYes will save.`nNo will just update them until script is reloaded.`nCancel will reset them to settings.ini values.
+    ;Tooltip, X=%xposPNew% / Y=%yposPNew%`nGrabbing the X & Y coordinates of the mouse cursor`nMake sure it is over the Program Monitor's timecode display (lower left).`n`n(Previous values: X=%xposPOld% / Y=%yposPOld%)
+    ;RemoveToolTip(4000)
+    MsgBox, 35, Update TC Display Coords?, Make sure cursor is over the Program Monitor's Timecode Display (lower left).`n`nX=%xposPNew% / Y=%yposPNew%`nThese are the coordinates that were grabbed.`nWould you like to save these in settings.ini?`n`nYes will save.`nNo will just update them until script is reloaded.`nCancel will reset them to settings.ini values.`n`n(Previous values: X=%xposPOld% / Y=%yposPOld%)
     xposP := xposPNew ; storing new values in xposP - this should cover the 'No' selection case
     yposP := yposPNew ; storing new values in yposP - this should cover the 'No' selection case
-    Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Screen"
+    
     IfMsgBox Yes
         IniWrite, %xposP%, %inifile%, Settings, TCDisplayXpos ; writes the new X value to settings.ini
         IniWrite, %yposP%, %inifile%, Settings, TCDisplayYpos ; writes the new Y value to settings.ini
@@ -312,6 +312,7 @@ getTCDisplayCoords(ByRef xposP, ByRef yposP) ; this will revise the stored value
         xposP := xposPOld ; puts the old X value back into xposP on Cancel
         yposP := yposPOld ; puts the old Y value back into yposP on Cancel
     ; selecting No should just save the new values for X & Y for the current instance of the script. Reloading will re-read the values from settings.ini
+    Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Window"
     Return
 }
 
@@ -323,7 +324,7 @@ grabTCAsText(ByRef grabbedTC, ByRef xposP, ByRef yposP)
         MsgBox,, Grab Timecode Display position, You need to grab the X & Y coordinates of the Program Monitor's Timecode Display (lower left).`nPosition cursor then press CTRL-SHIFT-ALT-I to capture
         Return
     }
-    prFocus(program) ; Activating the Program Monitor
+    prFocus("program") ; Activating the Program Monitor
     Sleep, 333
     CoordMode, Mouse, Window
     MouseGetPos, xposTEMP, yposTEMP ;---storing cursor's current coordinates at X%xposTEMP% Y%yposTEMP%
@@ -331,7 +332,7 @@ grabTCAsText(ByRef grabbedTC, ByRef xposP, ByRef yposP)
     RemoveToolTip(5000)
     ;BlockInput, On
     MouseMove, xposP, yposP
-    Click, xposP, yposP, 0
+    Click, %xposP%, %yposP%, 0
     Sleep, 333
     Send, {Click}
     Sleep, 333
@@ -344,8 +345,8 @@ grabTCAsText(ByRef grabbedTC, ByRef xposP, ByRef yposP)
     Send, {Esc}
     ;BlockInput, Off
     MouseMove, xposTEMP, yposTEMP ; putting cursor back where it was before hotkey was invoked
-    Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Screen"
     grabbedTC = %clipboard%
+    Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Window"
     Return grabbedTC
 }
 

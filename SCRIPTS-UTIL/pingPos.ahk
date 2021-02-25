@@ -1,7 +1,7 @@
 #SingleInstance force
 
 EnvGet, Settings_rootFolder, BKB_ROOT
-pingFile := Settings_rootFolder . "\SUPPORTING-FILES\yellow-cross.png"
+pingFile := Settings_rootFolder . "\SUPPORTING-FILES\green-cross.png"
 
 #include %A_ScriptDir%\..\LIB\gdip.ahk
 ;Thanks to tic (Tariq Porter) for his GDI+ Library
@@ -44,7 +44,7 @@ pingPos(sx,sy,mode){
     UpdateLayeredWindow(hwnd, hdc,offsetSX,offsetSY,w,h)
     Gdip_DisposeImage(pBitmap)
     ;MSgBox,4096,,Sent: x:%sx% y:%sy%`nOffset: x:%offsetSX% y:%offsetSY%`npingFile: %pingFile%`nmode: %mode%`nbitmap h: %h% width:%w%, 10
-    Sleep, 5000
+    Sleep, 8000
     destroyGDIplusGUI()
 return
 }
