@@ -1,0 +1,48 @@
+Everything Search - Quick Help (Press F1 for more on website - http://www.voidtools.com/support/everything/)
+
++---------------------------------+-------------------------------------------+
+ Operators                        | Wildcards
+ space - AND                      | *     - Matches zero or more characters
+ |     - OR                       | ?     - Matches one character
+ !     - NOT                      |
+ < >   - Grouping                 |
+ " "   - Search for exact phrase  |
++---------------------------------+-------------------------------------------+
+
+Functions
++---------------------------------------------------------+------------------------------------------------+
+parent:<path>        + Search for files and folders       | dupe:           + Search for duplicated files.
+infolder:<path>      + in the specified path,             | namepartdupe:
+nosubfolders:<path>  + excluding subfolders.              | attribdupe:
+Searches by date:                                         | sizedupe:
+dateaccessed:<date> (OR) da:<date> + date accessed        | dadupe:
+datecreated:<date>  (OR) dc:<date> + date created         | dcdupe:
+datemodified:<date> (OR) dm:<date> + date modified        | dmdupe:
+daterun:<date>      (OR) dr:<date> + date run             |
+recentchange:<date> (OR) rc:<date: + recently changed date|
++---------------------------------------------------------+------------------------------------------------+
+
++----------------------------------+---------------------------------------------------------------------------------------+
+Size Syntax:                       | Date Syntax:
+size[kb|mb|gb]                     | year
+                                   | month/year or year/month depending on locale settings
+Size Constants:                    | day/month/year, month/day/year or year/month/day depending on locale settings
+empty                              | YYYY[-MM[-DD[Thh[:mm[:ss[.sss]]]]]]
+tiny     0 KB < size <= 10 KB      | YYYYMM[DD[Thh[mm[ss[.sss]]]]]
+small    10 KB < size <= 100 KB    |
+medium   100 KB < size <= 1 MB     | Date Constants:
+large    1 MB < size <= 16 MB      | today
+huge     16 MB < size <= 128 MB    | yesterday
+gigantic size > 128 MB             | <last|past|prev|current|this|coming|next><year|month|week>
+unknown                            | <last|past|prev|coming|next><x><years|months|weeks>
+                                   | <last|past|prev|coming|next><x><hours|minutes|mins|seconds|secs>
+                                   | january|february|march|april|may|june|july|august|september|october|november|december
+                                   | jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec
+                                   | sunday|monday|tuesday|wednesday|thursday|friday|saturday
+                                   | sun|mon|tue|wed|thu|fri|sat
+                                   | unknown
++----------------------------------+---------------------------------------------------------------------------------------+
+
+
+
+

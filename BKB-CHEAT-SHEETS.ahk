@@ -370,19 +370,22 @@ thirdShower: ; Display an Text CheatSheet of App Specific Keyboard Shortcuts (mo
     If WinActive("ahk_exe stickies.exe")
         fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-STICKIES.txt"
     else
-		If WinActive("ahk_exe WindowsTerminal.exe")
+	If WinActive("ahk_exe WindowsTerminal.exe")
 				fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-WINTERMpvw.txt"
-		else
-		If WinActive("ahk_exe SubtitleEdit.exe")
+	else
+	If WinActive("ahk_exe SubtitleEdit.exe")
 				fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-SUBTITLE-EDIT.txt"
-		else
-		If WinActive("ahk_exe keypirinha-x64.exe")
+	else
+	If WinActive("ahk_exe keypirinha-x64.exe")
 				fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-KEYPIRINHA.txt"
-		else
-		If WinActive("ahk_exe chrome.exe")
+	else
+	If WinActive("ahk_exe chrome.exe")
 				fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-CHROME.txt"
-		else		
-        fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\NO-CHEATSHEET.txt"
+	else
+	If WinActive("ahk_exe Everything.exe")
+				fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-EVERYTHING.txt"
+	else		
+    fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\NO-CHEATSHEET.txt"
 
 		showText(fileToShow) ; this calls a function that will build the GUI using the fileToShow
 
