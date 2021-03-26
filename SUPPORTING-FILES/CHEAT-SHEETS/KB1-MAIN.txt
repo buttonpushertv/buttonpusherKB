@@ -11,8 +11,8 @@ SCAF14 or CAPS+F2   <--Display an image CheatSheet of App Specific Keyboard Shor
 SCAF15 or CAPS+F3   <--Display a Text File CheatSheet of App Specific AutoHotKeys
 SCAF16 or CAPS+F4   <--Display an image CheatSheet for System Keyboard (Location Specific)
 
-CAPS+C              <--Delete Key
-CAPS+V              <--BackSpace
+CAPS+Z              <--Delete Key
+CAPS+X              <--BackSpace
 
 CAPS+F              <--Open Path from an Explorer Window or Save/Open Dialog in FreeCommander
 

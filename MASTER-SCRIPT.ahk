@@ -212,10 +212,6 @@ CapsLock & Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
 CapsLock & WheelDown::Send ^{PGDN} ; <-- Send Control+Page Down - for changing tabs in apps that support it (Chrome, Atom)
 CapsLock & WheelUp::Send ^{PGUP} ; <-- Send Control+Page Up - for changing tabs in apps that support it (Chrome, Atom)
 
-CapsLock & c:: ; <-- Delete Key
-	Send, {Delete} ; where you often are using one hand on mouse/trackball and one hand on keys the delete & backspace keys can be a long reach (or on right-half of split keyboard)
-return
-
 CapsLock & F:: ; <-- This will open the selected OR active path from an Explorer Window or Save/Open Dialog in FreeCommander OR VICE-VERSA
 	WinGetActiveTitle, activeTitle
 	If activeTitle contains FreeCommander ; checking to see if you might already be sitting in FreeCommander
@@ -240,8 +236,12 @@ CapsLock & L:: ; <-- This will launch BKB-LAUNCHX
     Run, %A_ScriptDir%\UTIL-APPS\BKB-LAUNCHX\launcher.ahk
     Return
 
-CapsLock & v:: ; <-- Backspace Key
+CapsLock & X:: ; <-- Backspace Key
 Send, {BackSpace} ; same as above comment
+return
+
+CapsLock & Z:: ; <-- Delete Key
+	Send, {Delete} ; where you often are using one hand on mouse/trackball and one hand on keys the delete & backspace keys can be a long reach (or on right-half of split keyboard)
 return
 
 CapsLock & p:: ; <-- Toggle CapsLockCheck on or Off
@@ -264,7 +264,7 @@ CapsLock & q:: ; <-- Exit MASTER-SCRIPT and child AHK Scripts
 	goto Quitting ; this subroutine will ID any of the scripts that have been launched (via enabled in settings.ini) and then quit them all
 return
 
-CapsLock & Z:: ;<--pingPos - just to show what it does
+CapsLock & M:: ;<--pingPos - just to show what it does
 	tWidth := % Round(halfScreenWidth)
 	tHeight := % Round(quarterScreenHeight)
 	Run, %A_ScriptDir%\SCRIPTS-UTIL\pingPos.ahk %tWidth% %tHeight% "Screen"
