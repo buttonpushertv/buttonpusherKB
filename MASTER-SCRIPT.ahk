@@ -352,6 +352,17 @@ return
 ; Above edits master file of app-specific & one-off SCAF keys. Just keeping them in one place, so I don't need to create scripts for each and every app I want/need to make SCAF keys in. See comments in that file for more info
 +^!Q::Run "%Settings_pathToEditor%" "PRIVATE\QUICKTYPE-HOTSTRINGS.ahk" ; <-- Edit PRIVATE\QUICKTYPE-HOTSTRINGS.ahk
 ; Above edits my Quicktype Hotstrings. These commands will do auto-replacment of commands as you type. See comments in SCRIPS-UTIL\QuickType.ahk & the above .txt file for more info
+
+^Z:: ; <-- Interrupt Undo at the Explorer level to prevent undoing a file move/copy action. Windows *will not* alert you if you press undo immediately after a file move/copy that it is about to just undo the move/copy with no way to recover. This will protect against that behavior.
+	WinGet, activeHwnd, ID, A
+	MsgBox, 48, Control-Z Blocked, You appear to be in an Explorer window and have just pressed Control-Z. To protect your files this command has been blocked.`n`nPress Control-Shift-Z if you would like to undo an action in an Explorer window., 7
+	WinActivate, ahk_id %activeHwnd%
+	Return
+
+^+Z::
+	Send ^z
+	Return
+
 #IfWinActive
 
 #Include %A_ScriptDir%\PRIVATE\MASTER-SCAF-KEYS.ahk
