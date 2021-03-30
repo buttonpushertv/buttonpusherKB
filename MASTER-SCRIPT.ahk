@@ -344,7 +344,7 @@ return
 	;msgbox, %Pfad%
 	Clipboard := ClipSaved   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
 	ClipSaved =   ; Free the memory in case the clipboard was very large.  
-	Run, "C:\Program Files\Adobe\Adobe Photoshop 2020\Photoshop.exe" "%Pfad%"
+	Run, "C:\Program Files\Adobe\Adobe Photoshop 2021\Photoshop.exe" "%Pfad%"
 	WinActivate, ahk_exe Photoshop.exe
 	Return
 
