@@ -196,17 +196,20 @@ ScrollLock & f11:: ; <-- Open the Settings GUI for MASTER-SCRIPT.AHK
 CapsLock & f11:: ; <-- Open the Settings GUI for MASTER-SCRIPT.AHK
 		ScrollLockOff()
 		Run, %A_ScriptDir%\MASTER-SETTINGS.AHK ; runs the settings configuration script for the whole suite.
+		SetCapsLockState, Off
     return
 
 ScrollLock & f12:: ; <-- Open buttonpusherLAUNCHER
 CapsLock & f12:: ; <-- Open buttonpusherLAUNCHER
 		ScrollLockOff()
 		Run, %A_ScriptDir%\BKB-LAUNCHER.ahk ; runs the launcher that runs at boot. Should only be used if you are making changes to what gets run at boot or if anything stops working properly
+		SetCapsLockState, Off
     return
 
 ScrollLock & Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
 CapsLock & Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
 		Reload ; reloads the MASTER-SCRIPT.ahk - will also force a reload of any other script that is set to load when MASTER-SCRIPT runs
+		SetCapsLockState, Off
     Return
 
 CapsLock & WheelDown::Send ^{PGDN} ; <-- Send Control+Page Down - for changing tabs in apps that support it (Chrome, Atom)
@@ -222,26 +225,32 @@ CapsLock & F:: ; <-- This will open the selected OR active path from an Explorer
 	{
 		Run, %A_ScriptDir%\SCRIPTS-UTIL\STREAMDECK\DRAKE\sendPATHtoFCXE.ahk ; this gets the active Explorer Window's path and sends to FCXE
 	}
+	SetCapsLockState, Off
 	Return
 
 CapsLock & G:: ; <-- This will return the selected OR active path from an Explorer Window/Save/Open Dialog OR FCXE in a MsgBox
 	Run, %A_ScriptDir%\SCRIPTS-UTIL\STREAMDECK\DRAKE\getPATH.ahk
+	SetCapsLockState, Off
 	Return
 
 CapsLock & H:: ; <-- Run HotKeyHelp.ahk
 	Run, "%A_ScriptDir%\SCRIPTS-UTIL\Hotkey Help.ahk"
+	SetCapsLockState, Off
 	Return
 	
 CapsLock & L:: ; <-- This will launch BKB-LAUNCHX
     Run, %A_ScriptDir%\UTIL-APPS\BKB-LAUNCHX\launcher.ahk
+	SetCapsLockState, Off
     Return
 
 CapsLock & X:: ; <-- Backspace Key
-Send, {BackSpace} ; same as above comment
+	Send, {BackSpace} ; where you often are using one hand on mouse/trackball and one hand on keys the delete & backspace keys can be a long reach (or on right-half of split keyboard)
+	SetCapsLockState, Off
 return
 
 CapsLock & Z:: ; <-- Delete Key
 	Send, {Delete} ; where you often are using one hand on mouse/trackball and one hand on keys the delete & backspace keys can be a long reach (or on right-half of split keyboard)
+	SetCapsLockState, Off
 return
 
 CapsLock & p:: ; <-- Toggle CapsLockCheck on or Off
@@ -257,6 +266,7 @@ CapsLock & p:: ; <-- Toggle CapsLockCheck on or Off
 	IgnoreCapsCheck := 1
 	ToolTip, CapsLock checking deactivated.
 	RemoveToolTip(-2000)
+	SetCapsLockState, Off
 	return
 	}
 
@@ -268,6 +278,7 @@ CapsLock & M:: ;<--pingPos - just to show what it does
 	tWidth := % Round(halfScreenWidth)
 	tHeight := % Round(quarterScreenHeight)
 	Run, %A_ScriptDir%\SCRIPTS-UTIL\pingPos.ahk %tWidth% %tHeight% "Screen"
+	SetCapsLockState, Off
 	Return
 
 ; USING THE HYPER KEY
@@ -457,6 +468,7 @@ Quitting:
 		    WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
 		    Sleep, sleepMedium
 		    SplashTextOff
+			SetCapsLockState, Off
 		    ExitApp
 		    return
 
