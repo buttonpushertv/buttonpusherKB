@@ -26,8 +26,9 @@ If !pToken := Gdip_Startup() ; this is here just to test that the GDI+ library i
 }
 OnExit, GdiplusExit
 
-Menu, Tray, Icon, shell32.dll, 214 ;tray icon is now a little keyboard, or piece of paper or something
+;Menu, Tray, Icon, shell32.dll, 214 ;tray icon is now a little keyboard, or piece of paper or something
 
+Menu, Tray, NoIcon ; removes the tray icon
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
 sleepMicro := 5

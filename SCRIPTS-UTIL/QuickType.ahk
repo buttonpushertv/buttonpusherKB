@@ -29,8 +29,9 @@ sleepDeep := 3500
 
 Location_currentSystemLocation = %1%
 
-Menu, Tray, Icon, imageres.dll, 243 ;tray icon is now something like '\\..'
+;Menu, Tray, Icon, imageres.dll, 243 ;tray icon is now something like '\\..'
 
+Menu, Tray, NoIcon ; removes the tray icon
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
 ; combine below with key and '::' to define hotkey

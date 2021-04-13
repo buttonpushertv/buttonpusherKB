@@ -4,6 +4,8 @@
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability
 
+Menu, Tray, NoIcon ; removes the tray icon
+
 ; This script was originally found here: https://www.computerhope.com/tips/tip224.htm
 ;
 ; And then I found this expanded script at: https://github.com/pmb6tz/windows-desktop-switcher

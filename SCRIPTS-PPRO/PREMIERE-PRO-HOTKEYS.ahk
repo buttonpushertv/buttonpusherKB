@@ -12,7 +12,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #MaxHotkeysPerInterval 2000
 #WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm
 
-Menu, Tray, Icon, shell32.dll, 116 ; this changes the tray icon to a filmstrip!
+;Menu, Tray, Icon, shell32.dll, 116 ; this changes the tray icon to a filmstrip!
+Menu, Tray, NoIcon
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
 sleepMicro := 5

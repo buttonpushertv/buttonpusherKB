@@ -9,8 +9,9 @@
 CoordMode, Mouse, screen
 CoordMode, Pixel, screen
 
-Menu, Tray, Icon, imageres.dll, 90 ; sets the Tray Icon to a timeline looking thingy
+;Menu, Tray, Icon, imageres.dll, 90 ; sets the Tray Icon to a timeline looking thingy
 
+Menu, Tray, NoIcon ; removes the tray icon
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
 sleepMicro := 15
