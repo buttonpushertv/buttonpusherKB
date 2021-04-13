@@ -270,7 +270,7 @@ CapsLock & p:: ; <-- Toggle CapsLockCheck on or Off
 	return
 	}
 
-CapsLock & q:: ; <-- Exit MASTER-SCRIPT and child AHK Scripts
+CapsLock & \:: ; <-- Exit MASTER-SCRIPT and child AHK Scripts
 	goto Quitting ; this subroutine will ID any of the scripts that have been launched (via enabled in settings.ini) and then quit them all
 return
 
