@@ -39,7 +39,7 @@ sleepDeep := 3500
 DetectHiddenWindows, On
 LaunchCode := "C:\Program Files\NDI.tv\NDI 4 Tools\Webcam Input\Webcam Input.exe"
 LaunchPath := "C:\Program Files\NDI.tv\NDI 4 Tools\Webcam Input"
-WindowTitle := "VNC helper"
+WindowTitle := "NDI Webcam Input"
 
 ;MsgBox,,Attempt,Trying to run or activate:`n%WindowLaunch%,2
 RunOrActivate(LaunchCode, WindowTitle)

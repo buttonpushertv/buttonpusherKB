@@ -37,9 +37,10 @@ sleepDeep := 3500
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 DetectHiddenWindows, On
-LaunchCode := "C:\Program Files\NDI.tv\NDI 4 Tools\Webcam Input\Webcam Input.exe"
-LaunchPath := "C:\Program Files\NDI.tv\NDI 4 Tools\Webcam Input"
-WindowTitle := "VNC helper"
+LaunchCode := "C:\Program Files\obs-studio\bin\64bit\obs64.exe"
+LaunchPath = C:\Program Files\obs-studio\bin\64bit
+LaunchParameters = % --profile-name "Video Presentations"
+WindowTitle := "OBS Studio"
 
 ;MsgBox,,Attempt,Trying to run or activate:`n%WindowLaunch%,2
 RunOrActivate(LaunchCode, WindowTitle)
@@ -56,6 +57,6 @@ RunOrActivate(LaunchCode, Windowtitle)
       }
    else {
       ;MsgBox Running
-      Run, %LaunchCode%
+      Run, %LaunchCode%, %LaunchPath%
    }
 }
