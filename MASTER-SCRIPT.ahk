@@ -281,6 +281,14 @@ CapsLock & M:: ;<--pingPos - just to show what it does
 	SetCapsLockState, Off
 	Return
 
+CapsLock & `:: ;<--Size a window to half the screen width & position it in the center of Display 1
+CapsLock & Numpad5::
+	tWidth := % Round(halfScreenWidth)
+	tWinLeftEdge := (tWidth / 2)
+	WinGetActiveTitle, tWinTitle
+	WinMove, %tWinTitle%,, %tWinLeftEdge%, 0, %tWidth%, %A_ScreenHeight%
+	Return
+
 ; USING THE HYPER KEY
 ; In Windows 10, Microsoft has hard-coded the HYPER Key (Control+Shift+Alt+Windows) to open the Office Hub. There some ways to remove that coding. They involve editing the Registry, so it's not something you should do lightly.
 ;
