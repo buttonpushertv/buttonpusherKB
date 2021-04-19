@@ -12,7 +12,9 @@ SetTitleMatchMode, 2 ; sets title matching to search for "containing" instead of
 #MaxHotkeysPerInterval 2000
 #WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm
 
-Menu, Tray, Icon, shell32.dll, 116 ; this changes the tray icon to a filmstrip!
+;Menu, Tray, Icon, shell32.dll, 116 ; this changes the tray icon to a filmstrip!
+Menu, Tray, NoIcon
+
 ;===== INITIALIZATION - VARIABLES ==============================================================
 ; Sleep shortcuts - use these to standardize sleep times. Change here to change everywhere.
 sleepMicro := 5

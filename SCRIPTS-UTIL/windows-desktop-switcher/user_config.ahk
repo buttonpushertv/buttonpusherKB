@@ -31,18 +31,18 @@ CapsLock & 7::switchDesktopByNumber(7) ; <-- Switch to Windows Virtual Desktop 7
 CapsLock & 8::switchDesktopByNumber(8) ; <-- Switch to Windows Virtual Desktop 8
 CapsLock & 9::switchDesktopByNumber(9) ; <-- Switch to Windows Virtual Desktop 9
 
-CapsLock & Numpad1::MoveCurrentWindowToDesktop(1) ; <-- Move Current/Active Window to Desktop 1
-CapsLock & Numpad2::MoveCurrentWindowToDesktop(2) ; <-- Move Current/Active Window to Desktop 2
-CapsLock & Numpad3::MoveCurrentWindowToDesktop(3) ; <-- Move Current/Active Window to Desktop 3
-CapsLock & Numpad4::MoveCurrentWindowToDesktop(4) ; <-- Move Current/Active Window to Desktop 4
-CapsLock & Numpad5::MoveCurrentWindowToDesktop(5) ; <-- Move Current/Active Window to Desktop 5
-CapsLock & Numpad6::MoveCurrentWindowToDesktop(6) ; <-- Move Current/Active Window to Desktop 6
-CapsLock & Numpad7::MoveCurrentWindowToDesktop(7) ; <-- Move Current/Active Window to Desktop 7
-CapsLock & Numpad8::MoveCurrentWindowToDesktop(8) ; <-- Move Current/Active Window to Desktop 8
-CapsLock & Numpad9::MoveCurrentWindowToDesktop(9) ; <-- Move Current/Active Window to Desktop 9
+;CapsLock & Numpad1::MoveCurrentWindowToDesktop(1) ; <-- Move Current/Active Window to Desktop 1
+;CapsLock & Numpad2::MoveCurrentWindowToDesktop(2) ; <-- Move Current/Active Window to Desktop 2
+;CapsLock & Numpad3::MoveCurrentWindowToDesktop(3) ; <-- Move Current/Active Window to Desktop 3
+;CapsLock & Numpad4::MoveCurrentWindowToDesktop(4) ; <-- Move Current/Active Window to Desktop 4
+;CapsLock & Numpad5::MoveCurrentWindowToDesktop(5) ; <-- Move Current/Active Window to Desktop 5
+;CapsLock & Numpad6::MoveCurrentWindowToDesktop(6) ; <-- Move Current/Active Window to Desktop 6
+;CapsLock & Numpad7::MoveCurrentWindowToDesktop(7) ; <-- Move Current/Active Window to Desktop 7
+;CapsLock & Numpad8::MoveCurrentWindowToDesktop(8) ; <-- Move Current/Active Window to Desktop 8
+;CapsLock & Numpad9::MoveCurrentWindowToDesktop(9) ; <-- Move Current/Active Window to Desktop 9
 
-CapsLock & =::switchDesktopToRight() ; <-- Switch to the Desktop to the Right - will loop to Desktop 1 when on the Last Desktop
-CapsLock & -::switchDesktopToLeft() ; <-- Switch to the Desktop to the Right - will loop to Last Desktop when on First Desktop
+;CapsLock & =::switchDesktopToRight() ; <-- Switch to the Desktop to the Right - will loop to Desktop 1 when on the Last Desktop
+;CapsLock & -::switchDesktopToLeft() ; <-- Switch to the Desktop to the Right - will loop to Last Desktop when on First Desktop
 CapsLock & s::switchDesktopToRight() ; <-- Switch to the Desktop to the Right - will loop to Desktop 1 when on the Last Desktop
 CapsLock & a::switchDesktopToLeft() ; <-- Switch to the Desktop to the Right - will loop to Last Desktop when on First Desktop
 CapsLock & tab::switchDesktopToLastOpened() ; <-- Switch to the Last Used Desktop (prior to the Current Desktop)

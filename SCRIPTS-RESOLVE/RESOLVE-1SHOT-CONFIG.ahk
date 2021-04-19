@@ -143,6 +143,7 @@ projectSettingsSubtitlesLocY = 261
 projectSettingsFairlightLocX = 150
 projectSettingsFairlightLocY = 291
 
+; COLOR PANEL
 ; Loc 2 colorClipsToggle
 colorClipsToggleLocX = 3073
 colorClipsToggleLocY = 69
@@ -161,7 +162,10 @@ colorMediaPoolToggleLocY = 68
 ; Loc 2 colorNodesToggle
 colorNodesToggleLocX = 3190
 colorNodesToggleLocY = 63
+; Loc 2 colorNodesFitToWindow
 ; Loc 2 colorNodesCleanup
+colorNodesCleanupLocX = 3438
+colorNodesCleanupLocY = 124
 ; Loc 2 colorOpenfxToggle
 colorOpenfxToggleLocX = 3287
 colorOpenfxToggleLocY = 67
@@ -273,6 +277,23 @@ colorCurvesLumBlackLocY = 1377
 ; Loc 2 colorCurvesLumWhite
 colorCurvesLumWhiteLocX = 1386
 colorCurvesLumWhiteLocY = 1378
+
+; EDIT PANEL
+; Loc 2 editShrinkLeftPanelsToggle
+editShrinkLeftPanelsToggleLocX = 37
+editShrinkLeftPanelsToggleLocY = 63
+; Loc 2 editMediaPoolToggle
+editMediaPoolToggleLocX = 132
+editMediaPoolToggleLocY = 66
+; Loc 2 editEffectsLibraryToggle
+editEffectsLibraryToggleLocX = 269
+editEffectsLibraryToggleLocY = 67
+; Loc 2 editEditIndexToggle
+editEditIndexToggleLocX = 387
+editEditIndexToggleLocY = 66
+; Loc 2 editSoundLibraryToggle
+editSoundLibraryToggleLocX = 515
+editSoundLibraryToggleLocY = 71
 
 
 }
