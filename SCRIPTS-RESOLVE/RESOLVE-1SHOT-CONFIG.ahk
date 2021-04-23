@@ -23,18 +23,6 @@ In order to create these variable defintions, there is another grabbing script. 
 
 MASTER LIST OF VARIABLES
 ========================
-COLOR PANEL:
-colorClipsToggle
-colorGalleryToggle
-colorLightboxToggle
-colorLutsToggle
-colorMediaPoolToggle
-colorNodesToggle
-colorOpenfxToggle
-colorStillsToggle
-colorTimelineToggle
-colorNodesClipDisplay
-colorNodesTimelineDisplay
 
 */
 
@@ -294,6 +282,18 @@ editEditIndexToggleLocY = 66
 ; Loc 2 editSoundLibraryToggle
 editSoundLibraryToggleLocX = 515
 editSoundLibraryToggleLocY = 71
+; Loc 2 editShrinkRightPanelsToggle
+editShrinkRightPanelsToggleLocX = 3416
+editShrinkRightPanelsToggleLocY = 69
+; Loc 2 editMixerToggle
+editMixerToggleLocX = 3138
+editMixerToggleLocY = 68
+; Loc 2 editMetadataToggle
+editMetadataToggleLocX = 3240
+editMetadataToggleLocY = 68
+; Loc 2 editInspectorToggle
+editInspectorToggleLocX = 3348
+editInspectorToggleLocY = 70
 
 
 }

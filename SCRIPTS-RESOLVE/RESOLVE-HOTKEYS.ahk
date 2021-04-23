@@ -35,6 +35,10 @@ IniRead, Location_currentSystemLocation, %iniFile%, Location, currentSystemLocat
 IniRead, xposP, %inifile%, Settings, TCDisplayXpos
 IniRead, yposP, %inifile%, Settings, TCDisplayYpos
 
+
+global halfScreenWidth := (A_ScreenWidth / 2) ; determine what half the screen's width
+global halfScreenHeight := (A_ScreenHeight / 2) ; determine what half the screen's height
+
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -59,7 +63,7 @@ Return
 MouseGetPos currentCursorX, currentCursorY ; store the current cursor coords to currentCursorX and currentCursorY
 
 ; display an input box with the contents of the clipboard pre-populated in the entry field
-InputBox, processLoc, Grabbing %Clipboard%, Is this the button/location/command you are grabbing?,,,,,,,,%Clipboard%
+InputBox, processLoc, Grabbing %Clipboard%, Is this the button/location/command you are grabbing?,, (halfScreenWidth/6), (halfScreenHeight/3),,,,,%Clipboard%
 
 If ErrorLevel
     Return ; if user selects CANCEL, exit this subroutine
