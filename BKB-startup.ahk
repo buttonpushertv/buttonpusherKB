@@ -51,6 +51,16 @@ guiElementWidth := (guiWidth - 20)
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
 
+; FreeFileSync is now an essential part of buttonpusherKB. It is integrated into DRAKE so that active projects can be backed up regularly.
+; 
+; TEST to see if freefilesync.exe is installed
+; OPEN website for freefilesync & encourage download and install
+If !FileExist("C:\Program Files\FreeFileSync\FreeFileSync.exe") {
+  MsgBox, 1, FreeFileSync NOT installed!, It appears that FreeFileSync is not installed. The backup features in BKB require that it be installed on your system. Please install it.`n`nPress OK to open the FreeFileSync website & download the app.`n`nRe-launch BKB-startup.ahk once you have it installed.
+  Run, "https://freefilesync.org/download.php"
+  ExitApp
+}
+
 timeoutSegments := Round(Settings_timeoutPeriod / 1000)
 timeoutText := "Launching in " . timeoutSegments . " seconds."
 timeoutRemaining := timeoutSegments
@@ -71,7 +81,7 @@ Gui, Add, Progress, x10 y290 w%guiElementWidth% h20 cGreen BackgroundNavy Range0
 Gui, Add, Button, xs-10 y195 w110 h40, &Cancel
 Gui, Add, Button, Default xs+110 y195 w125 h40, Launch BKB &Now
 Gui, Add, Button, xs-10 y245 w245 h30, Jump to &MASTER Script
-Gui, Show, w%guiWidth% h%guiHeight%
+Gui, Show, w%guiWidth% h%guiHeight%, %A_ScriptFullPath%
 
 ;timer code section here
 ;the timeout period is stored in settings.ini - under the [Settings] section as milliseconds - other values designated in above GUI code

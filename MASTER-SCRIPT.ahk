@@ -215,6 +215,10 @@ CapsLock & Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
 CapsLock & WheelDown::Send ^{PGDN} ; <-- Send Control+Page Down - for changing tabs in apps that support it (Chrome, Atom)
 CapsLock & WheelUp::Send ^{PGUP} ; <-- Send Control+Page Up - for changing tabs in apps that support it (Chrome, Atom)
 
+CapsLock & B:: ; <-- Run the ACTIVE-PROJECTS-BACKUPS.cmd file to backup all active projects.
+		Run, "%A_ScriptDir%\BAT-FILES\ACTIVE-PROJECT-BACKUPS.cmd"
+	Return
+
 CapsLock & F:: ; <-- This will open the selected OR active path from an Explorer Window or Save/Open Dialog in FreeCommander OR VICE-VERSA
 	WinGetActiveTitle, activeTitle
 	If activeTitle contains FreeCommander ; checking to see if you might already be sitting in FreeCommander

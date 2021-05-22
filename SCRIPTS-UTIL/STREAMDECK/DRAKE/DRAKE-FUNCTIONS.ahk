@@ -20,6 +20,7 @@ iniFile := Settings_rootFolder . "\settings.ini"
 ; and picking up a few other things
 IniRead, Settings_pathToFCXE, %iniFile%, Settings, pathToFCXE
 IniRead, Settings_FCXEParams, %iniFile%, Settings, FCXEParams
+IniRead, Settings_fffDefaultDestination, %iniFile%, Settings, fffDefaultDestination
 Settings_pathToFCXE = "%Settings_pathToFCXE%"
 ;MSGBOX,,DEBUG, From DRAKE-FUNCTIONS(INITIALIZATION)`n%iniFile%`n%Settings_rootFolder%`n%Settings_pathToFCXE%`n%Settings_FCXEParams%
 
@@ -466,3 +467,88 @@ Exiting(tipContent,projectNumber)
 	ExitApp
 	Return
   }
+
+fffSettingsCreator(selectedPath) { ; This function sets up the freefilesync backup settings for the provided project path
+	global Settings_rootFolder
+	global Settings_fffDefaultDestination
+    Needle := "[^\\]+$" ;Match all characters that are not a "\" starting from the end of the haystack (the double \ gets you the single character)
+    RegExMatch(selectedPath, Needle, Match)
+    projectName := Match
+    fffDestinationFullPath = %Settings_fffDefaultDestination%%projectName%
+	FileDelete, %fffDestinationFullPath%
+	;MSGBOX, , DEBUG, selectedPath: %selectedPath%`nSettings_fffDefaultDestination: %Settings_fffDefaultDestination%`nprojectName: %projectName%`nfffDestinationFullPath: %fffDestinationFullPath%
+	; ASK if user wants to create a freefilesync backup setting for this project
+  MsgBox, 36, Create FreeFileSync backup setting?, Do you want to create a FreeFileSync backup settings file for:`n%selectedPath%?`n`n(This will facilitate easy incremental backups of your work on a regular basis).
+    IfMsgBox, No
+      ExitApp 
+  InputBox, backupPath, Backup Destination?, Where should the backup be stored?,,,,,,,,%fffDestinationFullPath% ; ASK for the desitnation where freefilesync will backup the source
+
+  backupTemplate = %Settings_rootFolder%\SUPPORTING-FILES\project_backup_template.ffs_batch ; STORE this destination as variable
+  backupSettingToCreate =  %Settings_rootFolder%\PRIVATE\%A_ComputerName%\_fff-backup-settings\%projectName%-backup.ffs_batch
+
+; In order to save the source and destination paths, we need to construct the XML file that serves as a backup settings file for FreeFileSync. The FileAppend command below will construct that file and include the variables for the source and destination paths.
+  FileAppend,
+  (
+    <?xml version="1.0" encoding="utf-8"?>
+<FreeFileSync XmlType="BATCH" XmlFormat="17">
+    <Compare>
+        <Variant>TimeAndSize</Variant>
+        <Symlinks>Exclude</Symlinks>
+        <IgnoreTimeShift/>
+    </Compare>
+    <Synchronize>
+        <Variant>Update</Variant>
+        <DetectMovedFiles>false</DetectMovedFiles>
+        <DeletionPolicy>RecycleBin</DeletionPolicy>
+        <VersioningFolder Style="Replace"/>
+    </Synchronize>
+    <Filter>
+        <Include>
+            <Item>*</Item>
+        </Include>
+        <Exclude>
+            <Item>\System Volume Information\</Item>
+            <Item>\$Recycle.Bin\</Item>
+            <Item>\RECYCLE?\</Item>
+            <Item>*\thumbs.db</Item>
+        </Exclude>
+        <TimeSpan Type="None">0</TimeSpan>
+        <SizeMin Unit="None">0</SizeMin>
+        <SizeMax Unit="None">0</SizeMax>
+    </Filter>
+    <FolderPairs>
+        <Pair>
+            <Left>%selectedPath%</Left>
+            <Right>%backupPath%</Right>
+        </Pair>
+    </FolderPairs>
+    <Errors Ignore="false" Retry="0" Delay="5"/>
+    <PostSyncCommand Condition="Completion"/>
+    <LogFolder/>
+    <EmailNotification Condition="Always"/>
+    <Batch>
+        <ProgressDialog Minimized="false" AutoClose="true"/>
+        <ErrorDialog>Show</ErrorDialog>
+        <PostSyncAction>None</PostSyncAction>
+    </Batch>
+</FreeFileSync>
+  ), %backupSettingToCreate%
+
+  FileCreateDir, %backupPath%
+
+  activeProjectBackupsPath = %Settings_rootFolder%\BAT-FILES\ACTIVE-PROJECT-BACKUPS.cmd
+  
+  MsgBox, 36, Add to Active Project Backups?, Would you like to add this FreeFileSync backup settings to the %Settings_rootFolder%\BAT-FILES\ACTIVE-PROJECT-BACKUPS.cmd batch file?`n`n(CapsLock+B will launch it.) ; ASK if this new setting should be appended to the ACTIVE_PROJECT_BACKUPS batch file
+  IfMsgBox, No
+    ExitApp
+  FileAppend,
+  (
+CALL %backupSettingToCreate%
+if not `%errorlevel`% == 0 `(
+  echo Errors occurred during synchronization...
+  pause & exit 1
+`)
+
+  ), %activeProjectBackupsPath% ; IF YES, APPEND the commandline to run the new setting file
+
+}

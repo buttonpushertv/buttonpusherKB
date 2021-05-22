@@ -1,11 +1,16 @@
 SetWorkingDir %A_ScriptDir%	
-#Include %A_ScriptDir%\DRAKE-FUNCTIONS.ahk	
+#Include %A_ScriptDir%\DRAKE-FUNCTIONS.ahk
+
+; Getting the rootFolder for BKB from the Environment Variable
+EnvGet, Settings_rootFolder, BKB_ROOT
+
 dontSetCurrProj :=	
 projectNumber := A_Args[1]	
 if (!projectNumber) {	
     projectNumber =1	
 }	
-InputBox, projectSlug, Project Short Name, What's a short name for this project?	
+InputBox, projectSlug, Project Short Name, What's a short name for this project?
+
 f_class := whichWindowType()	
 If f_class contains FreeCommander	
 {	
@@ -37,5 +42,7 @@ else
 If !dontSetCurrProj {	
   setProjectNumber(pathGot, projectNumber, projectSlug)	
 }	
+
+fffSettingsCreator(pathGot)
 
 exitapp

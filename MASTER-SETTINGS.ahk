@@ -49,7 +49,7 @@ daysSinceLastBackupText := "Days since last`nbackup: " . daysSinceLastBackup
 
 ;Creating the Main GUI for the app - the bit that loads inititally when run
 ;setting width variables
-guiWidth := 980
+guiWidth := 1100
 halfGuiWidth := (guiWidth / 2)
 quarterGuiWidth := (guiWidth / 4)
 guiElementWidth := (halfGuiWidth - 25)
@@ -122,7 +122,7 @@ loop, %section1_keys%
 section2GroupH := (section2H - 0.25)
 currentAltCounter := 1
 Gui, mainWindow:Font, S12 CDefault Bold, %Settings_guiFont%
-Gui, mainWindow:Add, GroupBox, R%section2GroupH% x10 yp+60 w%guiElementWidth%, Scripts to Load (loaded via MASTER-SCRIPT.ahk)
+Gui, mainWindow:Add, GroupBox, R%section2GroupH% x10 yp+105 w%guiElementWidth%, Scripts to Load (loaded via MASTER-SCRIPT.ahk)
 Gui, mainWindow:Add, Text, hidden section xp yp,
 Gui, mainWindow:Font, S12 norm, %Settings_guiFont%
 loop, %section2_keys%
