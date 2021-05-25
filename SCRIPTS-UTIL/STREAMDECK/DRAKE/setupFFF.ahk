@@ -25,4 +25,3 @@ If f_class contains FreeCommander
 
 fffSettingsCreator(pathGot)
 
-  exitapp

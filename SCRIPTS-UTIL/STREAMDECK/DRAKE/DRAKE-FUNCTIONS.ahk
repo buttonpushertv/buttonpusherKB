@@ -22,7 +22,6 @@ IniRead, Settings_pathToFCXE, %iniFile%, Settings, pathToFCXE
 IniRead, Settings_FCXEParams, %iniFile%, Settings, FCXEParams
 IniRead, Settings_fffDefaultDestination, %iniFile%, Settings, fffDefaultDestination
 Settings_pathToFCXE = "%Settings_pathToFCXE%"
-;MSGBOX,,DEBUG, From DRAKE-FUNCTIONS(INITIALIZATION)`n%iniFile%`n%Settings_rootFolder%`n%Settings_pathToFCXE%`n%Settings_FCXEParams%
 
 global currentWorkingProject
 global lookupProjectNumber
@@ -485,8 +484,9 @@ fffSettingsCreator(selectedPath) { ; This function sets up the freefilesync back
 
 	backupSettingToCreate =  %Settings_rootFolder%\PRIVATE\%A_ComputerName%\_fff-backup-settings\%projectName%-backup.ffs_batch ; and this is the settings file along with full path that will created below
 
-	FileDelete, %backupSettingToCreate% ; we are falt out deleting this here because the FileAppend will just tack a whole other set of XML items to the end of the file otherwise, causing FFF to error out.
-
+	FileDelete, %backupSettingToCreate% ; we are flat out deleting this here because the FileAppend will just tack a whole other set of XML items to the end of the file otherwise, causing FFF to error out.
+	Tooltip, Deleting any old ffs_batch file settings
+	RemoveToolTip(3000)
 	; In order to save the source and destination paths, we need to construct the XML file that serves as a backup settings file for FreeFileSync. The FileAppend command below will construct that file and include the variables for the source and destination paths.
 	FileAppend,
 	(
@@ -540,7 +540,7 @@ fffSettingsCreator(selectedPath) { ; This function sets up the freefilesync back
 	activeProjectBackupsPath = %Settings_rootFolder%\PRIVATE\%A_ComputerName%\ACTIVE-PROJECT-BACKUPS.cmd ; this is the path & name of the batch file that can be invoked via CapsLocK+B from MASTER-SCRIPT.ahk to run the automated backups of active projects.
 
 	; ASK if this new setting should be appended to the ACTIVE_PROJECT_BACKUPS batch file
-	MsgBox, 36, Add to Active Project Backups?, Would you like to add this FreeFileSync backup settings to the %Settings_rootFolder%\BAT-FILES\ACTIVE-PROJECT-BACKUPS.cmd batch file?`n`n(CapsLock+B will launch it.) 
+	MsgBox, 36, Add to Active Project Backups?, Would you like to append a call to run this FreeFileSync backup settings to the %activeProjectBackupsPath% batch file?
 	IfMsgBox, No 
 		Return ; if they answer No, then we return & do nothing further
 	; If user answers Yes then code contiues
@@ -563,9 +563,21 @@ if not `%errorlevel`% == 0 `(
 REM ++++++++++++++
   ), %activeProjectBackupsPath%
 
+	MSGBOX, 64, Automated Backup Settings Created, A FreeFileSync backup settings file (ffs_batch) has been created at:`n`n%backupSettingToCreate%`n`nAnd it has been added to the batch file:`n`n%activeProjectBackupsPath%`n`nCapsLock+B will invoke the batch file above to run backups of all active projects.
+
 	; Issues to address at some point:
 	; 1. There is NO check to see if the same project already exists in the ACTIVE-PROJECT-BACKUPS.cmd file
 	; 2. Maybe it would be cool to have a GUI checklist of all projects that have been setup, so you could turn backups on and off
 	; 3. Once projects get archived from the system & removed, should there be a way to track that info?
+	Return
+}
 
+; use this function to Remove ToolTips - pretty self-explanatory - 'duration' should be given in milliseconds (4000 = 4 seconds)
+RemoveToolTip(duration) {
+  SetTimer, ToolTipOff, %duration%
+  Return
+
+ToolTipOff:
+    ToolTip
+    return
 }
