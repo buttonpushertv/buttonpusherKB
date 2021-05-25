@@ -216,7 +216,7 @@ CapsLock & WheelDown::Send ^{PGDN} ; <-- Send Control+Page Down - for changing t
 CapsLock & WheelUp::Send ^{PGUP} ; <-- Send Control+Page Up - for changing tabs in apps that support it (Chrome, Atom)
 
 CapsLock & B:: ; <-- Run the ACTIVE-PROJECTS-BACKUPS.cmd file to backup all active projects.
-		Run, "%A_ScriptDir%\BAT-FILES\ACTIVE-PROJECT-BACKUPS.cmd"
+		Run, "%A_ScriptDir%\PRIVATE\%A_Computername%\ACTIVE-PROJECT-BACKUPS.cmd"
 	Return
 
 CapsLock & F:: ; <-- This will open the selected OR active path from an Explorer Window or Save/Open Dialog in FreeCommander OR VICE-VERSA

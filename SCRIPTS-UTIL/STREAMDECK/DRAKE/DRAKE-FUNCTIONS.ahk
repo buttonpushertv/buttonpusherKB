@@ -469,26 +469,27 @@ Exiting(tipContent,projectNumber)
   }
 
 fffSettingsCreator(selectedPath) { ; This function sets up the freefilesync backup settings for the provided project path
-	global Settings_rootFolder
-	global Settings_fffDefaultDestination
-    Needle := "[^\\]+$" ;Match all characters that are not a "\" starting from the end of the haystack (the double \ gets you the single character)
-    RegExMatch(selectedPath, Needle, Match)
-    projectName := Match
-    fffDestinationFullPath = %Settings_fffDefaultDestination%%projectName%
-	FileDelete, %fffDestinationFullPath%
-	;MSGBOX, , DEBUG, selectedPath: %selectedPath%`nSettings_fffDefaultDestination: %Settings_fffDefaultDestination%`nprojectName: %projectName%`nfffDestinationFullPath: %fffDestinationFullPath%
+	global Settings_rootFolder ; needed to pull in the values of these 2 variables from outside the function
+	global Settings_fffDefaultDestination ; what that last line said
+	Needle := "[^\\]+$" ;patter that matches all characters that are not a "\" starting from the end of the haystack (the double \ gets you the single character)
+	RegExMatch(selectedPath, Needle, projectName) ; do the match and set the value to projectName
+	fffDestinationFullPath = %Settings_fffDefaultDestination%%projectName% ; this is the full path using the settings.ini/fffDefaultDestination value plus the projectName value where the files will be backed up to.
+
 	; ASK if user wants to create a freefilesync backup setting for this project
-  MsgBox, 36, Create FreeFileSync backup setting?, Do you want to create a FreeFileSync backup settings file for:`n%selectedPath%?`n`n(This will facilitate easy incremental backups of your work on a regular basis).
-    IfMsgBox, No
-      ExitApp 
-  InputBox, backupPath, Backup Destination?, Where should the backup be stored?,,,,,,,,%fffDestinationFullPath% ; ASK for the desitnation where freefilesync will backup the source
+	MsgBox, 36, Create FreeFileSync backup setting?, Do you want to create a FreeFileSync backup settings file for:`n%selectedPath%?`n`n(This will facilitate easy incremental backups of your work on a regular basis). ; this will prompt user if they want to create the FreeFileSync setting (ffs_batch) for this backup
+	IfMsgBox, No
+		Return ; if they answer No, then we return & do nothing further
+	; If user answers Yes then code contiues
+	; ASK for the destination where freefilesync will backup the source
+	InputBox, backupPath, Backup Destination?, Where should the backup be stored?,,,,,,,,%fffDestinationFullPath% 
 
-  backupTemplate = %Settings_rootFolder%\SUPPORTING-FILES\project_backup_template.ffs_batch ; STORE this destination as variable
-  backupSettingToCreate =  %Settings_rootFolder%\PRIVATE\%A_ComputerName%\_fff-backup-settings\%projectName%-backup.ffs_batch
+	backupSettingToCreate =  %Settings_rootFolder%\PRIVATE\%A_ComputerName%\_fff-backup-settings\%projectName%-backup.ffs_batch ; and this is the settings file along with full path that will created below
 
-; In order to save the source and destination paths, we need to construct the XML file that serves as a backup settings file for FreeFileSync. The FileAppend command below will construct that file and include the variables for the source and destination paths.
-  FileAppend,
-  (
+	FileDelete, %backupSettingToCreate% ; we are falt out deleting this here because the FileAppend will just tack a whole other set of XML items to the end of the file otherwise, causing FFF to error out.
+
+	; In order to save the source and destination paths, we need to construct the XML file that serves as a backup settings file for FreeFileSync. The FileAppend command below will construct that file and include the variables for the source and destination paths.
+	FileAppend,
+	(
     <?xml version="1.0" encoding="utf-8"?>
 <FreeFileSync XmlType="BATCH" XmlFormat="17">
     <Compare>
@@ -532,23 +533,39 @@ fffSettingsCreator(selectedPath) { ; This function sets up the freefilesync back
         <PostSyncAction>None</PostSyncAction>
     </Batch>
 </FreeFileSync>
-  ), %backupSettingToCreate%
+), %backupSettingToCreate%
 
-  FileCreateDir, %backupPath%
+	FileCreateDir, %backupPath% ; this will create the directory at the backupPath location. backupPath came from the Inputbox above
 
-  activeProjectBackupsPath = %Settings_rootFolder%\BAT-FILES\ACTIVE-PROJECT-BACKUPS.cmd
-  
-  MsgBox, 36, Add to Active Project Backups?, Would you like to add this FreeFileSync backup settings to the %Settings_rootFolder%\BAT-FILES\ACTIVE-PROJECT-BACKUPS.cmd batch file?`n`n(CapsLock+B will launch it.) ; ASK if this new setting should be appended to the ACTIVE_PROJECT_BACKUPS batch file
-  IfMsgBox, No
-    ExitApp
-  FileAppend,
-  (
+	activeProjectBackupsPath = %Settings_rootFolder%\PRIVATE\%A_ComputerName%\ACTIVE-PROJECT-BACKUPS.cmd ; this is the path & name of the batch file that can be invoked via CapsLocK+B from MASTER-SCRIPT.ahk to run the automated backups of active projects.
+
+	; ASK if this new setting should be appended to the ACTIVE_PROJECT_BACKUPS batch file
+	MsgBox, 36, Add to Active Project Backups?, Would you like to add this FreeFileSync backup settings to the %Settings_rootFolder%\BAT-FILES\ACTIVE-PROJECT-BACKUPS.cmd batch file?`n`n(CapsLock+B will launch it.) 
+	IfMsgBox, No 
+		Return ; if they answer No, then we return & do nothing further
+	; If user answers Yes then code contiues
+
+	; The block below is what will be added to end the file at: %Settings_rootFolder%\PRIVATE\%A_ComputerName%\ACTIVE-PROJECT-BACKUPS.cmd
+	; 
+	FileAppend,
+	(
+
+REM ==============
+REM Project Name: %projectName%
+REM Original Path: %selectedPath%
+REM Backup Destination: %backupPath%
+REM Added: %A_YYYY%-%A_MMM%-%A_DD% at %A_Hour%:%A_Min%:%A_Sec%
 CALL %backupSettingToCreate%
 if not `%errorlevel`% == 0 `(
   echo Errors occurred during synchronization...
   pause & exit 1
 `)
+REM ++++++++++++++
+  ), %activeProjectBackupsPath%
 
-  ), %activeProjectBackupsPath% ; IF YES, APPEND the commandline to run the new setting file
+	; Issues to address at some point:
+	; 1. There is NO check to see if the same project already exists in the ACTIVE-PROJECT-BACKUPS.cmd file
+	; 2. Maybe it would be cool to have a GUI checklist of all projects that have been setup, so you could turn backups on and off
+	; 3. Once projects get archived from the system & removed, should there be a way to track that info?
 
 }
