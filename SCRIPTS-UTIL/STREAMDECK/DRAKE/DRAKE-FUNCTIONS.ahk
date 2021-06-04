@@ -555,7 +555,7 @@ REM Project Name: %projectName%
 REM Original Path: %selectedPath%
 REM Backup Destination: %backupPath%
 REM Added: %A_YYYY%-%A_MMM%-%A_DD% at %A_Hour%:%A_Min%:%A_Sec%
-CALL %backupSettingToCreate%
+CALL "%backupSettingToCreate%"
 if not `%errorlevel`% == 0 `(
   echo Errors occurred during synchronization...
   pause & exit 1
@@ -563,7 +563,7 @@ if not `%errorlevel`% == 0 `(
 REM ++++++++++++++
   ), %activeProjectBackupsPath%
 
-	MSGBOX, 64, Automated Backup Settings Created, A FreeFileSync backup settings file (ffs_batch) has been created at:`n`n%backupSettingToCreate%`n`nAnd it has been added to the batch file:`n`n%activeProjectBackupsPath%`n`nCapsLock+B will invoke the batch file above to run backups of all active projects.
+	MSGBOX, 64, Automated Backup Settings Created, A FreeFileSync backup settings file (ffs_batch) has been created at:`n`n%backupSettingToCreate%`n`nAnd it has been added to the batch file:`n`n%activeProjectBackupsPath%`n`nCapsLock+B will invoke the batch file above to run backups of all active projects., 4
 
 	; Issues to address at some point:
 	; 1. There is NO check to see if the same project already exists in the ACTIVE-PROJECT-BACKUPS.cmd file
