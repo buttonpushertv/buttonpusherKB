@@ -57,6 +57,53 @@ F16:: ; < -- Left Click holder. This will allow you to use the scroll wheel to a
 
 Return
 
+F23:: ;< -- Grabbing a TC from Excel and jumping to it in Resolve
+MouseGetPos currentCursorX, currentCursorY ; store the current cursor coords to currentCursorX and currentCursorY
+
+WinActivate, ahk_exe EXCEL.EXE
+Sleep, sleepShort
+Send, {Escape}
+Sleep, sleepShort
+Send, {Left}{Down}
+Sleep, sleepMedium
+Send, ^c
+Sleep, sleepShort
+WinActivate, ahk_exe Resolve.exe
+Sleep, sleepShort
+Send, =
+Sleep, sleepMedium
+Send, ^v
+Sleep, sleepMedium
+Send, ^\
+
+MouseMove, %currentCursorX%, %currentCursorY%
+
+Return
+
+F24:: ;< -- Grabbing a TC from Excel and jumping to it in Resolve
+MouseGetPos currentCursorX, currentCursorY ; store the current cursor coords to currentCursorX and currentCursorY
+
+WinActivate, ahk_exe EXCEL.EXE
+Sleep, sleepShort
+Send, {Escape}
+Sleep, sleepShort
+Send, {Right}
+Sleep, sleepMedium
+Send, ^c
+Sleep, sleepShort
+WinActivate, ahk_exe Resolve.exe
+Sleep, sleepShort
+Send, =
+Sleep, sleepMedium
+Send, ^v
+Sleep, sleepMedium
+Send, ^\
+
+MouseMove, %currentCursorX%, %currentCursorY%
+
+Return
+
+
 #!^+F21:: ; < -- The Resolve location grabbing subroutine
 ; (To use this sub, the cursor should be positioned over the button/location/command you wish to grab before invoking it)
 
