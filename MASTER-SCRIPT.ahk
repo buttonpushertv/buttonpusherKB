@@ -212,11 +212,19 @@ CapsLock & Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
 		SetCapsLockState, Off
     Return
 
-CapsLock & WheelDown::Send ^{PGDN} ; <-- Send Control+Page Down - for changing tabs in apps that support it (Chrome, Atom)
-CapsLock & WheelUp::Send ^{PGUP} ; <-- Send Control+Page Up - for changing tabs in apps that support it (Chrome, Atom)
+CapsLock & WheelDown::
+	Send ^{PGDN} ; <-- Send Control+Page Down - for changing tabs in apps that support it (Chrome, Atom)
+	SetCapsLockState, Off
+	Return
 
+CapsLock & WheelUp::
+	Send ^{PGUP} ; <-- Send Control+Page Up - for changing tabs in apps that support it (Chrome, Atom)
+	SetCapsLockState, Off
+	Return
+	
 CapsLock & B:: ; <-- Run the ACTIVE-PROJECTS-BACKUPS.cmd file to backup all active projects.
 		Run, "%A_ScriptDir%\PRIVATE\%A_Computername%\ACTIVE-PROJECT-BACKUPS.cmd"
+		SetCapsLockState, Off
 	Return
 
 CapsLock & F:: ; <-- This will open the selected OR active path from an Explorer Window or Save/Open Dialog in FreeCommander OR VICE-VERSA
@@ -276,6 +284,7 @@ CapsLock & p:: ; <-- Toggle CapsLockCheck on or Off
 
 CapsLock & \:: ; <-- Exit MASTER-SCRIPT and child AHK Scripts
 	goto Quitting ; this subroutine will ID any of the scripts that have been launched (via enabled in settings.ini) and then quit them all
+	SetCapsLockState, Off
 return
 
 CapsLock & M:: ;<--pingPos - just to show what it does
@@ -291,6 +300,7 @@ CapsLock & Numpad5::
 	tWinLeftEdge := (tWidth / 2)
 	WinGetActiveTitle, tWinTitle
 	WinMove, %tWinTitle%,, %tWinLeftEdge%, 0, %tWidth%, %A_ScreenHeight%
+	SetCapsLockState, Off
 	Return
 
 ; USING THE HYPER KEY
@@ -428,7 +438,7 @@ CapsLockCheck:
 			} else If (CapsLockCounter >= Settings_CapsLockToggleOffTimeout ) {
 				SetCapsLockState, Off
 				ToolTip, CapsLock Being Deactivated - Press CAPS+P to toggle this check on/off.
-				RemoveToolTip(-4000)
+				RemoveToolTip(4000)
 				CapsLockCounter := 0
 				SoundPlay, SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_06.wav ; Assign your own sound
 				Return
