@@ -557,7 +557,7 @@ REM Backup Destination: %backupPath%
 REM Added: %A_YYYY%-%A_MMM%-%A_DD% at %A_Hour%:%A_Min%:%A_Sec%
 CALL "%backupSettingToCreate%"
 if not `%errorlevel`% == 0 `(
-  echo Errors occurred during synchronization...
+  echo Errors occurred during synchronization of %projectName%...
   pause & exit 1
 `)
 REM ++++++++++++++
