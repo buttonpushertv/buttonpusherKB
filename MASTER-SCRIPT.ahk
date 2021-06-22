@@ -157,7 +157,7 @@ loop, %section2_keys% ; this loop will launch any scripts that are defined and e
 Gui, launchApp:Show,, All Scripts Have Been Launched...Enjoy!
 Sleep, Settings_splashScreenTimeout
 
-goto launchAppTimeout
+Gui, launchApp:Destroy ; this will destroy the launchApp:GUI once everything is loaded & the splashScreenTimeout has passed
 
 SetTimer, CapsLockCheck, %Settings_CapsLockCheckPeriod% ; the main timer to check for CapsLock. The variable 'Settings_CapsLockCheckPeriod' is defined in settings.ini. More info about this Function is in comments down in the Function Definition at the end of this script.
 
@@ -433,25 +433,38 @@ CapsLockCheck:
 		If GetKeyState("CapsLock","T")
     {
     	CapsLockCounter += 1
+		checkPeriodInSeconds := (Settings_CapsLockCheckPeriod / 1000)
+		counterSecondsSoFar := (CapsLockCounter * checkPeriodInSeconds) 
 			If (CapsLockCounter <= Settings_CapsLockToggleTimeoutThreshold ) {
-					return
+				; items here are only executed when the CapsLockCounter is less than or equal to CapsLockToggleTimeoutThreshold
+				; essentially this is just here to advance the counter by 1 each pass and do nothing
+				; the 'return' 4 lines below will take us out of the routine there and will not process the rest of this
+				; subroutine until the CapsLockCounter is over the CapsLockToggleTimeoutThreshold
+					;for testing purposes the ToolTip & RemoveTooltip lines can be uncommented to see when things are being detected.
+					;ToolTip, Counting seconds since CapsLock detected as being on.`n%counterSecondsSoFar% seconds counted so far.
+					;RemoveToolTip(1500)
+				return
 			} else If (CapsLockCounter >= Settings_CapsLockToggleOffTimeout ) {
-				SetCapsLockState, Off
-				ToolTip, CapsLock Being Deactivated - Press CAPS+P to toggle this check on/off.
-				RemoveToolTip(4000)
-				CapsLockCounter := 0
-				SoundPlay, SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_06.wav ; Assign your own sound
+				; this is the subroutine where Caps Lock will get deactivated after CapsLockCounter is equal or over the CapsLockToggleTimeoutThreshold
+					SetCapsLockState, Off
+					ToolTip, CapsLock Being Deactivated - Press CAPS+P to toggle this check on/off.
+					RemoveToolTip(4000)
+					CapsLockCounter := 0
+					SoundPlay, SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_06.wav ; Assign your own sound
 				Return
 				}
-			SoundPlay, SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_01.wav ; Assign your own sound
-    	}	else {
+			; items below this line will run every pass through the routine defined by the "If GetKetState" item above once
+			; the CapsLockCounter is over the CapsLockToggleTimeoutThreshold
+				;for testing purposes the ToolTip & RemoveTooltip lines below can be uncommented to see when things are being detected.
+				;ToolTip, Counting seconds since CapsLock detected as being on.`nCapsLockToggleTimeoutThreshold (%Settings_CapsLockToggleTimeoutThreshold%) reached.`nShould turn off after %Settings_CapsLockToggleOffTimeout%0 seconds. `n%counterSecondsSoFar% seconds counted so far
+				;RemoveToolTip(1500)
+				SoundPlay, SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_click_01.wav ; Assign your own sound
+    	} else {
+			; items here run if the "If GetKeyState" is false - meaning the CapsLock key is not on.
+			; hence this is probably the most frequently visited section of this section
 			CapsLockCounter := 0
 		}
     Return
-
-launchAppTimeout:
-	Gui, launchApp:Destroy
-Return
 
 Quitting:
     splashScreenSpacing := 75
