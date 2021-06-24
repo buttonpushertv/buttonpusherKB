@@ -557,8 +557,16 @@ REM Backup Destination: %backupPath%
 REM Added: %A_YYYY%-%A_MMM%-%A_DD% at %A_Hour%:%A_Min%:%A_Sec%
 CALL "%backupSettingToCreate%"
 if not `%errorlevel`% == 0 `(
+  echo errorlevel gives some indication of what went wrong
+  echo ==============================================
+  echo 0 - Synchronization completed successfully
+  echo 1 - Synchronization completed with warnings
+  echo 2 - Synchronization completed with errors
+  echo 3 - Synchronization was aborted
+  echo ==============================================
   echo Errors occurred during synchronization of %projectName%...
-  pause & exit 1
+  echo Exited with errorlevel: `%errorlevel`%
+  pause
 `)
 REM ++++++++++++++
   ), %activeProjectBackupsPath%
