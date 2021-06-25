@@ -56,7 +56,7 @@ global Settings_rootFolder
 
 global CapsLockCounter := 0 ; initial value for the CapsLock detection code below
 
-SetCapsLockState, off ; turn off CapsLock so that the checking function doesn't go off automatically
+CapsLockOff() ; turn off CapsLock so that the checking function doesn't go off automatically
 SetScrollLockState, off ; since we're hacking ScrollLock to become a modifier key, we pretty much want it turned off all the time. This turns it off on script load. Most of the uses with this hacked-modifier will re-load the scripts.
 
 ; These 2 INI_ function calls will load the settings.ini info and load in the sections relevant for this script
@@ -196,35 +196,33 @@ ScrollLock & f11:: ; <-- Open the Settings GUI for MASTER-SCRIPT.AHK
 CapsLock & f11:: ; <-- Open the Settings GUI for MASTER-SCRIPT.AHK
 		ScrollLockOff()
 		Run, %A_ScriptDir%\MASTER-SETTINGS.AHK ; runs the settings configuration script for the whole suite.
-		SetCapsLockState, Off
+		CapsLockOff()
     return
 
 ScrollLock & f12:: ; <-- Open buttonpusherLAUNCHER
 CapsLock & f12:: ; <-- Open buttonpusherLAUNCHER
 		ScrollLockOff()
 		Run, %A_ScriptDir%\BKB-LAUNCHER.ahk ; runs the launcher that runs at boot. Should only be used if you are making changes to what gets run at boot or if anything stops working properly
-		SetCapsLockState, Off
+		CapsLockOff()
     return
 
 ScrollLock & Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
 CapsLock & Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
 		Reload ; reloads the MASTER-SCRIPT.ahk - will also force a reload of any other script that is set to load when MASTER-SCRIPT runs
-		SetCapsLockState, Off
+		CapsLockOff()
     Return
 
 CapsLock & WheelDown::
 	Send ^{PGDN} ; <-- Send Control+Page Down - for changing tabs in apps that support it (Chrome, Atom)
-	SetCapsLockState, Off
 	Return
 
 CapsLock & WheelUp::
 	Send ^{PGUP} ; <-- Send Control+Page Up - for changing tabs in apps that support it (Chrome, Atom)
-	SetCapsLockState, Off
 	Return
 	
 CapsLock & B:: ; <-- Run the ACTIVE-PROJECTS-BACKUPS.cmd file to backup all active projects.
 		Run, "%A_ScriptDir%\PRIVATE\%A_Computername%\ACTIVE-PROJECT-BACKUPS.cmd"
-		SetCapsLockState, Off
+		CapsLockOff()
 	Return
 
 CapsLock & F:: ; <-- This will open the selected OR active path from an Explorer Window or Save/Open Dialog in FreeCommander OR VICE-VERSA
@@ -237,32 +235,32 @@ CapsLock & F:: ; <-- This will open the selected OR active path from an Explorer
 	{
 		Run, %A_ScriptDir%\SCRIPTS-UTIL\STREAMDECK\DRAKE\sendPATHtoFCXE.ahk ; this gets the active Explorer Window's path and sends to FCXE
 	}
-	SetCapsLockState, Off
+	CapsLockOff()
 	Return
 
 CapsLock & G:: ; <-- This will return the selected OR active path from an Explorer Window/Save/Open Dialog OR FCXE in a MsgBox
 	Run, %A_ScriptDir%\SCRIPTS-UTIL\STREAMDECK\DRAKE\getPATH.ahk
-	SetCapsLockState, Off
+	CapsLockOff()
 	Return
 
 CapsLock & H:: ; <-- Run HotKeyHelp.ahk
 	Run, "%A_ScriptDir%\SCRIPTS-UTIL\Hotkey Help.ahk"
-	SetCapsLockState, Off
+	CapsLockOff()
 	Return
 	
 CapsLock & L:: ; <-- This will launch BKB-LAUNCHX
     Run, %A_ScriptDir%\UTIL-APPS\BKB-LAUNCHX\launcher.ahk
-	SetCapsLockState, Off
+	CapsLockOff()
     Return
 
 CapsLock & X:: ; <-- Backspace Key
 	Send, {BackSpace} ; where you often are using one hand on mouse/trackball and one hand on keys the delete & backspace keys can be a long reach (or on right-half of split keyboard)
-	SetCapsLockState, Off
+	CapsLockOff()
 return
 
 CapsLock & Z:: ; <-- Delete Key
 	Send, {Delete} ; where you often are using one hand on mouse/trackball and one hand on keys the delete & backspace keys can be a long reach (or on right-half of split keyboard)
-	SetCapsLockState, Off
+	CapsLockOff()
 return
 
 CapsLock & p:: ; <-- Toggle CapsLockCheck on or Off
@@ -278,20 +276,20 @@ CapsLock & p:: ; <-- Toggle CapsLockCheck on or Off
 	IgnoreCapsCheck := 1
 	ToolTip, CapsLock checking deactivated.
 	RemoveToolTip(-2000)
-	SetCapsLockState, Off
+	CapsLockOff()
 	return
 	}
 
 CapsLock & \:: ; <-- Exit MASTER-SCRIPT and child AHK Scripts
 	goto Quitting ; this subroutine will ID any of the scripts that have been launched (via enabled in settings.ini) and then quit them all
-	SetCapsLockState, Off
+	CapsLockOff()
 return
 
 CapsLock & M:: ;<--pingPos - just to show what it does
 	tWidth := % Round(halfScreenWidth)
 	tHeight := % Round(quarterScreenHeight)
 	Run, %A_ScriptDir%\SCRIPTS-UTIL\pingPos.ahk %tWidth% %tHeight% "Screen"
-	SetCapsLockState, Off
+	CapsLockOff()
 	Return
 
 CapsLock & `:: ;<--Size a window to half the screen width & position it in the center of Display 1
@@ -300,7 +298,7 @@ CapsLock & Numpad5::
 	tWinLeftEdge := (tWidth / 2)
 	WinGetActiveTitle, tWinTitle
 	WinMove, %tWinTitle%,, %tWinLeftEdge%, 0, %tWidth%, %A_ScreenHeight%
-	SetCapsLockState, Off
+	CapsLockOff()
 	Return
 
 ; USING THE HYPER KEY
@@ -446,7 +444,7 @@ CapsLockCheck:
 				return
 			} else If (CapsLockCounter >= Settings_CapsLockToggleOffTimeout ) {
 				; this is the subroutine where Caps Lock will get deactivated after CapsLockCounter is equal or over the CapsLockToggleTimeoutThreshold
-					SetCapsLockState, Off
+					CapsLockOff()
 					ToolTip, CapsLock Being Deactivated - Press CAPS+P to toggle this check on/off.
 					RemoveToolTip(4000)
 					CapsLockCounter := 0
@@ -503,7 +501,7 @@ Quitting:
 		    WinMove, Quitting AHK scripts, , %splashScreenStartX%, %splashScreenStartY%
 		    Sleep, sleepMedium
 		    SplashTextOff
-			SetCapsLockState, Off
+			CapsLockOff()
 		    ExitApp
 		    return
 

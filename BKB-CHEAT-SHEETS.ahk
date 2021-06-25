@@ -632,6 +632,7 @@ squashGUI(activeWin){
 	Gui, TabText:Destroy ; destroys any TabText GUI
 	Gui, Picture:Destroy ; this kills the main cheatsheet GUI window
 	destroyGDIplusGUI() ; this kills the TaskBar CheatSheet
+	CapsLockOff() ; this will just turn off the CapsLock toggle as an extra part of closing the cheat sheet. This is here because if it is within the CapsLock+WheelUp or CapsLock+WheelDown over in MASTER-SCRIPT.ahk, it only allows one execution of the hotkey until the CapsLock key is released.
 	WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 	Return
 }
@@ -641,3 +642,10 @@ GuiEscape:
 	Gui, Picture:Destroy ; this kills the Picture:GUI window
 	WinActivate, %activeWin% ; this refocuses the Window that had focus before this was triggered
 	Return
+
+CapsLockOff() {
+  ;use this function to set the CapsLock key to off, but wait until the key is released before toggling it off
+  KeyWait, CapsLock
+  SetCapsLockState, Off
+  Return
+}
