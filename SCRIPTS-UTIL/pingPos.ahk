@@ -40,10 +40,10 @@ pingPos(sx,sy,mode){
     hdc := CreateCompatibleDC()
     obm := SelectObject(hdc, hbm)
     pGraphics:=Gdip_GraphicsFromHDC(hdc)
-    Gdip_DrawImage(pGraphics, pBitmap, 0,0,w,h)
+    Gdip_DrawImage(pGraphics, pBitmap, 0, 0, w, h)
     UpdateLayeredWindow(hwnd, hdc,offsetSX,offsetSY,w,h)
     Gdip_DisposeImage(pBitmap)
-    ;MSgBox,4096,,Sent: x:%sx% y:%sy%`nOffset: x:%offsetSX% y:%offsetSY%`npingFile: %pingFile%`nmode: %mode%`nbitmap h: %h% width:%w%, 10
+    ;MSgBox,4096,,Sent: x:%sx% y:%sy%`nhalfWidth: %halfWidth% halfHeight:%halfHeight%`nOffset: x:%offsetSX% y:%offsetSY%`npingFile: %pingFile%`nmode: %mode%`nbitmap h: %h% width:%w%, 10
     Sleep, 8000
     destroyGDIplusGUI()
 return

@@ -182,6 +182,15 @@ return
   grabTCAsText(grabbedTC, xposP, yposP)
   MSGBOX,,Timecode value read..., This is the value of grabbedTC: %grabbedTC% `nThis is the value stored on the clipboard: %clipboard%`n`nYou can send this to other apps by editing %A_ScriptName% and using the function 'grabTCAsText' (see PREMIERE-PRO-FUNCTIONS.ahk for more info)., 4
   Return
+
+^!i::
+  CoordMode, Mouse, Window
+  MouseMove, xposP, yposP
+  Tooltip, xposP:%xposP%/yposP:%yposP%
+  Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Window"
+  RemoveToolTip(2500)
+  Return
+
 /*
 TEMPORARILY DISABLING THESE COMMANDS
 
