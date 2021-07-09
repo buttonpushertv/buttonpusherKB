@@ -50,6 +50,13 @@ ScrollLockToggle:
 
 }
 
+CapsLockOff() {
+  ;use this function to set the CapsLock key to off, but wait until the key is released before toggling it off
+  KeyWait, CapsLock
+  SetCapsLockState, Off
+  Return
+}
+
 /*
   This sections defines the Functions to Initialize, Read, and Saves the settings from the file defined by the variable %iniFile% - set in MASTER-SCRIPT.ahk (around line 37)
   INI_Init(inifile)     ;prepares the global variables to be populated
