@@ -3,8 +3,6 @@
 @echo ===================
 @echo.
 
-@SET rootFolder=%BKB_ROOT%
-
 REM get some info about the month and day
 for /f %%i in ('powershell ^(get-date^).Month') do set mon=%%i
 for /f %%i in ('powershell ^(get-date^).Day') do set dom=%%i

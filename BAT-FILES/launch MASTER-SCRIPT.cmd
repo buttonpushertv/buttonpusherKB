@@ -1,4 +1,2 @@
-SET rootFolder=%BKB_ROOT%
-)
-cd %rootFolder%
+cd %BKB_ROOT%
 MASTER-SCRIPT.ahk

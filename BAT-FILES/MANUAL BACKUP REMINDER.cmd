@@ -5,15 +5,11 @@
 @echo.
 @echo.
 
-SET rootFolder=%BKB_ROOT%
-)
-
 REM Set working directory to the location of the SCHEDULED-BATS
-CD %rootFolder%\BAT-FILES\SCHEDULED-BATS
+CD %BKB_ROOT%\BAT-FILES\SCHEDULED-BATS
 
 REM run DAILY CMD
-call 0_system_backup_reminder.cmd %rootFolder%
-
+call 0_system_backup_reminder.cmd
 CD ..
 
 @echo -----------------------------------
