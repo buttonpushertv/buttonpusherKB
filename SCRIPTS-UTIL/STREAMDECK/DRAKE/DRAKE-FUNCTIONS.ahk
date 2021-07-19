@@ -480,7 +480,7 @@ fffSettingsCreator(selectedPath) { ; This function sets up the freefilesync back
 		Return ; if they answer No, then we return & do nothing further
 	; If user answers Yes then code contiues
 	; ASK for the destination where freefilesync will backup the source
-	InputBox, backupPath, Backup Destination?, Where should the backup be stored?,,,,,,,,%fffDestinationFullPath% 
+	InputBox, backupPath, Backup Destination?, Where should the backup be stored?,,800,,,,,,%fffDestinationFullPath% 
 
 	backupSettingToCreate =  %Settings_rootFolder%\PRIVATE\%A_ComputerName%\_fff-backup-settings\%projectName%-backup.ffs_batch ; and this is the settings file along with full path that will created below
 
