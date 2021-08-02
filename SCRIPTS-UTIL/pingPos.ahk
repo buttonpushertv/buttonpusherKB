@@ -44,7 +44,7 @@ pingPos(sx,sy,mode){
     UpdateLayeredWindow(hwnd, hdc,offsetSX,offsetSY,w,h)
     Gdip_DisposeImage(pBitmap)
     ;MSgBox,4096,,Sent: x:%sx% y:%sy%`nhalfWidth: %halfWidth% halfHeight:%halfHeight%`nOffset: x:%offsetSX% y:%offsetSY%`npingFile: %pingFile%`nmode: %mode%`nbitmap h: %h% width:%w%, 10
-    Sleep, 8000
+    Sleep, 5000
     destroyGDIplusGUI()
 return
 }

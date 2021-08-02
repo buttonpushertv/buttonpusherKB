@@ -174,20 +174,23 @@ return
 
 ^+!i:: ; <-- Find Coordinates of Sequence Timecode so 'Get Current Timecode of Sequence' below knows where to look.
   getTCDisplayCoords(xposP, yposP)
-  Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Window"
+  Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Screen"
   ;MSGBOX, , DEBUG, This is what came back from the function: X=%xposP% / Y=%yposP%
   Return
 
 +!i:: ; <-- Get Current Timecode of Sequence
+  CoordMode, Mouse, Screen
   grabTCAsText(grabbedTC, xposP, yposP)
-  MSGBOX,,Timecode value read..., This is the value of grabbedTC: %grabbedTC% `nThis is the value stored on the clipboard: %clipboard%`n`nYou can send this to other apps by editing %A_ScriptName% and using the function 'grabTCAsText' (see PREMIERE-PRO-FUNCTIONS.ahk for more info)., 4
+  ToolTip, Grabbed %grabbedTC% to Clipboard
+  RemoveToolTip(2000)
+  ;MSGBOX,,Timecode value read..., This is the value of grabbedTC: %grabbedTC% `nThis is the value stored on the clipboard: %clipboard%`n`nYou can send this to other apps by editing %A_ScriptName% and using the function 'grabTCAsText' (see PREMIERE-PRO-FUNCTIONS.ahk for more info)., 2
   Return
 
-^!i::
-  CoordMode, Mouse, Window
+^!i:: ; <-- Show coords that are stored
+  CoordMode, Mouse, Screen
   MouseMove, xposP, yposP
-  Tooltip, xposP:%xposP%/yposP:%yposP%
-  Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Window"
+  Tooltip, Mouse positioned at:`nxposP:%xposP%/yposP:%yposP%
+  Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Screen"
   RemoveToolTip(2500)
   Return
 

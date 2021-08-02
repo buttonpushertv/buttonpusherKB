@@ -295,13 +295,14 @@ getTCDisplayCoords(ByRef xposP, ByRef yposP) ; this will revise the stored value
 {
     global inifile
     global Settings_rootFolder
-    CoordMode, Mouse, Window
+    CoordMode, Mouse, Screen
     xposPOld := xposP ; storing the previous X position
     yposPOld := yposP ; storing the previous Y position
     MouseGetPos, xposPNew, yposPNew ;---storing cursor's current coordinates at X%xposPNew% Y%yposPNew%
     ;Tooltip, X=%xposPNew% / Y=%yposPNew%`nGrabbing the X & Y coordinates of the mouse cursor`nMake sure it is over the Program Monitor's timecode display (lower left).`n`n(Previous values: X=%xposPOld% / Y=%yposPOld%)
     ;RemoveToolTip(4000)
-    Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Window"
+    prFocus("program") ; Activating the Program Monitor
+    Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Screen"
     MsgBox, 35, Update TC Display Coords?, Make sure cursor is over the Program Monitor's Timecode Display (lower left).`n`nX=%xposPNew% / Y=%yposPNew%`nThese are the coordinates that were grabbed.`nWould you like to save these in settings.ini?`n`nYes will save.`nNo will just update them until script is reloaded.`nCancel will reset them to settings.ini values.`n`n(Previous values: X=%xposPOld% / Y=%yposPOld%)
     xposP := xposPNew ; storing new values in xposP - this should cover the 'No' selection case
     yposP := yposPNew ; storing new values in yposP - this should cover the 'No' selection case
@@ -327,10 +328,10 @@ grabTCAsText(ByRef grabbedTC, ByRef xposP, ByRef yposP)
     }
     prFocus("program") ; Activating the Program Monitor
     Sleep, 333
-    CoordMode, Mouse, Window
+    CoordMode, Mouse, Screen
     MouseGetPos, xposTEMP, yposTEMP ;---storing cursor's current coordinates at X%xposTEMP% Y%yposTEMP%
     Tooltip, Attempting a click at: X=%xposP% / Y=%yposP%`nIf this misclicks`, position cursor over TC display in Program Monitor then press CTRL-SHIFT-ALT-I to capture coordinates.
-    RemoveToolTip(5000)
+    RemoveToolTip(2000)
     ;BlockInput, On
     MouseMove, xposP, yposP
     Click, %xposP%, %yposP%, 0
@@ -347,7 +348,7 @@ grabTCAsText(ByRef grabbedTC, ByRef xposP, ByRef yposP)
     ;BlockInput, Off
     MouseMove, xposTEMP, yposTEMP ; putting cursor back where it was before hotkey was invoked
     grabbedTC = %clipboard%
-    Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Window"
+    Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Screen"
     Return grabbedTC
 }
 
