@@ -355,6 +355,45 @@ Return
 ;+^!f14::
 ;+^!f15::
 ;+^!f16::
+;+^!f17::
++^!f18:: ;<-- Grabbing a single frame to export & add TC into the name
+  Send, !{F3} ; clear in & out marks
+  ; mark in & out on single frame
+  Send, i 
+  Sleep, sleepShort
+  Send, o
+  Sleep, sleepShort
+  ; grab current playhead TC
+  CoordMode, Mouse, Screen
+  grabTCAsText(grabbedTC, xposP, yposP)
+  ToolTip, Grabbed %grabbedTC% to Clipboard
+  RemoveToolTip(2000)
+  ; open export dialog
+  Send, !e
+  Sleep, sleepShort
+  ; add TC to export filename
+  Click, 1814, 465
+  Sleep, sleepShort
+  Send, {Right}
+  Sleep, sleepShort
+  Send, {Left}{Left}{Left}{Left}
+  Sleep, sleepShort
+  Send, -
+  Sleep, sleepShort
+  Send, %clipboard%
+  Sleep, sleepShort
+  Send, {Enter}
+  Sleep, sleepLong
+  ; set export to 'Seq In/Out'
+  Click, 985, 1221
+  Sleep, sleepShort
+  Click, 985, 1260
+  Sleep, sleepShort
+  ; export the frame
+  Click, 1870, 1210
+  ; activate FreeCommander
+  WinActivate, ahk_exe FreeCommander.exe
+Return
 
 #IfWinActive
 
