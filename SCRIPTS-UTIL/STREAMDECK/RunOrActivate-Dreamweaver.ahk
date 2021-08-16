@@ -37,7 +37,7 @@ sleepDeep := 3500
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 DetectHiddenWindows, On
-LaunchCode := "C:\Program Files\Adobe\Adobe Dreamweaver 2020\Dreamweaver.exe"
+LaunchCode := "C:\Program Files\Adobe\Adobe Dreamweaver 2021\Dreamweaver.exe"
 WindowTitle := "ahk_exe Dreamweaver.exe"
 
 ;MsgBox,,Attempt,Trying to run or activate:`n%WindowLaunch%,2

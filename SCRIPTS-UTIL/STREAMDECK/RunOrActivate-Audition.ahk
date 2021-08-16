@@ -37,7 +37,7 @@ sleepDeep := 3500
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 DetectHiddenWindows, On
-LaunchCode := "C:\Program Files\Adobe\Adobe Audition 2020\Adobe Audition.exe"
+LaunchCode := "C:\Program Files\Adobe\Adobe Audition 2021\Adobe Audition.exe"
 WindowTitle := "ahk_exe Adobe Audition.exe"
 
 ;MsgBox,,Attempt,Trying to run or activate:`n%WindowLaunch%,2

@@ -37,7 +37,7 @@ sleepDeep := 3500
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 DetectHiddenWindows, On
-LaunchCode := "C:\Program Files\Adobe\Adobe Bridge 2020\Bridge.exe"
+LaunchCode := "C:\Program Files\Adobe\Adobe Bridge 2021\Bridge.exe"
 WindowTitle := "ahk_exe Bridge.exe"
 
 ;MsgBox,,Attempt,Trying to run or activate:`n%WindowLaunch%,2

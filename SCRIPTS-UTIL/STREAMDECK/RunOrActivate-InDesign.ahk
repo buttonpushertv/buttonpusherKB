@@ -37,7 +37,7 @@ sleepDeep := 3500
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 DetectHiddenWindows, On
-LaunchCode := "C:\Program Files\Adobe\Adobe InDesign 2020\InDesign.exe"
+LaunchCode := "C:\Program Files\Adobe\Adobe InDesign 2021\InDesign.exe"
 WindowTitle := "ahk_exe InDesign.exe"
 
 ;MsgBox,,Attempt,Trying to run or activate:`n%WindowLaunch%,2
