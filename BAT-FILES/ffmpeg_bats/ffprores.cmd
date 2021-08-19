@@ -10,3 +10,5 @@ if not exist "originals\" (
 ffmpeg -i %1 -c:v prores -profile:v 3 %newname%
 
 move %1 originals\
+
+%BKB_ROOT%\SCRIPTS-UTIL\play_a_sound.ahk "C:\BKB\SUPPORTING-FILES\SOUNDS\PB - Sci-Fi UI Free SFX\PremiumBeat SFX\PremiumBeat_0013_cursor_selection_11.wav" "Conversion is done! Original moved to 'originals' folder" 4000
