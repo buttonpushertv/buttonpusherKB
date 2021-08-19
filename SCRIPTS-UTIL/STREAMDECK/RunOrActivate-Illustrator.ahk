@@ -37,7 +37,7 @@ sleepDeep := 3500
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 DetectHiddenWindows, On
-LaunchCode := "C:\Program Files\Adobe\Adobe Illustrator 2020\Adobe Illustrator 2020.lnk"
+LaunchCode := "C:\Program Files\Adobe\Adobe Illustrator 2021\Adobe Illustrator 2020.lnk"
 WindowTitle := "ahk_exe Illustrator.exe"
 
 ;MsgBox,,Attempt,Trying to run or activate:`n%WindowLaunch%,2

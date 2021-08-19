@@ -37,7 +37,7 @@ sleepDeep := 3500
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 DetectHiddenWindows, On
-LaunchCode := "C:\Program Files\Adobe\Adobe Media Encoder 2020\Adobe Media Encoder.exe"
+LaunchCode := "C:\Program Files\Adobe\Adobe Media Encoder 2021\Adobe Media Encoder.exe"
 WindowTitle := "ahk_exe Adobe Media Encoder.exe"
 
 ;MsgBox,,Attempt,Trying to run or activate:`n%WindowLaunch%,2

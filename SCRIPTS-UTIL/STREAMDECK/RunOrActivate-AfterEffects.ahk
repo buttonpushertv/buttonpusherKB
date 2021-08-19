@@ -37,7 +37,7 @@ sleepDeep := 3500
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 DetectHiddenWindows, On
-LaunchCode := "C:\Program Files\Adobe\Adobe After Effects 2020\Adobe After Effects 2020.lnk"
+LaunchCode := "C:\Program Files\Adobe\Adobe After Effects 2021\Adobe After Effects 2020.lnk"
 WindowTitle := "ahk_exe AfterFX.exe"
 
 ;MsgBox,,Attempt,Trying to run or activate:`n%WindowLaunch%,2
