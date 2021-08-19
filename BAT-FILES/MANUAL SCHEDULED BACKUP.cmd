@@ -1,4 +1,4 @@
-@echo on
+@echo off
 
 @REM The line below is mostly for new or first times running this BAT file. If the commands below this can't find the paths to the files they are looking for it will fail.
 @IF NOT EXIST %BKB_ROOT%\PRIVATE\%computername% mkdir %BKB_ROOT%\PRIVATE\%computername%

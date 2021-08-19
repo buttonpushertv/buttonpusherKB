@@ -1,4 +1,4 @@
-@echo on
+@echo off
 @echo =============================
 @echo MANUALLY RUNNING DAILY BACKUP
 @echo =============================
