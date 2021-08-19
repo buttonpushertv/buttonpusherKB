@@ -1,5 +1,5 @@
 @echo off
 
-@cd %rootFolder%
+@cd %BKB_ROOT%
 
 BKB-LAUNCHER.ahk
