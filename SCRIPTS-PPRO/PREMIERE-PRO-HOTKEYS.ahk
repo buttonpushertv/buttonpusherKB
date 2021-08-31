@@ -340,7 +340,16 @@ return
   prFocus("timeline") ; set timeline as the focused window in PPRO
 Return
 
-;+^!f2:: 
++^!f2:: ;<-- Select text from cursor location to beginning of line, delete, & paste from clipboard
+  Send, {Shift Down}{Home}{Shift Up}
+  Sleep, sleepShort
+  Send, {Delete}
+  Sleep, sleepShort
+  Send, ^v
+  Sleep, sleepShort
+  Send, {Enter}
+  Return
+
 ;+^!f3::
 ;+^!f4::
 ;+^!f5:: ; [USED by PPRO to Toggle Transmit(Video Playback)]
