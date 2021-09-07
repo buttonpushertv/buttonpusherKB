@@ -32,6 +32,27 @@ sleepDeep := 3500
 #IfWinActive, ahk_exe chrome.exe
 CoordMode, Mouse, Client
 
+^F24:: ; <-- Reload CHROME-HOTKEYS.ahk
+    MSGBOX, , DEBUG,Reloading Chrome-Hotkeys
+    Reload
+    Return
+
+#IfWinActive
+;===== FUNCTIONS ===============================================================================
+
+shutterStockClickAndClose() {
+    Click, 600, 715
+    Sleep, 1500
+    Send, {Control Down}w
+    Send, {Blind}{Control Up}
+    Return
+}
+
+
+;====== INACTIVE HOTKEYS =======================================================================
+; Hotkey defs here to hold them inactive for later use.
+/*
+
 F21:: ; <-- Downloading Comps from a ShutterStock Single Image page
     ; This will auto-magically download comp versions of video clips from iStockPhoto.com
     ; It will do this by doing the following: 
@@ -155,18 +176,7 @@ F24:: ; <-- Downloading Comps from an iStockPhoto Board
     MouseMove, xposP, yposP
     Return
 
-^F24:: ; <-- Reload CHROME-HOTKEYS.ahk
-    MSGBOX, , DEBUG,Reloading Chrome-Hotkeys
-    Reload
-    Return
 
-#IfWinActive
-;===== FUNCTIONS ===============================================================================
 
-shutterStockClickAndClose() {
-    Click, 600, 715
-    Sleep, 1500
-    Send, {Control Down}w
-    Send, {Blind}{Control Up}
-    Return
-}
+
+*/
