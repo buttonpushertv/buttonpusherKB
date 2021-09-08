@@ -1,4 +1,4 @@
-=========================== PREMIERE-PRO-HOTKEYS ===========================
+=========================== ILLUSTRATOR-HOTKEYS ===========================
 
 SHIFT+1                 <-- Set Opacity to 10%
 SHIFT+2                 <-- Set Opacity to 100%
