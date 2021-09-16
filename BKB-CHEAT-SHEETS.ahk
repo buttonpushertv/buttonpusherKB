@@ -385,6 +385,9 @@ thirdShower: ; Display an Text CheatSheet of App Specific Keyboard Shortcuts (mo
 	else
 	If WinActive("ahk_exe Everything.exe")
 				fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-EVERYTHING.txt"
+	else
+	If WinActive("ahk_exe Notepad++.exe")
+				fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\KBF3-NOTEPAD++.txt"
 	else		
     fileToShow := "SUPPORTING-FILES\CHEAT-SHEETS\NO-CHEATSHEET.txt"
 

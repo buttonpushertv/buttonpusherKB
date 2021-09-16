@@ -1,32 +1,6 @@
-======================== GOOGLE-CHROME-BUILT-IN HOTKEYS =========================
-Ctrl+N             Open a new window
-Ctrl+Shft+N        Open a new window in incognito mode
-Ctrl+click a link  Open link in a new tab
-Shft+click a link Open link in a new window
-Alt+F4            Close current window
-Ctrl+T            Open a new tab
-Ctrl+Shft+T       Reopen the last tab you've closed. Google Chrome remembers the last 10 tabs you've closed.
-Drag link to tab  Open link in specified tab
-Drag link to space between tabs  Open link in a new tab in the specified position on the tab strip
 
-Ctrl+1 to Ctrl+8  Switch to the tab at the specified position number. The number you press represents a position on the tab strip.
-Ctrl+9            Switch to the last tab
-Ctrl+Tab          Switch to the next tab
-Ctrl+Shft+Tab     Switch to the previous tab
-Ctrl+PgDown       Switch to the next tab
-Ctrl+PgUp         Switch to the previous tab
-
-Ctrl+W or Ctrl+F4 Close current tab or pop-up
-Alt+Home          Open your homepage
-Ctrl+O, select file Open a file from your computer in Google Chrome
+=========================== MASTER SCAF KEYS - NOTEPAD++ ===========================
+(These are defined within PRIVATE/MASTER-SCAF-KEY.ahk - not synced to Github - Ben)
 
 
-=========================== GOOGLE-CHROME-AUTOHOTKEYS ===========================
-
-F19      <-- Downloading Comps from a ShutterStock Single Image page
-F20      <-- Downloading Comps from a ShutterStock Board
-F23      <-- Downloading Comps from an iStockPhoto Single Video Page
-F24      <-- Downloading Comps from an iStockPhoto Board
-
-Ctrl+F24 <-- Reload CHROME-HOTKEYS.ahk
 

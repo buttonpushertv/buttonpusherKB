@@ -53,18 +53,311 @@ OnExit, GdiplusExit
 
 #IfWinActive, ahk_exe Illustrator.exe
 
-+^!F5:: ; <-- Clicking on 'Vertical Distribute Center' FOR TYPE ONLY
++^!F1:: ; <-- Clicking on 'Vertical Distribute Center' FOR TYPE ONLY
     ;- why can't this be assigned a key board shortcut in Illustrator?!?
     ; 'clickRadar' is a function below. You give it the coordinates you want to click & it does the rest.
     clickRadar(1750, 65)
     Return
 
 
-+^!F6:: ; <-- Clicking on 'Vertical Distribute Center' FOR MIXED OBJECTS
++^!F2:: ; <-- Clicking on 'Vertical Distribute Center' FOR MIXED OBJECTS
     ;- why can't this be assigned a key board shortcut in Illustrator?!?
     ; 'clickRadar' is a function below. You give it the coordinates you want to click & it does the rest.
     clickRadar(1056,66) 
     Return
+
+#IfWinActive, ahk_exe Illustrator.exe
++^!f12:: ; <--ILLUSTRATOR: Resetting a PLAIN Keyboard Template Key to PLAIN & set to opacity 10%
+    ;ITEM LOOP STARTS HERE
+    Sleep, sleepMedium
+    Click
+    Sleep, sleepMedium
+    Click,2
+    Sleep, sleepMedium
+    Send, {Control Down}
+    Sleep, sleepShort
+    Send, a
+    Sleep, sleepShort
+    Send, {Control Up}
+    Sleep, sleepMedium
+    Send, PLAIN
+    Sleep, sleepMedium
+    Send, {ESC}
+    Sleep, sleepMedium
+    Send, {Shift Down}
+    Sleep, sleepShort
+    Send, 1
+    Sleep, sleepShort
+    Send, {Shift Up}
+    Sleep, sleepShort
+    Send, {Control Down}
+    Sleep, sleepShort
+    Send, {Shift Down}
+    Sleep, sleepShort
+    Send, a
+    Sleep, sleepShort
+    Send, {Shift Up}
+    Sleep, sleepShort
+    Send, {Control Up}
+    Sleep, sleepShort
+    ;ITEM LOOP ENDS HERE
+    SoundBeep
+    return
++^!f13::  ; <-- Resetting a CONTROL Keyboard Template Key to CONTROL & set to opacity 10%
+    ;ITEM LOOP STARTS HERE
+    Sleep, sleepShort
+    Click
+    Sleep, sleepMedium
+    Click,2
+    Sleep, sleepMedium
+    Send, {Control Down}
+    Sleep, sleepShort
+    Send, a
+    Sleep, sleepShort
+    Send, {Control Up}
+    Sleep, sleepMedium
+    Send, CONTROL
+    Sleep, sleepMedium
+    Send, {ESC}
+    Sleep, sleepMedium
+    Send, {Shift Down}
+    Sleep, sleepShort
+    Send, 1
+    Sleep, sleepShort
+    Send, {Shift Up}
+    Sleep, sleepShort
+    Send, {Control Down}
+    Sleep, sleepShort
+    Send, {Shift Down}
+    Sleep, sleepShort
+    Send, a
+    Sleep, sleepShort
+    Send, {Shift Up}
+    Sleep, sleepShort
+    Send, {Control Up}
+    Sleep, sleepShort
+    ;ITEM LOOP ENDS HERE
+    SoundBeep
+    return
++^!f14:: ; <-- Resetting a ALT Keyboard Template Key to ALT & set to opacity 10%
+    ;ITEM LOOP STARTS HERE
+    Sleep, sleepShort
+    Click
+    Sleep, sleepMedium
+    Click,2
+    Sleep, sleepMedium
+    Send, {Control Down}
+    Sleep, sleepShort
+    Send, a
+    Sleep, sleepShort
+    Send, {Control Up}
+    Sleep, sleepMedium
+    Send, ALT
+    Sleep, sleepMedium
+    Send, {ESC}
+    Sleep, sleepMedium
+    Send, {Shift Down}
+    Sleep, sleepShort
+    Send, 1
+    Sleep, sleepShort
+    Send, {Shift Up}
+    Sleep, sleepShort
+    Send, {Control Down}
+    Sleep, sleepShort
+    Send, {Shift Down}
+    Sleep, sleepShort
+    Send, a
+    Sleep, sleepShort
+    Send, {Shift Up}
+    Sleep, sleepShort
+    Send, {Control Up}
+    Sleep, sleepShort
+    ;ITEM LOOP ENDS HERE
+    SoundBeep
+    return
++^!f15:: ; <-- Resetting a SHIFT Keyboard Template Key to SHIFT & set to opacity 10%
+    ;ITEM LOOP STARTS HERE
+    Sleep, sleepShort
+    Click
+    Sleep, sleepMedium
+    Click,2
+    Sleep, sleepMedium
+    Send, {Control Down}
+    Sleep, sleepShort
+    Send, a
+    Sleep, sleepShort
+    Send, {Control Up}
+    Sleep, sleepMedium
+    Send, SHIFT
+    Sleep, sleepMedium
+    Send, {ESC}
+    Sleep, sleepMedium
+    Send, {Shift Down}
+    Sleep, sleepShort
+    Send, 1
+    Sleep, sleepShort
+    Send, {Shift Up}
+    Sleep, sleepShort
+    Send, {Control Down}
+    Sleep, sleepShort
+    Send, {Shift Down}
+    Sleep, sleepShort
+    Send, a
+    Sleep, sleepShort
+    Send, {Shift Up}
+    Sleep, sleepShort
+    Send, {Control Up}
+    Sleep, sleepShort
+    ;ITEM LOOP ENDS HERE
+    SoundBeep
+    return
++^!f16:: ; <-- Resetting a CTRL+ALT Keyboard Template Key to CTRL+ALT & set to opacity 10%
+    ;ITEM LOOP STARTS HERE
+    Sleep, sleepShort
+    Click
+    Sleep, sleepMedium
+    Click,2
+    Sleep, sleepMedium
+    Send, {Control Down}
+    Sleep, sleepShort
+    Send, a
+    Sleep, sleepShort
+    Send, {Control Up}
+    Sleep, sleepMedium
+    Send, CTRL{+}ALT
+    Sleep, sleepMedium
+    Send, {ESC}
+    Sleep, sleepMedium
+    Send, {Shift Down}
+    Sleep, sleepShort
+    Send, 1
+    Sleep, sleepShort
+    Send, {Shift Up}
+    Sleep, sleepShort
+    Send, {Control Down}
+    Sleep, sleepShort
+    Send, {Shift Down}
+    Sleep, sleepShort
+    Send, a
+    Sleep, sleepShort
+    Send, {Shift Up}
+    Sleep, sleepShort
+    Send, {Control Up}
+    Sleep, sleepShort
+    ;ITEM LOOP ENDS HERE
+    SoundBeep
+    return
++^!f17::  ; <-- Resetting a CTRL+SHIFT Keyboard Template Key to CTRL+SHIFT & set to opacity 10%
+    ;ITEM LOOP STARTS HERE
+    Sleep, sleepShort
+    Click
+    Sleep, sleepMedium
+    Click,2
+    Sleep, sleepMedium
+    Send, {Control Down}
+    Sleep, sleepShort
+    Send, a
+    Sleep, sleepShort
+    Send, {Control Up}
+    Sleep, sleepMedium
+    Send, CTRL{+}SHIFT
+    Sleep, sleepMedium
+    Send, {ESC}
+    Sleep, sleepMedium
+    Send, {Shift Down}
+    Sleep, sleepShort
+    Send, 1
+    Sleep, sleepShort
+    Send, {Shift Up}
+    Sleep, sleepShort
+    Send, {Control Down}
+    Sleep, sleepShort
+    Send, {Shift Down}
+    Sleep, sleepShort
+    Send, a
+    Sleep, sleepShort
+    Send, {Shift Up}
+    Sleep, sleepShort
+    Send, {Control Up}
+    Sleep, sleepShort
+    ;ITEM LOOP ENDS HERE
+    SoundBeep
+    return
++^!f18::  ; <-- Resetting a ALT+SHIFT Keyboard Template Key to ALT+SHIFT & set to opacity 10%
+    ;ITEM LOOP STARTS HERE
+    Sleep, sleepShort
+    Click
+    Sleep, sleepMedium
+    Click,2
+    Sleep, sleepMedium
+    Send, {Control Down}
+    Sleep, sleepShort
+    Send, a
+    Sleep, sleepShort
+    Send, {Control Up}
+    Sleep, sleepMedium
+    Send, ALT{+}SHIFT
+    Sleep, sleepMedium
+    Send, {ESC}
+    Sleep, sleepMedium
+    Send, {Shift Down}
+    Sleep, sleepShort
+    Send, 1
+    Sleep, sleepShort
+    Send, {Shift Up}
+    Sleep, sleepShort
+    Send, {Control Down}
+    Sleep, sleepShort
+    Send, {Shift Down}
+    Sleep, sleepShort
+    Send, a
+    Sleep, sleepShort
+    Send, {Shift Up}
+    Sleep, sleepShort
+    Send, {Control Up}
+    Sleep, sleepShort
+    ;ITEM LOOP ENDS HERE
+    SoundBeep
+    return
++^!f19::   ; <-- Resetting a CTRL+ALT+SHIFT Keyboard Template Key to CTRL+ALT+SHIFT & set to opacity 10%
+    ;ITEM LOOP STARTS HERE
+    Sleep, sleepShort
+    Click
+    Sleep, sleepMedium
+    Click,2
+    Sleep, sleepMedium
+    Send, {Control Down}
+    Sleep, sleepShort
+    Send, a
+    Sleep, sleepShort
+    Send, {Control Up}
+    Sleep, sleepMedium
+    Send, CTRL{+}ALT{+}SHIFT
+    Sleep, sleepMedium
+    Send, {ESC}
+    Sleep, sleepMedium
+    Send, {Shift Down}
+    Sleep, sleepShort
+    Send, 1
+    Sleep, sleepShort
+    Send, {Shift Up}
+    Sleep, sleepShort
+    Send, {Control Down}
+    Sleep, sleepShort
+    Send, {Shift Down}
+    Sleep, sleepShort
+    Send, a
+    Sleep, sleepShort
+    Send, {Shift Up}
+    Sleep, sleepShort
+    Send, {Control Up}
+    Sleep, sleepShort
+    ;ITEM LOOP ENDS HERE
+    SoundBeep
+    return
+#IfWinActive
+
+
 
 #IfWinActive
 
