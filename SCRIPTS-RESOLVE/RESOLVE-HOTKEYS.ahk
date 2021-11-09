@@ -145,15 +145,17 @@ seekText =
 ; these send commands will perform a replace on the seekText comment and replace it with formattedText
 Sleep, sleepShort
 Send, ^h
-Sleep, sleepShort
-Send, +{Tab}
-Sleep, sleepShort
+Sleep, sleepMedium
+; Send, +{Tab}
+;Sleep, sleepShort
 Send, %seekText%
-Sleep, sleepShort
-Send, {Tab}
+Sleep, sleepMedium
+Send, {Tab}{BackSpace}
 Sleep, sleepShort
 Send, ^v
-Sleep, sleepShort
+Sleep, sleepMedium
+Send, !r
+Sleep, sleepMedium
 Send, !r
 Sleep, sleepMedium
 Send, {Escape}{Escape}

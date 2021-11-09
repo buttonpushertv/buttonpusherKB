@@ -24,6 +24,99 @@ In order to create these variable defintions, there is another grabbing script. 
 MASTER LIST OF VARIABLES
 ========================
 
+; SYSTEM SETTINGS PANEL
+; Loc X systemSettingsPanel
+; Loc X systemSettingsMemoryAndGPU
+; Loc X systemSettingsMediaStorage
+; Loc X systemSettingsDecodeOptions
+; Loc X systemSettingsVideoAndAudioIO
+; Loc X systemSettingsVideoPlugins
+; Loc X systemSettingsAudioPlugins
+; Loc X systemSettingsControlPanels
+; Loc X systemSettingsGeneral
+; Loc X systemSettingsInternetAccounts
+; Loc X systemSettingsAdvanced
+; Loc X systemSettingsUser
+; Loc X systemSettingsUserUISettings
+; Loc X systemSettingsUserProjectSaveAndLoad
+; Loc X systemSettingsUserEditing
+; Loc X systemSettingsUserColor
+; Loc X systemSettingsUserFairlight
+; Loc X systemSettingsUserPlaybackSettings
+; Loc X systemSettingsUserControlPanels
+; Loc X systemSettingsUserMetadata
+
+; PROJECT SETTINGS PANEL
+; Loc X projectSettings
+; Loc X projectSettingsCameraRaw
+; Loc X projectSettingsCaptureAndPlayback
+; Loc X projectSettingsColorManagement
+; Loc X projectSettingsFairlight
+; Loc X projectSettingsGeneralOptions
+; Loc X projectSettingsImageScaling
+; Loc X projectSettingsMasterSettings
+; Loc X projectSettingsPresets
+; Loc X projectSettingsSubtitles
+
+; COLOR PANEL
+; Loc X colorClipsToggle
+; Loc X colorCurves
+; Loc X colorCurvesBlue
+; Loc X colorCurvesChannelReset
+; Loc X colorCurvesCustom
+; Loc X colorCurvesGreen
+; Loc X colorCurvesHueBlue
+; Loc X colorCurvesHueCyan
+; Loc X colorCurvesHueGreen
+; Loc X colorCurvesHueMagenta
+; Loc X colorCurvesHueRed
+; Loc X colorCurvesHueVsHue
+; Loc X colorCurvesHueVsLum
+; Loc X colorCurvesHueVsSat
+; Loc X colorCurvesHueYellow
+; Loc X colorCurvesLink
+; Loc X colorCurvesLumBlack
+; Loc X colorCurvesLuminance
+; Loc X colorCurvesLumVsSat
+; Loc X colorCurvesLumWhite
+; Loc X colorCurvesRed
+; Loc X colorCurvesResetAll
+; Loc X colorCurvesSatVsLum
+; Loc X colorCurvesSatVsSat
+; Loc X colorCurvesSplineToggle
+; Loc X colorGalleryStillsListView
+; Loc X colorGalleryStillsThumbView
+; Loc X colorGalleryToggle
+; Loc X colorInfoPalette
+; Loc X colorKeyframePalette
+; Loc X colorKeyframePaletteSetToAll
+; Loc X colorKeyframePaletteSetToColor
+; Loc X colorKeyframePaletteSetToSizing
+; Loc X colorLightboxToggle
+; Loc X colorLutsToggle
+; Loc X colorMediaPoolToggle
+; Loc X colorNodesCleanup
+; Loc X colorNodesClipDisplay
+; Loc X colorNodesFitToWindow
+; Loc X colorNodesTimelineDisplay
+; Loc X colorNodesToggle
+; Loc X colorOpenfxToggle
+; Loc X colorStillsToggle
+; Loc X colorTimelineToggle
+; Loc X colorWaveformPalette
+
+; EDIT PANEL
+; Loc X editEditIndexToggle
+; Loc X editEffectsLibraryToggle
+; Loc X editInspectorToggle
+; Loc X editMediaPoolToggle
+; Loc X editMetadataToggle
+; Loc X editMixerToggle
+; Loc X editShrinkLeftPanelsToggle
+; Loc X editShrinkRightPanelsToggle
+; Loc X editSoundLibraryToggle
+
+
 */
 
 global Location_currentSystemLocation :=
@@ -35,6 +128,105 @@ IniRead, Location_currentSystemLocation, %iniFile%, Location, currentSystemLocat
 global versionFile := Settings_rootFolder . "version.ini" ; the file which holds the current version of buttonpusherKB
 global version ; creating a global variable for the version info
 FileRead, version, %versionFile% ; reading the version from versionFile
+
+if ( Location_currentSystemLocation = 1 ) {
+; SYSTEM SETTINGS PANEL
+; Loc 1 systemSettingsPanel
+; Loc 1 systemSettingsMemoryAndGPU
+; Loc 1 systemSettingsMediaStorage
+; Loc 1 systemSettingsDecodeOptions
+; Loc 1 systemSettingsVideoAndAudioIO
+; Loc 1 systemSettingsVideoPlugins
+; Loc 1 systemSettingsAudioPlugins
+; Loc 1 systemSettingsControlPanels
+; Loc 1 systemSettingsGeneral
+; Loc 1 systemSettingsInternetAccounts
+; Loc 1 systemSettingsAdvanced
+; Loc 1 systemSettingsUser
+; Loc 1 systemSettingsUserUISettings
+; Loc 1 systemSettingsUserProjectSaveAndLoad
+; Loc 1 systemSettingsUserEditing
+; Loc 1 systemSettingsUserColor
+; Loc 1 systemSettingsUserFairlight
+; Loc 1 systemSettingsUserPlaybackSettings
+; Loc 1 systemSettingsUserControlPanels
+; Loc 1 systemSettingsUserMetadata
+
+; PROJECT SETTINGS PANEL
+; Loc 1 projectSettings
+; Loc 1 projectSettingsCameraRaw
+; Loc 1 projectSettingsCaptureAndPlayback
+; Loc 1 projectSettingsColorManagement
+; Loc 1 projectSettingsFairlight
+; Loc 1 projectSettingsGeneralOptions
+; Loc 1 projectSettingsImageScaling
+; Loc 1 projectSettingsMasterSettings
+; Loc 1 projectSettingsPresets
+; Loc 1 projectSettingsSubtitles
+
+; COLOR PANEL
+; Loc 1 colorClipsToggle
+; Loc 1 colorCurves
+; Loc 1 colorCurvesBlue
+; Loc 1 colorCurvesChannelReset
+; Loc 1 colorCurvesCustom
+; Loc 1 colorCurvesGreen
+; Loc 1 colorCurvesHueBlue
+; Loc 1 colorCurvesHueCyan
+; Loc 1 colorCurvesHueGreen
+; Loc 1 colorCurvesHueMagenta
+; Loc 1 colorCurvesHueRed
+; Loc 1 colorCurvesHueVsHue
+; Loc 1 colorCurvesHueVsLum
+; Loc 1 colorCurvesHueVsSat
+; Loc 1 colorCurvesHueYellow
+; Loc 1 colorCurvesLink
+; Loc 1 colorCurvesLumBlack
+; Loc 1 colorCurvesLuminance
+; Loc 1 colorCurvesLumVsSat
+; Loc 1 colorCurvesLumWhite
+; Loc 1 colorCurvesRed
+; Loc 1 colorCurvesResetAll
+; Loc 1 colorCurvesSatVsLum
+; Loc 1 colorCurvesSatVsSat
+; Loc 1 colorCurvesSplineToggle
+; Loc 1 colorGalleryFoldersViewToggle
+colorGalleryFoldersViewToggleLocX = 14
+colorGalleryFoldersViewToggleLocY = 69
+; Loc 1 colorGalleryStillsListView
+; Loc 1 colorGalleryStillsThumbView
+; Loc 1 colorGalleryToggle
+colorGalleryToggleLocX = 33
+colorGalleryToggleLocY = 37
+; Loc 1 colorInfoPalette
+; Loc 1 colorKeyframePalette
+; Loc 1 colorKeyframePaletteSetToAll
+; Loc 1 colorKeyframePaletteSetToColor
+; Loc 1 colorKeyframePaletteSetToSizing
+; Loc 1 colorLightboxToggle
+; Loc 1 colorLutsToggle
+; Loc 1 colorMediaPoolToggle
+; Loc 1 colorNodesCleanup
+; Loc 1 colorNodesClipDisplay
+; Loc 1 colorNodesFitToWindow
+; Loc 1 colorNodesTimelineDisplay
+; Loc 1 colorNodesToggle
+; Loc 1 colorOpenfxToggle
+; Loc 1 colorStillsToggle
+; Loc 1 colorTimelineToggle
+; Loc 1 colorWaveformPalette
+
+; EDIT PANEL
+; Loc 1 editEditIndexToggle
+; Loc 1 editEffectsLibraryToggle
+; Loc 1 editInspectorToggle
+; Loc 1 editMediaPoolToggle
+; Loc 1 editMetadataToggle
+; Loc 1 editMixerToggle
+; Loc 1 editShrinkLeftPanelsToggle
+; Loc 1 editShrinkRightPanelsToggle
+; Loc 1 editSoundLibraryToggle
+}
 
 if ( Location_currentSystemLocation = 2 ) {
 ; SYSTEM SETTINGS PANEL
