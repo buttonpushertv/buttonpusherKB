@@ -24,9 +24,9 @@ currentLocY = % %locToGetY%
 tempSearchZoneX := (currentLocX - 10)
 tempSearchZoneY := (currentLocY + 10)
 
-PixelSearch, foundLocX, foundLocY, %currentLocX%, %currentLocY%, %tempSearchZoneX%, %tempSearchZoneY%, 0x28282E, 10, Fast
+PixelSearch, foundLocX, foundLocY, %currentLocX%, %currentLocY%, %tempSearchZoneX%, %tempSearchZoneY%, 0x282828, 10, Fast
 
-;PixelGetColor, foundPixelColor, %currentLocX%, %currentLocY%
+PixelGetColor, foundPixelColor, %currentLocX%, %currentLocY%
 MouseMove, %currentLocX%, %currentLocY%
 
 ;MSGBOX, foundPixelColor:%foundPixelColor%`n%foundLocX%`n%foundLocY%`ncurrentLocX:%currentLocX%`ncurrentLocY:%currentLocY%`ntempSearchZoneX:%tempSearchZoneX%`ntempSearchZoneY:%tempSearchZoneY%
@@ -39,9 +39,7 @@ else
 	Click, right, %foundLocX%, %foundLocY%
 	Sleep, 333
 	Send, {Down}{Down}{Down}{Down}{Down}{Down}{Down}{Down}{Down}{Down}{Enter}
-	Click, right, %foundLocX%, %foundLocY%
-	Sleep, 333
-	Send, {Down}{Down}{Down}{Down}{Down}{Down}{Down}{Enter}
-	MouseMove %x%, %y% ; restore the cursor to its location before 1-shot script was executed
+
+MouseMove %x%, %y% ; restore the cursor to its location before 1-shot script was executed
 
 ExitApp ; just to ensure the script exits

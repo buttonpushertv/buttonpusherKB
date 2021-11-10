@@ -31,6 +31,29 @@ sleepDeep := 3500
 
 #IfWinActive, ahk_exe notepad++.exe
 
+F13:: ; <-- Helper for setting cursor positions in Resolve. Used in conjunction with SCRIPTS-RESOLVE\RESOLVE-1SHOT-CONFIG.ahk
+    Send, {LShift Down}{End}{LShift Up}
+    Sleep, sleepShort
+    Send, ^c
+    Sleep, sleepShort
+    Send, {Home}
+    Sleep, sleepShort
+    WinActivate, ahk_exe Resolve.exe
+    ToolTip, Ready to grab cursor position of %clipboard%
+    RemoveToolTip(4000)
+Return
+
+
+^F24:: ; <-- Reload NOTEPAD++-HOTKEYS.ahk
+    MSGBOX, , DEBUG,Reloading Notepad++-Hotkeys
+    Reload
+    Return
+
+#IfWinActive
+
+;===== HOLDING TANK FOR DEACTIVATED HOTKEYS ====================================================
+/* Just a place to store Hotkeys that I don't need but want to keep around...just in case.
+
 +^!f13:: ; <-- HTML: wrap selected text in <strong>..</strong> tag
     WinActivate, ahk_exe notepad++.exe
     Send, ^c
@@ -128,16 +151,6 @@ F23:: ; <--DOKUWIKI: set headline to 5th Level
     Send, {Space}==
     Return
 
-^F24:: ; <-- Reload NOTEPAD++-HOTKEYS.ahk
-    MSGBOX, , DEBUG,Reloading Notepad++-Hotkeys
-    Reload
-    Return
-
-#IfWinActive
-
-;===== HOLDING TANK FOR DEACTIVATED HOTKEYS ====================================================
-/* Just a place to store Hotkeys that I don't need but want to keep around...just in case.
-
 	+^!F21:: ; <-- copy current line for robocopy - DC Comics project
 		Send, {Home}
 		Sleep, %sleepShort%
@@ -165,3 +178,12 @@ F23:: ; <--DOKUWIKI: set headline to 5th Level
 
 ;===== FUNCTIONS ===============================================================================
 
+; use this function to Remove ToolTips - pretty self-explanatory - 'duration' should be given in milliseconds (4000 = 4 seconds)
+RemoveToolTip(duration) {
+  SetTimer, ToolTipOff, %duration%
+  Return
+
+ToolTipOff:
+    ToolTip
+    return
+}

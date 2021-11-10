@@ -5,14 +5,18 @@ In order to create these variable defintions, there is another grabbing script. 
 
 - Enable the RESOLVE-HOTKEYS.ahk script in BKB/MASTER-SETTINGS.ahk & reload BKB/MASTER-SCRIPT.ahk
 - Launch Resolve on the system you need to create definitions for.
-- Open this file for editing.
-- In the RESOLVE-HOTKEY.ahk script, there is a command (HYPER-F21) that will launch a function that will grab the relavent info for the button/location/command you are grabbing.
+- Open this file for editing in Notepad++ (that's what the hotkeys are setup for).
+- In the RESOLVE-HOTKEY.ahk script, there is a command (HYPER-F17) that will launch a function that will grab the relavent info for the button/location/command you are grabbing.
 - Prior to running the grabber, you need to do a few things (this is on a per location/command basis - meaning you do this for each individual command you are defining.):
     - Below is a master listing of the variables that we need to define.
-    - Find the variable name for the button/location/command you wish to grab.
-    - Select it and copy it to the Clipboard.
-    - Alt-Tab back into Resolve and position the cursor over the button/location/command you are grabbing.
-    - Invoke the GRAB hotkey (should be HYPER-F21). That will give you a few prompts and then grab the location of the button you are grabbing and copy that info to the Clipboard.
+	- Setup a new section for the location you are working with. Change the 'If' statement at the start of the new section to match the location. Copy and paste the full variable listing from the MASTER LIST OF VARIABLES section.
+	- Change the 'Loc X' to match the location you are setting up in the new section.
+	- In SCRIPTS-NOTEPAD++\NOTEPAD++-HOTKEYS.ahk there is a hotkey to grab a given variable name and then switch over to Resolve to prepare to grab that cursor postion. You just need to park the cursor prior to the first character of the variable you wish to grab. That hotkey will then do these steps:
+		- Find the variable name for the button/location/command you wish to grab.
+		- Select it and copy it to the Clipboard.
+		- Alt-Tab back into Resolve
+		- Notify you, via a tooltip, that it is ready to grab the specified cursor position.
+	- The you manually position the cursor over the button/location/command you are grabbing & invoke the GRAB hotkey (should be HYPER-F17). That will give you a few prompts and then grab the location of the button you are grabbing and copy that info to the Clipboard.
     - The GRAB process should activate the editing window of this file after you click to grab.
     - Search the file to find the section of this file that matches the SystemLocation where you are grabbing and then you can paste the Clipboard info into this file there.
     - The grabbed info should be formatted correctly with all the info that needs to be captured.
@@ -129,86 +133,216 @@ global versionFile := Settings_rootFolder . "version.ini" ; the file which holds
 global version ; creating a global variable for the version info
 FileRead, version, %versionFile% ; reading the version from versionFile
 
-if ( Location_currentSystemLocation = 1 ) {
+if ( Location_currentSystemLocation = 1 ) { ; this if statement must change based on where you are working
 ; SYSTEM SETTINGS PANEL
-; Loc 1 systemSettingsPanel
 ; Loc 1 systemSettingsMemoryAndGPU
+systemSettingsMemoryAndGPULocX = 167
+systemSettingsMemoryAndGPULocY = 85
 ; Loc 1 systemSettingsMediaStorage
+systemSettingsMediaStorageLocX = 170
+systemSettingsMediaStorageLocY = 117
 ; Loc 1 systemSettingsDecodeOptions
+systemSettingsDecodeOptionsLocX = 168
+systemSettingsDecodeOptionsLocY = 147
 ; Loc 1 systemSettingsVideoAndAudioIO
+systemSettingsVideoAndAudioIOLocX = 164
+systemSettingsVideoAndAudioIOLocY = 177
 ; Loc 1 systemSettingsVideoPlugins
+systemSettingsVideoPluginsLocX = 171
+systemSettingsVideoPluginsLocY = 207
 ; Loc 1 systemSettingsAudioPlugins
+systemSettingsAudioPluginsLocX = 175
+systemSettingsAudioPluginsLocY = 241
 ; Loc 1 systemSettingsControlPanels
+systemSettingsControlPanelsLocX = 173
+systemSettingsControlPanelsLocY = 272
 ; Loc 1 systemSettingsGeneral
+systemSettingsGeneralLocX = 190
+systemSettingsGeneralLocY = 303
 ; Loc 1 systemSettingsInternetAccounts
+systemSettingsInternetAccountsLocX = 176
+systemSettingsInternetAccountsLocY = 334
 ; Loc 1 systemSettingsAdvanced
+systemSettingsAdvancedLocX = 182
+systemSettingsAdvancedLocY = 363
 ; Loc 1 systemSettingsUser
+systemSettingsUserLocX = 528
+systemSettingsUserLocY = 48
 ; Loc 1 systemSettingsUserUISettings
+systemSettingsUserUISettingsLocX = 177
+systemSettingsUserUISettingsLocY = 84
 ; Loc 1 systemSettingsUserProjectSaveAndLoad
+systemSettingsUserProjectSaveAndLoadLocX = 166
+systemSettingsUserProjectSaveAndLoadLocY = 117
 ; Loc 1 systemSettingsUserEditing
+systemSettingsUserEditingLocX = 191
+systemSettingsUserEditingLocY = 145
 ; Loc 1 systemSettingsUserColor
+systemSettingsUserColorLocX = 192
+systemSettingsUserColorLocY = 177
 ; Loc 1 systemSettingsUserFairlight
+systemSettingsUserFairlightLocX = 188
+systemSettingsUserFairlightLocY = 208
 ; Loc 1 systemSettingsUserPlaybackSettings
+systemSettingsUserPlaybackSettingsLocX = 165
+systemSettingsUserPlaybackSettingsLocY = 239
 ; Loc 1 systemSettingsUserControlPanels
+systemSettingsUserControlPanelsLocX = 175
+systemSettingsUserControlPanelsLocY = 269
 ; Loc 1 systemSettingsUserMetadata
+systemSettingsUserMetadataLocX = 181
+systemSettingsUserMetadataLocY = 302
 
 ; PROJECT SETTINGS PANEL
-; Loc 1 projectSettings
 ; Loc 1 projectSettingsCameraRaw
+projectSettingsCameraRawLocX = 139
+projectSettingsCameraRawLocY = 199
 ; Loc 1 projectSettingsCaptureAndPlayback
+projectSettingsCaptureAndPlaybackLocX = 127
+projectSettingsCaptureAndPlaybackLocY = 231
 ; Loc 1 projectSettingsColorManagement
+projectSettingsColorManagementLocX = 125
+projectSettingsColorManagementLocY = 137
 ; Loc 1 projectSettingsFairlight
+projectSettingsFairlightLocX = 144
+projectSettingsFairlightLocY = 291
 ; Loc 1 projectSettingsGeneralOptions
+projectSettingsGeneralOptionsLocX = 129
+projectSettingsGeneralOptionsLocY = 168
 ; Loc 1 projectSettingsImageScaling
+projectSettingsImageScalingLocX = 130
+projectSettingsImageScalingLocY = 108
 ; Loc 1 projectSettingsMasterSettings
+projectSettingsMasterSettingsLocX = 133
+projectSettingsMasterSettingsLocY = 74
 ; Loc 1 projectSettingsPresets
+projectSettingsPresetsLocX = 152
+projectSettingsPresetsLocY = 44
 ; Loc 1 projectSettingsSubtitles
+projectSettingsSubtitlesLocX = 146
+projectSettingsSubtitlesLocY = 260
 
 ; COLOR PANEL
 ; Loc 1 colorClipsToggle
+	colorClipsToggleLocX = 2196
+	colorClipsToggleLocY = 36
 ; Loc 1 colorCurves
-; Loc 1 colorCurvesBlue
-; Loc 1 colorCurvesChannelReset
+	colorCurvesLocX = 1053
+	colorCurvesLocY = 943
 ; Loc 1 colorCurvesCustom
-; Loc 1 colorCurvesGreen
-; Loc 1 colorCurvesHueBlue
-; Loc 1 colorCurvesHueCyan
-; Loc 1 colorCurvesHueGreen
-; Loc 1 colorCurvesHueMagenta
-; Loc 1 colorCurvesHueRed
+    colorCurvesCustomLocX = 1619
+    colorCurvesCustomLocY = 984
 ; Loc 1 colorCurvesHueVsHue
+    colorCurvesHueVsHueLocX = 1648
+    colorCurvesHueVsHueLocY = 986
 ; Loc 1 colorCurvesHueVsLum
+    colorCurvesHueVsLumLocX = 1704
+    colorCurvesHueVsLumLocY = 987
 ; Loc 1 colorCurvesHueVsSat
-; Loc 1 colorCurvesHueYellow
-; Loc 1 colorCurvesLink
-; Loc 1 colorCurvesLumBlack
-; Loc 1 colorCurvesLuminance
+    colorCurvesHueVsSatLocX = 1676
+    colorCurvesHueVsSatLocY = 985
 ; Loc 1 colorCurvesLumVsSat
-; Loc 1 colorCurvesLumWhite
-; Loc 1 colorCurvesRed
-; Loc 1 colorCurvesResetAll
+    colorCurvesLumVsSatLocX = 1732
+    colorCurvesLumVsSatLocY = 986
 ; Loc 1 colorCurvesSatVsLum
+    colorCurvesSatVsLumLocX = 1788
+    colorCurvesSatVsLumLocY = 985
 ; Loc 1 colorCurvesSatVsSat
+    colorCurvesSatVsSatLocX = 1759
+    colorCurvesSatVsSatLocY = 986
+; Loc 1 colorCurvesResetAll
+    colorCurvesResetAllLocX = 1862
+    colorCurvesResetAllLocY = 986
+; Loc 1 colorCurvesCustomRed
+    colorCurvesCustomRedLocX = 1805
+    colorCurvesCustomRedLocY = 1024
+; Loc 1 colorCurvesCustomGreen
+    colorCurvesCustomGreenLocX = 1833
+    colorCurvesCustomGreenLocY = 1021
+; Loc 1 colorCurvesCustomBlue
+    colorCurvesCustomBlueLocX = 1860
+    colorCurvesCustomBlueLocY = 1022
+; Loc 1 colorCurvesCustomY
+    colorCurvesCustomYLocX = 1777
+    colorCurvesCustomYLocY = 1022
+; Loc 1 colorCurvesCustomLinkChannels
+    colorCurvesCustomLinkChannelsLocX = 1756
+    colorCurvesCustomLinkChannelsLocY = 1021
+; Loc 1 colorCurvesCustomColorChannelsReset
+    colorCurvesCustomColorChannelsResetLocX = 1902
+    colorCurvesCustomColorChannelsResetLocY = 1020
+; Loc 1 colorCurvesHueBlue
+    colorCurvesHueBlueLocX = 1136
+    colorCurvesHueBlueLocY = 1368
+; Loc 1 colorCurvesHueCyan
+    colorCurvesHueCyanLocX = 1106
+    colorCurvesHueCyanLocY = 1370
+; Loc 1 colorCurvesHueGreen
+    colorCurvesHueGreenLocX = 1076
+    colorCurvesHueGreenLocY = 1369
+; Loc 1 colorCurvesHueMagenta
+    colorCurvesHueMagentaLocX = 1164
+    colorCurvesHueMagentaLocY = 1368
+; Loc 1 colorCurvesHueRed
+    colorCurvesHueRedLocX = 1019
+    colorCurvesHueRedLocY = 1368
+; Loc 1 colorCurvesHueYellow
+    colorCurvesHueYellowLocX = 1050
+    colorCurvesHueYellowLocY = 1371
+; Loc 1 colorCurvesLumBlack
+    colorCurvesLumBlackLocX = 1020
+    colorCurvesLumBlackLocY = 1367
+; Loc 1 colorCurvesLumWhite
+    colorCurvesLumWhiteLocX = 1049
+    colorCurvesLumWhiteLocY = 1368
 ; Loc 1 colorCurvesSplineToggle
+    colorCurvesSplineToggleLocX = 989
+    colorCurvesSplineToggleLocY = 1368
 ; Loc 1 colorGalleryFoldersViewToggle
 colorGalleryFoldersViewToggleLocX = 14
 colorGalleryFoldersViewToggleLocY = 69
 ; Loc 1 colorGalleryStillsListView
+colorGalleryStillsListViewLocX = 689
+colorGalleryStillsListViewLocY = 69
 ; Loc 1 colorGalleryStillsThumbView
+colorGalleryStillsThumbViewLocX = -1898
+colorGalleryStillsThumbViewLocY = -912
 ; Loc 1 colorGalleryToggle
 colorGalleryToggleLocX = 33
 colorGalleryToggleLocY = 37
 ; Loc 1 colorInfoPalette
+    colorInfoPaletteLocX = 2531
+    colorInfoPaletteLocY = 945
 ; Loc 1 colorKeyframePalette
+    colorKeyframePaletteLocX = 2411
+    colorKeyframePaletteLocY = 945
 ; Loc 1 colorKeyframePaletteSetToAll
+    colorKeyframePaletteSetToAllLocX = 2371
+    colorKeyframePaletteSetToAllLocY = 987
 ; Loc 1 colorKeyframePaletteSetToColor
+    colorKeyframePaletteSetToAllLocX = 2371
+    colorKeyframePaletteSetToAllLocY = 987
 ; Loc 1 colorKeyframePaletteSetToSizing
+    colorKeyframePaletteSetToAllLocX = 2371
+    colorKeyframePaletteSetToAllLocY = 987
 ; Loc 1 colorLightboxToggle
+    colorLightboxToggleLocX = 2507
+    colorLightboxToggleLocY = 36
 ; Loc 1 colorLutsToggle
+    colorLutsToggleLocX = 153
+    colorLutsToggleLocY = 36
 ; Loc 1 colorMediaPoolToggle
+    colorMediaPoolToggleLocX = 246
+    colorMediaPoolToggleLocY = 35
 ; Loc 1 colorNodesCleanup
+    colorNodesCleanupLocX = 2487
+    colorNodesCleanupLocY = 134
 ; Loc 1 colorNodesClipDisplay
+    colorNodesClipDisplayLocX = 2140
+    colorNodesClipDisplayLocY = 68
 ; Loc 1 colorNodesFitToWindow
+    colorNodesFitToWindowLocX = 2500
+    colorNodesFitToWindowLocY = 111
 ; Loc 1 colorNodesTimelineDisplay
 ; Loc 1 colorNodesToggle
 ; Loc 1 colorOpenfxToggle

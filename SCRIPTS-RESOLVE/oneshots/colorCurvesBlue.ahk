@@ -21,6 +21,8 @@ locToGetY := currentName . "LocY"
 currentLocX = % %locToGetX%
 currentLocY = % %locToGetY%
 
+RunWait, colorCurvesCustom.ahk ; first the Curves Panel needs to be open
+Sleep, 500
 SendEvent {Click, %currentLocX%, %currentLocY%}
 
 MouseMove %x%, %y% ; restore the cursor to its location before 1-shot script was executed

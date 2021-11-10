@@ -7,6 +7,8 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
+CoordMode, Mouse, Screen
+
 #Include %A_ScriptDir%\..\RESOLVE-1SHOT-CONFIG.ahk
 
 SetDefaultMouseSpeed, 0
@@ -28,7 +30,7 @@ ImageSearch, FoundX, FoundY, 0, 1390, 205, 1440,  %A_ScriptDir%\..\images_for_ah
 If (ErrorLevel = 1)
     currentLocY+=50
 
-RunWait, colorCurves.ahk ; first the Curves Panel needs to be open
+RunWait, colorCurvesCustom.ahk ; first the Curves Panel needs to be open
 Sleep, 500
 SendEvent {Click, %currentLocX%, %currentLocY%}
 
