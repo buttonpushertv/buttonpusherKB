@@ -7,6 +7,9 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
+CoordMode, Mouse, Screen
+CoordMode, Pixel, Screen
+
 #Include %A_ScriptDir%\..\RESOLVE-1SHOT-CONFIG.ahk
 
 SetDefaultMouseSpeed, 0
@@ -20,6 +23,13 @@ locToGetY := currentName . "LocY"
 
 currentLocX = % %locToGetX%
 currentLocY = % %locToGetY%
+
+;Since you can turn the Page Navigation panel on or off, we need to detect if it is on and adjust accordingly
+;
+; Mostly applies to items below the top lines of the UI
+ImageSearch, FoundX, FoundY, 0, 1390, 205, 1440,  %A_ScriptDir%\..\images_for_ahk\resolve_logo_bottom_corner_with_nav_panel_enabled.png
+If (ErrorLevel = 1)
+    currentLocY+=50
 
 SendEvent {Click, %currentLocX%, %currentLocY%}
 

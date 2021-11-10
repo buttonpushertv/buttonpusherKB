@@ -58,124 +58,125 @@ F16:: ; < -- Left Click holder. This will allow you to use the scroll wheel to a
 Return
 
 F23:: ;< -- Grabbing a TC from Excel and jumping to it in Resolve
-MouseGetPos currentCursorX, currentCursorY ; store the current cursor coords to currentCursorX and currentCursorY
+    MouseGetPos currentCursorX, currentCursorY ; store the current cursor coords to currentCursorX and currentCursorY
 
-WinActivate, ahk_exe EXCEL.EXE
-Sleep, sleepShort
-Send, {Escape}
-Sleep, sleepShort
-Send, {Left}{Down}
-Sleep, sleepMedium
-Send, ^c
-Sleep, sleepShort
-WinActivate, ahk_exe Resolve.exe
-Sleep, sleepShort
-Send, =
-Sleep, sleepMedium
-Send, ^v
-Sleep, sleepMedium
-Send, ^\
+    WinActivate, ahk_exe EXCEL.EXE
+    Sleep, sleepShort
+    Send, {Escape}
+    Sleep, sleepShort
+    Send, {Left}{Down}
+    Sleep, sleepMedium
+    Send, ^c
+    Sleep, sleepShort
+    WinActivate, ahk_exe Resolve.exe
+    Sleep, sleepShort
+    Send, =
+    Sleep, sleepMedium
+    Send, ^v
+    Sleep, sleepMedium
+    Send, ^\
 
-MouseMove, %currentCursorX%, %currentCursorY%
+    MouseMove, %currentCursorX%, %currentCursorY%
 
 Return
 
 F24:: ;< -- Grabbing a TC from Excel and jumping to it in Resolve
-MouseGetPos currentCursorX, currentCursorY ; store the current cursor coords to currentCursorX and currentCursorY
+    MouseGetPos currentCursorX, currentCursorY ; store the current cursor coords to currentCursorX and currentCursorY
 
-WinActivate, ahk_exe EXCEL.EXE
-Sleep, sleepShort
-Send, {Escape}
-Sleep, sleepShort
-Send, {Right}
-Sleep, sleepMedium
-Send, ^c
-Sleep, sleepShort
-WinActivate, ahk_exe Resolve.exe
-Sleep, sleepShort
-Send, =
-Sleep, sleepMedium
-Send, ^v
-Sleep, sleepMedium
-Send, ^\
+    WinActivate, ahk_exe EXCEL.EXE
+    Sleep, sleepShort
+    Send, {Escape}
+    Sleep, sleepShort
+    Send, {Right}
+    Sleep, sleepMedium
+    Send, ^c
+    Sleep, sleepShort
+    WinActivate, ahk_exe Resolve.exe
+    Sleep, sleepShort
+    Send, =
+    Sleep, sleepMedium
+    Send, ^v
+    Sleep, sleepMedium
+    Send, ^\
 
-MouseMove, %currentCursorX%, %currentCursorY%
+    MouseMove, %currentCursorX%, %currentCursorY%
 
 Return
 
 
-#!^+F21:: ; < -- The Resolve location grabbing subroutine
-; (To use this sub, the cursor should be positioned over the button/location/command you wish to grab before invoking it)
+#!^+F17:: ; < -- The Resolve location grabbing subroutine
+    CoordMode, Mouse, Screen
+    ; (To use this sub, the cursor should be positioned over the button/location/command you wish to grab before invoking it)
 
-MouseGetPos currentCursorX, currentCursorY ; store the current cursor coords to currentCursorX and currentCursorY
+    MouseGetPos currentCursorX, currentCursorY ; store the current cursor coords to currentCursorX and currentCursorY
 
-; display an input box with the contents of the clipboard pre-populated in the entry field
-InputBox, processLoc, Grabbing %Clipboard%, Is this the button/location/command you are grabbing?,, (halfScreenWidth/6), (halfScreenHeight/3),,,,,%Clipboard%
+    ; display an input box with the contents of the clipboard pre-populated in the entry field
+    InputBox, processLoc, Grabbing %Clipboard%, Grabbed coordinates:`nX=%currentCursorX% / Y=%currentCursorY%`nIs this the button/location/command you are grabbing?,, (halfScreenWidth/6), (halfScreenHeight/3),,,,,%Clipboard%
 
-If ErrorLevel
-    Return ; if user selects CANCEL, exit this subroutine
-else ; the below will be processed if user presses OK
-currentButtonName := processLoc ; puts the value we are grabbing into this variable
-current1ShotScriptName := currentButtonName . ".ahk" ; appends the ".ahk" to create the script filename
-oneshotPathName := "oneshots\" ; this is the path where we will find the 1-shot scripts
-full1ShotScriptPath := "" . oneshotPathName . current1ShotScriptName . "" ; this creates the full path *without* quotes
-quotedPath := """" . full1ShotScriptPath . """" ; this creates the full path *with* quotes
-if !FileExist(full1ShotScriptPath) ; if the script file doesn't exist, create it
-{
-FileCopy, BKB-RESOLVE-1-SHOT-TEMPLATE.ahk, %full1ShotScriptPath% ; this will copy from the template to the specific script named in full1ShotScriptPath for this currentButtonName
-ToolTip ,The script did not exist.`nIt has been created at:`n%full1ShotScriptPath%
-RemoveToolTip(2000)
-}
+    If ErrorLevel
+        Return ; if user selects CANCEL, exit this subroutine
+    else ; the below will be processed if user presses OK
+    currentButtonName := processLoc ; puts the value we are grabbing into this variable
+    current1ShotScriptName := currentButtonName . ".ahk" ; appends the ".ahk" to create the script filename
+    oneshotPathName := "oneshots\" ; this is the path where we will find the 1-shot scripts
+    full1ShotScriptPath := "" . oneshotPathName . current1ShotScriptName . "" ; this creates the full path *without* quotes
+    quotedPath := """" . full1ShotScriptPath . """" ; this creates the full path *with* quotes
+    if !FileExist(full1ShotScriptPath) ; if the script file doesn't exist, create it
+    {
+    FileCopy, BKB-RESOLVE-1-SHOT-TEMPLATE.ahk, %full1ShotScriptPath% ; this will copy from the template to the specific script named in full1ShotScriptPath for this currentButtonName
+    ToolTip ,The script did not exist.`nIt has been created at:`n%full1ShotScriptPath%
+    RemoveToolTip(2000)
+    }
 
-WinActivate, RESOLVE-1SHOT-CONFIG.ahk ; this should activate the window where the config file is being edited
+    WinActivate, RESOLVE-1SHOT-CONFIG.ahk - Notepad++ ; this should activate the window where the config file is being edited
 
-; below will create the info we will want to paste into the config file
-formattedText =
-(
-; Loc %Location_currentSystemLocation% %currentButtonName%
-%currentButtonName%LocX = %currentCursorX%
-%currentButtonName%LocY = %currentCursorY%
-)
-clipboard = %formattedText%
-; below we define the comment text to search for
-seekText =
-(
-; Loc %Location_currentSystemLocation% %currentButtonName%
-)
-; these send commands will perform a replace on the seekText comment and replace it with formattedText
-Sleep, sleepShort
-Send, ^h
-Sleep, sleepMedium
-; Send, +{Tab}
-;Sleep, sleepShort
-Send, %seekText%
-Sleep, sleepMedium
-Send, {Tab}{BackSpace}
-Sleep, sleepShort
-Send, ^v
-Sleep, sleepMedium
-Send, !r
-Sleep, sleepMedium
-Send, !r
-Sleep, sleepMedium
-Send, {Escape}{Escape}
-Sleep, sleepShort
-Send, {Left}{Down}{Down}{Down}
-Sleep, sleepShort
-Send, ^{Right}^{Right}^{Right}
-Sleep, sleepShort
-Send, ^s
-ToolTip, Saved location info for %currentButtonName%
-RemoveToolTip(5000)
+    ; below will create the info we will want to paste into the config file
+    formattedText =
+    (
+    ; Loc %Location_currentSystemLocation% %currentButtonName%
+    %currentButtonName%LocX = %currentCursorX%
+    %currentButtonName%LocY = %currentCursorY%
+    )
+    clipboard = %formattedText%
+    ; below we define the comment text to search for
+    seekText =
+    (
+    ; Loc %Location_currentSystemLocation% %currentButtonName%
+    )
+    ; these send commands will perform a replace on the seekText comment and replace it with formattedText
+    Sleep, sleepShort
+    Send, ^h
+    Sleep, sleepMedium
+    ; Send, +{Tab}
+    ;Sleep, sleepShort
+    Send, %seekText%
+    Sleep, sleepMedium
+    Send, {Tab}{BackSpace}
+    Sleep, sleepShort
+    Send, ^v
+    Sleep, sleepMedium
+    Send, !r
+    Sleep, sleepMedium
+    Send, !r
+    Sleep, sleepMedium
+    Send, {Escape}{Escape}
+    Sleep, sleepShort
+    Send, {Left}{Down}{Down}{Down}
+    Sleep, sleepShort
+    Send, ^{Right}^{Right}^{Right}
+    Sleep, sleepShort
+    Send, ^s
+    ToolTip, Saved location info for %currentButtonName%
+    RemoveToolTip(5000)
 
-; prompt to open the referred 1shot script for editing
-;MsgBox,4, Edit new script?, Do you need to adjust or edit the new script at %full1ShotScriptPath%, 4
-;IfMsgBox No
-;    Return
-;Run, edit %quotedPath%
-;Sleep, sleepMedium
-;Send, {Escape}
-Return
+    ; prompt to open the referred 1shot script for editing
+    ;MsgBox,4, Edit new script?, Do you need to adjust or edit the new script at %full1ShotScriptPath%, 4
+    ;IfMsgBox No
+    ;    Return
+    ;Run, edit %quotedPath%
+    ;Sleep, sleepMedium
+    ;Send, {Escape}
+    Return
 #IfWinActive
 
 ;===== END Program 1 DEFINITIONS ===============================================================

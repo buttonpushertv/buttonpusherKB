@@ -7,6 +7,8 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
+CoordMode, Mouse, Screen
+
 #Include %A_ScriptDir%\..\RESOLVE-1SHOT-CONFIG.ahk
 
 SetDefaultMouseSpeed, 0
