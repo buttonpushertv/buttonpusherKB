@@ -32,6 +32,16 @@ sleepDeep := 3500
 #IfWinActive, ahk_exe chrome.exe
 CoordMode, Mouse, Client
 
+!z::
+    Send, {Escape}
+    Sleep, sleepMedium
+    Click, 1300, 975
+    Sleep, sleepLong
+    Click, 1100, 620
+    Sleep, sleepLong
+    Click, 1561, 872
+    Return
+
 F24:: ; <-- Downloading Comps from an iStockPhoto Board
     ; This will auto-magically download comp versions of video clips from iStockPhoto.com
     ; It will do this by doing the following: 
