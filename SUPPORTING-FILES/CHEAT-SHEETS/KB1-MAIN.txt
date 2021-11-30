@@ -29,7 +29,7 @@ CAPS+WHEELUP      <-- Send Control+Page Up - for changing tabs in apps that supp
 CAPS/SCRLK+F11      <--Open the Settings GUI for MASTER-SCRIPT.AHK
 CAPS/SCRLK+F12      <--Open BKB-LAUNCHER
 CAPS/SCRLK+BACKSP   <--Reload MASTER-SCRIPT.ahk
-CAPS/SCRLK+Q        <--Exit MASTER-SCRIPT and child AHK Scripts
+CAPS/SCRLK+\        <--Exit MASTER-SCRIPT and child AHK Scripts
 
 {ON WINDOWS DESKTOP ONLY}
 WIN+CTRL+SHIFT+F    <--Nuke Firefox (click Desktop first)
