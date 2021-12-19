@@ -15,11 +15,11 @@
 
 @REM run MONTHLY CMD - if you need to run backups monthly, use this.
 @REM UNCOMMENT THE LINE BELOW TO RUN 0_monthly.cmd
-@REM call 0_monthly.cmd %BKB_ROOT%
+call 0_monthly.cmd %BKB_ROOT%
 
 @REM run WEEKLY CMD - if you need to run backups on specific days of the week, use this.
 @REM UNCOMMENT THE LINE BELOW TO RUN 0_weekly.cmd
-@REM call 0_weekly.cmd %BKB_ROOT%
+call 0_weekly.cmd %BKB_ROOT%
 
 @REM run DAILY CMD
 @echo +++++++
