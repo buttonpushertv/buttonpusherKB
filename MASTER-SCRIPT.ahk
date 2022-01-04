@@ -302,9 +302,9 @@ CapsLock & Numpad5::
 	Return
 
 
-Alt & Space::
-	Send, ^{Space}
-	Return
+;Alt & Space::
+;	Send, ^{Space}
+;	Return
 	
 ; USING THE HYPER KEY
 ; In Windows 10, Microsoft has hard-coded the HYPER Key (Control+Shift+Alt+Windows) to open the Office Hub. There some ways to remove that coding. They involve editing the Registry, so it's not something you should do lightly.
