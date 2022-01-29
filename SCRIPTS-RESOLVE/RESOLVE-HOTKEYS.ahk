@@ -57,6 +57,19 @@ F16:: ; < -- Left Click holder. This will allow you to use the scroll wheel to a
 
 Return
 
+!^+`:: ;<--Toggle hovered node's lock
+    MouseGetPos currentCursorX, currentCursorY ; store the current cursor coords to currentCursorX and currentCursorY
+    Click
+    Sleep, sleepShort
+    Click, right
+    Sleep, sleepShort
+    Click, left, 60, 85, Relative
+    SoundPlay, ..\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V1.0\Interface\Item Lock (1).wav
+    MouseMove, %currentCursorX%, %currentCursorY%
+    Return
+
+
+
 F23:: ;< -- Grabbing a TC from Excel and jumping to it in Resolve
     MouseGetPos currentCursorX, currentCursorY ; store the current cursor coords to currentCursorX and currentCursorY
 
