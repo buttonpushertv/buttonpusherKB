@@ -292,13 +292,40 @@ CapsLock & M:: ;<--pingPos - just to show what it does
 	CapsLockOff()
 	Return
 
-CapsLock & `:: ;<--Size a window to half the screen width & position it in the center of Display 1
-CapsLock & Numpad5::
+CapsLock & `:: ; <--Size a window to half the screen width & position it in the center of Display 1
+CapsLock & Numpad8::
 	tWidth := % Round(halfScreenWidth)
 	tWinLeftEdge := (tWidth / 2)
 	WinGetActiveTitle, tWinTitle
 	WinMove, %tWinTitle%,, %tWinLeftEdge%, 0, %tWidth%, %A_ScreenHeight%
 	CapsLockOff()
+	Return
+
+CapsLock & Numpad5:: ; <-- Center the active window on the primary display
+	WinExist("A")
+	WinGetPos,,, sizeX, sizeY
+	WinMove, (A_ScreenWidth/2)-(sizeX/2), (A_ScreenHeight/2)-(sizeY/2)
+	CapsLockOff()
+	Return
+
+CapsLock & Numpad2:: ; <-- Center the active window on the current display
+	winHandle := WinExist("A") ; The window to operate on
+
+	; Don't worry about how this part works. Just trust that it gets the 
+	; bounding coordinates of the monitor the window is on.
+	;--------------------------------------------------------------------------
+	VarSetCapacity(monitorInfo, 40), NumPut(40, monitorInfo)
+	monitorHandle := DllCall("MonitorFromWindow", "Ptr", winHandle, "UInt", 0x2)
+	DllCall("GetMonitorInfo", "Ptr", monitorHandle, "Ptr", &monitorInfo)
+	;--------------------------------------------------------------------------
+
+	workLeft      := NumGet(monitorInfo, 20, "Int") ; Left
+	workTop       := NumGet(monitorInfo, 24, "Int") ; Top
+	workRight     := NumGet(monitorInfo, 28, "Int") ; Right
+	workBottom    := NumGet(monitorInfo, 32, "Int") ; Bottom
+	WinGetPos,,, W, H, A
+	WinMove, A,, workLeft + (workRight - workLeft) // 2 - W // 2
+		, workTop + (workBottom - workTop) // 2 - H // 2
 	Return
 
 
