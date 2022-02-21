@@ -56,6 +56,8 @@ global gHeight
 global elementHeight
 global elementWidth
 global screenFontSize
+global scalingFactor
+global pictureScalingFactor
 
 iniFile := "settings.ini"
 IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
@@ -90,11 +92,16 @@ If (keyboardHasHyperKey) {
 	modForThisConfig := "HYPER"
 }
 
-screenFontSize := 14
-; Getting some screen info and sizing the GUI window (currently only implemented on the 'firstShower')
+; Getting some screen info and sizing the GUI window (currently only implemented on the 'firstShower' & 'thirdShower')
 SysGet, monSize, Monitor
 
-If (monSizeRight > 3441) {
+; Windows has a setting that allows users to scale the UI by some percentage. On monitors where that is set to 100% then the Screen DPI is 96. Setting it higher than 100% could cause the GUI's of this script to display much larger than the screen area. These scaling factors are an attempt to make the GUIs display a little better on those screens.
+scalingFactor := 1
+pictureScalingFactor := 1
+screenFontSize := 14
+
+If (A_ScreenDPI = 240) { ; for a UHD Display with very high pixel density. These values are what works for a laptop with a 3840x2400 UHD screen set to 250% UI Scaling.
+; The math of these doesn't quite make sense to me, so this a brute force method of making it work. - BEN
 	scalingFactor := .4
 	pictureScalingFactor := .65
 	screenFontSize := 8
@@ -104,11 +111,11 @@ If (monSizeRight < 1980) {
 	screenFontSize := 10
 	}
 
-gHeightPadding := (monSizeBottom * .9)
-gHeight := (gHeightPadding * scalingFactor)
+gHeightPadding := round(monSizeBottom * .9)
+gHeight := round(gHeightPadding * scalingFactor)
 elementHeight := (gHeight - 220)
-gWidthPadding := (monSizeRight * .75)
-gWidth := (gWidthPadding * scalingFactor)
+gWidthPadding := round(monSizeRight * .75)
+gWidth := round(gWidthPadding * scalingFactor)
 elementWidth := (gWidth - 120)
 gButtonStartY := (gHeight - 60)
 
@@ -237,9 +244,8 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 			Gui, TabText:Tab
 		; since tabs are unset (no longer being worked with) this button appears outside of the tabs area
 			Gui, TabText:Add, Button, x30 y%gButtonStartY% w180, &Edit Sheets
-			Gui, TabText:Add, Text, xp+200 yp , %now% - %today% - gWidth:%gWidth% - gHeight:%gHeight% - elementWidth:%elementWidth% - elementHeight:%elementHeight% ; displaying time and date text.
-			Gui, TabText:Add, Text, xp yp+15, gHeightPadding:%gHeightPadding% - gWidthPadding:%gWidthPadding%
-			Gui, TabText:Add, Text, xp yp+15 , Current System Location(%Location_currentSystemLocation%): %currentSystemLocationName% - Keyboard has F13 to F24? %yesF13% - Keyboard has Hyper: %yesHYPER% ; Displaying some keyboard settings
+			Gui, TabText:Add, Text, xp+200 yp , %now% - %today% - gWidth:%gWidth% - gHeight:%gHeight% - elementWidth:%elementWidth% - elementHeight:%elementHeight% - gWidthPadding:%gWidthPadding% - gHeightPadding:%gHeightPadding% - DPI:%A_ScreenDPI% ; displaying time and date text.
+			Gui, TabText:Add, Text, xp yp+25 , Current System Location(%Location_currentSystemLocation%): %currentSystemLocationName% - Keyboard has F13 to F24? %yesF13% - Keyboard has Hyper: %yesHYPER% ; Displaying some keyboard settings
 
 			Gui, TabText:Show, h%gHeight% w%gWidth% Center
 
