@@ -54,6 +54,8 @@ global activeWin
 global gWidth
 global gHeight
 global elementHeight
+global elementWidth
+global screenFontSize
 
 iniFile := "settings.ini"
 IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
@@ -88,20 +90,30 @@ If (keyboardHasHyperKey) {
 	modForThisConfig := "HYPER"
 }
 
-; Getting some screen info and sizing the GUI window (currently only implemented on the 'firstShower')
-
-SysGet, monSize, Monitor
-gHeight := (monSizeBottom * .9)
-elementHeight := (gHeight - 220)
-gWidth := (monSizeRight * .75)
-elementWidth := (gWidth - 120)
-gButtonStartY := (gHeight - 60)
-
 screenFontSize := 14
+; Getting some screen info and sizing the GUI window (currently only implemented on the 'firstShower')
+SysGet, monSize, Monitor
+
+If (monSizeRight > 3441) {
+	scalingFactor := .4
+	pictureScalingFactor := .65
+	screenFontSize := 8
+	}
 
 If (monSizeRight < 1980) {
 	screenFontSize := 10
 	}
+
+gHeightPadding := (monSizeBottom * .9)
+gHeight := (gHeightPadding * scalingFactor)
+elementHeight := (gHeight - 220)
+gWidthPadding := (monSizeRight * .75)
+gWidth := (gWidthPadding * scalingFactor)
+elementWidth := (gWidth - 120)
+gButtonStartY := (gHeight - 60)
+
+
+;MSGBOX, A_ScreenDPI: %A_ScreenDPI%`nmonSizeRight: %monSizeRight%`nscreenFontSize: %screenFontSize%`ngHeight: %gHeight%`ngWidth: %gWidth%`nelementHeight: %elementHeight%`nelementWidth: %elementWidth%`nscalingFactor: %scalingFactor%
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -226,7 +238,8 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 		; since tabs are unset (no longer being worked with) this button appears outside of the tabs area
 			Gui, TabText:Add, Button, x30 y%gButtonStartY% w180, &Edit Sheets
 			Gui, TabText:Add, Text, xp+200 yp , %now% - %today% - gWidth:%gWidth% - gHeight:%gHeight% - elementWidth:%elementWidth% - elementHeight:%elementHeight% ; displaying time and date text.
-			Gui, TabText:Add, Text, xp yp+25 , Current System Location(%Location_currentSystemLocation%): %currentSystemLocationName% - Keyboard has F13 to F24? %yesF13% - Keyboard has Hyper: %yesHYPER% ; Displaying some keyboard settings
+			Gui, TabText:Add, Text, xp yp+15, gHeightPadding:%gHeightPadding% - gWidthPadding:%gWidthPadding%
+			Gui, TabText:Add, Text, xp yp+15 , Current System Location(%Location_currentSystemLocation%): %currentSystemLocationName% - Keyboard has F13 to F24? %yesF13% - Keyboard has Hyper: %yesHYPER% ; Displaying some keyboard settings
 
 			Gui, TabText:Show, h%gHeight% w%gWidth% Center
 
@@ -328,6 +341,7 @@ secondShower: ; Display an image CheatSheet of App Specific Keyboard Shortcuts (
         PictureWidth := 579
         numPages := 1
     }
+	PictureWidth *= pictureScalingFactor
     showImageTabs(pic2Show, PictureWidth, numPages, PictureStartY)
     ;If you want some help recalling which line is which in the buttonpusherKB templates, you can uncomment the ToolTip below. It will appear near the mouse cursor when the Cheat Sheet is invoked & clear with everything else. Make sure to also uncomment the plain ToolTip line a few lines down.
     ;ToolTip, PLAIN`nCONTROL`nALT`nSHIFT`nCTRL+ALT`nCTRL+SHIFT`nALT+SHIFT`nCTRL+ALT+SHIFT
@@ -393,7 +407,7 @@ thirdShower: ; Display an Text CheatSheet of App Specific Keyboard Shortcuts (mo
 
 		showText(fileToShow) ; this calls a function that will build the GUI using the fileToShow
 
-		Gui, Text:Show ; the above function call DOES NOT show the Text: Gui becuase we need to access the Edit Sheet button and that needs to be done outside of the function for the variable defined below to be read properly
+		Gui, Text:Show, h%gHeight% w%gWidth% Center ; the above function call DOES NOT show the Text: Gui becuase we need to access the Edit Sheet button and that needs to be done outside of the function for the variable defined below to be read properly
 		currentFullPathToFileToShow := Settings_rootFolder . "\" . fileToShow ; foe some reason, this variable would get defined properly (when within the showText() function) but would not pass its value on to the Run command below in TextButtonEditSheet - it was just blank. What's odd is that pathToEditor *would* hold its value & get passed along to the button Run command...just not currentFullPathToFileToShow.
 		; By relocating this all back here in this subroutine it seems to hav just worked. Very strange. Operator Error, to be sure - Ben
 
@@ -499,9 +513,9 @@ showText(fileToShow){
   Gui, Text:+alwaysontop -sysmenu +owner -caption +toolwindow +0x02000000
   Gui, Text:Color, %backgroundColor%
   Gui, Text:Margin, 30, 30
-  Gui, Text:font, s12 c%foregroundColor%, Consolas
+  Gui, Text:font, s%screenFontSize% c%foregroundColor%, Consolas
   Gui, Text:Add, Text, , %now% - %today%
-  Gui, Text:add, text, , %textToShow%
+  Gui, Text:add, text, w%elementWidth% h%elementHeight%, %textToShow%
   ;Gui, Text:add, text, , File: %A_ScriptDir%\%fileToShow%
   ;uncomment line above to display the path to the %fileToShow% at the bottom of this GUI window
   Gui, Text:Add, Button, w180, &Edit Sheet
