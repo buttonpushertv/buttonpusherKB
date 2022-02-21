@@ -96,9 +96,9 @@ If (keyboardHasHyperKey) {
 SysGet, monSize, Monitor
 
 ; Windows has a setting that allows users to scale the UI by some percentage. On monitors where that is set to 100% then the Screen DPI is 96. Setting it higher than 100% could cause the GUI's of this script to display much larger than the screen area. These scaling factors are an attempt to make the GUIs display a little better on those screens.
-scalingFactor := 1
-pictureScalingFactor := 1
-screenFontSize := 14
+scalingFactor := 1 ; This is the value to use for UI Scaling of 100%
+pictureScalingFactor := 1 ; This is the value to use for UI Scaling of 100%
+screenFontSize := 14 ; ; This is the value to use for UI Scaling of 100%
 
 If (A_ScreenDPI = 240) { ; for a UHD Display with very high pixel density. These values are what works for a laptop with a 3840x2400 UHD screen set to 250% UI Scaling.
 ; The math of these doesn't quite make sense to me, so this a brute force method of making it work. - BEN
@@ -112,12 +112,12 @@ If (monSizeRight < 1980) {
 	}
 
 gHeightPadding := round(monSizeBottom * .9)
-gHeight := round(gHeightPadding * scalingFactor)
-elementHeight := (gHeight - 220)
-gWidthPadding := round(monSizeRight * .75)
-gWidth := round(gWidthPadding * scalingFactor)
-elementWidth := (gWidth - 120)
-gButtonStartY := (gHeight - 60)
+gHeight := round(gHeightPadding * scalingFactor) ; scalingFactor compensates for Windows UI Scaling
+elementHeight := round(gHeight * .8)
+gWidthPadding := round(monSizeRight * .8)
+gWidth := round(gWidthPadding * scalingFactor) ; scalingFactor compensates for Windows UI Scaling
+elementWidth := round(gWidth *.9)
+gButtonStartY := round(gHeight * .95)
 
 
 ;MSGBOX, A_ScreenDPI: %A_ScreenDPI%`nmonSizeRight: %monSizeRight%`nscreenFontSize: %screenFontSize%`ngHeight: %gHeight%`ngWidth: %gWidth%`nelementHeight: %elementHeight%`nelementWidth: %elementWidth%`nscalingFactor: %scalingFactor%
@@ -283,7 +283,13 @@ secondShower: ; Display an image CheatSheet of App Specific Keyboard Shortcuts (
         numPages := 2
         PictureStartY := 0 ; determines where the cheatsheet is going to start drawing. Whenever we want to display the TaskBar Cheatsheet, we should make sure the CheatSheet image doesn't get drawn underneath the TaskBar CheatSheet.
         taskBarPic := "SUPPORTING-FILES\CHEAT-SHEETS\WIN-TASKBAR\windows-taskbar-keyboard-cheaetsheet-DKYELLOW.png"
-        showTaskBarPicture = 1
+        If (A_ScreenDPI = 96) {
+			showTaskBarPicture = 1
+		}
+		else {
+			showTaskBarPicture = 0
+		}
+
     }
     else
     If WinActive("ahk_exe Adobe Premiere Pro.exe") {
