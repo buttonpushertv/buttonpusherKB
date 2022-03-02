@@ -192,6 +192,8 @@ GroupAdd, altBlocked, ahk_exe Adobe Premiere Pro.exe ; items added to the group 
 
 ; There are 2 hotkeys defined for the Hotkeys below because on my split keyboard it's easier to use ScrollLock & on my Kira/Preonic keyboards it's easier to use CapsLock.
 
+#Space::#!z ; <--Workaround to launch Keypirinha instead of PowerToys Run (Windows maps this even when it's turned off so that Keypirinha can't be mapped to it.)
+
 ScrollLock & f11:: ; <-- Open the Settings GUI for MASTER-SCRIPT.AHK
 CapsLock & f11:: ; <-- Open the Settings GUI for MASTER-SCRIPT.AHK
 		ScrollLockOff()
