@@ -54,6 +54,10 @@ global activeWin
 global gWidth
 global gHeight
 global elementHeight
+global elementWidth
+global screenFontSize
+global scalingFactor
+global pictureScalingFactor
 
 iniFile := "settings.ini"
 IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
@@ -88,20 +92,35 @@ If (keyboardHasHyperKey) {
 	modForThisConfig := "HYPER"
 }
 
-; Getting some screen info and sizing the GUI window (currently only implemented on the 'firstShower')
-
+; Getting some screen info and sizing the GUI window (currently only implemented on the 'firstShower' & 'thirdShower')
 SysGet, monSize, Monitor
-gHeight := (monSizeBottom * .9)
-elementHeight := (gHeight - 220)
-gWidth := (monSizeRight * .75)
-elementWidth := (gWidth - 120)
-gButtonStartY := (gHeight - 60)
 
-screenFontSize := 14
+; Windows has a setting that allows users to scale the UI by some percentage. On monitors where that is set to 100% then the Screen DPI is 96. Setting it higher than 100% could cause the GUI's of this script to display much larger than the screen area. These scaling factors are an attempt to make the GUIs display a little better on those screens.
+scalingFactor := 1 ; This is the value to use for UI Scaling of 100%
+pictureScalingFactor := 1 ; This is the value to use for UI Scaling of 100%
+screenFontSize := 14 ; ; This is the value to use for UI Scaling of 100%
+
+If (A_ScreenDPI = 240) { ; for a UHD Display with very high pixel density. These values are what works for a laptop with a 3840x2400 UHD screen set to 250% UI Scaling.
+; The math of these doesn't quite make sense to me, so this a brute force method of making it work. - BEN
+	scalingFactor := .4
+	pictureScalingFactor := .65
+	screenFontSize := 8
+	}
 
 If (monSizeRight < 1980) {
 	screenFontSize := 10
 	}
+
+gHeightPadding := round(monSizeBottom * .9)
+gHeight := round(gHeightPadding * scalingFactor) ; scalingFactor compensates for Windows UI Scaling
+elementHeight := round(gHeight * .8)
+gWidthPadding := round(monSizeRight * .8)
+gWidth := round(gWidthPadding * scalingFactor) ; scalingFactor compensates for Windows UI Scaling
+elementWidth := round(gWidth *.9)
+gButtonStartY := round(gHeight * .95)
+
+
+;MSGBOX, A_ScreenDPI: %A_ScreenDPI%`nmonSizeRight: %monSizeRight%`nscreenFontSize: %screenFontSize%`ngHeight: %gHeight%`ngWidth: %gWidth%`nelementHeight: %elementHeight%`nelementWidth: %elementWidth%`nscalingFactor: %scalingFactor%
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -225,7 +244,7 @@ firstShower: ; <--Display a Text File CheatSheet of MASTER-SCRIPT AutoHotKeys ba
 			Gui, TabText:Tab
 		; since tabs are unset (no longer being worked with) this button appears outside of the tabs area
 			Gui, TabText:Add, Button, x30 y%gButtonStartY% w180, &Edit Sheets
-			Gui, TabText:Add, Text, xp+200 yp , %now% - %today% - gWidth:%gWidth% - gHeight:%gHeight% - elementWidth:%elementWidth% - elementHeight:%elementHeight% ; displaying time and date text.
+			Gui, TabText:Add, Text, xp+200 yp , %now% - %today% - gWidth:%gWidth% - gHeight:%gHeight% - elementWidth:%elementWidth% - elementHeight:%elementHeight% - gWidthPadding:%gWidthPadding% - gHeightPadding:%gHeightPadding% - DPI:%A_ScreenDPI% ; displaying time and date text.
 			Gui, TabText:Add, Text, xp yp+25 , Current System Location(%Location_currentSystemLocation%): %currentSystemLocationName% - Keyboard has F13 to F24? %yesF13% - Keyboard has Hyper: %yesHYPER% ; Displaying some keyboard settings
 
 			Gui, TabText:Show, h%gHeight% w%gWidth% Center
@@ -264,7 +283,13 @@ secondShower: ; Display an image CheatSheet of App Specific Keyboard Shortcuts (
         numPages := 2
         PictureStartY := 0 ; determines where the cheatsheet is going to start drawing. Whenever we want to display the TaskBar Cheatsheet, we should make sure the CheatSheet image doesn't get drawn underneath the TaskBar CheatSheet.
         taskBarPic := "SUPPORTING-FILES\CHEAT-SHEETS\WIN-TASKBAR\windows-taskbar-keyboard-cheaetsheet-DKYELLOW.png"
-        showTaskBarPicture = 1
+        If (A_ScreenDPI = 96) {
+			showTaskBarPicture = 1
+		}
+		else {
+			showTaskBarPicture = 0
+		}
+
     }
     else
     If WinActive("ahk_exe Adobe Premiere Pro.exe") {
@@ -328,6 +353,7 @@ secondShower: ; Display an image CheatSheet of App Specific Keyboard Shortcuts (
         PictureWidth := 579
         numPages := 1
     }
+	PictureWidth *= pictureScalingFactor
     showImageTabs(pic2Show, PictureWidth, numPages, PictureStartY)
     ;If you want some help recalling which line is which in the buttonpusherKB templates, you can uncomment the ToolTip below. It will appear near the mouse cursor when the Cheat Sheet is invoked & clear with everything else. Make sure to also uncomment the plain ToolTip line a few lines down.
     ;ToolTip, PLAIN`nCONTROL`nALT`nSHIFT`nCTRL+ALT`nCTRL+SHIFT`nALT+SHIFT`nCTRL+ALT+SHIFT
@@ -393,7 +419,7 @@ thirdShower: ; Display an Text CheatSheet of App Specific Keyboard Shortcuts (mo
 
 		showText(fileToShow) ; this calls a function that will build the GUI using the fileToShow
 
-		Gui, Text:Show ; the above function call DOES NOT show the Text: Gui becuase we need to access the Edit Sheet button and that needs to be done outside of the function for the variable defined below to be read properly
+		Gui, Text:Show, h%gHeight% w%gWidth% Center ; the above function call DOES NOT show the Text: Gui becuase we need to access the Edit Sheet button and that needs to be done outside of the function for the variable defined below to be read properly
 		currentFullPathToFileToShow := Settings_rootFolder . "\" . fileToShow ; foe some reason, this variable would get defined properly (when within the showText() function) but would not pass its value on to the Run command below in TextButtonEditSheet - it was just blank. What's odd is that pathToEditor *would* hold its value & get passed along to the button Run command...just not currentFullPathToFileToShow.
 		; By relocating this all back here in this subroutine it seems to hav just worked. Very strange. Operator Error, to be sure - Ben
 
@@ -499,9 +525,9 @@ showText(fileToShow){
   Gui, Text:+alwaysontop -sysmenu +owner -caption +toolwindow +0x02000000
   Gui, Text:Color, %backgroundColor%
   Gui, Text:Margin, 30, 30
-  Gui, Text:font, s12 c%foregroundColor%, Consolas
+  Gui, Text:font, s%screenFontSize% c%foregroundColor%, Consolas
   Gui, Text:Add, Text, , %now% - %today%
-  Gui, Text:add, text, , %textToShow%
+  Gui, Text:add, text, w%elementWidth% h%elementHeight%, %textToShow%
   ;Gui, Text:add, text, , File: %A_ScriptDir%\%fileToShow%
   ;uncomment line above to display the path to the %fileToShow% at the bottom of this GUI window
   Gui, Text:Add, Button, w180, &Edit Sheet

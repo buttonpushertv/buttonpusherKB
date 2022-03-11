@@ -190,6 +190,8 @@ GroupAdd, altBlocked, ahk_exe Adobe Premiere Pro.exe ; items added to the group 
 
 #IfWinActive
 
+#Space::#!z ; <--Workaround to launch Keypirinha instead of PowerToys Run (Windows maps this even when it's turned off so that Keypirinha can't be mapped to it.)
+
 ; There are 2 hotkeys defined for the Hotkeys below because on my split keyboard it's easier to use ScrollLock & on my Kira/Preonic keyboards it's easier to use CapsLock.
 
 ScrollLock & f11:: ; <-- Open the Settings GUI for MASTER-SCRIPT.AHK
@@ -292,8 +294,8 @@ CapsLock & M:: ;<--pingPos - just to show what it does
 	CapsLockOff()
 	Return
 
-CapsLock & `:: ;<--Size a window to half the screen width & position it in the center of Display 1
-CapsLock & Numpad5::
+CapsLock & `:: ; <--Size a window to half the screen width & position it in the center of Display 1
+CapsLock & Numpad8::
 	tWidth := % Round(halfScreenWidth)
 	tWinLeftEdge := (tWidth / 2)
 	WinGetActiveTitle, tWinTitle
@@ -301,6 +303,38 @@ CapsLock & Numpad5::
 	CapsLockOff()
 	Return
 
+CapsLock & Numpad5:: ; <-- Center the active window on the primary display
+	WinExist("A")
+	WinGetPos,,, sizeX, sizeY
+	WinMove, (A_ScreenWidth/2)-(sizeX/2), (A_ScreenHeight/2)-(sizeY/2)
+	CapsLockOff()
+	Return
+
+CapsLock & Numpad2:: ; <-- Center the active window on the current display
+	winHandle := WinExist("A") ; The window to operate on
+
+	; Don't worry about how this part works. Just trust that it gets the 
+	; bounding coordinates of the monitor the window is on.
+	;--------------------------------------------------------------------------
+	VarSetCapacity(monitorInfo, 40), NumPut(40, monitorInfo)
+	monitorHandle := DllCall("MonitorFromWindow", "Ptr", winHandle, "UInt", 0x2)
+	DllCall("GetMonitorInfo", "Ptr", monitorHandle, "Ptr", &monitorInfo)
+	;--------------------------------------------------------------------------
+
+	workLeft      := NumGet(monitorInfo, 20, "Int") ; Left
+	workTop       := NumGet(monitorInfo, 24, "Int") ; Top
+	workRight     := NumGet(monitorInfo, 28, "Int") ; Right
+	workBottom    := NumGet(monitorInfo, 32, "Int") ; Bottom
+	WinGetPos,,, W, H, A
+	WinMove, A,, workLeft + (workRight - workLeft) // 2 - W // 2
+		, workTop + (workBottom - workTop) // 2 - H // 2
+	Return
+
+
+;Alt & Space::
+;	Send, ^{Space}
+;	Return
+	
 ; USING THE HYPER KEY
 ; In Windows 10, Microsoft has hard-coded the HYPER Key (Control+Shift+Alt+Windows) to open the Office Hub. There some ways to remove that coding. They involve editing the Registry, so it's not something you should do lightly.
 ;

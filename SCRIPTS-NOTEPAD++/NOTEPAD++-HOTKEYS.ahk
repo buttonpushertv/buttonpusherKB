@@ -31,6 +31,22 @@ sleepDeep := 3500
 
 #IfWinActive, ahk_exe notepad++.exe
 
+F14:: ; <-- WordWrap to specific character width
+    Clipboard = 60 ; set this value to whatever you want to wrap to
+    MSGBOX, , Wrap to Width, Wrapping text to %Clipboard% characters wide.
+    Send, ^{F1}
+    Return
+
+^F24:: ; <-- Reload NOTEPAD++-HOTKEYS.ahk
+    MSGBOX, , DEBUG,Reloading Notepad++-Hotkeys
+    Reload
+    Return
+
+#IfWinActive
+
+;===== HOLDING TANK FOR DEACTIVATED HOTKEYS ====================================================
+/* Just a place to store Hotkeys that I don't need but want to keep around...just in case.
+
 F13:: ; <-- Helper for setting cursor positions in Resolve. Used in conjunction with SCRIPTS-RESOLVE\RESOLVE-1SHOT-CONFIG.ahk
     Send, {LShift Down}{End}{LShift Up}
     Sleep, sleepShort
@@ -43,16 +59,6 @@ F13:: ; <-- Helper for setting cursor positions in Resolve. Used in conjunction 
     RemoveToolTip(4000)
 Return
 
-
-^F24:: ; <-- Reload NOTEPAD++-HOTKEYS.ahk
-    MSGBOX, , DEBUG,Reloading Notepad++-Hotkeys
-    Reload
-    Return
-
-#IfWinActive
-
-;===== HOLDING TANK FOR DEACTIVATED HOTKEYS ====================================================
-/* Just a place to store Hotkeys that I don't need but want to keep around...just in case.
 
 +^!f13:: ; <-- HTML: wrap selected text in <strong>..</strong> tag
     WinActivate, ahk_exe notepad++.exe
