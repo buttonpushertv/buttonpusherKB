@@ -33,7 +33,7 @@ sleepDeep := 3500
 CoordMode, Mouse, Client
 
 !z::
-    Send, {Escape}
+    Send, {Escape} ; Escape to exit previous full screen video
     Sleep, sleepMedium
     Click, 1300, 975
     Sleep, sleepLong
