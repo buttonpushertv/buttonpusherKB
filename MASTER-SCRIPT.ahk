@@ -46,8 +46,8 @@ sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
 
-halfScreenWidth := (A_ScreenWidth / 2) ; determine what half the screen's width is for splash screens
-quarterScreenHeight := (A_ScreenHeight / 4) ; determine what 1/4 the screen's height is for splash screens
+global halfScreenWidth := (A_ScreenWidth / 2) ; determine what half the screen's width is for splash screens
+global quarterScreenHeight := (A_ScreenHeight / 4) ; determine what 1/4 the screen's height is for splash screens
 
 global iniFile := "settings.ini" ; the main settings file used by most of the buttonpusherKB scripts
 global versionFile := "version.ini" ; the file which holds the current version of buttonpusherKB
@@ -328,6 +328,13 @@ CapsLock & Numpad2:: ; <-- Center the active window on the current display
 	WinGetPos,,, W, H, A
 	WinMove, A,, workLeft + (workRight - workLeft) // 2 - W // 2
 		, workTop + (workBottom - workTop) // 2 - H // 2
+	Return
+
+CapsLock & Numpad0:: ; <-- Get Cursor X & Y Position
+	MouseGetPos, x, y
+	ToolTip, % "x: " x "`ny: " y
+	CapsLockOff()
+	RemoveToolTip(-2500)
 	Return
 
 

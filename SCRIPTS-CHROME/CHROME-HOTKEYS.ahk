@@ -32,53 +32,41 @@ sleepDeep := 3500
 #IfWinActive, ahk_exe chrome.exe
 CoordMode, Mouse, Client
 
-!z::
-    Send, {Escape}
-    Sleep, sleepMedium
-    Click, 1300, 975
-    Sleep, sleepLong
-    Click, 1100, 620
-    Sleep, sleepLong
-    Click, 1561, 872
-    Return
+F24:: ; <-- Press Right Arrow looped number of times
+loopAmount := 14
+Loop, %loopAmount%
+{
+    Send, {Right}
+    Sleep, sleepShort
+}
+Return
 
-F24:: ; <-- Downloading Comps from an iStockPhoto Board
-    ; This will auto-magically download comp versions of video clips from iStockPhoto.com
-    ; It will do this by doing the following: 
-    ;   -Store the current position of the cursor when hotkey is pressed.
-    ;   -Shift Middle-Click on a clip in a board to open in new tab.
-    ;   -Activate that new tab.
-    ;   -Right click on the bottom, middle of the preview clip.
-    ;   -Select "Save Video As".
-    ;   -Wait for the 'Save As' window to activate.
-    ;   -Press Enter to save the comp clip.
-    ;   -Wait for the 'Save As' window to deactivate.
-    ;   -Close the Tab.
-    ;   -Restore cursor to position where it started.
-    ;
-    ; There are a few things you need to setup/make sure of before using this hotkey:
-    ;   1-Use Chrome (that's why it's in the CHROME-HOTKEYS.ahk)
-    ;   2-Make sure Chrome view is set to 100%
-    ;   3-Be using an iStockPhoto.com Board. See the F23 version for saving from a Video's page directly.
-    ;   4-Do the process once, manually, to set the location where files will be saved.
-    ;
-    MouseGetPos, xposP, yposP ;---storing cursor's current coordinates at X%xposP% Y%yposP%
-    Send, {MButton}
-    Sleep, sleepMedium
-    Send, {CtrlDown}{Tab}
-    Sleep, sleepMedium
-    Send, {Blind}{CtrlUp}
-    Sleep, sleepMedium
-    Click, right, 390, 590
-    Sleep, sleepMedium
-    Click, 460, 680
-    WinWaitActive, Save As,, 3
-    SendInput, {Enter}
-    WinWaitNotActive, Save As,, 3
-    Send, {Control Down}w
-    Send, {Blind}{Control Up}
-    MouseMove, xposP, yposP
-    Return
+F23:: ; <-- Press Left Arrow looped number of times
+loopAmount := 34
+Loop, %loopAmount%
+{
+    Send, {Left}
+    Sleep, sleepShort
+}
+Return
+
+F16:: ; <-- Press Up Arrow looped number of times
+loopAmount := 14
+Loop, %loopAmount%
+{
+    Send, {Up}
+    Sleep, sleepShort
+}
+Return
+
+F20:: ; <-- Press Down Arrow looped number of times
+loopAmount := 14
+Loop, %loopAmount%
+{
+    Send, {Down}
+    Sleep, sleepShort
+}
+Return
 
 
 ^F24:: ; <-- Reload CHROME-HOTKEYS.ahk
@@ -101,6 +89,17 @@ shutterStockClickAndClose() {
 ;====== INACTIVE HOTKEYS =======================================================================
 ; Hotkey defs here to hold them inactive for later use.
 /*
+
+!z:: ; <-- No idea what this is for....
+    Send, {Escape}
+    Sleep, sleepMedium
+    Click, 1300, 975
+    Sleep, sleepLong
+    Click, 1100, 620
+    Sleep, sleepLong
+    Click, 1561, 872
+    Return
+
 
 F21:: ; <-- Downloading Comps from a ShutterStock Single Image page
     ; This will auto-magically download comp versions of video clips from iStockPhoto.com
@@ -225,6 +224,43 @@ F24:: ; <-- Downloading Comps from an iStockPhoto Board
     MouseMove, xposP, yposP
     Return
 
+F24:: ; <-- Downloading Comps from an iStockPhoto Board
+    ; This will auto-magically download comp versions of video clips from iStockPhoto.com
+    ; It will do this by doing the following: 
+    ;   -Store the current position of the cursor when hotkey is pressed.
+    ;   -Shift Middle-Click on a clip in a board to open in new tab.
+    ;   -Activate that new tab.
+    ;   -Right click on the bottom, middle of the preview clip.
+    ;   -Select "Save Video As".
+    ;   -Wait for the 'Save As' window to activate.
+    ;   -Press Enter to save the comp clip.
+    ;   -Wait for the 'Save As' window to deactivate.
+    ;   -Close the Tab.
+    ;   -Restore cursor to position where it started.
+    ;
+    ; There are a few things you need to setup/make sure of before using this hotkey:
+    ;   1-Use Chrome (that's why it's in the CHROME-HOTKEYS.ahk)
+    ;   2-Make sure Chrome view is set to 100%
+    ;   3-Be using an iStockPhoto.com Board. See the F23 version for saving from a Video's page directly.
+    ;   4-Do the process once, manually, to set the location where files will be saved.
+    ;
+    MouseGetPos, xposP, yposP ;---storing cursor's current coordinates at X%xposP% Y%yposP%
+    Send, {MButton}
+    Sleep, sleepMedium
+    Send, {CtrlDown}{Tab}
+    Sleep, sleepMedium
+    Send, {Blind}{CtrlUp}
+    Sleep, sleepMedium
+    Click, right, 390, 590
+    Sleep, sleepMedium
+    Click, 460, 680
+    WinWaitActive, Save As,, 3
+    SendInput, {Enter}
+    WinWaitNotActive, Save As,, 3
+    Send, {Control Down}w
+    Send, {Blind}{Control Up}
+    MouseMove, xposP, yposP
+    Return
 
 
 
