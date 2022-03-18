@@ -40,15 +40,6 @@ Loop, %loopAmount%
     Sleep, sleepShort
 }
 Return
-!z::
-    Send, {Escape} ; Escape to exit previous full screen video
-    Sleep, sleepMedium
-    Click, 1300, 975
-    Sleep, sleepLong
-    Click, 1100, 620
-    Sleep, sleepLong
-    Click, 1561, 872
-    Return
 
 F23:: ; <-- Press Left Arrow looped number of times
 loopAmount := 34
