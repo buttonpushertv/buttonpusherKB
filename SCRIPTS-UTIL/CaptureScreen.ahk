@@ -1,9 +1,6 @@
+/* {Found here: https://www.autohotkey.com/board/topic/121619-screencaptureahk-broken-capturescreen-function-win-81-x64/  -  The 4th item down - by Linear Spoon} */
+
 /* CaptureScreen(aRect, bCursor, sFileTo, nQuality)
-
-{Found here: https://www.autohotkey.com/board/topic/121619-screencaptureahk-broken-capturescreen-function-win-81-x64/
-
-The 4th item down - by Linear Spoon}
-
 
 1) If the optional parameter bCursor is True, captures the cursor too.
 2) If the optional parameter sFileTo is 0, set the image to Clipboard.
