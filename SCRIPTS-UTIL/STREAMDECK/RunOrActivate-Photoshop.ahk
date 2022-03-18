@@ -37,7 +37,7 @@ sleepDeep := 3500
 ;===== END OF AUTO-EXECUTE =====================================================================
 
 DetectHiddenWindows, On
-LaunchCode := "C:\Program Files\Adobe\Adobe Photoshop 2021\Photoshop.exe"
+LaunchCode := "C:\Program Files\Adobe\Adobe Photoshop 2022\Photoshop.exe"
 WindowTitle := "ahk_exe Photoshop.exe"
 
 ;MsgBox,,Attempt,Trying to run or activate:`n%WindowLaunch%,2

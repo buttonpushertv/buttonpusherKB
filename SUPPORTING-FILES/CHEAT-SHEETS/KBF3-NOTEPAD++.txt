@@ -10,18 +10,12 @@ SHIFT+CTRL+ALT+F4       <--NOTEPAD++: wrap selected text in <b>..</b> tag
 
 =========================== NOTEPAD++ HOTKEYS ======================================
 
+F14                     <-- WordWrap to specific character width (variable in script)
+
+
 CTRL+F24                <-- Reload NOTEPAD++-HOTKEYS.ahk
-F13                     <--HTML: open DIV tag for FVTT-FATE development
-F14                     <--HTML: close DIV tag for FVTT-FATE development
-F17                     <--DOKUWIKI: make selection an Internal Link
-F19                     <--DOKUWIKI: set headline to Top Level
-F20                     <--DOKUWIKI: set headline to 2nd Level
-F21                     <--DOKUWIKI: set headline to 3rd Level
-F22                     <--DOKUWIKI: set headline to 4th Level
-F23                     <--DOKUWIKI: set headline to 5th Level
-SHIFT+CTRL+ALT+F13      <--HTML: wrap selected text in <strong>..</strong> tag
-SHIFT+CTRL+ALT+F14      <--DOKUWIKI: underline selected
-SHIFT+CTRL+ALT+F15      <--DOKUWIKI: italicize selected text
-SHIFT+CTRL+ALT+F16      <--DOKUWIKI: bold selected text
 
+=========================== NOTEPAD++ SHORTCUTS ======================================
+(These are things I can never remember - BEN)
 
+CTRL+SHIFT+L            <-- Delete the line where the cursor is
