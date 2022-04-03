@@ -20,6 +20,8 @@ sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
 
+#Include, C:\BKB\SCRIPTS-UTIL\CaptureScreen.ahk
+
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
 ; combine below with key and '::' to define hotkey 
@@ -32,42 +34,15 @@ sleepDeep := 3500
 #IfWinActive, ahk_exe chrome.exe
 CoordMode, Mouse, Client
 
-F24:: ; <-- Press Right Arrow looped number of times
-loopAmount := 14
-Loop, %loopAmount%
-{
-    Send, {Right}
-    Sleep, sleepShort
-}
-Return
 
-F23:: ; <-- Press Left Arrow looped number of times
-loopAmount := 34
-Loop, %loopAmount%
-{
-    Send, {Left}
-    Sleep, sleepShort
-}
+F22:: ; <-- capture the screen and prompt for file name
+    InputBox, ImageToGrab, Image filename?, What name should this grab be called?,,,,,,,,C:\BKB\PRIVATE\GAMING_SCRIPTS\TEST\FMG_IMAGE
+    Sleep, sleepMedium
+    if ErrorLevel
+        MsgBox, CANCEL was pressed
+    else
+        CaptureScreen("58,0,3440,1390",0,ImageToGrab)
 Return
-
-F16:: ; <-- Press Up Arrow looped number of times
-loopAmount := 14
-Loop, %loopAmount%
-{
-    Send, {Up}
-    Sleep, sleepShort
-}
-Return
-
-F20:: ; <-- Press Down Arrow looped number of times
-loopAmount := 14
-Loop, %loopAmount%
-{
-    Send, {Down}
-    Sleep, sleepShort
-}
-Return
-
 
 ^F24:: ; <-- Reload CHROME-HOTKEYS.ahk
     MSGBOX, , DEBUG,Reloading Chrome-Hotkeys
@@ -89,6 +64,43 @@ shutterStockClickAndClose() {
 ;====== INACTIVE HOTKEYS =======================================================================
 ; Hotkey defs here to hold them inactive for later use.
 /*
+
+F24:: ; <-- Press Right Arrow looped number of times
+loopAmount := 14
+Loop, %loopAmount%
+{
+    Send, {Right}
+    Sleep, sleepShort
+}
+Return
+
+F23:: ; <-- Press Left Arrow looped number of times
+loopAmount := 14
+Loop, %loopAmount%
+{
+    Send, {Left}
+    Sleep, sleepShort
+}
+Return
+
+F16:: ; <-- Press Up Arrow looped number of times
+loopAmount := 6
+Loop, %loopAmount%
+{
+    Send, {Up}
+    Sleep, sleepShort
+}
+Return
+
+F20:: ; <-- Press Down Arrow looped number of times
+loopAmount := 6
+Loop, %loopAmount%
+{
+    Send, {Down}
+    Sleep, sleepShort
+}
+Return
+
 
 !z:: ; <-- No idea what this is for....
     Send, {Escape}

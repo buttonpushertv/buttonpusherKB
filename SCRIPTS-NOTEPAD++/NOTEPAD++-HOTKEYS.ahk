@@ -32,7 +32,7 @@ sleepDeep := 3500
 #IfWinActive, ahk_exe notepad++.exe
 
 F14:: ; <-- WordWrap to specific character width
-    Clipboard = 60 ; set this value to whatever you want to wrap to
+    Clipboard = 64 ; set this value to whatever you want to wrap to
     MSGBOX, , Wrap to Width, Wrapping text to %Clipboard% characters wide.
     Send, ^{F1}
     Return

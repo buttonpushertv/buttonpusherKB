@@ -175,7 +175,20 @@ SetTimer, CapsLockCheck, %Settings_CapsLockCheckPeriod% ; the main timer to chec
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
 GroupAdd, altBlocked, ahk_exe Adobe Premiere Pro.exe ; items added to the group called 'altBlocked' will have the LAlt key blocked from triggering the menu selection
 
+GroupAdd, winBlocked, ahk_exe Adobe Premiere Pro.exe ; items added to the group called 'winBlocked' will have the LWin key blocked from triggering the menu selection
+
+#IfWinActive, ahk_group winBlocked
+; don't know if this works for Win too...
 ~LWin::Send {Blind}{vk07} ; <-- Blocks Left Window key from triggering the Start Menu when pressed by itself. The Right Window key will still work in the default fashion.
+    KeyWait, LWin
+    Return
+
+~LWin up:: ; <-- Part of blocking Left Alt Key from triggering menus
+		sendinput, {SC15B up}
+		return
+
+#IfWinActive
+
 
 #IfWinActive, ahk_group altBlocked
 ; don't know if this works for alt too...
