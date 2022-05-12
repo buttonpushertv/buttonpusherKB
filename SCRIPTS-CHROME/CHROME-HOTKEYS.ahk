@@ -20,6 +20,8 @@ sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
 
+#Include, C:\BKB\SCRIPTS-UTIL\CaptureScreen.ahk
+
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
 ; combine below with key and '::' to define hotkey 
@@ -30,44 +32,19 @@ sleepDeep := 3500
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
 
 #IfWinActive, ahk_exe chrome.exe
-CoordMode, Mouse, Client
 
-F24:: ; <-- Press Right Arrow looped number of times
-loopAmount := 14
-Loop, %loopAmount%
-{
-    Send, {Right}
-    Sleep, sleepShort
-}
-Return
-
-F23:: ; <-- Press Left Arrow looped number of times
-loopAmount := 34
-Loop, %loopAmount%
-{
-    Send, {Left}
-    Sleep, sleepShort
-}
-Return
-
-F16:: ; <-- Press Up Arrow looped number of times
-loopAmount := 14
-Loop, %loopAmount%
-{
-    Send, {Up}
-    Sleep, sleepShort
-}
-Return
-
-F20:: ; <-- Press Down Arrow looped number of times
-loopAmount := 14
-Loop, %loopAmount%
-{
-    Send, {Down}
-    Sleep, sleepShort
-}
-Return
-
+!z:: ; <-- FCM - leave fullscreen, continue to next video, and then setting back to fullscreen
+    ; currently set for use on Xeonator Laptop
+    Send, {Escape}
+    Sleep, sleepMedium
+    Click, 2960,2130
+    Sleep, sleepLong
+    Click, 3250,2130
+    Sleep, sleepDeep
+    Click, 2344,1408
+    Sleep, 3000
+    Click, 3378,1973
+    Return
 
 ^F24:: ; <-- Reload CHROME-HOTKEYS.ahk
     MSGBOX, , DEBUG,Reloading Chrome-Hotkeys
@@ -89,6 +66,52 @@ shutterStockClickAndClose() {
 ;====== INACTIVE HOTKEYS =======================================================================
 ; Hotkey defs here to hold them inactive for later use.
 /*
+
+F24:: ; <-- Press Right Arrow looped number of times
+loopAmount := 14
+Loop, %loopAmount%
+{
+    Send, {Right}
+    Sleep, sleepShort
+}
+Return
+
+F23:: ; <-- Press Left Arrow looped number of times
+loopAmount := 14
+Loop, %loopAmount%
+{
+    Send, {Left}
+    Sleep, sleepShort
+}
+Return
+
+F16:: ; <-- Press Up Arrow looped number of times
+loopAmount := 6
+Loop, %loopAmount%
+{
+    Send, {Up}
+    Sleep, sleepShort
+}
+Return
+
+F20:: ; <-- Press Down Arrow looped number of times
+loopAmount := 6
+Loop, %loopAmount%
+{
+    Send, {Down}
+    Sleep, sleepShort
+}
+Return
+
+CoordMode, Mouse, Client
+F22:: ; <-- capture the screen and prompt for file name
+    InputBox, ImageToGrab, Image filename?, What name should this grab be called?,,,,,,,,C:\BKB\PRIVATE\GAMING_SCRIPTS\TEST\FMG_IMAGE
+    Sleep, sleepMedium
+    if ErrorLevel
+        MsgBox, CANCEL was pressed
+    else
+        CaptureScreen("58,0,3440,1390",0,ImageToGrab)
+Return
 
 !z:: ; <-- No idea what this is for....
     Send, {Escape}

@@ -31,11 +31,18 @@ sleepDeep := 3500
 
 #IfWinActive, ahk_exe notepad++.exe
 
-F14:: ; <-- WordWrap to specific character width
-    Clipboard = 60 ; set this value to whatever you want to wrap to
-    MSGBOX, , Wrap to Width, Wrapping text to %Clipboard% characters wide.
-    Send, ^{F1}
-    Return
+Capslock & b:: ; <-- HTML: wrap selected text in <b>..</b> tag
+    WinActivate, ahk_exe notepad++.exe
+    CapsLockOff()
+    Send, ^c
+    ClipWait
+    Send, {Del}
+    wrappedText := "<b>" . Clipboard . "</b>"
+    WinActivate, ahk_exe notepad++.exe
+    SendInput, %wrappedText%
+    Clipboard = ; clears Clipboard
+Return
+
 
 ^F24:: ; <-- Reload NOTEPAD++-HOTKEYS.ahk
     MSGBOX, , DEBUG,Reloading Notepad++-Hotkeys
@@ -75,6 +82,12 @@ F13:: ; <-- Helper for setting cursor positions in Resolve. Used in conjunction 
     ToolTip, Ready to grab cursor position of %clipboard%
     RemoveToolTip(4000)
 Return
+
+F14:: ; <-- WordWrap to specific character width
+    Clipboard = 64 ; set this value to whatever you want to wrap to
+    MSGBOX, , Wrap to Width, Wrapping text to %Clipboard% characters wide.
+    Send, ^{F1}
+    Return
 
 
 +^!f13:: ; <-- HTML: wrap selected text in <strong>..</strong> tag
@@ -209,4 +222,11 @@ RemoveToolTip(duration) {
 ToolTipOff:
     ToolTip
     return
+}
+
+CapsLockOff() {
+  ;use this function to set the CapsLock key to off, but wait until the key is released before toggling it off
+  KeyWait, CapsLock
+  SetCapsLockState, Off
+  Return
 }
