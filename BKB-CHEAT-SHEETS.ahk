@@ -100,6 +100,13 @@ scalingFactor := 1 ; This is the value to use for UI Scaling of 100%
 pictureScalingFactor := 1 ; This is the value to use for UI Scaling of 100%
 screenFontSize := 14 ; ; This is the value to use for UI Scaling of 100%
 
+If (A_ScreenDPI = 216) { ; for a UHD Display with very high pixel density. These values are what works for a laptop with a 3840x2400 UHD screen set to 225% UI Scaling.
+; The math of these doesn't quite make sense to me, so this a brute force method of making it work. - BEN
+	scalingFactor := .5
+	pictureScalingFactor := .8
+	screenFontSize := 12
+	}
+
 If (A_ScreenDPI = 240) { ; for a UHD Display with very high pixel density. These values are what works for a laptop with a 3840x2400 UHD screen set to 250% UI Scaling.
 ; The math of these doesn't quite make sense to me, so this a brute force method of making it work. - BEN
 	scalingFactor := .4
