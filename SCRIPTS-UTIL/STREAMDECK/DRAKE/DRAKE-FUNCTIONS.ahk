@@ -313,10 +313,20 @@ Explorer_GetPath(hwnd="") {
 }
 #IfWinActive
 
+; Generic saving of the path info here. This is based on the fact that once we pull the path from wherever it comes from, we save it the same way anyhow.
+
+savePath(pathToSave){
+    global Settings_rootFolder
+	FileDelete, %Settings_rootFolder%\PRIVATE\%A_Computername%\SavedPath.txt
+	FileAppend, %pathToSave%, %Settings_rootFolder%\PRIVATE\%A_Computername%\SavedPath.txt
+}
+
+; This function is being phased out in favor of the more generic function "savePath()" - around line 318
 ; tweaked the function below to keep it consistent with the FCXE functions futher down.
 savePathForExplorer(pathToSave){
+	global Settings_rootFolder
 	FileDelete, %Settings_rootFolder%\PRIVATE\%A_Computername%\SavedExplorerAddress.txt
-	FileAppend, %title%, %Settings_rootFolder%\PRIVATE\%A_Computername%\SavedExplorerAddress.txt
+	FileAppend, %pathToSave%, %Settings_rootFolder%\PRIVATE\%A_Computername%\SavedExplorerAddress.txt
 ;FOR SOME REASON, AFTER THIS SCRIPT RUNS, IT SOMETIMES ACTIVATES THE LAST ACTIVE WINDOW. IT DOESN'T MAKE ANY SENSE...
 }
 ;FOR FURTHER READING:
@@ -434,9 +444,10 @@ getFCXEPath(){
    return pathToSave
 }
 
+; This function is being phased out in favor of the more generic function "savePath()" - around line 318
 savePathForFCXE(savedPath){
-  global Settings_rootFolder
-  FileDelete, %Settings_rootFolder%\PRIVATE\%A_Computername%\SavedPathForFCXE.txt
+	global Settings_rootFolder
+	FileDelete, %Settings_rootFolder%\PRIVATE\%A_Computername%\SavedPathForFCXE.txt
 	FileAppend, %savedPath%, %Settings_rootFolder%\PRIVATE\%A_Computername%\SavedPathForFCXE.txt
 	;MSGBOX,,DEBUG,savePathForFCXE,%savedPath%`nwas saved to`n`n%Settings_rootFolder%\PRIVATE\SavedPathForFCXE.txt, 2
 	return
