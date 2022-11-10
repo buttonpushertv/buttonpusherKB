@@ -68,11 +68,31 @@ F13:: ; <- In Timeline, Select All then collapse/open effects/animated on all tr
         Send, u
     Return
 
-    
++^!F5:: ; <-- on a timeline, reveal transparency on selected layer, select layer below, reveal rotation, reselect layer above
+    Send, t
+    Sleep, sleepShort
+    Send, ^v
+    Sleep, sleepShort
+    Send, ^{Down}
+    Sleep, sleepShort
+    Send, r
+    Sleep, sleepShort
+    Send, ^{Up}
+Return
+
++^!F6:: ; <-- On a timeline, select next layer down, go to in point, then open scale
+    Send, ^{Down}
+    Sleep, sleepShort
+    Send, i
+    Sleep, sleepShort
+    Send, s
+Return
+
+
 #IfWinActive
 
 
-;===== ILLUSTRATOR HOTKEY DEFINITIONS HERE ============================================
+;===== AFTER EFFECTS HOTKEY DEFINITIONS HERE ============================================
 
 /* 
 
@@ -80,13 +100,38 @@ THIS BLOCK IS JUST HERE FOR REFERENCE ON USING 'clickradar()' FUNCTION
 
 #IfWinActive, ahk_exe Illustrator.exe
 
-+^!F6:: ; <-- Clicking on 'Vertical Distribute Center' FOR MIXED OBJECTS
++^!F6:: c; <-- Clicking on 'Vertical Distribute Center' FOR MIXED OBJECTS
     ;- why can't this be assigned a key board shortcut in Illustrator?!?
     ; 'clickRadar' is a function below. You give it the coordinates you want to click & it does the rest.
     clickRadar(1056,66) 
     Return
 
 #IfWinActive
+
+OLDER AFERT EFFECTS HOTKEYS USED FOR SPECIFIC PROJECTS/TASKS
+
++^!F6:: ; <-- For Alexion Mosaic Project: placing master photo comp into an individual photo comp - placing in time, trimming end, copying to clipboard
+    MouseGetPos, xpos, ypos ; storing current mouse position
+    Send, {Home}
+    Sleep, sleepShort
+    Send, ^v
+    Sleep, sleepShort
+    Send, {[}
+    Sleep, sleepShort
+    Send, !^{Down}
+    Sleep, sleepShort
+    Send, {End}
+    Sleep, sleepShort
+    Send, {PgUp}{PgUp}{PgUp}{PgUp}
+    Sleep, sleepShort
+    Send, ^+d
+    Sleep, sleepShort
+    Send, ^x
+    Sleep, sleepShort
+    Send, {Home}
+
+Return
+
 */
 ;===== END SCAF DEFINITIONS ===============================================================
 
