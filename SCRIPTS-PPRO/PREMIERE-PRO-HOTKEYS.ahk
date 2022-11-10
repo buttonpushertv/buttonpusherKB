@@ -29,8 +29,10 @@ sleepDeep := 3500
 
 EnvGet, Settings_rootFolder, BKB_ROOT
 iniFile := Settings_rootFolder . "\settings.ini" ; the main settings file used by most of the buttonpusherKB scripts
-IniRead, xposP, %inifile%, Settings, TCDisplayXpos
-IniRead, yposP, %inifile%, Settings, TCDisplayYpos
+IniRead, programXposP, %inifile%, Settings, TCDisplayProgramXpos
+IniRead, programYposP, %inifile%, Settings, TCDisplayProgramYpos
+IniRead, sourceXposP, %inifile%, Settings, TCDisplaySourceXpos
+IniRead, sourceYposP, %inifile%, Settings, TCDisplaySourceYpos
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 
@@ -173,24 +175,48 @@ return
 ; these are usage examples for the functions to grab the timecode of the current Program Monitor sequence.
 
 ^+!i:: ; <-- Find Coordinates of Sequence Timecode so 'Get Current Timecode of Sequence' below knows where to look.
-  getTCDisplayCoords(xposP, yposP)
-  Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Screen"
-  ;MSGBOX, , DEBUG, This is what came back from the function: X=%xposP% / Y=%yposP%
+  getProgramTCDisplayCoords(programXposP, programYposP)
+  Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %programXposP% %programYposP% "Screen"
+  ;MSGBOX, , DEBUG, This is what came back from the function: X=%programXposP% / Y=%programYposP%
   Return
 
 +!i:: ; <-- Get Current Timecode of Sequence
   CoordMode, Mouse, Screen
-  grabTCAsText(grabbedTC, xposP, yposP)
+  grabProgramTCAsText(grabbedTC, programXposP, programYposP)
   ToolTip, Grabbed %grabbedTC% to Clipboard
   RemoveToolTip(2000)
-  ;MSGBOX,,Timecode value read..., This is the value of grabbedTC: %grabbedTC% `nThis is the value stored on the clipboard: %clipboard%`n`nYou can send this to other apps by editing %A_ScriptName% and using the function 'grabTCAsText' (see PREMIERE-PRO-FUNCTIONS.ahk for more info)., 2
+  MSGBOX,,Timecode value read..., This is the value of grabbedTC: %grabbedTC% `nThis is the value stored on the clipboard: %clipboard%`n`nYou can send this to other apps by editing %A_ScriptName% and using the function 'grabProgramTCAsText' (see PREMIERE-PRO-FUNCTIONS.ahk for more info)., 2
   Return
 
 ^!i:: ; <-- Show coords that are stored
   CoordMode, Mouse, Screen
-  MouseMove, xposP, yposP
-  Tooltip, Mouse positioned at:`nxposP:%xposP%/yposP:%yposP%
-  Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Screen"
+  MouseMove, programXposP, programYposP
+  Tooltip, Mouse positioned at:`nprogramXposP:%programXposP%/programYposP:%programYposP%
+  Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %programXposP% %programYposP% "Screen"
+  RemoveToolTip(2500)
+  Return
+
+; these are usage examples for the functions to grab the timecode of the current Source Monitor clip.
+
+^+!u:: ; <-- Find Coordinates of Source Clip's Timecode so 'Get Current Timecode of Source' below knows where to look.
+  getSourceTCDisplayCoords(sourceXposP, sourceYposP)
+  Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %sourceXposP% %sourceYposP% "Screen"
+  ;MSGBOX, , DEBUG, This is what came back from the function: X=%sourceXposP% / Y=%sourceYposP%
+  Return
+
++!u:: ; <-- Get Current Timecode of Source Clip
+  CoordMode, Mouse, Screen
+  grabSourceTCAsText(grabbedTC, sourceXposP, sourceYposP)
+  ToolTip, Grabbed %grabbedTC% to Clipboard
+  RemoveToolTip(2000)
+  MSGBOX,,Timecode value read..., This is the value of grabbedTC: %grabbedTC% `nThis is the value stored on the clipboard: %clipboard%`n`nYou can send this to other apps by editing %A_ScriptName% and using the function 'grabSourceTCAsText' (see PREMIERE-PRO-FUNCTIONS.ahk for more info)., 2
+  Return
+
+^!u:: ; <-- Show coords that are stored for Source
+  CoordMode, Mouse, Screen
+  MouseMove, sourceXposP, sourceYposP
+  Tooltip, Mouse positioned at:`nsourceXposP:%sourceXposP%/sourceYposP:%sourceYposP%
+  Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %sourceXposP% %sourceYposP% "Screen"
   RemoveToolTip(2500)
   Return
 
@@ -325,31 +351,60 @@ return
 
 ;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
 
-+^!F1:: ; <-- Push current timecode value to Word
-  grabTCAsText(grabbedTC, xposP, yposP)
++^!F1:: ;<-- match framing to a secondary Clip that has matching timecode
+  message := "It appears you haven't used this command since you launched buttonpusherKB since you booted up today.`n`nThis hotkey will help you matchframe to a secondary source clip. It does this by matchframing a primary clip, copying that timecode to the clipboard, then loading a secondary source clip that has matching timecode, setting an in point to the same timecode, and then replacing the primary source clip with the secondary source clip.`n`nIn order to use this properly, follow these steps:`n`n1. Your secondary source clip (sequence or multicam clip,etc.) must have identical timecode to your original source clip. This will not work properly if you don't make the identical.`n`n2. Make sure the Secondary Source Clip is the only item in the Source Monitor listing. Right-click the source name and you can close any that shouldn't be there.`n`n3. This hotkey (currently) only works with one primary/secondary source clip at a time. As long as your primary source timecode exists within your secondary source clip, it should work.`n`n4. Make sure you have duped your sequence or duped the primary source layer to another layer - so you can compare the replaced clip with the original.`n`n5. You need to have ""Selection Follows Playhead"" turned on in the Sequence menu & make sure the clip you are replacing is selected in timeline before proceeding.`n`nPress Cancel below if things aren't setup properly.`n`nPress OK to continue with this hotkey (or if you're seeing this after fixing things to make it work.)"
+  if (!f1MessageSeen)
+  {
+    FirstUsageSinceLaunch(message)
+    IfMsgBox, Cancel
+      Return
+    f1MessageSeen := 1
+  }
+  prfocus("program") ;First we need to give the Record monitor focus
+  Send, f ;then we perfom the standard matchframe to the source clips
   Sleep, sleepShort
-  WinActivate, ahk_exe WINWORD.EXE ;switch to Word
-  Sleep, sleepShort
-  Send, {Down}{Down} ;move cursor down two rows
-  Sleep, sleepShort
-  ;MSGBOX, , DEBUG, %grabbedTC%
-  Send, %clipboard% ;paste the clipboard where the cursor is sitting
-  Sleep, sleepShort
-  WinActivate, ahk_exe Adobe Premiere Pro.exe ;switch back to PPRO
-  Sleep, sleepShort
-  prFocus("timeline") ; set timeline as the focused window in PPRO
+  ;then we grab the timecode from the source monitor
+  CoordMode, Mouse, Screen
+  grabSourceTCAsText(grabbedTC, sourceXposP, sourceYposP)
+  ToolTip, Grabbed %grabbedTC% to Clipboard
+  RemoveToolTip(1500)
+  prfocus("source") ;PPRO has an interesting behavior in that it will cycle through clips loaded in Source Monitor on successive presses of the "Source Monitor" hotkey. So, this should load in the 2nd clip - which should be the secondary source
+    BlockInput, On
+    MouseMove, sourceXposP, sourceYposP
+    Sleep, sleepLong
+    Click, %sourceXposP%, %sourceYposP%, 0
+    Sleep, sleepMedium
+    Send, {Click}
+    Sleep, sleepMedium
+    Send, ^v ;then go to the matching timecode in the secondary source - pasting from clipboard
+    Sleep, sleepMedium
+    Send, {Enter}
+    Sleep, sleepMedium
+    Send, i ;then set an in point on the secondary source
+    Sleep, sleepMedium
+    prfocus("timeline") ;then switch back to timeline
+    Sleep, sleepLong
+    Send, ^!+2 ;and replace the clip contents from "Source Monitor, Match Frame"
+    Sleep, sleepMedium
+    prfocus("program") ; and then set focus back on Program Monitor
+    BlockInput, Off
+
 Return
 
-+^!f2:: ;<-- Select text from cursor location to beginning of line, delete, & paste from clipboard
-  Send, {Shift Down}{Home}{Shift Up}
-  Sleep, sleepShort
-  Send, {Delete}
-  Sleep, sleepShort
-  Send, ^v
-  Sleep, sleepShort
-  Send, {Enter}
-  Return
++^!F2::
+  message := "This is the first time you've launched hotkey this since youe started buttonousherKB."
+  ;MSGBOX, , DEBUG, %message%
 
+  if (!f2MessageSeen)
+  {
+    FirstUsageSinceLaunch(message)
+    IfMsgBox, Cancel
+      Return
+    f2MessageSeen := 1
+  }
+  else
+  MSGBOX, , DEBUG, Already been run.
+  Return
 ;+^!f3::
 ;+^!f4::
 ;+^!f5:: ; [USED by PPRO to Toggle Transmit(Video Playback)]
@@ -365,7 +420,41 @@ Return
 ;+^!f15::
 ;+^!f16::
 ;+^!f17::
-+^!f18:: ;<-- Grabbing a single frame to export & add TC into the name
+;+^!f18::
+
+#IfWinActive
+
+;===== END Program 1 DEFINITIONS ===============================================================
+
+/* COMMAND HOLDING TANK
+(This comment block is a place where you can store previously used hotkeys that you may want to keep around in case you need to reuse them. Make sure to comment on what they did and/or were for.)
+
+; <-- Push current timecode value to Word
+  grabTCAsText(grabbedTC, xposP, yposP)
+  Sleep, sleepShort
+  WinActivate, ahk_exe WINWORD.EXE ;switch to Word
+  Sleep, sleepShort
+  Send, {Down}{Down} ;move cursor down two rows
+  Sleep, sleepShort
+  ;MSGBOX, , DEBUG, %grabbedTC%
+  Send, %clipboard% ;paste the clipboard where the cursor is sitting
+  Sleep, sleepShort
+  WinActivate, ahk_exe Adobe Premiere Pro.exe ;switch back to PPRO
+  Sleep, sleepShort
+  prFocus("timeline") ; set timeline as the focused window in PPRO
+Return
+
+ ;<-- Select text from cursor location to beginning of line, delete, & paste from clipboard
+  Send, {Shift Down}{Home}{Shift Up}
+  Sleep, sleepShort
+  Send, {Delete}
+  Sleep, sleepShort
+  Send, ^v
+  Sleep, sleepShort
+  Send, {Enter}
+  Return
+
+ ;<-- Grabbing a single frame to export & add TC into the name
   Send, !{F3} ; clear in & out marks
   ; mark in & out on single frame
   Send, i 
@@ -403,13 +492,6 @@ Return
   ; activate FreeCommander
   WinActivate, ahk_exe FreeCommander.exe
 Return
-
-#IfWinActive
-
-;===== END Program 1 DEFINITIONS ===============================================================
-
-/* COMMAND HOLDING TANK
-(This comment block is a place where you can store previously used hotkeys that you may want to keep around in case you need to reuse them. Make sure to comment on what they did and/or were for.)
 
 ; <-- Go to next edit then add edit to active tracks
   Send, {down}

@@ -17,7 +17,7 @@ OnExit, GdiplusExit
 xpos = %1%
 ypos = %2%
 wMode = %3%
-
+;MSGBOX, , DEBUG, This is what was sent`nX: %xpos% / Y: %ypos%
 pingPos(xpos, ypos, wMode)
 ExitApp
 

@@ -47,7 +47,7 @@ else if (panel = "timeline")
     Send {F21} ;if focus had already been on the timeline, this would have switched to the next sequence in some arbitrary order.
 else if (panel = "program") ;program monitor
         Send {F20}
-else if (panel = "source") ;source monitor
+else if (panel = "source") ;source monitor - if focus had already been on the source monitor, this will switch to the next clip in some name or listing order.
         Send {F19}
 else if (panel = "project") ;AKA a "bin" or "folder"
         Send {F9}
@@ -291,50 +291,51 @@ resetFromAutoVFX(clicky := 0)
 
 ; These Functions are for copying the timecode from the currently active sequence in the Program Monitor to the clipboard as text.
 
-getTCDisplayCoords(ByRef xposP, ByRef yposP) ; this will revise the stored values of the X & Y coords of where the Program Monitor's TC Display is located on your screen.
+getProgramTCDisplayCoords(ByRef programXposP, ByRef programYposP) ; this will revise the stored values of the X & Y coords of where the Program Monitor's TC Display is located on your screen.
 {
     global inifile
     global Settings_rootFolder
     CoordMode, Mouse, Screen
-    xposPOld := xposP ; storing the previous X position
-    yposPOld := yposP ; storing the previous Y position
-    MouseGetPos, xposPNew, yposPNew ;---storing cursor's current coordinates at X%xposPNew% Y%yposPNew%
-    ;Tooltip, X=%xposPNew% / Y=%yposPNew%`nGrabbing the X & Y coordinates of the mouse cursor`nMake sure it is over the Program Monitor's timecode display (lower left).`n`n(Previous values: X=%xposPOld% / Y=%yposPOld%)
+    programXposPOld := programXposP ; storing the previous X position
+    programYposPOld := programYposP ; storing the previous Y position
+    MouseGetPos, programXposPNew, programYposPNew ;---storing cursor's current coordinates at X%programXposPNew% Y%programYposPNew%
+    ;Tooltip, X=%programXposPNew% / Y=%programYposPNew%`nGrabbing the X & Y coordinates of the mouse cursor`nMake sure it is over the Program Monitor's timecode display (lower left).`n`n(Previous values: X=%programXposPOld% / Y=%programYposPOld%)
     ;RemoveToolTip(4000)
-    prFocus("program") ; Activating the Program Monitor
-    Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Screen"
-    MsgBox, 35, Update TC Display Coords?, Make sure cursor is over the Program Monitor's Timecode Display (lower left).`n`nX=%xposPNew% / Y=%yposPNew%`nThese are the coordinates that were grabbed.`nWould you like to save these in settings.ini?`n`nYes will save.`nNo will just update them until script is reloaded.`nCancel will reset them to settings.ini values.`n`n(Previous values: X=%xposPOld% / Y=%yposPOld%)
-    xposP := xposPNew ; storing new values in xposP - this should cover the 'No' selection case
-    yposP := yposPNew ; storing new values in yposP - this should cover the 'No' selection case
+    ;prFocus("program") ; Activating the Program Monitor
+    Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %programXposP% %programYposP% "Screen"
+    MsgBox, 35, Update TC Display Coords?, Make sure cursor is over the Program Monitor's Timecode Display (lower left).`n`nX=%programXposPNew% / Y=%programYposPNew%`nThese are the coordinates that were grabbed.`nWould you like to save these in settings.ini?`n`nYes will save.`nNo will just update them until script is reloaded.`nCancel will reset them to settings.ini values.`n`n(Previous values: X=%programXposPOld% / Y=%programYposPOld%)
+    programXposP := programXposPNew ; storing new values in programXposP - this should cover the 'No' selection case
+    programYposP := programYposPNew ; storing new values in programYposP - this should cover the 'No' selection case
     
     IfMsgBox Yes
-        IniWrite, %xposP%, %inifile%, Settings, TCDisplayXpos ; writes the new X value to settings.ini
-        IniWrite, %yposP%, %inifile%, Settings, TCDisplayYpos ; writes the new Y value to settings.ini
+        IniWrite, %programXposP%, %inifile%, Settings, TCDisplayProgramXpos ; writes the new X value to settings.ini
+        IniWrite, %programYposP%, %inifile%, Settings, TCDisplayProgramYpos ; writes the new Y value to settings.ini
     IfMsgBox Cancel
-        xposP := xposPOld ; puts the old X value back into xposP on Cancel
-        yposP := yposPOld ; puts the old Y value back into yposP on Cancel
+        programXposP := programXposPOld ; puts the old X value back into programXposP on Cancel
+        programYposP := programYposPOld ; puts the old Y value back into programYposP on Cancel
     ; selecting No should just save the new values for X & Y for the current instance of the script. Reloading will re-read the values from settings.ini
     
     Return
 }
 
-grabTCAsText(ByRef grabbedTC, ByRef xposP, ByRef yposP)
+grabProgramTCAsText(ByRef grabbedTC, ByRef programXposP, ByRef programYposP)
 {
     global Settings_rootFolder
-    If (!xposP and !yposP)
+    If (!programXposP and !programYposP)
     {
         MsgBox,, Grab Timecode Display position, You need to grab the X & Y coordinates of the Program Monitor's Timecode Display (lower left).`nPosition cursor then press CTRL-SHIFT-ALT-I to capture
         Return
     }
-    prFocus("program") ; Activating the Program Monitor
+    ;prFocus("program") ; Activating the Program Monitor
     Sleep, 333
     CoordMode, Mouse, Screen
-    MouseGetPos, xposTEMP, yposTEMP ;---storing cursor's current coordinates at X%xposTEMP% Y%yposTEMP%
-    Tooltip, Attempting a click at: X=%xposP% / Y=%yposP%`nIf this misclicks`, position cursor over TC display in Program Monitor then press CTRL-SHIFT-ALT-I to capture coordinates.
-    RemoveToolTip(2000)
-    ;BlockInput, On
-    MouseMove, xposP, yposP
-    Click, %xposP%, %yposP%, 0
+    MouseGetPos, programXposTEMP, programYposTEMP ;---storing cursor's current coordinates at X%programXposTEMP% Y%programYposTEMP%
+    ; This tooltip below is commented out. The MsgBox above does the same thing but will only trigger if there's no values in settings.ini to read. This was an earlier reminder, but maybe it wants to stick around - BH
+    ;Tooltip, Attempting a click at: X=%programXposP% / Y=%programYposP%`nIf this misclicks`, position cursor over TC display in Program Monitor then press CTRL-SHIFT-ALT-I to capture coordinates.
+    ;RemoveToolTip(2000)
+    BlockInput, On
+    MouseMove, programXposP, programYposP
+    Click, %programXposP%, %programYposP%, 0
     Sleep, 333
     Send, {Click}
     Sleep, 333
@@ -345,10 +346,70 @@ grabTCAsText(ByRef grabbedTC, ByRef xposP, ByRef yposP)
     Send, {Control Up}
     Sleep, 333
     Send, {Esc}
-    ;BlockInput, Off
-    MouseMove, xposTEMP, yposTEMP ; putting cursor back where it was before hotkey was invoked
+    BlockInput, Off
+    MouseMove, programXposTEMP, programYposTEMP ; putting cursor back where it was before hotkey was invoked
     grabbedTC = %clipboard%
-    Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %xposP% %yposP% "Screen"
+    ;Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %programXposP% %programYposP% "Screen"
+    Return grabbedTC
+}
+
+; These Functions are for copying the timecode from the currently active sequence in the Source Monitor to the clipboard as text.
+
+getSourceTCDisplayCoords(ByRef sourceXposP, ByRef sourceYposP) ; this will revise the stored values of the X & Y coords of where the Source Monitor's TC Display is located on your screen.
+{
+    global inifile
+    global Settings_rootFolder
+    CoordMode, Mouse, Screen
+    sourceXposPOld := sourceXposP ; storing the previous X position
+    sourceYposPOld := sourceYposP ; storing the previous Y position
+    MouseGetPos, sourceXposPNew, sourceYposPNew ;---storing cursor's current coordinates at X%sourceXposPNew% Y%sourceYposPNew%
+    ;Tooltip, X=%sourceXposPNew% / Y=%sourceYposPNew%`nGrabbing the X & Y coordinates of the mouse cursor`nMake sure it is over the Source Monitor's timecode display (lower left).`n`n(Previous values: X=%sourceXposPOld% / Y=%sourceYposPOld%)
+    ;RemoveToolTip(4000)
+    ;prFocus("source") ; Activating the Source Monitor
+    Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %sourceXposP% %sourceYposP% "Screen"
+    MsgBox, 35, Update TC Display Coords?, Make sure cursor is over the Source Monitor's Timecode Display (lower left).`n`nX=%sourceXposPNew% / Y=%sourceYposPNew%`nThese are the coordinates that were grabbed.`nWould you like to save these in settings.ini?`n`nYes will save.`nNo will just update them until script is reloaded.`nCancel will reset them to settings.ini values.`n`n(Previous values: X=%sourceXposPOld% / Y=%sourceYposPOld%)
+    sourceXposP := sourceXposPNew ; storing new values in sourceXposP - this should cover the 'No' selection case
+    sourceYposP := sourceYposPNew ; storing new values in sourceYposP - this should cover the 'No' selection case
+    
+    IfMsgBox Yes
+        IniWrite, %sourceXposP%, %inifile%, Settings, TCDisplaySourceXpos ; writes the new X value to settings.ini
+        IniWrite, %sourceYposP%, %inifile%, Settings, TCDisplaySourceYpos ; writes the new Y value to settings.ini
+    IfMsgBox Cancel
+        sourceXposP := sourceXposPOld ; puts the old X value back into sourceXposP on Cancel
+        sourceYposP := sourceYposPOld ; puts the old Y value back into sourceYposP on Cancel
+    ; selecting No should just save the new values for X & Y for the current instance of the script. Reloading will re-read the values from settings.ini
+    
+    Return
+}
+
+grabSourceTCAsText(ByRef grabbedTC, ByRef sourceXposP, ByRef sourceYposP)
+{
+    global Settings_rootFolder
+    If (!sourceXposP and !sourceYposP)
+    {
+        MsgBox,, Grab Timecode Display position, You need to grab the X & Y coordinates of the Source Monitor's Timecode Display (lower left).`nPosition cursor then press CTRL-SHIFT-ALT-I to capture
+        Return
+    }
+    ;prFocus("source") ; Activating the Source Monitor
+    Sleep, 333
+    CoordMode, Mouse, Screen
+    MouseGetPos, sourceXposTEMP, sourceYposTEMP ;---storing cursor's current coordinates at X%sourceXposTEMP% Y%sourceYposTEMP%
+    ; This tooltip below is commented out. The MsgBox above does the same thing but will only trigger if there's no values in settings.ini to read. This was an earlier reminder, but maybe it wants to stick around - BH
+    ;Tooltip, Attempting a click at: X=%sourceXposP% / Y=%sourceYposP%`nIf this misclicks`, position cursor over TC display in Source Monitor then press CTRL-SHIFT-ALT-I to capture coordinates.
+    ;RemoveToolTip(2000)
+    BlockInput, On
+    MouseMove, sourceXposP, sourceYposP
+    Click, %sourceXposP%, %sourceYposP%, 0
+    Sleep, 333
+    Send, {Click}
+    Sleep, 333
+    Send, ^c
+    Sleep, 333
+    Send, {Esc}
+    BlockInput, Off
+    MouseMove, sourceXposTEMP, sourceYposTEMP ; putting cursor back where it was before hotkey was invoked
+    grabbedTC = %clipboard%
+    ;Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %sourceXposP% %sourceYposP% "Screen"
     Return grabbedTC
 }
 
@@ -523,4 +584,9 @@ RemoveToolTip(duration) {
 ToolTipOff:
     ToolTip
     return
+}
+
+FirstUsageSinceLaunch(messageBoxText) {
+    MSGBOX, 49, First Launch Since Usage, %messageBoxText%
+    Return
 }
