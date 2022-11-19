@@ -587,6 +587,25 @@ ToolTipOff:
 }
 
 FirstUsageSinceLaunch(messageBoxText) {
+/*
+    PURPOSE: This function creates a message that gets shown the first time you use a hotkey that contains something like the code below.
+    USAGE: In order to use this function, place this code block at the top of any hotkey definition block where you want to use it. Change the 'message' to customize it. You can use '`n' to begin a new line.
+
+        message := "This is the first time you've launched hotkey this since you've started buttonpusherKB."
+        
+        if (!f2MessageSeen) ; test this local variable
+        {
+            FirstUsageSinceLaunch(message) ; calls the function
+            IfMsgBox, Cancel ; tests if you want to cancel this hotkey from executing.
+            Return ; that means it will re-run this block again the next time you press this hotkey
+            f2MessageSeen := 1 ; setting this to a non-zero value means the 'if' statement above will skip this whole block and move on to the 'else' section
+            ;anything else you eish to do on this first time pressing this hotkey can be executed here
+        }
+        ; the 'else' below is optional. Most of the time, you can just delete it.
+        else ; this 'else' section is only here if you want to do something different when this is not the first time pressing this hotkey.
+        MSGBOX, , DEBUG, Already been run. ; this command is just an example to show that the 'else' is doing something.
+*/
+
     MSGBOX, 49, First Launch Since Usage, %messageBoxText%
     Return
 }

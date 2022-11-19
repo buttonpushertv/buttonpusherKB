@@ -33,18 +33,79 @@ sleepDeep := 3500
 
 #IfWinActive, ahk_exe chrome.exe
 
-!z:: ; <-- FCM - leave fullscreen, continue to next video, and then setting back to fullscreen
-    ; currently set for use on Xeonator Laptop
-    Send, {Escape}
-    Sleep, sleepMedium
-    Click, 2960,2130
-    Sleep, sleepLong
-    Click, 3250,2130
+F22:: ;<-- Morvold Press Master Maps List click on link & switch to that tab
+    MouseGetPos, xposP, yposP  
+    Send, ^{Click}
+    Sleep, sleepShort
+    Send, ^{Tab}
+    Sleep, sleepShort
     Sleep, sleepDeep
-    Click, 2344,1408
-    Sleep, 3000
-    Click, 3378,1973
-    Return
+    ImageSearch, foundLinkX, foundLinkY, 265, 200, 465, 1200, C:\BKB\PRIVATE\GAMING_SCRIPTS\chrome_morvold-press-link-image-to-match.png
+    If ErrorLevel
+    {
+        SoundPlay, C:\BKB\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V.3.0 Files\Buzz Error (7).wav
+        Return
+    }
+    Sleep, sleepLong
+    destLinkX := foundLinkX+20
+    destLinkY := foundLinkY+10
+    SoundPlay, C:\BKB\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V1.0\Interface\Futuristic\Future Sounds (2).wav
+    MouseMove, destLinkX, destLinkY
+    Sleep, sleepShort
+    Click
+    Sleep, sleepShort
+    ;MSGBOX, DEBUG, found the image at: X: %foundLinkX% | Y: %foundLinkY%`n`nMoving to X: %destLinkX% | Y: %destLinkY%
+    yposP += 123
+    MouseMove, xposP, yposP ; this puts the cursor back where it came from 
+Return
+    
+
+F23:: ;<--Start a Google Drive link download from a page with NO blue button
+    Send, {Tab}
+    Sleep, sleepShort
+    Send, {Tab}
+    Sleep, sleepShort
+    Send, {Tab}
+    Sleep, sleepShort
+    Send, {Tab}
+    Sleep, sleepMedium
+    Send, {Enter}
+    Sleep, sleepMedium
+    Send, {Tab}
+    Sleep, sleepMedium
+    Send, {Tab}
+    Sleep, sleepLong
+    Send, {Enter}
+    SoundPlay, C:\BKB\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V1.0\Interface\Futuristic\Future Sounds (8).wav
+    Sleep, sleepLong
+    Send, ^w
+    Sleep, sleepShort
+    Send, ^w
+    Sleep, sleepShort
+    Send, ^w
+    Sleep, sleepShort
+Return
+
+F24:: ;<-- Start a Google Drive link download when there's a blue button to click
+    Send, {Tab}
+    Sleep, sleepShort
+    Send, {Enter}
+    Sleep, sleepLong
+    Send, {Tab}
+    Sleep, sleepMedium
+    Send, {Tab}
+    Sleep, sleepLong
+    Send, {Enter}
+    SoundPlay, C:\BKB\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V1.0\Interface\Futuristic\Future Sounds (9).wav
+    Sleep, sleepLong
+    Send, ^w
+    Sleep, sleepShort
+    Send, ^w
+    Sleep, sleepShort
+    Send, ^w
+    Sleep, sleepShort
+Return
+
 
 ^F24:: ; <-- Reload CHROME-HOTKEYS.ahk
     MSGBOX, , DEBUG,Reloading Chrome-Hotkeys
@@ -62,10 +123,50 @@ shutterStockClickAndClose() {
     Return
 }
 
+FirstUsageSinceLaunch(messageBoxText) {
+/*
+    PURPOSE: This function creates a message that gets shown the first time you use a hotkey that contains something like the code below.
+    USAGE: In order to use this function, place this code block at the top of any hotkey definition block where you want to use it. Change the 'message' to customize it. You can use '`n' to begin a new line.
+
+        message := "This is the first time you've launched hotkey this since you've started buttonpusherKB."
+        
+        if (!tempMessageSeen) ; test this local variable
+        {
+            FirstUsageSinceLaunch(message) ; calls the function
+            IfMsgBox, Cancel ; tests if you want to cancel this hotkey from executing.
+            Return ; that means it will re-run this block again the next time you press this hotkey
+            tempMessageSeen := 1 ; setting this to a non-zero value means the 'if' statement above will skip this whole block and move on to the 'else' section
+            ; keep in mind that the variable set here (not inside a function) will be global, so you probably should change it to a unique name within each instance of using this code block.
+            ;anything else you wish to do on this first time pressing this hotkey can be executed here
+        }
+        ; the 'else' below is optional. Most of the time, you can just delete it.
+        else ; this 'else' section is only here if you want to do something different when this is not the first time pressing this hotkey.
+        MSGBOX, , DEBUG, Already been run. ; this command is just an example to show that the 'else' is doing something.
+
+    IMPORTANT: This message will always appear the very first time you press a hotkey that contains the above code for the first time after launching this script
+*/
+
+    MSGBOX, 49, First Launch Since Usage, %messageBoxText%
+    Return
+}
 
 ;====== INACTIVE HOTKEYS =======================================================================
 ; Hotkey defs here to hold them inactive for later use.
 /*
+
+!z:: ; <-- FCM - leave fullscreen, continue to next video, and then setting back to fullscreen
+    ; currently set for use on Xeonator Laptop
+    Send, {Escape}
+    Sleep, sleepMedium
+    Click, 2960,2130
+    Sleep, sleepLong
+    Click, 3250,2130
+    Sleep, sleepDeep
+    Click, 2344,1408
+    Sleep, 3000
+    Click, 3378,1973
+    Return
+
 
 F24:: ; <-- Press Right Arrow looped number of times
 loopAmount := 14
