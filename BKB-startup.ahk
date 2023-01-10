@@ -110,6 +110,10 @@ return
 
 launchBKB:
 Gui, Destroy
+
+/*
+IMPORTANT - This section was for the time when I needed to mount an encrypted VHD file. Now that I don't need to do that any longer, we can skip it. I just left it here in case I need it for something again.
+
 If (currentSystemLocation = 1) {
   Run, %Settings_rootFolder%\BAT-FILES\user_files_VHDMount_to_X.cmd ; this batch file will mount a Bitlocker Encrypted VHD and then launch BKB-Launcher
   goto Quitting
@@ -122,7 +126,10 @@ If (currentSystemLocation = 1) {
   Run, %Settings_rootFolder%\BKB-LAUNCHER.ahk ; on these systems there isn't a Encrypted VHD to mount, so we jump to BKB-Launcher directly
   goto Quitting
 }
-return
+*/
+
+Run, %Settings_rootFolder%\BKB-LAUNCHER.ahk ; on these systems there isn't a Encrypted VHD to mount, so we jump to BKB-Launcher directly
+goto Quitting
 
 ButtonCancel:
 GuiClose:
