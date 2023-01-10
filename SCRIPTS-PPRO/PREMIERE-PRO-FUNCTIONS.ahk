@@ -301,7 +301,7 @@ getProgramTCDisplayCoords(ByRef programXposP, ByRef programYposP) ; this will re
     MouseGetPos, programXposPNew, programYposPNew ;---storing cursor's current coordinates at X%programXposPNew% Y%programYposPNew%
     ;Tooltip, X=%programXposPNew% / Y=%programYposPNew%`nGrabbing the X & Y coordinates of the mouse cursor`nMake sure it is over the Program Monitor's timecode display (lower left).`n`n(Previous values: X=%programXposPOld% / Y=%programYposPOld%)
     ;RemoveToolTip(4000)
-    ;prFocus("program") ; Activating the Program Monitor
+    prFocus("program") ; Activating the Program Monitor
     Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %programXposP% %programYposP% "Screen"
     MsgBox, 35, Update TC Display Coords?, Make sure cursor is over the Program Monitor's Timecode Display (lower left).`n`nX=%programXposPNew% / Y=%programYposPNew%`nThese are the coordinates that were grabbed.`nWould you like to save these in settings.ini?`n`nYes will save.`nNo will just update them until script is reloaded.`nCancel will reset them to settings.ini values.`n`n(Previous values: X=%programXposPOld% / Y=%programYposPOld%)
     programXposP := programXposPNew ; storing new values in programXposP - this should cover the 'No' selection case
@@ -363,9 +363,9 @@ getSourceTCDisplayCoords(ByRef sourceXposP, ByRef sourceYposP) ; this will revis
     sourceXposPOld := sourceXposP ; storing the previous X position
     sourceYposPOld := sourceYposP ; storing the previous Y position
     MouseGetPos, sourceXposPNew, sourceYposPNew ;---storing cursor's current coordinates at X%sourceXposPNew% Y%sourceYposPNew%
-    ;Tooltip, X=%sourceXposPNew% / Y=%sourceYposPNew%`nGrabbing the X & Y coordinates of the mouse cursor`nMake sure it is over the Source Monitor's timecode display (lower left).`n`n(Previous values: X=%sourceXposPOld% / Y=%sourceYposPOld%)
-    ;RemoveToolTip(4000)
-    ;prFocus("source") ; Activating the Source Monitor
+    Tooltip, X=%sourceXposPNew% / Y=%sourceYposPNew%`nGrabbing the X & Y coordinates of the mouse cursor`nMake sure it is over the Source Monitor's timecode display (lower left).`n`n(Previous values: X=%sourceXposPOld% / Y=%sourceYposPOld%)
+    RemoveToolTip(4000)
+    prFocus("source") ; Activating the Source Monitor
     Run, %Settings_rootFolder%\SCRIPTS-UTIL\pingPos.ahk %sourceXposP% %sourceYposP% "Screen"
     MsgBox, 35, Update TC Display Coords?, Make sure cursor is over the Source Monitor's Timecode Display (lower left).`n`nX=%sourceXposPNew% / Y=%sourceYposPNew%`nThese are the coordinates that were grabbed.`nWould you like to save these in settings.ini?`n`nYes will save.`nNo will just update them until script is reloaded.`nCancel will reset them to settings.ini values.`n`n(Previous values: X=%sourceXposPOld% / Y=%sourceYposPOld%)
     sourceXposP := sourceXposPNew ; storing new values in sourceXposP - this should cover the 'No' selection case
