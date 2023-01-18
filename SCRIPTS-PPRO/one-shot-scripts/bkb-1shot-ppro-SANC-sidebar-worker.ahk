@@ -19,6 +19,11 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ; This is included to allow for app-related functions to be used in the script 
 #Include %A_ScriptDir%\..\PREMIERE-PRO-FUNCTIONS.ahk
 
+;===== MODIFIER MEMORY HELPER ==================================================================
+; combine below with key and '::' to define hotkey
+; e.g.- ^f1::Msgbox You pressed Control and F1
+; #=Win | !=Alt | ^=Ctrl | +=Shift | &=combine keys | *=ignore other mods
+; <=use left mod key| >=use right mod key  | UP=fires on release
 
 ; SCRIPT EXECUTION
 ; command for this 1-shot script go here
@@ -40,6 +45,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ;MsgBox, , Ready to start, This will perfom several edits.`n`nPlease make sure you have done the following:`n1. Pasted Text into MOGRT`n2. Placed MOGRT past the end of the piece on timeline.`n3. Adjusted the line spacing for the sidebar items.`n`n4. Hit Save!`n`nReady to go?
 
 ;prfocus("timeline")
+Send, ^+a
+Sleep, 333
 Send, {NumpadAdd}
 Sleep, 333
 Send,{Numpad2}{NumpadDot}{Numpad1}{Numpad4}

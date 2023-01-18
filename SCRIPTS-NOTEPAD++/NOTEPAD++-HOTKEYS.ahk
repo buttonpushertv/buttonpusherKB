@@ -57,6 +57,14 @@ F13:: ; <-- Sp[ecial Block for Sanctuary Health Graphics Content Document
     Send, {Up}{Up}{Up}{Up}{Up}{Up}{Up}{Up}{Up}{Up}{Up}{End}{Space}
     Return
 
+F14:: ; <-- Trim content to 60 characters
+    Loop, 60
+    Send, {Right}
+    ToolTip, Coloum: 60
+    RemoveToolTip(2000)
+    Return
+
+
 ; HOTKEY TEXT REPLACEMENT
 :o:'f::FS Card:{Enter}
 :o:'k::KP:{Enter}
