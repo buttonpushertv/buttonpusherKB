@@ -49,6 +49,19 @@ Return
     Reload
     Return
 
+F13:: ; <-- Sp[ecial Block for Sanctuary Health Graphics Content Document
+    WinActivate, ahk_exe notepad++.exe
+    Send, ^{END}
+    Sleep, 333
+    Send, Script:`n`nTitle:`n`nNum. SB {#}1`n`nFS Card:`n`nKP:`n`n====`n
+    Send, {Up}{Up}{Up}{Up}{Up}{Up}{Up}{Up}{Up}{Up}{Up}{End}{Space}
+    Return
+
+; HOTKEY TEXT REPLACEMENT
+:o:'f::FS Card:{Enter}
+:o:'k::KP:{Enter}
+:o:'n::Num. SB #
+
 #IfWinActive
 
 ;===== HOLDING TANK FOR DEACTIVATED HOTKEYS ====================================================
