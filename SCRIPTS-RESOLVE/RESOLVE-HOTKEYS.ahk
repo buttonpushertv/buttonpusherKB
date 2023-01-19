@@ -53,9 +53,46 @@ global halfScreenHeight := (A_ScreenHeight / 2) ; determine what half the screen
 
 #IfWinActive, ahk_exe Resolve.exe
 
-F16:: ; < -- Left Click holder. This will allow you to use the scroll wheel to adjust a parameter
-
+F13:: ;<-- Apply Memory 1
+    Send, ^+!1
 Return
+
+F14:: ;<-- Apply Memory 1
+    Send, ^+!2
+Return
+
+F15:: ;<-- Apply Memory 1
+    Send, ^+!3
+Return
+
+F16:: ;<-- Apply Memory 1
+    Send, ^+!4
+Return
+
+F17:: ;<-- Apply Memory 1
+    Send, ^+!5
+Return
+
+F18:: ;<-- Apply Memory 1
+    Send, ^+!6
+Return
+
+F19:: ;<-- Apply Memory 1
+    Send, ^+!7
+Return
+
+F20:: ;<-- Apply Memory 1
+    Send, ^+!8
+Return
+
+F21:: ;<-- Copy Correction from 2 clips previous
+    Send, +-
+Return
+
+F22:: ;<-- Copy Correction from 2 clips previous
+    Send, +=
+Return
+
 
 !^+`:: ;<--Toggle hovered node's lock
     MouseGetPos currentCursorX, currentCursorY ; store the current cursor coords to currentCursorX and currentCursorY
@@ -67,54 +104,6 @@ Return
     SoundPlay, ..\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V1.0\Interface\Item Lock (1).wav
     MouseMove, %currentCursorX%, %currentCursorY%
     Return
-
-
-
-F23:: ;< -- Grabbing a TC from Excel and jumping to it in Resolve
-    MouseGetPos currentCursorX, currentCursorY ; store the current cursor coords to currentCursorX and currentCursorY
-
-    WinActivate, ahk_exe EXCEL.EXE
-    Sleep, sleepShort
-    Send, {Escape}
-    Sleep, sleepShort
-    Send, {Left}{Down}
-    Sleep, sleepMedium
-    Send, ^c
-    Sleep, sleepShort
-    WinActivate, ahk_exe Resolve.exe
-    Sleep, sleepShort
-    Send, =
-    Sleep, sleepMedium
-    Send, ^v
-    Sleep, sleepMedium
-    Send, ^\
-
-    MouseMove, %currentCursorX%, %currentCursorY%
-
-Return
-
-F24:: ;< -- Grabbing a TC from Excel and jumping to it in Resolve
-    MouseGetPos currentCursorX, currentCursorY ; store the current cursor coords to currentCursorX and currentCursorY
-
-    WinActivate, ahk_exe EXCEL.EXE
-    Sleep, sleepShort
-    Send, {Escape}
-    Sleep, sleepShort
-    Send, {Right}
-    Sleep, sleepMedium
-    Send, ^c
-    Sleep, sleepShort
-    WinActivate, ahk_exe Resolve.exe
-    Sleep, sleepShort
-    Send, =
-    Sleep, sleepMedium
-    Send, ^v
-    Sleep, sleepMedium
-    Send, ^\
-
-    MouseMove, %currentCursorX%, %currentCursorY%
-
-Return
 
 
 #!^+F17:: ; < -- The Resolve location grabbing subroutine
@@ -193,5 +182,61 @@ Return
 #IfWinActive
 
 ;===== END Program 1 DEFINITIONS ===============================================================
+
+
+;==== HOLDING TANK FOR PREVIOUS HOTKEYS ========================================================
+; Just holding these previous hotkeys in case needed later
+
+/*
+F16:: ; < -- Left Click holder. This will allow you to use the scroll wheel to adjust a parameter
+
+Return
+
+F23:: ;< -- Grabbing a TC from Excel and jumping to it in Resolve
+    MouseGetPos currentCursorX, currentCursorY ; store the current cursor coords to currentCursorX and currentCursorY
+
+    WinActivate, ahk_exe EXCEL.EXE
+    Sleep, sleepShort
+    Send, {Escape}
+    Sleep, sleepShort
+    Send, {Left}{Down}
+    Sleep, sleepMedium
+    Send, ^c
+    Sleep, sleepShort
+    WinActivate, ahk_exe Resolve.exe
+    Sleep, sleepShort
+    Send, =
+    Sleep, sleepMedium
+    Send, ^v
+    Sleep, sleepMedium
+    Send, ^\
+
+    MouseMove, %currentCursorX%, %currentCursorY%
+
+Return
+
+F24:: ;< -- Grabbing a TC from Excel and jumping to it in Resolve
+    MouseGetPos currentCursorX, currentCursorY ; store the current cursor coords to currentCursorX and currentCursorY
+
+    WinActivate, ahk_exe EXCEL.EXE
+    Sleep, sleepShort
+    Send, {Escape}
+    Sleep, sleepShort
+    Send, {Right}
+    Sleep, sleepMedium
+    Send, ^c
+    Sleep, sleepShort
+    WinActivate, ahk_exe Resolve.exe
+    Sleep, sleepShort
+    Send, =
+    Sleep, sleepMedium
+    Send, ^v
+    Sleep, sleepMedium
+    Send, ^\
+
+    MouseMove, %currentCursorX%, %currentCursorY%
+
+Return
+*/
 
 ;===== FUNCTIONS ===============================================================================
