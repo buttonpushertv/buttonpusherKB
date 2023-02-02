@@ -435,12 +435,12 @@ Return
   Sleep, sleepShort
   Send, 2160
   Sleep, sleepShort
-  Send, {tab}{tab}{tab}{tab}{tab}{tab}{tab}{tab}{tab}
-  Sleep, sleepShort
-  Send, {Down}{Down}
-  Sleep, sleepShort
-  Send, {tab}{tab}{tab}{tab}{tab}{tab}{space}
-  Sleep, sleepShort
+  ;Send, {tab}{tab}{tab}{tab}{tab}{tab}{tab}{tab}{tab}
+  ;Sleep, sleepShort
+  ;Send, {Down}{Down}
+  ;Sleep, sleepShort
+  ;Send, {tab}{tab}{tab}{tab}{tab}{tab}{space}
+  ;Sleep, sleepShort
   Send, {enter}{enter}
   Sleep, sleepShort
   Send, ^a
@@ -449,9 +449,7 @@ Return
   Sleep, sleepShort
   Send, {enter}
   Sleep, sleepShort
-  prFocus("project")
-  Sleep, sleepShort
-  Send, {Enter}
+  Send, ^k
 Return
 
 #IfWinActive

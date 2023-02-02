@@ -43,13 +43,14 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ;  - add then add cpLineLength edits into the MOGRT track
 
 ;MsgBox, , Ready to start, This will perfom several edits.`n`nPlease make sure you have done the following:`n1. Pasted Text into MOGRT`n2. Placed MOGRT past the end of the piece on timeline.`n3. Adjusted the line spacing for the sidebar items.`n`n4. Hit Save!`n`nReady to go?
+;WinActivate, ahk_exe Adobe Premiere Pro.exe
 
 ;prfocus("timeline")
 Send, ^+a
 Sleep, 333
 Send, {NumpadAdd}
 Sleep, 333
-Send,{Numpad2}{NumpadDot}{Numpad1}{Numpad4}
+Send,{Numpad2}{NumpadDot}{Numpad1}{Numpad7}
 Sleep, 333
 Send, {NumpadEnter}
 Sleep, 333
