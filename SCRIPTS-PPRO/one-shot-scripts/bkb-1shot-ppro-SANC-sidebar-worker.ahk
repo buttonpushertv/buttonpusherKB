@@ -55,126 +55,20 @@ Sleep, 333
 Send, {NumpadEnter}
 Sleep, 333
 Send, {F4}
-; ITEM START
-Sleep, 333
-Send, {NumpadAdd}
-Sleep, 333
-Send,{Numpad2}{NumpadDot}{Numpad0}
-Sleep, 333
-Send, {NumpadEnter}
-Sleep, 333
-Send, {F4}
-;ITEM END
-; ITEM START
-Sleep, 333
-Send, {NumpadAdd}
-Sleep, 333
-Send,{Numpad2}{NumpadDot}{Numpad0}
-Sleep, 333
-Send, {NumpadEnter}
-Sleep, 333
-Send, {F4}
-;ITEM END
-; ITEM START
-Sleep, 333
-Send, {NumpadAdd}
-Sleep, 333
-Send,{Numpad2}{NumpadDot}{Numpad0}
-Sleep, 333
-Send, {NumpadEnter}
-Sleep, 333
-Send, {F4}
-;ITEM END
-; ITEM START
-Sleep, 333
-Send, {NumpadAdd}
-Sleep, 333
-Send,{Numpad2}{NumpadDot}{Numpad0}
-Sleep, 333
-Send, {NumpadEnter}
-Sleep, 333
-Send, {F4}
-;ITEM END
-; ITEM START
-Sleep, 333
-Send, {NumpadAdd}
-Sleep, 333
-Send,{Numpad2}{NumpadDot}{Numpad0}
-Sleep, 333
-Send, {NumpadEnter}
-Sleep, 333
-Send, {F4}
-;ITEM END
-; ITEM START
-Sleep, 333
-Send, {NumpadAdd}
-Sleep, 333
-Send,{Numpad2}{NumpadDot}{Numpad0}
-Sleep, 333
-Send, {NumpadEnter}
-Sleep, 333
-Send, {F4}
-;ITEM END
-; ITEM START
-Sleep, 333
-Send, {NumpadAdd}
-Sleep, 333
-Send,{Numpad2}{NumpadDot}{Numpad0}
-Sleep, 333
-Send, {NumpadEnter}
-Sleep, 333
-Send, {F4}
-;ITEM END
-; ITEM START
-Sleep, 333
-Send, {NumpadAdd}
-Sleep, 333
-Send,{Numpad2}{NumpadDot}{Numpad0}
-Sleep, 333
-Send, {NumpadEnter}
-Sleep, 333
-Send, {F4}
-;ITEM END
-; ITEM START
-Sleep, 333
-Send, {NumpadAdd}
-Sleep, 333
-Send,{Numpad2}{NumpadDot}{Numpad0}
-Sleep, 333
-Send, {NumpadEnter}
-Sleep, 333
-Send, {F4}
-;ITEM END
-; ITEM START
-Sleep, 333
-Send, {NumpadAdd}
-Sleep, 333
-Send,{Numpad2}{NumpadDot}{Numpad0}
-Sleep, 333
-Send, {NumpadEnter}
-Sleep, 333
-Send, {F4}
-;ITEM END
-; ITEM START
-Sleep, 333
-Send, {NumpadAdd}
-Sleep, 333
-Send,{Numpad2}{NumpadDot}{Numpad0}
-Sleep, 333
-Send, {NumpadEnter}
-Sleep, 333
-Send, {F4}
-;ITEM END
-; ITEM START
-Sleep, 333
-Send, {NumpadAdd}
-Sleep, 333
-Send,{Numpad2}{NumpadDot}{Numpad0}
-Sleep, 333
-Send, {NumpadEnter}
-Sleep, 333
-Send, {F4}
-;ITEM END
+
+Loop, 12
+    {
+    ; ITEM START
+    Sleep, 333
+    Send, {NumpadAdd}
+    Sleep, 333
+    Send,{Numpad1}{NumpadDot}{Numpad2}{Numpad3}
+    Sleep, 333
+    Send, {NumpadEnter}
+    Sleep, 333
+    Send, {F4}
+    ;ITEM END
+    }
 Sleep, 333
 ; ENDING
 Send, {Down}
