@@ -421,7 +421,32 @@ Return
 ;+^!f10::
 ;+^!f11::
 ;+^!f12::
-;+^!f13::
++^!f13:: ; Increment a Sequence version number
+  ; Press {Enter} to select the sequence name
+  Send, {Enter}
+  Sleep, sleepShort
+  ; Copy Sequence name to clipboard
+  Send, ^c
+  Sleep, sleepShort
+  ; Create temp var of Sequence name without final digits
+  versionLoc := InStr(clipboard,"V")
+  sequenceTemp := Substr(clipboard, 1, versionLoc)
+  ; Extract the digits following the final 'V' from name
+  digitLoc := versionLoc
+  digitLoc++
+  versionCurr := Substr(clipboard, digitLoc)
+  ; increment the final digit
+  versionCurr++
+  ; Concatenante the Temp Sequence name var with the incremented digit
+  newSeqName := sequenceTemp . versionCurr
+  ; Store new Sequence name to clipboard
+  clipboard := newSeqName
+  ; Paste back into the Sequence name
+  Send, ^v
+  Sleep, sleepShort
+  ; Press Enter to save the name
+  Send, {NumpadEnter}
+  Return
 ;+^!f14::
 ;+^!f15::
 ;+^!f16::
