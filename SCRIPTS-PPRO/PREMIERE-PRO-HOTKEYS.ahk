@@ -394,64 +394,65 @@ return
     prfocus("program") ; and then set focus back on Program Monitor
     BlockInput, Off
     SoundPlay, ..\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V.3.0 Files\Special & Powerup (31).wav
+    Sleep, sleepShort
+    Send, ^s ; save project
 
 Return
 
-+^!F2::
-  message := "This is the first time you've launched hotkey this since youe started buttonousherKB."
-  ;MSGBOX, , DEBUG, %message%
++^!F2:: ;<-- select all audio tracks & move down one track
+  Send, +0 ;lock video
+  Sleep, sleepShort
+  Send, ^a ;select all - which will only get audio since video is locked
+  Sleep, sleepShort
+  Send, !{Down} ;opt-down to move down one track
+  Sleep, sleepShort
+  Send, +0 ;unlock video
+  Sleep, sleepShort
+  Send, ^+a ;deselect all
+  Sleep, sleepShort
+  Send, {right} ; move to next edit
+  Sleep, sleepShort
+  Send, {left} ; then move back to previous edit
+  Sleep, sleepShort
+  Send, ^s ; save project
+  SoundPlay, ..\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V.3.0 Files\Futuristic Sounds (27).wav
+  Return
 
-  if (!f2MessageSeen)
-  {
-    FirstUsageSinceLaunch(message)
-    IfMsgBox, Cancel
-      Return
-    f2MessageSeen := 1
-  }
-  else
-  MSGBOX, , DEBUG, Already been run.
-  Return
-;+^!f3::
-;+^!f4::
-;+^!f5:: ; [USED by PPRO to Toggle Transmit(Video Playback)]
-;+^!f6:: ; [USED by PPRO to Set Starting Timecode on Sequence]
-;+^!f7::
-;+^!f8::
-;+^!f9:: 
-;+^!f10::
-;+^!f11::
-;+^!f12::
-+^!f13:: ; Increment a Sequence version number
-  ; Press {Enter} to select the sequence name
-  Send, {Enter}
-  Sleep, sleepShort
-  ; Copy Sequence name to clipboard
-  Send, ^c
-  Sleep, sleepShort
-  ; Create temp var of Sequence name without final digits
-  versionLoc := InStr(clipboard,"V")
-  sequenceTemp := Substr(clipboard, 1, versionLoc)
-  ; Extract the digits following the final 'V' from name
-  digitLoc := versionLoc
-  digitLoc++
-  versionCurr := Substr(clipboard, digitLoc)
-  ; increment the final digit
-  versionCurr++
-  ; Concatenante the Temp Sequence name var with the incremented digit
-  newSeqName := sequenceTemp . versionCurr
-  ; Store new Sequence name to clipboard
-  clipboard := newSeqName
-  ; Paste back into the Sequence name
-  Send, ^v
-  Sleep, sleepShort
-  ; Press Enter to save the name
-  Send, {NumpadEnter}
-  Return
-;+^!f14::
-;+^!f15::
-;+^!f16::
-;+^!f17::
-+^!f18:: ; <- Changing Sequence Settings to 4k
++^!f3:: ; Increment a Sequence version number
+; Press {Enter} to select the sequence name
+Send, {Enter}
+Sleep, sleepShort
+; Copy Sequence name to clipboard
+Send, ^c
+Sleep, sleepShort
+; Create temp var of Sequence name without final digits
+versionLoc := InStr(clipboard,"V")
+sequenceTemp := Substr(clipboard, 1, versionLoc)
+; Extract the digits following the final 'V' from name
+digitLoc := versionLoc
+digitLoc++
+versionCurr := Substr(clipboard, digitLoc)
+; increment the final digit
+versionCurr++
+; Concatenante the Temp Sequence name var with the incremented digit
+newSeqName := sequenceTemp . versionCurr
+; Store new Sequence name to clipboard
+clipboard := newSeqName
+; Paste back into the Sequence name
+Send, ^v
+Sleep, sleepShort
+; Press Enter to save the name
+Send, {NumpadEnter}
+Sleep, sleepShort
+Send, ^s ; save project
+SoundPlay, ..\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V.3.0 Files\Quick Transition (4).wav
+
+Sleep, sleepDeep
+prfocus("project")
+Return
+
+
++^!f4::  ; <- Changing Sequence Settings to 4k
   Send, ^k
   Sleep, sleepShort
   Send, {tab}{tab}{tab}{tab}
@@ -460,13 +461,15 @@ Return
   Sleep, sleepShort
   Send, 2160
   Sleep, sleepShort
-  ;Send, {tab}{tab}{tab}{tab}{tab}{tab}{tab}{tab}{tab}
-  ;Sleep, sleepShort
-  ;Send, {Down}{Down}
-  ;Sleep, sleepShort
-  ;Send, {tab}{tab}{tab}{tab}{tab}{tab}{space}
-  ;Sleep, sleepShort
+  Send, {tab}{tab}{tab}{tab}{tab}{tab}{tab}{tab}{tab}
+  Sleep, sleepShort
+  Send, {Down}{Down}
+  Sleep, sleepShort
+  Send, {tab}{tab}{tab}{tab}{tab}{tab}{space}
+  Sleep, sleepShort
   Send, {enter}{enter}
+  Sleep, sleepShort
+  Send, {F21}
   Sleep, sleepShort
   Send, ^a
   Sleep, sleepShort
@@ -474,8 +477,28 @@ Return
   Sleep, sleepShort
   Send, {enter}
   Sleep, sleepShort
-  Send, ^k
+  Sleep, sleepShort
+  Send, ^s ; save project
+  Sleep, sleepDeep
+  Send, ^k ; reopne seq settings to double check
+  SoundPlay, ..\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V.3.0 Files\Futuristic Sounds (27).wav
+
 Return
+
+;+^!f5:: ; [USED by PPRO to Toggle Transmit(Video Playback)]
+;+^!f6:: ; [USED by PPRO to Set Starting Timecode on Sequence]
+;+^!f7::
+;+^!f8::
+;+^!f9:: 
+;+^!f10::
+;+^!f11::
+;+^!f12::
+;+^!f13:: 
+;+^!f14::
+;+^!f15::
+;+^!f16::
+;+^!f17::
+;+^!f18::
 
 #IfWinActive
 
@@ -483,6 +506,38 @@ Return
 
 /* COMMAND HOLDING TANK
 (This comment block is a place where you can store previously used hotkeys that you may want to keep around in case you need to reuse them. Make sure to comment on what they did and/or were for.)
+
+ ; Trim last 18 chars from clip name in project window
+  ; Press {Enter} to select the sequence name
+  Send, {Enter}
+  Sleep, sleepShort
+  ; Copy Sequence name to clipboard
+  Send, ^c
+  Sleep, sleepShort
+  ; Create temp var of Sequence name without final digits
+  versionCurr := "-V0" ; this is what we will tack on to the ending
+  endTrim := InStr(clipboard,"(") ; find the location of the first parenthesis
+  endTrim-- ; we need to trim off 2 characters
+  endTrim-- ; so there's no space before the version
+  sequenceTemp := Substr(clipboard, 1, endTrim) ; copy the left part of the name to new var
+  newSeqName := sequenceTemp . versionCurr ; Concatenate the parts back together
+  clipboard := newSeqName ; Store new Sequence name to clipboard
+  ;MSGBOX, , DEBUG, %newSeqName%
+  ; Paste back into the Sequence name
+  Send, ^v
+  Sleep, sleepShort
+  ; Press Enter to save the name
+  Send, {NumpadEnter}
+  Sleep, sleepShort
+  Send, ^s ; save project
+  Sleep, sleepDeep
+  prfocus("project")
+  Sleep, sleepShort
+  Send, ^!+o
+  Sleep, sleepShort
+  SoundPlay, ..\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V.3.0 Files\Futuristic Sounds (27).wav
+  Return
+
 
 
 +^!F1:: ;<-- match framing to a secondary Clip that has matching timecode

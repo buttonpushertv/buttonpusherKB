@@ -48,15 +48,19 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ;prfocus("timeline")
 Send, ^+a
 Sleep, 333
+
+; TITLE START
+Sleep, 333
 Send, {NumpadAdd}
 Sleep, 333
-Send,{Numpad2}{NumpadDot}{Numpad1}{Numpad7}
+Send,{Numpad2}{NumpadDot}{Numpad1}{Numpad4}
 Sleep, 333
 Send, {NumpadEnter}
 Sleep, 333
 Send, {F4}
+;TITLE END
 
-Loop, 12
+Loop, 11
     {
     ; ITEM START
     Sleep, 333
@@ -69,6 +73,7 @@ Loop, 12
     Send, {F4}
     ;ITEM END
     }
+
 Sleep, 333
 ; ENDING
 Send, {Down}
@@ -84,3 +89,21 @@ Send, {F4}
 
 ; END OF SCRIPT
 ExitApp
+
+
+/*
+HOLDING THIS FOR LATER USE
+Loop, 12
+    {
+    ; ITEM START
+    Sleep, 333
+    Send, {NumpadAdd}
+    Sleep, 333
+    Send,{Numpad1}{NumpadDot}{Numpad2}{Numpad3}
+    Sleep, 333
+    Send, {NumpadEnter}
+    Sleep, 333
+    Send, {F4}
+    ;ITEM END
+    }
+*/
