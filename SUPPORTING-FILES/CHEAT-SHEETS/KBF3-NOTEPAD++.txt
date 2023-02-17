@@ -1,17 +1,15 @@
-
-=========================== MASTER SCAF KEYS - NOTEPAD++ ===========================
-(These are defined within PRIVATE/MASTER-SCAF-KEY.ahk - not synced to Github - Ben)
+=========================== NOTEPAD++ HOTKEYS ======================================
 
 SHIFT+CTRL+ALT+F1       <--NOTEPAD++: wrap selected text in <strong>..</strong> tag
 SHIFT+CTRL+ALT+F2       <--NOTEPAD++: wrap selected text in <em>..</em> tag
 SHIFT+CTRL+ALT+F3       <--NOTEPAD++: wrap selected text in <i>..</i> tag
 SHIFT+CTRL+ALT+F4       <--NOTEPAD++: wrap selected text in <b>..</b> tag
-
-
-=========================== NOTEPAD++ HOTKEYS ======================================
+SHIFT+CTRL+ALT+F5       <--Make a DEBUG MsgBox
+SHIFT+CTRL+ALT+F6       <--Search AHK Help for Token Word under cursor (Run search-for-AHK-token.ahk)
 
 F14                     <-- WordWrap to specific character width (variable in script)
 
+CAPSLOCK & B            <-- HTML: wrap selected text in <b>..</b> tag
 
 CTRL+F24                <-- Reload NOTEPAD++-HOTKEYS.ahk
 
@@ -19,3 +17,15 @@ CTRL+F24                <-- Reload NOTEPAD++-HOTKEYS.ahk
 (These are things I can never remember - BEN)
 
 CTRL+SHIFT+L            <-- Delete the line where the cursor is
+
+============================ HOTSRINGS (TEXT REPLACEMENT) ===========================
+
+'f  = FS Card:{Enter}
+'k  = KP:{Enter}
+'n  = Num. SB #
+'v  = (Sets up a new Sanctuary Health Graphic Elements block)
+
+
+
+
+

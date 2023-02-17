@@ -31,6 +31,51 @@ sleepDeep := 3500
 
 #IfWinActive, ahk_exe notepad++.exe
 
++^!f1:: ; <--wrap selected text in <strong>..</strong> tag
+WinActivate, ahk_exe notepad++.exe
+Send, ^c
+ClipWait
+wrappedText := "<strong>" . Clipboard . "</strong>"
+WinActivate, ahk_exe notepad++.exe
+SendInput, %wrappedText%
+Clipboard = ; clears Clipboard
+Return
+
++^!f2:: ; <--wrap selected text in <em>..</em> tag
+WinActivate, ahk_exe notepad++.exe
+Send, ^c
+ClipWait
+wrappedText := "<em>" . Clipboard . "</em>"
+WinActivate, ahk_exe notepad++.exe
+SendInput, %wrappedText%
+Clipboard = ; clears Clipboard
+Return
+
++^!f3:: ; <--wrap selected text in <i>..</i> tag
+WinActivate, ahk_exe notepad++.exe
+Send, ^c
+ClipWait
+wrappedText := "<i>" . Clipboard . "</i>"
+WinActivate, ahk_exe notepad++.exe
+SendInput, %wrappedText%
+Clipboard = ; clears Clipboard
+Return
+
++^!f4:: ; <--wrap selected text in <b>..</b> tag
+WinActivate, ahk_exe notepad++.exe
+Send, ^c
+ClipWait
+wrappedText := "<b>" . Clipboard . "</b>"
+WinActivate, ahk_exe notepad++.exe
+SendInput, %wrappedText%
+Clipboard = ; clears Clipboard
+Return
+
++^!f5:: Send, MSGBOX, , DEBUG, ; <--Make a DEBUG MsgBox
+
++^!f6:: Run, "SCRIPTS-UTIL\search-for-AHK-token.ahk" ; <--Search AHK Help for Token Word under cursor (Run search-for-AHK-token.ahk)
+
+
 Capslock & b:: ; <-- HTML: wrap selected text in <b>..</b> tag
     WinActivate, ahk_exe notepad++.exe
     CapsLockOff()
@@ -43,32 +88,37 @@ Capslock & b:: ; <-- HTML: wrap selected text in <b>..</b> tag
     Clipboard = ; clears Clipboard
 Return
 
-
 ^F24:: ; <-- Reload NOTEPAD++-HOTKEYS.ahk
     MSGBOX, , DEBUG,Reloading Notepad++-Hotkeys
     Reload
     Return
 
-F13:: ; <-- Sp[ecial Block for Sanctuary Health Graphics Content Document
-    WinActivate, ahk_exe notepad++.exe
-    Send, ^{END}
-    Sleep, 333
-    Send, Script:`n`nTitle:`n`nNum. SB {#}1`n`nFS Card:`n`nKP:`n`n====`n
-    Send, {Up}{Up}{Up}{Up}{Up}{Up}{Up}{Up}{Up}{Up}{Up}{End}{Space}
-    Return
-
 F14:: ; <-- Trim content to 60 characters
     Loop, 60
     Send, {Right}
-    ToolTip, Coloum: 60
-    RemoveToolTip(2000)
+    ToolTip, Column: 60
+    RemoveToolTip(3000)
     Return
-
 
 ; HOTKEY TEXT REPLACEMENT
 :o:'f::FS Card:{Enter}
 :o:'k::KP:{Enter}
 :o:'n::Num. SB #
+::'v::
+    Send, ^{END}
+    Sleep, 333
+    Send, {Enter}Script:{ENTER}
+    Sleep, 333
+    Send, {ENTER}
+    Sleep, 333
+    Send, Title:{ENTER}
+    Sleep, 333
+    Send, {ENTER}
+    Sleep, 333
+    Send, {ENTER}
+    Sleep, 333
+    Send, ===={ENTER}
+    Return
 
 #IfWinActive
 
