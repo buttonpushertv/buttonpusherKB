@@ -6,9 +6,10 @@ SetWorkingDir %A_ScriptDir%
 ; You need the quotes to enclose paths with spaces.
 
 pathGot = %1%
-
-openInFCXE(pathGot)
+;MSGBOX, , DEBUG, %pathGot%
 
 WinActivate, ahk_exe FreeCommander.exe
+
+openInFCXE(pathGot)
 
 exitapp
