@@ -91,7 +91,7 @@ Sleep, sleepShort
 ; field 10
 Send, {Tab}
 Sleep, sleepShort
-Send, Blue
+Send, INT-REVIEWED BY BEN
 Sleep, sleepShort
 ; field 11
 Send, {Tab}
