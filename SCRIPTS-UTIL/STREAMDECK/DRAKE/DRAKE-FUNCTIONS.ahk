@@ -427,7 +427,7 @@ openInFCXE(selectedPath){
 	quotedPathToOpen := """" . selectedPath . """" ;THIS ADDS QUOTATION MARKS AROUND EVERYTHING SO THAT IT WORKS AS A STRING, NOT A VARIABLE.
 	;MsgBox, %Settings_pathToFCXE% %Settings_FCXEparams% %quotedPathToOpen%
     Run, %Settings_pathToFCXE% %Settings_FCXEparams% %quotedPathToOpen%
-    ; There is a trick about the way FCXE recieves it's parameters: If you are sending the one where you tell it which panel to open in ('/ L=' or '/R=') it must not have a space between the parameter and the path you want to open. However, if you just want to open the path in the active panel of the current instance you must send '/C' with a space. SO, if you want to force it to open in a specific panel, you will need to remove the space between the 2 %'s above (like this: "%Settings_FCXEparams%%quotedPathToOpen%")
+    ; There is a trick about the way FCXE recieves it's parameters: If you are sending the one where you tell it which panel to open in ('/L=' or '/R=') it must not have a space between the parameter and the path you want to open. However, if you just want to open the path in the active panel of the current instance you must send '/C' with a space. SO, if you want to force it to open in a specific panel, you will need to remove the space between the 2 %'s above (like this: "%Settings_FCXEparams%%quotedPathToOpen%")
 	return
     }
 
