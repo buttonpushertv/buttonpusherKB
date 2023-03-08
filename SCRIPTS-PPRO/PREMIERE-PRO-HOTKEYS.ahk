@@ -399,10 +399,12 @@ return
 
 Return
 
-+^!F2:: ;<-- select all audio tracks & move down one track
++^!F2:: ;<-- select all audio tracks & move down two tracks
   Send, +0 ;lock video
   Sleep, sleepShort
   Send, ^a ;select all - which will only get audio since video is locked
+  Sleep, sleepShort
+  Send, !{Down} ;opt-down to move down one track
   Sleep, sleepShort
   Send, !{Down} ;opt-down to move down one track
   Sleep, sleepShort
@@ -461,7 +463,7 @@ Return
   Sleep, sleepShort
   Send, 2160
   Sleep, sleepShort
-  Send, {tab}{tab}{tab}{tab}{tab}{tab}{tab}{tab}{tab}
+  Send, {tab}{tab}{tab}{tab}{tab}{tab}{tab}{tab}{tab}{tab}
   Sleep, sleepShort
   Send, {Down}{Down}
   Sleep, sleepShort
@@ -469,18 +471,27 @@ Return
   Sleep, sleepShort
   Send, {enter}{enter}
   Sleep, sleepShort
-  Send, {F21}
-  Sleep, sleepShort
+  Send, +9 ; lock audio
   Send, ^a
   Sleep, sleepShort
   Send, ^!x
   Sleep, sleepShort
   Send, {enter}
   Sleep, sleepShort
+  Send, +9 ; unlock audio
+  ToolTip, What is currently selected?
+  RemoveToolTip(4000)
+  /*
+
+  Send, {F21} ; select timeline panel
+
   Sleep, sleepShort
+
+*/
+
   Send, ^s ; save project
   Sleep, sleepDeep
-  Send, ^k ; reopne seq settings to double check
+  Send, ^k ; reopen seq settings to double check
   SoundPlay, ..\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V.3.0 Files\Futuristic Sounds (27).wav
 
 Return
@@ -498,7 +509,39 @@ Return
 ;+^!f15::
 ;+^!f16::
 ;+^!f17::
-;+^!f18::
++^!f18::  ; Trim last 9 chars from clip name in project window
+  ; Press {Enter} to select the sequence name
+  Send, {Enter}
+  Sleep, sleepShort
+  ; Copy Sequence name to clipboard
+  Send, ^c
+  Sleep, sleepShort
+  ; Create temp var of Sequence name without final digits
+  versionCurr := "-VERTICAL-V1" ; this is what we will tack on to the ending
+  endTrim := InStr(clipboard,"Copy") ; find the location of '-V0''
+  endTrim-- ; we need to trim off 4 characters
+  endTrim--
+  endTrim--
+  endTrim--
+  endTrim--
+  sequenceTemp := Substr(clipboard, 1, endTrim) ; copy the left part of the name to new var
+  newSeqName := sequenceTemp . versionCurr ; Concatenate the parts back together
+  clipboard := newSeqName ; Store new Sequence name to clipboard
+  ;MSGBOX, , DEBUG, %newSeqName%
+  ; Paste back into the Sequence name
+  Send, ^v
+  Sleep, sleepShort
+  ; Press Enter to save the name
+  Send, {NumpadEnter}
+  Sleep, sleepShort
+  Send, ^s ; save project
+  Sleep, sleepDeep
+  prfocus("project")
+  Sleep, sleepShort
+  ;Send, ^!+o ; opens the selected sequence in the Program Monitor
+  Sleep, sleepShort
+  SoundPlay, ..\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V.3.0 Files\Futuristic Sounds (27).wav
+  Return
 
 #IfWinActive
 
