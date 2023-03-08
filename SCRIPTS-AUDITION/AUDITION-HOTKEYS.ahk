@@ -54,6 +54,19 @@ OnExit, GdiplusExit
 
 #IfWinActive, ahk_exe Adobe Audition.exe
 
+;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
+
+;+^!F1::
+;+^!F2::
+;+^!f3::
+;+^!f4::
+;+^!f5::
++^!f6:: ;<-- Heal Audio
+F16::
+    Send, ^u
+Return
+;+^!f7::
++^!f8::
 F13:: ;<-- Deselect all & Jump back 1 second
     Send, ^d
     Sleep, sleepShort
@@ -61,9 +74,11 @@ F13:: ;<-- Deselect all & Jump back 1 second
     Sleep, sleepShort
     Send, {NumpadSub}
     Sleep, sleepShort
-    Send, {Numpad1}{NumpadDot}{Numpad0}{Enter}
+    Send, {NumpadDot}{Numpad7}{Numpad5}{Enter}
+    Sleep, sleepShort
+    Send, {Esc}
 Return
-
++^!f9::
 F14:: ;<-- Paste & Mix then press Enter
     Send, ^+v
     Sleep, sleepLong
@@ -76,21 +91,9 @@ F14:: ;<-- Paste & Mix then press Enter
     Send, {NumpadSub}
     Sleep, sleepShort
     Send, {NumpadDot}{Numpad7}{Numpad5}{Enter}
+    Sleep, sleepShort
+    Send, {Esc}
 Return
-
-;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
-
-;+^!F1::
-;+^!F2::
-;+^!f3::
-;+^!f4::
-;+^!f5::
-+^!f6:: ;<-- Heal Audio
-    Send, ^u
-Return
-;+^!f7::
-;+^!f8::
-;+^!f9:: 
 ;+^!f10::
 ;+^!f11::
 ;+^!f12::

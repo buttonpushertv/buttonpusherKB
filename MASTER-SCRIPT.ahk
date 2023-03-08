@@ -173,9 +173,9 @@ SetTimer, CapsLockCheck, %Settings_CapsLockCheckPeriod% ; the main timer to chec
 ;
 ;   This will be read by \buttonpusherKB\UTIL-APPS\Hotkey Help.ahk to create a text cheat sheet of all HotKeys & Definitons. This text file can be used to create the Cheat Sheets shown with CAPS+F1, etc.
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
-GroupAdd, altBlocked, ahk_exe Adobe Premiere Pro.exe ; items added to the group called 'altBlocked' will have the LAlt key blocked from triggering the menu selection
+GroupAdd, altBlocked, ahk_exe Adobe Premiere Pro.exe Adobe Audition.exe; items added to the group called 'altBlocked' will have the LAlt key blocked from triggering the menu selection
 
-GroupAdd, winBlocked, ahk_exe Adobe Premiere Pro.exe ; items added to the group called 'winBlocked' will have the LWin key blocked from triggering the menu selection
+GroupAdd, winBlocked, ahk_exe Adobe Premiere Pro.exe Adobe Audition.exe; items added to the group called 'winBlocked' will have the LWin key blocked from triggering the menu selection
 
 #IfWinActive, ahk_group winBlocked
 ; don't know if this works for Win too...
