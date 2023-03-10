@@ -40,10 +40,11 @@ F22:: ;<-- Morvold Press Master Maps List click on link & switch to that tab
     Send, ^{Tab}
     Sleep, sleepShort
     Sleep, sleepDeep
-    ImageSearch, foundLinkX, foundLinkY, 265, 200, 465, 1200, C:\BKB\PRIVATE\GAMING_SCRIPTS\chrome_morvold-press-link-image-to-match.png
+    ImageSearch, foundLinkX, foundLinkY, 680, 380, 1400, 2300, C:\BKB\PRIVATE\GAMING_SCRIPTS\Xchrome_morvold-press-link-image-to-match.png
     If ErrorLevel
     {
         SoundPlay, C:\BKB\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V.3.0 Files\Buzz Error (7).wav
+        MSGBOX, DEBUG, found the image at: X: %foundLinkX% | Y: %foundLinkY%`n`nMoving to X: %destLinkX% | Y: %destLinkY%
         Return
     }
     Sleep, sleepLong
@@ -54,8 +55,8 @@ F22:: ;<-- Morvold Press Master Maps List click on link & switch to that tab
     Sleep, sleepShort
     Click
     Sleep, sleepShort
-    ;MSGBOX, DEBUG, found the image at: X: %foundLinkX% | Y: %foundLinkY%`n`nMoving to X: %destLinkX% | Y: %destLinkY%
-    yposP += 123
+    
+    yposP += 278
     MouseMove, xposP, yposP ; this puts the cursor back where it came from 
 Return
     
