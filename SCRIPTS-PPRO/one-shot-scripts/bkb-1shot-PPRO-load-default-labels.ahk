@@ -29,12 +29,14 @@ sleepDeep := 3500
 
 ; This script will store the contents of the PPRO Settings->Labels panel to a text file
 
+labelSet := "DEFAULT PPRO"
+
 ; message box to alert user that:
 ; 1. they should be in the PPRO Settings/>Lables panel
-; 2. Inform User that this will load the Default set of labels into the fields
+; 2. Inform User that this will load the labelSet(from above) of labels into the fields
 ; 3. give options - OK to proceed & Cancel to cancel
 
-MsgBox, 33, Load PPRO Label Fields, This script will load text vaules into the fields on the Settings->Labels panel in Premiere Pro.`n`nPlease make sure you are sitting with that panel open and ready to accept text entry before running this script.`n`nClick OK to begjn pasting the DEFAULT LABELS into the text fields.`nClick CANCEL to abort this process.
+MsgBox, 33, Load PPRO Label Fields, This script will load text vaules into the fields on the Settings->Labels panel in Premiere Pro for this project:`n`n %labelSet% Labels`n`nPlease make sure you are sitting with that panel open and have clicked on the Labels entry in the sidebar before running this script.`n`nClick OK to begjn pasting the %labelSet% labels into the text fields.`n`nClick CANCEL to abort this process.
 
 IfMsgBox Cancel
     ExitApp
@@ -125,7 +127,7 @@ Send, Yellow
 Sleep, sleepShort
 
 ; Message box to declare process complete
-MsgBox, Labels have been replaced.`n`nClick OK on the Settings panel to save them.
+MsgBox, Labels have been replaced with labels for:`n`n %labelSet% Labels`n`nClick OK on the Settings panel to save them.
 
 ; exit the script WITHOUT saving of closing the Settings Panel
 
