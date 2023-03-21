@@ -103,7 +103,7 @@ Sleep, sleepShort
 ; field 12
 Send, {Tab}
 Sleep, sleepShort
-Send, Magenta
+Send, SINGLE CAM INT
 Sleep, sleepShort
 ; field 13
 Send, {Tab}
@@ -146,10 +146,11 @@ ExitApp
 8-Mango
 9-Purple
 10-INT-REVIEWED BY BEN
-11-KELLEY-PREPPED
-12-Magenta
+11-MULTICAM-APPLIED
+12-SINGLE CAM INT
 13-Tan
 14-Green
 15-Brown
 16-KELLEY-PREP-withGOLDs
 */
+

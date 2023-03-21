@@ -74,7 +74,10 @@ While(arrayCount <= elementMax)
         }
     clipboard .= "*/`n"
 
-MSGBOX, , Label values stored on clipboard, The values currently stored in Premiere Pro's Label text fields are now stored on the clipboard.`n`n The values are:`n %clipboard%`n`nBe sure to save them before copying anything else to the clipboard.
+MSGBOX, 4, Label values stored on clipboard, The values currently stored in Premiere Pro's Label text fields are now stored on the clipboard.`n`n The values are:`n %clipboard%`n`nBe sure to save them before copying anything else to the clipboard.`n`nClick YES below to open VS Code in the BKB Workspace to paste these labels into the appropriate script.`nClick NO to skip.
+
+IfMsgBox Yes 
+    Run, "C:\BKB\PRIVATE\buttonpusherKB.code-workspace"
 
 ; END OF SCRIPT
 ExitApp
