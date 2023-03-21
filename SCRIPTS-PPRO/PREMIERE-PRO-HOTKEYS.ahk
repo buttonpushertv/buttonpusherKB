@@ -368,18 +368,20 @@ return
   Sleep, sleepShort
   Send, f ;then we perfom the standard matchframe to the source clips
   Sleep, sleepShort
-  ;then we grab the timecode from the source monitor
-  CoordMode, Mouse, Screen
-  grabSourceTCAsText(grabbedTC, sourceXposP, sourceYposP)
-  ToolTip, Grabbed %grabbedTC% to Clipboard
+  Send, {Tab} ;then we tab into the timecode field on the source monitor
+  Sleep, sleepShort
+  Send, ^c ; to copy the highlighted timecode to the clipboard
+  ToolTip, Grabbed %clipboard% - now on Clipboard
   RemoveToolTip(1500)
+  Sleep, sleepMedium
+  Send, {Escape}
+  Sleep, sleepShort
   prfocus("source") ;PPRO has an interesting behavior in that it will cycle through clips loaded in Source Monitor on successive presses of the "Source Monitor" hotkey. So, this should load in the 2nd clip - which should be the secondary source
-    BlockInput, On
-    MouseMove, sourceXposP, sourceYposP
-    Sleep, sleepLong
-    Click, %sourceXposP%, %sourceYposP%, 0
-    Sleep, sleepMedium
-    Send, {Click}
+    ; BlockInput, On
+    Loop, 5
+      {
+      Send {Tab}
+      }
     Sleep, sleepMedium
     Send, ^v ;then go to the matching timecode in the secondary source - pasting from clipboard
     Sleep, sleepMedium
@@ -392,11 +394,10 @@ return
     Send, +b ; edit on to timeline
     Sleep, sleepMedium
     prfocus("program") ; and then set focus back on Program Monitor
-    BlockInput, Off
+    ; BlockInput, Off
     SoundPlay, ..\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V.3.0 Files\Special & Powerup (31).wav
     Sleep, sleepShort
     Send, ^s ; save project
-
 Return
 
 +^!F2:: ;<-- select all audio tracks & move down two tracks
@@ -549,6 +550,56 @@ Return
 
 /* COMMAND HOLDING TANK
 (This comment block is a place where you can store previously used hotkeys that you may want to keep around in case you need to reuse them. Make sure to comment on what they did and/or were for.)
+
+;<-- match framing to a secondary Clip that has matching timecode
+; THIS VERSION DOES THIS BY CLICKING ON THE TIMECODE FIELDS WITHIN THE SOURCE MONITOR
+  message := "It appears you haven't used this command since you launched buttonpusherKB since you booted up today.`n`nThis hotkey will help you matchframe to a secondary source clip. It does this by matchframing a primary clip, copying that timecode to the clipboard, then loading a secondary source clip that has matching timecode, setting an in point to the same timecode, and then replacing the primary source clip with the secondary source clip.`n`nIn order to use this properly, follow these steps:`n`n1. Your secondary source clip (sequence or multicam clip,etc.) must have identical timecode to your original source clip. This will not work properly if you don't make the identical.`n`n2. Make sure the Secondary Source Clip is the only item in the Source Monitor listing. Right-click the source name and you can close any that shouldn't be there.`n`n3. This hotkey (currently) only works with one primary/secondary source clip at a time. As long as your primary source timecode exists within your secondary source clip, it should work.`n`n4. Make sure you have duped your sequence or duped the primary source layer to another layer - so you can compare the replaced clip with the original.`n`n5. You need to have ""Selection Follows Playhead"" turned on in the Sequence menu & make sure the clip you are replacing is selected in timeline before proceeding.`n`nPress Cancel below if things aren't setup properly.`n`nPress OK to continue with this hotkey (or if you're seeing this after fixing things to make it work.)"
+  if (!f1MessageSeen)
+  {
+    FirstUsageSinceLaunch(message)
+    IfMsgBox, Cancel
+      Return
+    f1MessageSeen := 1
+  }
+  prfocus("program") ;First we need to give the Record monitor focus
+  Sleep, sleepShort
+  Send, {F3} ; mark the selected clip
+  Sleep, sleepShort
+  Send, +i ; go to In Point
+  Sleep, sleepShort
+  Send, f ;then we perfom the standard matchframe to the source clips
+  Sleep, sleepShort
+  ;then we grab the timecode from the source monitor
+  CoordMode, Mouse, Screen
+  grabSourceTCAsText(grabbedTC, sourceXposP, sourceYposP)
+  ToolTip, Grabbed %grabbedTC% to Clipboard
+  RemoveToolTip(1500)
+  prfocus("source") ;PPRO has an interesting behavior in that it will cycle through clips loaded in Source Monitor on successive presses of the "Source Monitor" hotkey. So, this should load in the 2nd clip - which should be the secondary source
+    BlockInput, On
+    MouseMove, sourceXposP, sourceYposP
+    Sleep, sleepLong
+    Click, %sourceXposP%, %sourceYposP%, 0
+    Sleep, sleepMedium
+    Send, {Click}
+    Sleep, sleepMedium
+    Send, ^v ;then go to the matching timecode in the secondary source - pasting from clipboard
+    Sleep, sleepMedium
+    Send, {Enter}
+    Sleep, sleepMedium
+    Send, i ;then set an in point on the secondary source
+    Sleep, sleepMedium
+    prfocus("timeline") ;then switch back to timeline
+    Sleep, sleepLong
+    Send, +b ; edit on to timeline
+    Sleep, sleepMedium
+    prfocus("program") ; and then set focus back on Program Monitor
+    BlockInput, Off
+    SoundPlay, ..\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V.3.0 Files\Special & Powerup (31).wav
+    Sleep, sleepShort
+    Send, ^s ; save project
+
+Return
+
 
  ; Trim last 18 chars from clip name in project window
   ; Press {Enter} to select the sequence name
