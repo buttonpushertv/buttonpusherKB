@@ -429,7 +429,8 @@ Sleep, sleepShort
 Send, ^c
 Sleep, sleepShort
 ; Create temp var of Sequence name without final digits
-versionLoc := InStr(clipboard,"V")
+; this will search from the end of the seq name, backwards
+versionLoc := InStr(clipboard,"V", ,-1)
 sequenceTemp := Substr(clipboard, 1, versionLoc)
 ; Extract the digits following the final 'V' from name
 digitLoc := versionLoc
@@ -505,7 +506,14 @@ Return
 ;+^!f10::
 ;+^!f11::
 ;+^!f12::
-;+^!f13:: 
+
++^!f13:: ;<-- Get name of item above currently selected & copy to clipboard
+      Send, {Enter}
+      Send, +{Enter}
+      Send, ^c
+      Send, {Enter}
+      Send, ^v
+    Return
 ;+^!f14::
 ;+^!f15::
 ;+^!f16::

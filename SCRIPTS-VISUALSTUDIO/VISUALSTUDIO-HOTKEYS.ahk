@@ -31,6 +31,40 @@ sleepDeep := 3500
 
 #IfWinActive, ahk_exe Code.exe
 
+;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
++^!f1:: ;<-- Type a Comment template
+    Send, {Space}
+    Send, {Raw};<--
+    Send, {Space}
+    Return
+;+^!f2::
+;+^!f3::
++^!f4:: Send, Sleep`, sleepShort
++^!f5:: Send, MSGBOX, , DEBUG, ; <--VIZ STUDIO CODE: Make a DEBUG MsgBox
++^!f6:: Run, "SCRIPTS-UTIL\search-for-AHK-token.ahk" ; <--VIZ STUDIO CODE: Search AHK Help for Token Word under cursor (Run search-for-AHK-token.ahk)
+;+^!f7::
+;+^!f8::
+;+^!f9:: 
+;+^!f10::
++^!F11:: Send, MSGBOX, , Made it here! ; <--VIZ STUDIO CODE: Make a MSGBOX to act as a flag for script routing
+;+^!f12::
+;+^!f13::
+;+^!f14::
+;+^!f15::
+;+^!f16::
+;+^!f17::
+;+^!f18::
+;+^!f19::
+;+^!f20::
+;+^!f21::
+;+^!f22::
+;+^!f23::
+;+^!f24::
+
+#IfWinActive
+
+;===== END Program 1 DEFINITIONS ===============================================================
+
 #IfWinActive
 
 ;===== HOLDING TANK FOR DEACTIVATED HOTKEYS ====================================================

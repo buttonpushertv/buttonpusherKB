@@ -114,6 +114,17 @@ Return
     Return
 
 #IfWinActive
+
++^!f3:: ; <--CHROME: wrap selected text in [spell]text[/spell]
+	WinActivate, "Create - Create a Monster - Creations - Homebrew - D&D Beyond - Google Chrome"
+    Send, ^c
+    ClipWait
+    wrappedText := "[spell]" . Clipboard . "[/spell]"
+	WinActivate, "Create - Create a Monster - Creations - Homebrew - D&D Beyond - Google Chrome"
+    SendInput, %wrappedText%
+    Clipboard = ; clears Clipboard
+    Return
+
 ;===== FUNCTIONS ===============================================================================
 
 shutterStockClickAndClose() {
