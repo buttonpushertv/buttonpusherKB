@@ -229,10 +229,12 @@ CapsLock & Backspace:: ; <-- Reload MASTER-SCRIPT.ahk
 
 CapsLock & WheelDown::
 	Send ^{PGDN} ; <-- Send Control+Page Down - for changing tabs in apps that support it (Chrome, Atom)
+	CapsLockOff()
 	Return
 
 CapsLock & WheelUp::
 	Send ^{PGUP} ; <-- Send Control+Page Up - for changing tabs in apps that support it (Chrome, Atom)
+	CapsLockOff()
 	Return
 	
 CapsLock & B:: ; <-- Run the ACTIVE-PROJECTS-BACKUPS.cmd file to backup all active projects.
