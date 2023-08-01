@@ -22,6 +22,7 @@ sleepDeep := 3500
 
 iniFile := "..\settings.ini"
 IniRead, Settings_rootFolder, %iniFile%, Settings, rootFolder
+IniRead, backupApplication, %iniFile%, Settings, backupApplication
 
 FileReadLine, dayssince, %Settings_rootFolder%\PRIVATE\%A_Computername%\days_since_system_backup.txt, 1
 
@@ -34,7 +35,6 @@ Settings_timeoutPeriod := 10000 ; in milliseconds
 guiHeight := 200
 guiWidth := 325
 guiElementWidth := (guiWidth - 50)
-backupApplication := "C:\Program Files (x86)\EaseUS\Todo Backup\bin\Loader.exe"
 
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
@@ -44,6 +44,8 @@ backupApplication := "C:\Program Files (x86)\EaseUS\Todo Backup\bin\Loader.exe"
 ; <=use left mod key| >=use right mod key  | UP=fires on release
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
+MSGBOX, , DEBUG, Current backupApplication: %backupApplication%
+
 Gui, Font, S12 CDefault, Franklin Gothic Medium
 Gui, Add, Text, x25 y20 h40 , It's been %dayssince% days since the last backup.
 Gui, Add, Text, x25 y60 h40 , Do you want to run a System Backup?
