@@ -44,7 +44,7 @@ guiElementWidth := (guiWidth - 50)
 ; <=use left mod key| >=use right mod key  | UP=fires on release
 
 ;===== MAIN HOTKEY DEFINITIONS HERE ============================================================
-MSGBOX, , DEBUG, Current backupApplication: %backupApplication%
+;MSGBOX, , DEBUG, Current backupApplication: %backupApplication%
 
 Gui, Font, S12 CDefault, Franklin Gothic Medium
 Gui, Add, Text, x25 y20 h40 , It's been %dayssince% days since the last backup.
