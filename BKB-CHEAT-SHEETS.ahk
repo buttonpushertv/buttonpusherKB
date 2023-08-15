@@ -354,7 +354,14 @@ secondShower: ; Display an image CheatSheet of App Specific Keyboard Shortcuts (
 				numPages := 1
 				PictureStartY := 50
 		}
-		else
+	else
+			If WinActive("ahk_exe AvidMediaComposer.exe") {
+					pic2Show := "SUPPORTING-FILES\CHEAT-SHEETS\KBF2-AVIDMC.png"
+					PictureWidth := 1000
+					numPages := 1
+					PictureStartY := 50
+			}
+	else
 		{
         pic2Show := "SUPPORTING-FILES\CHEAT-SHEETS\NO-CHEATSHEET.png"
         PictureWidth := 579

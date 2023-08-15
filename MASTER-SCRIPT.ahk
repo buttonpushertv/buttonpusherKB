@@ -203,7 +203,15 @@ GroupAdd, winBlocked, ahk_exe Adobe Premiere Pro.exe Adobe Audition.exe; items a
 
 #IfWinActive
 
-#Space::#!z ; <--Workaround to launch Keypirinha instead of PowerToys Run (Windows maps this even when it's turned off so that Keypirinha can't be mapped to it.)
+#Space:: ;<--  ; <--Workaround to launch Keypirinha instead of PowerToys Run (Windows maps this even when it's turned off so that Keypirinha can't be mapped to it.)
+	Send, #!z
+	CapsLockOff()
+	Return
+
+CapsLock & Space:: ; <-- trying this as an alternate to open Keypirinha
+	Send, #!z
+	CapsLockOff()
+	Return
 
 ; There are 2 hotkeys defined for the Hotkeys below because on my split keyboard it's easier to use ScrollLock & on my Kira/Preonic keyboards it's easier to use CapsLock.
 

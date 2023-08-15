@@ -20,6 +20,8 @@ sleepMedium := 666
 sleepLong := 1500
 sleepDeep := 3500
 
+EnvGet, Settings_rootFolder, BKB_ROOT
+;MSGBOX, , DEBUG, %Settings_rootFolder%
 ;===== END OF AUTO-EXECUTE =====================================================================
 ;===== MODIFIER MEMORY HELPER ==================================================================
 ; combine below with key and '::' to define hotkey 
@@ -41,7 +43,7 @@ sleepDeep := 3500
 ;+^!f3::
 +^!f4:: Send, Sleep`, sleepShort
 +^!f5:: Send, MSGBOX, , DEBUG, ; <--VIZ STUDIO CODE: Make a DEBUG MsgBox
-+^!f6:: Run, "SCRIPTS-UTIL\search-for-AHK-token.ahk" ; <--VIZ STUDIO CODE: Search AHK Help for Token Word under cursor (Run search-for-AHK-token.ahk)
++^!f6:: Run, "..\SCRIPTS-UTIL\search-for-AHK-token.ahk" ; <--VIZ STUDIO CODE: Search AHK Help for Token Word under cursor (Run search-for-AHK-token.ahk)
 ;+^!f7::
 ;+^!f8::
 ;+^!f9:: 
