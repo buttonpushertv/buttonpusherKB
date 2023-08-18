@@ -68,6 +68,14 @@ F1:: ; Move backward 1 frame
     Send, P
     Return
 
+F13:: ;<-- focus Composer window & subclip
+    Send, ^4
+    Sleep, sleepShort
+    Send, u
+    Sleep, sleepShort
+    Send, {Tab}
+    Return
+
 
 ;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
 
