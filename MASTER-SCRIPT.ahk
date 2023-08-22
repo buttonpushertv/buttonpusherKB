@@ -205,11 +205,13 @@ GroupAdd, winBlocked, ahk_exe Adobe Premiere Pro.exe Adobe Audition.exe; items a
 
 #Space:: ;<--  ; <--Workaround to launch Keypirinha instead of PowerToys Run (Windows maps this even when it's turned off so that Keypirinha can't be mapped to it.)
 	Send, #!z
+	WinWait, ahk_exe keypirinha-x64.exe
 	CapsLockOff()
 	Return
 
 CapsLock & Space:: ; <-- trying this as an alternate to open Keypirinha
 	Send, #!z
+	WinWait, ahk_exe keypirinha-x64.exe
 	CapsLockOff()
 	Return
 
