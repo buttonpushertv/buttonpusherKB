@@ -33,6 +33,46 @@ sleepDeep := 3500
 
 #IfWinActive, ahk_exe chrome.exe
 
+F17:: ;<--Used to set formatting on Omnibus Transcripts Google Sheets
+    ; Move to Column D
+    Send, ^{Home}
+    Sleep, sleepShort
+    Send, {Right}
+    Sleep, sleepShort
+    Send, {Right}
+    Sleep, sleepShort
+    Send, {Right}
+    Sleep, sleepShort
+    ; Select Column
+    Send, ^{Space}
+    Sleep, sleepLong
+    ; Set Column to Word Wrappin ON
+    Click, 271, 164
+    Sleep, sleepMedium
+    Send, w
+    Sleep, sleepMedium
+    Send, w
+    Sleep, sleepMedium
+    ; Set Column Width to 350 Pixels
+    Click, right, 380,270
+    Sleep, sleepMedium
+    ; once the context menu for the column is opened, the only way to get to the 'Resize Column' command is by arrowing down 9 times
+        loopAmount := 9
+        Loop, %loopAmount%
+        {
+            Send, {Down}
+            Sleep, sleepShort
+        }
+    Sleep, sleepShort
+    Send, {Enter}
+    Sleep, sleepShort
+    Send, 350
+    Sleep, sleepShort
+    Send, {Enter}
+    Sleep, sleepShort
+    Send, ^{Home}
+    Return
+
 F22:: ;<-- Morvold Press Master Maps List click on link & switch to that tab
     MouseGetPos, xposP, yposP  
     Send, ^{Click}
