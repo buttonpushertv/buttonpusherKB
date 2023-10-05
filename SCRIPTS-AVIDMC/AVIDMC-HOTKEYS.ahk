@@ -76,6 +76,12 @@ F13:: ;<-- focus Composer window & subclip
     Send, {Tab}
     Return
 
+F14:: ;<-- Select All tracks then select everything to the right of playhead
+Send, ^a ; select all tracks
+Sleep, sleepShort
+Send, += ; select all to the right
+Return
+
 
 ;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
 
