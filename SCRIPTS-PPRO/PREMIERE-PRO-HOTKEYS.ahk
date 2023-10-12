@@ -517,37 +517,39 @@ Return
 ;+^!f14::
 ;+^!f15::
 ;+^!f16::
-;+^!f17::
-+^!f18::  ; Trim last 9 chars from clip name in project window
-  ; Press {Enter} to select the sequence name
++^!f17:: ;<-- get the name of a clip without the trailing extension
+      prFocus("project")
+  ; Press {Enter} to select the clip name
   Send, {Enter}
   Sleep, sleepShort
   ; Copy Sequence name to clipboard
   Send, ^c
   Sleep, sleepShort
   ; Create temp var of Sequence name without final digits
-  versionCurr := "-VERTICAL-V1" ; this is what we will tack on to the ending
-  endTrim := InStr(clipboard,"Copy") ; find the location of '-V0''
-  endTrim-- ; we need to trim off 4 characters
-  endTrim--
-  endTrim--
-  endTrim--
-  endTrim--
+  endTrim := InStr(clipboard,".mp3") ; find the location of '.mp3' & set endTrim to the char num of the period
+  endTrim-- ; remomving 1 extra character for the period
   sequenceTemp := Substr(clipboard, 1, endTrim) ; copy the left part of the name to new var
-  newSeqName := sequenceTemp . versionCurr ; Concatenate the parts back together
-  clipboard := newSeqName ; Store new Sequence name to clipboard
-  ;MSGBOX, , DEBUG, %newSeqName%
-  ; Paste back into the Sequence name
-  Send, ^v
+    clipboard := sequenceTemp ; Store new name to clipboard
+    Sleep, sleepShort
+    Send, {Escape}
+    Sleep, sleepShort
+    Send, O ; opens clip in source monitor & activates the transcript in the Text/Transcription Panel
+  ;MSGBOX, , DEBUG, %sequenceTemp%
   Sleep, sleepShort
-  ; Press Enter to save the name
-  Send, {NumpadEnter}
-  Sleep, sleepShort
-  Send, ^s ; save project
-  Sleep, sleepDeep
-  prfocus("project")
-  Sleep, sleepShort
-  ;Send, ^!+o ; opens the selected sequence in the Program Monitor
+  SoundPlay, ..\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V.3.0 Files\Futuristic Sounds (27).wav
+  Return
++^!f18:: ;<-- Focus the Text Panel and Export the active transcript as CSV
+      ;Click to focus the Text Panel - you cannot get the panel to have focus via a keyboard shortcut
+      Click, 1770, 133 ; this activates the Text/Transcript Window - provided it's already at least visible
+      Send, ^!E ; ;Send the Export to CSV keyboard shortcut - set it if it isn't already & make this line match your command in PPRO
+      Sleep, sleepLong
+      Send, ^v
+      Sleep, sleepLong
+      Send, {Enter}
+      Sleep, sleepShort
+      prFocus("project")
+      Sleep, sleepShort
+      Send, {Down}
   Sleep, sleepShort
   SoundPlay, ..\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V.3.0 Files\Futuristic Sounds (27).wav
   Return
@@ -869,6 +871,40 @@ F20:: ; <-- For PPRO - PHARMA Project - to ID client selected takes with a marke
   Sleep, sleepShort
   Send, {NumpadEnter}
 return
+
++^!f18::  ; Trim last 9 chars from clip name in project window
+  ; Press {Enter} to select the sequence name
+  Send, {Enter}
+  Sleep, sleepShort
+  ; Copy Sequence name to clipboard
+  Send, ^c
+  Sleep, sleepShort
+  ; Create temp var of Sequence name without final digits
+  versionCurr := "-VERTICAL-V1" ; this is what we will tack on to the ending
+  endTrim := InStr(clipboard,"Copy") ; find the location of '-V0''
+  endTrim-- ; we need to trim off 4 characters
+  endTrim--
+  endTrim--
+  endTrim--
+  endTrim--
+  sequenceTemp := Substr(clipboard, 1, endTrim) ; copy the left part of the name to new var
+  newSeqName := sequenceTemp . versionCurr ; Concatenate the parts back together
+  clipboard := newSeqName ; Store new Sequence name to clipboard
+  ;MSGBOX, , DEBUG, %newSeqName%
+  ; Paste back into the Sequence name
+  Send, ^v
+  Sleep, sleepShort
+  ; Press Enter to save the name
+  Send, {NumpadEnter}
+  Sleep, sleepShort
+  Send, ^s ; save project
+  Sleep, sleepDeep
+  prfocus("project")
+  Sleep, sleepShort
+  ;Send, ^!+o ; opens the selected sequence in the Program Monitor
+  Sleep, sleepShort
+  SoundPlay, ..\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V.3.0 Files\Futuristic Sounds (27).wav
+  Return
 
 */
 

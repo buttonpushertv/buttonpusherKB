@@ -31,7 +31,24 @@ sleepDeep := 3500
 
 #IfWinActive, ahk_exe FreeCommander.exe
 
-F13::
+F13:: ;<-- Get the name of the current selected item & copy to clipboard
+;press F2 to toggle text selection
+Send, {F2}
+Sleep, sleepShort
+;copy to clipboard
+Send, ^c
+Sleep, sleepShort
+Send, {Escape}
+return
+
+
+#IfWinActive
+;===== FUNCTIONS ===============================================================================
+
+/*
+HOLDING TANK for inactive hotkeys
+
+F13:: ; NO IDEA WHAT THIS WAS FOR - something about making a new folder from clipboard text
 Send, {ShiftDown}}{AltDown}c{ShiftUp}{AltUp}
 Sleep, sleepMedium
 Send, {Tab}
@@ -43,5 +60,4 @@ Sleep, sleepMedium
 Send, {Enter}
 Return
 
-#IfWinActive
-;===== FUNCTIONS ===============================================================================
+*/
