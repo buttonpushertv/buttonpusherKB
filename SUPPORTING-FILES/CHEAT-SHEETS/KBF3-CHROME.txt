@@ -1,6 +1,44 @@
 
-=========================== MASTER SCAF KEYS - NOTEPAD++ ===========================
-(These are defined within PRIVATE/MASTER-SCAF-KEY.ahk - not synced to Github - Ben)
+=========================== GOOGLE-CHROME-HOTKEYS ===========================
 
+
+
+
+
+
+
+
+
+============================== YOUTUBE-HOTKEYS ==============================
+
+SPACEBAR or K <-- Play/Pause Video
+
+J <-- Seek backwards 10 seconds
+L <-- Seek forwards 10 seconds
+
+Left <-- With seek bar focused, skip backwards 5 seconds
+Right <-- With seek bar focused, skip forwards 5 seconds
+
+< <-- Reduce playback speed
+> <-- Increase playback speed
+
+Home <-- Seek to start of the video
+End <-- Seek to the last few seconds of the video
+
+Number 0 <-- Seek to start of the video
+
+Numbers 1-9 <-- Seek to the 10% to 90% of the video
+
+m <-- Mute audio of playing video
+
+Up <-- With seek bar focused, increase volume 5%
+Down <-- With seek bar focused, decrease volume 5%
+
+f <-- Toggle full-screen of playing video
+
+c <-- Toggle captions of playing video
+
+Shift+N <-- Move to next video in playlist or next suggested video if not in playlist
+Shift+P <-- Move to previous video in playlist or previous suggested video if not in playlist
 
 
