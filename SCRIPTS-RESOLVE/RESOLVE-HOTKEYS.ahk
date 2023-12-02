@@ -89,7 +89,7 @@ F21:: ;<-- Copy Correction from 2 clips previous
     Send, +-
 Return
 
-F22:: ;<-- Copy Correction from 2 clips previous
+F22:: ;<-- Copy Correction from 1 clip previous
     Send, +=
 Return
 
@@ -179,6 +179,30 @@ Return
     ;Sleep, sleepMedium
     ;Send, {Escape}
     Return
+
+;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
+
+;+^!f1::
+;+^!f2::
+;+^!f3::
+;+^!f4::
++^!f5:: ;<-- goto first frame
+Send, ^+{Up}
+Return
++^!f6:: ;<-- goto last frame
+Send, ^+{Down}
+Return
+;+^!f7::
+;+^!f8::
+;+^!f9::
+;+^!f10::
+;+^!f11::
+;+^!f12::
+;+^!f13::
+;+^!f14::
+;+^!f15::
+;+^!f16::
+
 #IfWinActive
 
 ;===== END Program 1 DEFINITIONS ===============================================================
