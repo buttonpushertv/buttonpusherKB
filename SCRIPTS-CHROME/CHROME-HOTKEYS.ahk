@@ -71,6 +71,8 @@ F17:: ;<--Used to set formatting on Omnibus Transcripts Google Sheets
     Send, {Enter}
     Sleep, sleepShort
     Send, ^{Home}
+    Sleep, sleepShort
+    Send, ^w
     Return
 
 F22:: ;<-- Morvold Press Master Maps List click on link & switch to that tab
