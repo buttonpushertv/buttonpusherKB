@@ -540,9 +540,9 @@ Return
   Return
 +^!f18:: ;<-- Focus the Text Panel and Export the active transcript as CSV
       ;Click to focus the Text Panel - you cannot get the panel to have focus via a keyboard shortcut
-      Click, 1770, 133 ; this activates the Text/Transcript Window - provided it's already at least visible
-      Send, ^!E ; ;Send the Export to CSV keyboard shortcut - set it if it isn't already & make this line match your command in PPRO
-      Sleep, sleepLong
+      Click, 47, 135 ; this activates the Text/Transcript Window - provided it's already at least visible
+      Send, ^!+c ; ;Send the Export to CSV keyboard shortcut - set it if it isn't already & make this line match your command in PPRO
+      Sleep, sleepDeep
       Send, ^v
       Sleep, sleepLong
       Send, {Enter}
