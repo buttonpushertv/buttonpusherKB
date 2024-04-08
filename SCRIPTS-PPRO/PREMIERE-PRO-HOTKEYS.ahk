@@ -507,16 +507,24 @@ Return
 ;+^!f11::
 ;+^!f12::
 
-+^!f13:: ;<-- Get name of item above currently selected & copy to clipboard
-      Send, {Enter}
-      Send, +{Enter}
-      Send, ^c
-      Send, {Enter}
-      Send, ^v
-    Return
++^!f13:: ;<-- update the date on the tail of a sequence
+; prior to using this command, select the sequence you want to update
+; the sequence SHOULD already have a date at its tail - formatted as YYYY-MMM-DD-HHSS
+  Send, {Enter}
+  Send, {End}
+  Loop, 16 {
+    Send, {BackSpace}
+  }
+  FormatTime, TimeString,, yyyy-MMM-dd-HHmm
+  SendInput, %TimeString%
+  Send, {Enter}
+  Send, {Escape}
+Return
+
 ;+^!f14::
 ;+^!f15::
 ;+^!f16::
+
 +^!f17:: ;<-- get the name of a clip without the trailing extension
       prFocus("project")
   ; Press {Enter} to select the clip name
@@ -538,6 +546,7 @@ Return
   Sleep, sleepShort
   SoundPlay, ..\SUPPORTING-FILES\SOUNDS\interfaceanditemsounds\V.3.0 Files\Futuristic Sounds (27).wav
   Return
+
 +^!f18:: ;<-- Focus the Text Panel and Export the active transcript as CSV
       ;Click to focus the Text Panel - you cannot get the panel to have focus via a keyboard shortcut
       Click, 47, 135 ; this activates the Text/Transcript Window - provided it's already at least visible
@@ -560,6 +569,14 @@ Return
 
 /* COMMAND HOLDING TANK
 (This comment block is a place where you can store previously used hotkeys that you may want to keep around in case you need to reuse them. Make sure to comment on what they did and/or were for.)
+
+;<-- Get name of item above currently selected & copy to clipboard
+      Send, {Enter}
+      Send, +{Enter}
+      Send, ^c
+      Send, {Enter}
+      Send, ^v
+    Return
 
 ;<-- match framing to a secondary Clip that has matching timecode
 ; THIS VERSION DOES THIS BY CLICKING ON THE TIMECODE FIELDS WITHIN THE SOURCE MONITOR

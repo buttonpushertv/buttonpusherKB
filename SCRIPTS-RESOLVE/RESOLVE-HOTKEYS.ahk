@@ -130,7 +130,7 @@ Return
     RemoveToolTip(2000)
     }
 
-    WinActivate, RESOLVE-1SHOT-CONFIG.ahk - Notepad++ ; this should activate the window where the config file is being edited
+    WinActivate, RESOLVE-1SHOT-CONFIG.ahk ; this should activate the window where the config file is being edited
 
     ; below will create the info we will want to paste into the config file
     formattedText =
