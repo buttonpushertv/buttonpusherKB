@@ -33,47 +33,7 @@ sleepDeep := 3500
 
 #IfWinActive, ahk_exe chrome.exe
 
-F17:: ;<--Used to set formatting on Omnibus Transcripts Google Sheets
-    ; Move to Column D
-    Send, ^{Home}
-    Sleep, sleepShort
-    Send, {Right}
-    Sleep, sleepShort
-    Send, {Right}
-    Sleep, sleepShort
-    Send, {Right}
-    Sleep, sleepShort
-    ; Select Column
-    Send, ^{Space}
-    Sleep, sleepLong
-    ; Set Column to Word Wrappin ON
-    Click, 271, 164
-    Sleep, sleepMedium
-    Send, w
-    Sleep, sleepMedium
-    Send, w
-    Sleep, sleepMedium
-    ; Set Column Width to 350 Pixels
-    Click, right, 380,270
-    Sleep, sleepMedium
-    ; once the context menu for the column is opened, the only way to get to the 'Resize Column' command is by arrowing down 9 times
-        loopAmount := 9
-        Loop, %loopAmount%
-        {
-            Send, {Down}
-            Sleep, sleepShort
-        }
-    Sleep, sleepShort
-    Send, {Enter}
-    Sleep, sleepShort
-    Send, 350
-    Sleep, sleepShort
-    Send, {Enter}
-    Sleep, sleepShort
-    Send, ^{Home}
-    Sleep, sleepShort
-    Send, ^w
-    Return
+
 
 F22:: ;<-- Morvold Press Master Maps List click on link & switch to that tab
     MouseGetPos, xposP, yposP  
@@ -169,6 +129,17 @@ Return
 
 ;===== FUNCTIONS ===============================================================================
 
+; use this function to Remove ToolTips - pretty self-explanatory - 'duration' should be given in milliseconds (4000 = 4 seconds)
+RemoveToolTip(duration) {
+    SetTimer, ToolTipOff, %duration%
+    Return
+  
+  ToolTipOff:
+      ToolTip
+      return
+  }
+
+
 shutterStockClickAndClose() {
     Click, 600, 715
     Sleep, 1500
@@ -207,6 +178,49 @@ FirstUsageSinceLaunch(messageBoxText) {
 ;====== INACTIVE HOTKEYS =======================================================================
 ; Hotkey defs here to hold them inactive for later use.
 /*
+
+F17:: ;<--Used to set formatting on Omnibus Transcripts Google Sheets
+    ; Move to Column D
+    Send, ^{Home}
+    Sleep, sleepShort
+    Send, {Right}
+    Sleep, sleepShort
+    Send, {Right}
+    Sleep, sleepShort
+    Send, {Right}
+    Sleep, sleepShort
+    ; Select Column
+    Send, ^{Space}
+    Sleep, sleepLong
+    ; Set Column to Word Wrappin ON
+    Click, 271, 164
+    Sleep, sleepMedium
+    Send, w
+    Sleep, sleepMedium
+    Send, w
+    Sleep, sleepMedium
+    ; Set Column Width to 350 Pixels
+    Click, right, 380,270
+    Sleep, sleepMedium
+    ; once the context menu for the column is opened, the only way to get to the 'Resize Column' command is by arrowing down 9 times
+        loopAmount := 9
+        Loop, %loopAmount%
+        {
+            Send, {Down}
+            Sleep, sleepShort
+        }
+    Sleep, sleepShort
+    Send, {Enter}
+    Sleep, sleepShort
+    Send, 350
+    Sleep, sleepShort
+    Send, {Enter}
+    Sleep, sleepShort
+    Send, ^{Home}
+    Sleep, sleepShort
+    Send, ^w
+    Return
+
 
 !z:: ; <-- FCM - leave fullscreen, continue to next video, and then setting back to fullscreen
     ; currently set for use on Xeonator Laptop
