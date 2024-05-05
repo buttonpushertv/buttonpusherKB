@@ -94,7 +94,7 @@ F22:: ;<-- Copy Correction from 1 clip previous
 Return
 
 
-!^+`:: ;<--Toggle hovered node's lock
+!^+#`:: ;<--Toggle hovered node's lock
     MouseGetPos currentCursorX, currentCursorY ; store the current cursor coords to currentCursorX and currentCursorY
     Click
     Sleep, sleepShort
@@ -130,7 +130,7 @@ Return
     RemoveToolTip(2000)
     }
 
-    WinActivate, RESOLVE-1SHOT-CONFIG.ahk - Notepad++ ; this should activate the window where the config file is being edited
+    WinActivate, RESOLVE-1SHOT-CONFIG.ahk ; this should activate the window where the config file is being edited
 
     ; below will create the info we will want to paste into the config file
     formattedText =
@@ -182,7 +182,19 @@ Return
 
 ;===== SHIFT-CONTROL-ALT-FUNCTION KEY DEFINITIONS HERE =========================================
 
-;+^!f1::
++^!f1:: ;<-- Jump back 3 seconds
+    Send, `;
+    Sleep, sleepShort
+    Send, {NumpadSub}
+    Sleep, sleepShort
+    Send, {Numpad3}
+    Sleep, sleepShort
+    Send, {NumpadDot}
+    Sleep, sleepShort
+    Send, {Numpad0}
+    Sleep, sleepShort
+    Send, {NumpadEnter}
+    Return
 ;+^!f2::
 ;+^!f3::
 ;+^!f4::

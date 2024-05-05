@@ -223,6 +223,13 @@ projectSettingsSubtitlesLocX = 146
 projectSettingsSubtitlesLocY = 260
 
 ; COLOR PANEL
+; Loc 1 colorClipsOpenMenu
+colorClipsOpenMenuLocX = 386
+colorClipsOpenMenuLocY = 62
+; Loc 1 colorClipsViewAllClips
+; not accessed using coords - see 1-shot script - probably uses arrows to navigate
+; Loc 1 colorClipsViewCurrentGroup
+; not accessed using coords - see 1-shot script - probably uses arrows to navigate
 ; Loc 1 colorClipsToggle
 	colorClipsToggleLocX = 2196
 	colorClipsToggleLocY = 36
